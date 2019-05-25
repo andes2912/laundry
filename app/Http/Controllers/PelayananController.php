@@ -9,7 +9,20 @@ use App\harga;
 use Auth;
 
 class PelayananController extends Controller
+
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    
+    private $user ;
+    function __construct(Request $request)
+    {
+        $this->middleware('auth');
+        $this->user = \Auth::user();
+    }
     /**
      * Display a listing of the resource.
      *

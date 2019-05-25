@@ -17,6 +17,18 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    private $user ;
+    function __construct(Request $request)
+    {
+        $this->middleware('auth');
+        $this->user = \Auth::user();
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function adm()
     {
         if (Auth::user()->auth === "Admin") {
