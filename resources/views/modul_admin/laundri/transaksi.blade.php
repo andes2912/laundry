@@ -55,8 +55,10 @@
                                     <a href="{{url('invoice-customer', $item->id)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
                                     <a class="btn btn-sm btn-info" style="color:white">Detail</a>
                                 @elseif($item->status_order == "Selesai")
+                                    <a href="{{url('invoice-customer', $item->id)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
                                     <a class="btn btn-sm btn-info" style="color:white">Detail</a>
                                 @elseif($item->status_order == "Proses")
+                                    <a href="{{url('invoice-customer', $item->id)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
                                     <a class="btn btn-sm btn-info" style="color:white">Detail</a>    
                                 @endif
                             </td>

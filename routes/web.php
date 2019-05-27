@@ -49,6 +49,7 @@ Route::resource('pelayanan','PelayananController');
     Route::post('add-order-store/{id_customer}','PelayananController@addorderstore');
     Route::get('ubah-status-order','PelayananController@ubahstatusorder');
     Route::get('ubah-status-bayar','PelayananController@ubahstatusbayar');
+    Route::get('ubah-status-ambil','PelayananController@ubahstatusambil');
 
     // Customer
     Route::get('list-customer','PelayananController@listcs');
@@ -58,3 +59,6 @@ Route::resource('pelayanan','PelayananController');
     // Filter
     Route::get('listharga','PelayananController@listharga');
     Route::get('listhari','PelayananController@listhari');
+
+    // Laporan
+    Route::get('invoice-kar/{id}','PelayananController@invoicekar');

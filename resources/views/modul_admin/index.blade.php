@@ -7,8 +7,8 @@
             <div class="card-body">
                 <!-- Row -->
                 <div class="row">
-                    <div class="col-8"><h2>2376 <i class="ti-angle-down font-14 text-danger"></i></h2>
-                        <h6>Order Received</h6></div>
+                    <div class="col-8"><h2>{{$customer->count()}} <i class=" font-14 text-danger"></i></h2>
+                        <h6>Jumlah Customer</h6></div>
                     <div class="col-4 align-self-center text-right  p-l-0">
                         <div id="sparklinedash3"></div>
                     </div>
@@ -22,8 +22,8 @@
             <div class="card-body">
                 <!-- Row -->
                 <div class="row">
-                    <div class="col-8"><h2 class="">3670 <i class="ti-angle-up font-14 text-success"></i></h2>
-                        <h6>Tax Deduction</h6></div>
+                    <div class="col-8"><h2 class="">{{$masuk}} <i class=" font-14 text-success"></i></h2>
+                        <h6>Laundry Masuk</h6></div>
                     <div class="col-4 align-self-center text-right p-l-0">
                         <div id="sparklinedash"></div>
                     </div>
@@ -37,8 +37,8 @@
             <div class="card-body">
                 <!-- Row -->
                 <div class="row">
-                    <div class="col-8"><h2>1562 <i class="ti-angle-up font-14 text-success"></i></h2>
-                        <h6>Revenue Stats</h6></div>
+                    <div class="col-8"><h2>{{$selesai}} <i class=" font-14 text-success"></i></h2>
+                        <h6>Laundry Selesai</h6></div>
                     <div class="col-4 align-self-center text-right p-l-0">
                         <div id="sparklinedash2"></div>
                     </div>
@@ -52,8 +52,8 @@
             <div class="card-body">
                 <!-- Row -->
                 <div class="row">
-                    <div class="col-8"><h2>35% <i class="ti-angle-down font-14 text-danger"></i></h2>
-                        <h6>Yearly Sales</h6></div>
+                    <div class="col-8"><h2>{{$diambil}} <i class=" font-14 text-danger"></i></h2>
+                        <h6>Laundry Diambil</h6></div>
                     <div class="col-4 align-self-center text-right p-l-0">
                         <div id="sparklinedash4"></div>
                     </div>
@@ -62,24 +62,18 @@
         </div>
     </div>
 
-    <div class="col-md-7">
+    <div class="col-lg-7">
+        <!-- LINE CHART -->
         <div class="card">
-            <div class="card-body">
-                <div class="d-flex flex-wrap">
-                    <div>
-                        <h4 class="card-title">Statistik Bulanan</h4>
-                    </div>
-                    <div class="ml-auto">
-                        <ul class="list-inline">
-                            <li>
-                                <h6 class="text-muted text-success"><i class="fa fa-circle font-10 m-r-10 "></i>Masuk</h6> 
-                            </li>                               
-                        </ul>
-                    </div>
-                </div>
-                <div id="morris-area-chart2" style="height: 405px;"></div>
-            </div>
+          <div class="card-body">
+            <h4 class="card-title m-b-0">Grafik Jumlah Laundry Masuk</h4>
         </div>
+          <div class="card-body">
+            <div class="amp-pxl m-t-90" style="height: 390px;" id="linechart"></div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
     </div>
     <div class="col-md-5">
         <!-- Column -->
@@ -111,68 +105,10 @@
             </div>
         </div>
     </div>
-
 @endsection
 @section('script')
 <script type="text/javascript">
-/*
-Template Name: Admin Press Admin
-Author: Themedesigner
-Email: niravjoshi87@gmail.com
-File: js
-*/
 $(function () {
-    "use strict";
-    // ============================================================== 
-    // Product chart
-    // ============================================================== 
-    Morris.Area({
-        element: 'morris-area-chart2',
-        data: [{
-            period: '2010',
-            Masuk: 0,
-            
-        }, {
-            period: '2011',
-            Masuk: 130,
-            
-        }, {
-            period: '2012',
-            Masuk: 30,
-            
-        }, {
-            period: '2013',
-            Masuk: {{$data}},
-            
-        }, {
-            period: '2014',
-            Masuk: 200,
-            
-        }, {
-            period: '2015',
-            Masuk: 105,
-            
-        },
-         {
-            period: '2016',
-            Masuk: 250,
-           
-        }],
-        xkey: 'period',
-        ykeys: ['Masuk'],
-        labels: ['Masuk'],
-        pointSize: 0,
-        fillOpacity: 0.4,
-        pointStrokeColors:[ '#01c0c8'],
-        behaveLikeLine: true,
-        gridLineColor: '#e0e0e0',
-        lineWidth: 0,
-        smooth: true,
-        hideHover: 'auto',
-        lineColors: [ '#01c0c8'],
-        resize: true
-        
-    });
    // ============================================================== 
    // Morris donut chart
    // ==============================================================       
@@ -243,6 +179,29 @@ $(function () {
         sparklineLogin();
 });
 
+$(function () {
+    $('#linechart').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Grafik Jumlah Laundry Masuk'
+        },
+        yAxis: {
+            title: {
+                text: 'Jumlah Jumlah Laundry Masuk'
+            }
 
+        },
+        credits: {enabled: false},
+        xAxis: {
+            categories: [{{ $_tanggal }}],
+            crosshair: true
+        },series: [{
+            name: 'Jumlah',
+            data: [{{ $_nilai }}],
+        }]
+    });
+});
 </script>
 @endsection

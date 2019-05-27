@@ -335,7 +335,7 @@
                     </div>
                     <!-- User profile text-->
                     <div class="profile-text"> 
-                            <h5>Markarn Doe</h5>
+                            <h5>{{Auth::user()->name}}</h5>
                             <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                              <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
                             <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
@@ -365,10 +365,7 @@
                     <ul id="sidebarnav">
                          <li class="nav-devider"></li>
                         <li class="nav-small-cap">PERSONAL</li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard <span class="label label-rouded label-themecolor pull-right">4</span></span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="index.html">Minimal </a></li>
-                            </ul>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="{{url('home')}}" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</a>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Data Transaksi</span></a>
                             <ul aria-expanded="false" class="collapse">
@@ -511,6 +508,12 @@
     <script src="{{asset('asset/js/custom.min.js')}}"></script>
     <!-- This is data table -->
     <script src="{{asset('asset/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <!-- ChartJS -->
+    <script src="{{asset('/highchart/js/highcharts.js')}}"></script>
+    <script src="{{asset('/highchart/js/modules/exporting.js')}}"></script>
+    <!--morris JavaScript -->
+    <script src="{{asset('asset/plugins/raphael/raphael-min.js')}}"></script>
+    <script src="{{asset('asset/plugins/morrisjs/morris.min.js')}}"></script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

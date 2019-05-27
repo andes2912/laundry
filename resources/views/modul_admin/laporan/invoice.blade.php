@@ -4,17 +4,16 @@
 @section('content')
 <div class="col-md-12">
     <div class="card card-body printableArea">
-        <h3><b>INVOICE</b> <span class="pull-right">#5669626</span></h3>
+        <h3><b>INVOICE</b> <span class="pull-right">{{$data->invoice}}</span></h3>
         <hr>
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-left">
                     <address>
-                        <h3> &nbsp;<b class="text-danger">Laundri Jakarta Timur</b></h3>
-                        <p class="text-muted m-l-5"> Diterima Oleh <span style="margin-left:20px"> </span>: Karyawan
-                            <br/> Alamat <span style="margin-left:70px"> </span>: Tebet, Jakarta Selatan,
-                            <br/> No. Telp <span style="margin-left:68px"> </span>: 0721 - 009093830,
-                            <br/>Tgl Invoice <span style="margin-left:45px"> </span>: 25th Jan 2017</p>
+                        <h3> &nbsp;<b class="text-danger">{{$data->nama_cabang}}</b></h3>
+                        <p class="text-muted m-l-5"> Diterima Oleh <span style="margin-left:20px"> </span>: {{$data->name}}
+                            <br/> Alamat <span style="margin-left:70px"> </span>: {{$data->alamat_cabang}},
+                            <br/> No. Telp <span style="margin-left:68px"> </span>: {{$data->telp_cabang}},
                     </address>
                 </div>
                 <div class="pull-right text-right">
@@ -22,11 +21,11 @@
                         <h3>Detail Order Customer :</h3>
                         {{-- <h4 class="font-bold">Nama : Andri Desmana</h4> --}}
                         <p class="text-muted m-l-30">
-                            Andri Desmana
-                            <br/> Jakarta Selatan
-                            <br/> 085669292692</p>
-                        <p class="m-t-30"><b>Tanggal Masuk :</b> <i class="fa fa-calendar"></i> 23rd Jan 2017</p>
-                        <p><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i> 25th Jan 2017</p>
+                            {{$data->nama}}
+                            <br/> {{$data->alamat}}
+                            <br/> {{$data->no_telp}}</p>
+                        <p class="m-t-30"><b>Tanggal Masuk :</b> <i class="fa fa-calendar"></i> {{$data->tgl_transaksi}}</p>
+                        <p><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i> {{$data->tgl_diambil}}</p>
                     </address>
                 </div>
             </div>

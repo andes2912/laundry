@@ -20,6 +20,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('auth');
             $table->string('status');
+            $table->string('nama_cabang')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('no_telp')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

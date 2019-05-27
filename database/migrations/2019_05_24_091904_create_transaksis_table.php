@@ -15,8 +15,10 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('invoice');
             $table->string('id_customer');
-            $table->string('tgl_transaksi');
+            $table->string('id_karyawan');
+            $table->date('tgl_transaksi');
             $table->string('customer');
             $table->string('status_order');
             $table->string('status_payment');
@@ -24,6 +26,8 @@ class CreateTransaksisTable extends Migration
             $table->string('kg');
             $table->string('hari');
             $table->string('harga');
+            $table->string('tgl');
+            $table->date('tgl_ambil')->nullable();
             $table->timestamps();
         });
     }

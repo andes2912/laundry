@@ -19,21 +19,44 @@
                         </div>
                         <input type="hidden" name="id_customer" value="{{$addorder->id_customer}}">
                         <!--/span-->
-                        <div class="col-md-3">
+                        {{-- <div class="col-md-3 hi">
                             <div class="form-group has-success">
                                 <label class="control-label">TGL Transaksi</label>
                                 <input type="date" class="form-control form-control-danger" name="tgl_transaksi" placeholder="TGL Transaksi" autocomplete="off" required>
                             </div>
-                        </div>
-                        <div class="col-md-3">
+                        </div> --}}
+                        <input type="hidden" name="tgl_transaksi" id="">
+                        <div class="col-md-4">
                             <div class="form-group has-success">
                                 <label class="control-label">Berat Pakaian</label>
                                 <input type="text" class="form-control form-control-danger" name="kg_transaksi" placeholder="Berat Pakaian" autocomplete="off" required>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group has-success">
+                                <label class="control-label">Status Order</label>
+                                {{-- <select class="form-control custom-select" name="status_order" required>
+                                    <option value="">-- Pilih Status Order --</option>
+                                    <option value="Selesai">Selesai</option>
+                                    <option value="Diambil">Diambil</option>
+                                    <option value="Proses">Proses</option>
+                                </select> --}}
+                                <input type="text" name="status_order" value="Proses" readonly class="form-control">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
+                    <div class="col-md-3">
+                            <div class="form-group has-success">
+                                <label class="control-label">Status Payment</label>
+                                <select class="form-control custom-select" name="status_payment" required>
+                                    <option value="">-- Pilih Status Payment --</option>
+                                    <option value="Belum">Belum Dibayar</option>
+                                    <option value="Lunas">Sudah Dibayar</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-3">
                             <div class="orm-group has-success">
                                 <label class="control-label">Pilih Pakaian</label>
@@ -54,32 +77,10 @@
                         <div class="col-md-3">
                             <span id="select-harga"></span>
                         </div>
+                        
                     </div>
 
-                    <div class="row">
-                        <!--/span-->
-                        <div class="col-md-5">
-                            <div class="form-group has-success">
-                                <label class="control-label">Status Order</label>
-                                <select class="form-control custom-select" name="status_order" required>
-                                    <option value="">-- Pilih Status Order --</option>
-                                    <option value="Selesai">Selesai</option>
-                                    <option value="Diambil">Diambil</option>
-                                    <option value="Proses">Proses</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-success">
-                                <label class="control-label">Status Payment</label>
-                                <select class="form-control custom-select" name="status_payment" required>
-                                    <option value="">-- Pilih Status Payment --</option>
-                                    <option value="Belum">Belum Dibayar</option>
-                                    <option value="Lunas">Sudah Dibayar</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="hidden" name="tgl">
                     <!--/row-->                  
                 </div>
                 <div class="form-actions">

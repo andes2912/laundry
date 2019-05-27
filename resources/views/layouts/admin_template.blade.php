@@ -345,10 +345,18 @@
                     </div>
                     <!-- User profile text-->
                     <div class="profile-text"> 
-                            <h5>Markarn Doe</h5>
+                            <h5>{{Auth::user()->name}}</h5>
                             <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                              <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
-                            <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+                            {{-- <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a> --}}
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();" data-toggle="tooltip" title="Logout">
+                                <i class="mdi mdi-power"></i>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                            </form>
 
                         <div class="dropdown-menu animated flipInY">
                         <!-- text--> 
@@ -539,8 +547,9 @@
     <!--morris JavaScript -->
     <script src="{{asset('asset/plugins/raphael/raphael-min.js')}}"></script>
     <script src="{{asset('asset/plugins/morrisjs/morris.min.js')}}"></script>
-    <!-- sparkline chart -->
-    {{-- <script src="{{asset('asset/js/dashboard4.js')}}"></script> --}}
+    <!-- ChartJS -->
+    <script src="{{asset('/highchart/js/highcharts.js')}}"></script>
+    <script src="{{asset('/highchart/js/modules/exporting.js')}}"></script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

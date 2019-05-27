@@ -7,6 +7,7 @@ use App\transaksi;
 use App\customer;
 use App\harga;
 use Auth;
+use carbon\carbon;
 
 class PelayananController extends Controller
 
@@ -63,20 +64,30 @@ class PelayananController extends Controller
      */
     public function store(Request $request)
     {
-        $order = new transaksi();
-        $order->tgl_transaksi = $request->tgl_transaksi;
-        $order->status_order = $request->status_order;
-        $order->status_payment = $request->status_payment;
-        $order->id_jenis = $request->id_jenis;
-        $order->id_customer = $request->id_customer;
-        $order->customer = $request->customer;
-        $order->kg_transaksi      = $request->kg_transaksi;
-        $order->hari    = $request->hari;
-        $order->harga   = $request->harga;
-        // dd($order);
-        $order->save();
+        if (Auth::user()->auth == "Karyawan") {
 
-        return redirect('pelayanan');
+            $invoice = transaksi::selectRaw('LPAD(CONVERT(COUNT("id") + 1, char(8)) , 8,"0") as invoice')-> first();
+            $order = new transaksi();
+            $order->invoice = '#'. $invoice->invoice;
+            $order->tgl_transaksi = Carbon::now();
+            $order->status_order = $request->status_order;
+            $order->status_payment = $request->status_payment;
+            $order->id_jenis = $request->id_jenis;
+            $order->id_customer = $request->id_customer;
+            $order->id_karyawan = Auth::user()->id;
+            $order->customer = $request->customer;
+            $order->kg_transaksi      = $request->kg_transaksi;
+            $order->hari    = $request->hari;
+            $order->harga   = $request->harga;
+            $order->tgl     = Carbon::now()->day;
+            // dd($order);
+            $order->save();
+
+            return redirect('pelayanan');
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     /**
@@ -150,28 +161,34 @@ class PelayananController extends Controller
     // Filter List Harga
     public function listharga(Request $request)
     {
-        $list_harga = harga::select('id','harga')
-        ->where('id',$request->id)
-        // ->where('jenis',$request->jenis)
-        ->get();
-        $select = '';
-        $select .= '
-                    <div class="form-group has-success">
-                    <label for="id" class="control-label">Harga</label>
-                    <select id="harga" class="form-control" name="harga" value="harga">
-                    ';
-                    foreach ($list_harga as $studi) {
-        $select .= '<option value="'.$studi->harga.'">'.$studi->harga.'</option>';
-                    }'
-                    </select>
-                    </div>
-                    </div>';
-        return $select;
+        if (Auth::user()->auth == "Karyawan") {
+            $list_harga = harga::select('id','harga')
+            ->where('id',$request->id)
+            // ->where('jenis',$request->jenis)
+            ->get();
+            $select = '';
+            $select .= '
+                        <div class="form-group has-success">
+                        <label for="id" class="control-label">Harga</label>
+                        <select id="harga" class="form-control" name="harga" value="harga">
+                        ';
+                        foreach ($list_harga as $studi) {
+            $select .= '<option value="'.$studi->harga.'">'.$studi->harga.'</option>';
+                        }'
+                        </select>
+                        </div>
+                        </div>';
+            return $select;
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // Filter List Jumlah Hari
     public function listhari(Request $request)
     {
+       if (Auth::user()->auth == "Karyawan") {
         $list_jenis = harga::select('id','hari')
         ->where('id',$request->id)
         ->get();
@@ -188,46 +205,109 @@ class PelayananController extends Controller
                     </div>
                     </div>';
         return $select;
+       } else {
+           return redirect('/home');
+       }
+       
     }
 
     // Proses Ubah Status Order
     public function ubahstatusorder(Request $request)
     {
-        $statusorder = transaksi::find($request->id);
-        $statusorder->update([
-            'status_order' => $request->status_order,
-        ]);
-        return $statusorder;
+        if (Auth::user()->auth == "Karyawan") {
+            $statusorder = transaksi::find($request->id);
+            $statusorder->update([
+                'status_order' => $request->status_order,
+            ]);
+            return $statusorder;
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // Proses Ubah Status Pembayaran
     public function ubahstatusbayar(Request $request)
     {
+       if (Auth::user()->auth == "Karyawan") {
         $statusbayar = transaksi::find($request->id);
         $statusbayar->update([
             'status_payment' => $request->status_payment,
         ]);
         return $statusbayar;
+       } else {
+           return redirect('/home');
+       }
+       
+    }
+
+    // Proses Ubah Status Diambil
+    public function ubahstatusambil(Request $request)
+    {
+       if (Auth::user()->auth == "Karyawan") {
+        $statusbayar = transaksi::find($request->id);
+        $statusbayar->update([
+            'tgl_ambil' => Carbon::today(),
+            'status_order' => 'Diambil'
+        ]);
+        return $statusbayar;
+       } else {
+           return redirect('/home');
+       }
+       
     }
 
     // Tambah Customer
     public function listcsadd()
     {
-        return view('pelayanan.transaksi.addcustomer');
+        if (Auth::user()->auth == "Karyawan") {
+            return view('pelayanan.transaksi.addcustomer');
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // Proses Tambah Customer
     public function addcs(Request $request)
     {
-        $addplg = New customer();
-        $addplg->nama = $request->nama;
-        $addplg->alamat = $request->alamat;
-        $addplg->kelamin = $request->kelamin;
-        $addplg->no_telp = $request->no_telp;
-        $addplg->save();
+        if (Auth::user()->auth == "Karyawan") {
+            $addplg = New customer();
+            $addplg->nama = $request->nama;
+            $addplg->alamat = $request->alamat;
+            $addplg->kelamin = $request->kelamin;
+            $addplg->no_telp = $request->no_telp;
+            $addplg->save();
 
-        $addplg->save();
+            $addplg->save();
 
         return redirect('list-customer');
+        } else {
+            return redirect('/home');
+        }
+        
     }
+
+    // Invoice
+    public function invoicekar(Request $request)
+    {
+        if (Auth::user()->auth == "Karyawan") {
+            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,a.jenis')
+            ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
+            ->where('transaksis.id', $request->id)
+            ->orderBy('id','DESC')->get();
+
+            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.tgl_ambil,transaksis.invoice,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.telp_cabang')
+            ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
+            ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
+            ->where('transaksis.id', $request->id)
+            ->orderBy('id','DESC')->first();
+            
+        return view('pelayanan.laporan.invoice', compact('invoice','data'));
+        } else {
+            return redirect('/home');
+        }
+    }
+
+    
 }

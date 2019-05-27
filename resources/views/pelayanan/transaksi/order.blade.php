@@ -52,15 +52,17 @@
                             </td>
                             <td>
                                 @if ($item->status_payment == "Belum")
-                                    <a class="btn btn-sm btn-success" data-toggle="modal" data-id-pay="{{$item->id}}" data-id-name="{{$item->customer}}" data-id-bayar="{{$item->status_payment}}" id="klick" data-target="#ubah_status_pay" style="color:white">Bayar</a>
-                                    <a href="" class="btn btn-sm btn-primary">Invoice</a>
+                                    <a class="btn btn-sm btn-danger" data-toggle="modal" data-id-pay="{{$item->id}}" data-id-name="{{$item->customer}}" data-id-bayar="{{$item->status_payment}}" id="klick" data-target="#ubah_status_pay" style="color:white">Bayar</a>
+                                    <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
                                 @elseif($item->status_payment == "Lunas")
                                     @if ($item->status_order == "Selesai")
-                                        <a class="btn btn-sm btn-primary" data-toggle="modal" data-id="{{$item->id}}" data-id-nama="{{$item->customer}}" data-id-order="{{$item->status_order}}" id="klikmodal" data-target="#ubah_status" style="color:white">Ambil</a>
+                                    <a class="btn btn-sm btn-success" data-id-ambil="{{$item->id}}" id="ambil" style="color:white">Ambil</a>
                                     @elseif($item->status_order == "Proses")
                                         <a class="btn btn-sm btn-info" data-toggle="modal" data-id="{{$item->id}}" data-id-nama="{{$item->customer}}" data-id-order="{{$item->status_order}}" id="klikmodal" data-target="#ubah_status" style="color:white">Selesai</a>
+                                        <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
                                     @elseif($item->status_order == "Diambil")
-                                        <a href="" class="btn btn-sm btn-danger">Detail</a>
+                                        <a href="" class="btn btn-sm btn-warning">Detail</a>
+                                        <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
                                     @endif
                                 @endif
                             </td>
@@ -140,5 +142,19 @@ $(document).on('click','#simpan_status', function(){
         location.reload();
     });
 });
+
+ // Ubah Status Menjadi Diambil
+ $(document).on('click','#ambil', function () {
+    var id = $(this).attr('data-id-ambil');
+    $.get(' {{Url("ubah-status-ambil")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
+        swal({
+            html : "Berhasil Ubah Status Diambil",
+            showConfirmButton : false,
+            type : "success",
+            timer : 1000
+        });
+        location.reload();
+    });
+    });
 </script>
 @endsection

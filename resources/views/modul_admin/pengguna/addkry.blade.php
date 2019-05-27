@@ -36,6 +36,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-4">
+                            <div class="form-group has-success">
+                                <label class="control-label">Nama Cabang :</label>
+                                <input type="text" class="form-control form-control-danger" name="nama_cabang" placeholder="Nama Cabang" autocomplete="off">
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-4">
+                            <div class="form-group has-success">
+                                <label class="control-label">Alamat</label>
+                                <input type="text" class="form-control form-control-danger" name="alamat" placeholder="Alamat" autocomplete="off">
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-4">
+                            <div class="form-group has-success">
+                                <label class="control-label">No. Telp</label>
+                                <input type="number" class="form-control form-control-danger" name="no_telp" placeholder="Nomor Telpon" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
                     <!--/row-->                  
                 </div>
                 <input type="hidden" name="auth" value="Karyawan">

@@ -85,6 +85,9 @@ class AdminController extends Controller
             $adduser->name = $request->name;
             $adduser->email = $request->email;
             $adduser->status = $request->status;
+            $adduser->nama_cabang = $request->nama_cabang;
+            $adduser->alamat = $request->alamat;
+            $adduser->no_telp = $request->no_telp;
             $adduser->auth = $request->auth;
             $adduser->password = bcrypt('123456');
             $adduser->save();
@@ -146,6 +149,9 @@ class AdminController extends Controller
             $adduser->name = $request->name;
             $adduser->email = $request->email;
             $adduser->status = $request->status;
+            $adduser->nama_cabang = $request->nama_cabang;
+            $adduser->alamat_cabang = $request->alamat_cabang;
+            $adduser->telp_cabang = $request->telp_cabang;
             $adduser->auth = $request->auth;
             $adduser->password = bcrypt('123456');
             $adduser->save();
@@ -300,6 +306,7 @@ class AdminController extends Controller
 
     public function hargaedit(Request $request)
     {
+       if (Auth::user()->auth == "Admin") {
         $editharga = harga::find($request->id_harga);
         $editharga->update([
             'jenis' => $request->jenis,
@@ -309,6 +316,10 @@ class AdminController extends Controller
             'status' => $request->status,
         ]);
         return $editharga;
+       } else {
+           return redirect('/home');
+       }
+       
     }
 
 // Laporan
@@ -316,10 +327,22 @@ class AdminController extends Controller
     // Invoice
     public function invoice( Request $request,$id)
     {
-        $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,a.jenis')
+        if (Auth::user()->auth == "Admin") {
+            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->where('transaksis.id', $request->id)
             ->orderBy('id','DESC')->get();
-        return view('modul_admin.laporan.invoice', compact('invoice'));
+
+            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.tgl_ambil,transaksis.invoice,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.telp_cabang')
+            ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
+            ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
+            ->where('transaksis.id', $request->id)
+            ->orderBy('id','DESC')->first();
+
+            return view('modul_admin.laporan.invoice', compact('invoice','data'));
+        } else {
+            return redirect('/home');
+        }
+        
     }
 }

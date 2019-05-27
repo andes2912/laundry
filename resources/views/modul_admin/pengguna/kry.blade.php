@@ -16,6 +16,9 @@
                             <th>#</th>
                             <th>Nama</th>
                             <th>E-mail</th>
+                            <th>Alamat</th>
+                            <th>Cabang</th>
+                            <th>No Telp</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -27,6 +30,9 @@
                             <td>{{$no}}</td>
                             <td>{{$item->name}}</td>
                             <td>{{$item->email}}</td>
+                            <td>{{$item->alamat}}</td>
+                            <td>{{$item->nama_cabang}}</td>
+                            <td>{{$item->no_telp}}</td>
                             <td>
                                 @if ($item->status == 1)
                                     <span class="label label-success">Aktif</span>
