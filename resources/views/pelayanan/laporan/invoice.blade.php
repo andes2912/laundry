@@ -84,7 +84,8 @@
                 <hr>
                 <div class="text-right">
                     <a href="{{url('pelayanan')}}" class="btn btn-outline btn-danger" style="color:white">Back</a>
-                    <button id="print" class="btn btn-primary btn-outline" type="button"> <span style="color:white"><i class="fa fa-print"></i> Print</span> </button>
+                    <a href="{{url('cetak-invoice/'.$item->id. '/print')}}" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> Print</a>
+                    {{-- <button id="print" class="btn btn-primary btn-outline" type="button"> <span style="color:white"><i class="fa fa-print"></i> Print</span> </button> --}}
                 </div>
             </div>
         </div>

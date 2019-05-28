@@ -65,3 +65,4 @@ Route::resource('pelayanan','PelayananController');
 
     // Laporan
     Route::get('invoice-kar/{id}','PelayananController@invoicekar');
+    Route::get('cetak-invoice/{id}/print','PelayananController@cetakinvoice');

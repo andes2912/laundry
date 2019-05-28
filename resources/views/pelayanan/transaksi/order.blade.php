@@ -54,15 +54,18 @@
                                 @if ($item->status_payment == "Belum")
                                     <a class="btn btn-sm btn-danger" data-toggle="modal" data-id-pay="{{$item->id}}" data-id-name="{{$item->customer}}" data-id-bayar="{{$item->status_payment}}" id="klick" data-target="#ubah_status_pay" style="color:white">Bayar</a>
                                     <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
+                                    <a href="{{url('cetak-invoice/'.$item->id. '/print')}}" target="_blank" class="btn btn-sm btn-success">Print</a>
                                 @elseif($item->status_payment == "Lunas")
                                     @if ($item->status_order == "Selesai")
                                     <a class="btn btn-sm btn-success" data-id-ambil="{{$item->id}}" id="ambil" style="color:white">Ambil</a>
                                     @elseif($item->status_order == "Proses")
                                         <a class="btn btn-sm btn-info" data-toggle="modal" data-id="{{$item->id}}" data-id-nama="{{$item->customer}}" data-id-order="{{$item->status_order}}" id="klikmodal" data-target="#ubah_status" style="color:white">Selesai</a>
-                                        <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
+                                        <a href="{{url('invoice-kar', $item->id)}}"  class="btn btn-sm btn-primary">Invoice</a>
+                                        <a href="{{url('cetak-invoice/'.$item->id. '/print')}}" target="_blank" class="btn btn-sm btn-success">Print</a>
                                     @elseif($item->status_order == "Diambil")
                                         <a href="" class="btn btn-sm btn-warning">Detail</a>
                                         <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
+                                        <a href="{{url('cetak-invoice/'.$item->id. '/print')}}" target="_blank" class="btn btn-sm btn-success">Print</a>
                                     @endif
                                 @endif
                             </td>

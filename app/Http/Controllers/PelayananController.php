@@ -7,6 +7,7 @@ use App\transaksi;
 use App\customer;
 use App\harga;
 use Auth;
+use PDF;
 use carbon\carbon;
 
 class PelayananController extends Controller
@@ -311,5 +312,21 @@ class PelayananController extends Controller
         }
     }
 
-    
+    public function cetakinvoice(Request $request)
+    {
+        //GET DATA BERDASARKAN ID
+        $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,a.jenis')
+        ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
+        ->where('transaksis.id', $request->id)
+        ->orderBy('id','DESC')->get();
+
+        $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.tgl_ambil,transaksis.invoice,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.telp_cabang,transaksis.created_at')
+            ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
+            ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
+            ->where('transaksis.id', $request->id)
+            ->orderBy('id','DESC')->first();
+
+        $pdf = PDF::loadView('pelayanan.laporan.cetak', compact('invoice','data'))->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    }
 }
