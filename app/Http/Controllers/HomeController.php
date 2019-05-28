@@ -33,6 +33,8 @@ class HomeController extends Controller
                 $selesai = transaksi::where('status_order','Selesai')->count();
                 $diambil = transaksi::where('status_order','Diambil')->count();
                 $customer = customer::all();
+                $sudahbayar = transaksi::where('status_payment','Lunas')->count();
+                $belumbayar = transaksi::where('status_payment','Belum')->count();
                 $data = DB::table("transaksis")
                     ->select("id" ,DB::raw("(COUNT(*)) as customer"))
                     ->orderBy('created_at')
@@ -69,6 +71,8 @@ class HomeController extends Controller
                     ->  with('masuk',$masuk)
                     ->  with('selesai',$selesai)
                     ->  with('customer', $customer)
+                    ->  with('sudahbayar', $sudahbayar)
+                    ->  with('belumbayar', $belumbayar)
                     ->  with('_tanggal', substr($tanggal, 0,-1))
                     ->  with('_nilai', substr($nilai, 0, -1))
                     ->  with('diambil',$diambil);

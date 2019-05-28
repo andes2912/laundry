@@ -79,12 +79,7 @@
         <!-- Column -->
         <div class="card card-default">
             <div class="card-header">
-                <div class="card-actions">
-                    <a class="" data-action="collapse"><i class="ti-minus"></i></a>
-                    <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
-                    <a class="btn-close" data-action="close"><i class="ti-close"></i></a>
-                </div>
-                <h4 class="card-title m-b-0">Order Stats</h4>
+                <h4 class="card-title m-b-0">Payment Stats</h4>
             </div>
             <div class="card-body collapse show">
             <div id="morris-donut-chart" class="ecomm-donute" style="height: 317px;"></div>
@@ -94,12 +89,12 @@
                     <h4 class="m-b-0">{{$masuk}}</h4>
                 </li>
                 <li>
-                    <h6 class="text-muted"><i class="fa fa-circle text-danger"></i> Selesai</h6>
-                    <h4 class="m-b-0">{{$selesai}}</h4>
+                    <h6 class="text-muted"><i class="fa fa-circle text-danger"></i> Belum Bayar</h6>
+                    <h4 class="m-b-0">{{$belumbayar}}</h4>
                 </li>
                 <li>
-                    <h6 class="text-muted"> <i class="fa fa-circle text-success"></i> Diambil</h6>
-                    <h4 class="m-b-0">{{$diambil}}</h4>
+                    <h6 class="text-muted"> <i class="fa fa-circle text-success"></i> Sudah Bayar</h6>
+                    <h4 class="m-b-0">{{$sudahbayar}}</h4>
                 </li>
             </ul>
             </div>
@@ -115,15 +110,15 @@ $(function () {
     Morris.Donut({
         element: 'morris-donut-chart',
         data: [{
-            label: "Diambil",
-            value: [{{$diambil}}],
+            label: "Sudah Bayar",
+            value: [{{$sudahbayar}}],
 
         }, {
             label: "Masuk",
             value: [{{$masuk}}],
         }, {
-            label: "Selesai",
-            value: [{{$selesai}}]
+            label: "Belum Bayar",
+            value: [{{$belumbayar}}]
         }],
         resize: true,
         colors:['#26c6da', '#1976d2', '#ef5350']

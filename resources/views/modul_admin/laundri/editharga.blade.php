@@ -10,18 +10,13 @@
                     <div class="form-group">
                         <input type="hidden" name="id_harga" id="id_harga">
                         <label for="recipient-name" class="control-label">Jenis :</label>
-                        <select name="jenis" id="jenis" class="form-control">
-                            <option value="atas">Atasan</option>
-                            <option value="bawah">Bawahan</option>
-                            <option value="sepatu">Sepatu</option>
-                            <option value="jaket">Jaket</option>
-                        </select>
+                        <input type="text" name="jenis" id="jenis" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="control-label">Status :</label>
                         <select name="status" id="status" class="form-control">
                             <option value="1">Aktif</option>
-                            <option value="2">Tidak Aktif</option>
+                            <option value="0">Tidak Aktif</option>
                         </select>
                     </div>
                     <div class="form-group">

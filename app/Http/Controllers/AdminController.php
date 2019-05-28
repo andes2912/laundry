@@ -295,7 +295,7 @@ class AdminController extends Controller
             $addharga->kg = $request->kg;
             $addharga->harga = $request->harga;
             $addharga->hari = $request->hari;
-            $addharga->status = $request->status;
+            $addharga->status = 1;
             $addharga->save();
 
             return redirect('data-harga');
@@ -343,6 +343,15 @@ class AdminController extends Controller
         } else {
             return redirect('/home');
         }
-        
+    }
+
+    // Notifikasi 
+    public function notif(Request $request)
+    {
+        $aktif = transaksi::find($request->id);
+        $aktif->update([
+            'notif' => 1
+        ]);
+        return redirect('data-transaksi');
     }
 }

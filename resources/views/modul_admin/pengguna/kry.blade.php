@@ -9,13 +9,12 @@
                 <a href="{{url('kry-add')}}" class="btn btn-sm btn-primary">Tambah</a>
             </h4>
             
-            <div class="table-responsive full-color-table full-inverse-table hover-table">
-                <table class="table color-table info-table">
+            <div class="table-responsive m-t-0">
+                <table id="myTable" class="table display table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Nama</th>
-                            <th>E-mail</th>
                             <th>Alamat</th>
                             <th>Cabang</th>
                             <th>No Telp</th>
@@ -29,10 +28,9 @@
                         <tr>
                             <td>{{$no}}</td>
                             <td>{{$item->name}}</td>
-                            <td>{{$item->email}}</td>
-                            <td>{{$item->alamat}}</td>
+                            <td>{{$item->alamat_cabang}}</td>
                             <td>{{$item->nama_cabang}}</td>
-                            <td>{{$item->no_telp}}</td>
+                            <td>{{$item->telp_cabang}}</td>
                             <td>
                                 @if ($item->status == 1)
                                     <span class="label label-success">Aktif</span>
@@ -57,4 +55,38 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#myTable').DataTable();
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+            "columnDefs": [{
+                "visible": false,
+                "targets": 2
+            }],
+            "order": [
+                [2, 'asc']
+            ],
+            "displayLength": 25,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
+                api.column(2, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+                        last = group;
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
 @endsection

@@ -3,7 +3,7 @@
 @section('content')
 <div class="col-lg-12">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">
@@ -57,7 +57,7 @@
             </div>
         </div>
        
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card card-outline-info">
                 <div class="card-header">
                     <h4 class="m-b-0 text-white">Form Tambah Data Harga</h4>
@@ -67,48 +67,33 @@
                         @csrf
                         <div class="form-body">
                             <div class="row p-t-20">
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <div class="form-group has-success">
-                                        <label class="control-label">Jenis</label>
-                                        <select name="jenis" class="form-control" id="jenis" required>
-                                            <option value="">--Pilih Jenis Pakaian--</option>
-                                            <option value="atas">Atasan</option>
-                                            <option value="bawah">Bawahan</option>
-                                            <option value="sepatu">Sepatu</option>
-                                            <option value="jaket">Jaket</option>
-                                        </select>
+                                        <label class="control-label">Jenis Pakaian</label>
+                                        <input type="text" name="jenis" class="form-control" placeholder="Tambahkan Jenis Pakaian" required autocomplete="off">
+                                        <small class="form-control-feedback "> Pisahkan Dengan format '+' Jika Jenis Lebih Dari Satu </small>
                                     </div>
                                 </div>
                                 <!--/span-->
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group has-success">
                                         <label class="control-label">Berat Per-Kg</label>
-                                        <input type="text" class="form-control form-control-danger" name="kg" placeholder="Berat Per-Kg" autocomplete="off" required>
+                                        <input type="text" class="form-control form-control-danger" name="kg" placeholder="Berat" autocomplete="off" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <!--/span-->
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group has-success">
                                         <label class="control-label">Harga Per-Kg</label>
                                         <input type="number" class="form-control form-control-danger" name="harga" placeholder="Harga Per-Kg" autocomplete="off" required>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group has-success">
                                         <label class="control-label">Lama Hari</label>
                                         <input type="number" name="hari" class="form-control" placeholder="Lama Hari" autocomplete="off" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group has-success">
-                                        <label class="control-label">Status Harga</label>
-                                        <select class="form-control custom-select" name="status" required>
-                                            <option value="">-- Pilih Status --</option>
-                                            <option value="1">Aktif</option>
-                                            <option value="0">Tidak Aktif</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +101,7 @@
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-                            <a href="{{url('customer')}}" class="btn btn-danger">Cancel</a>
+                            <button type="reset" class="btn btn-danger">Cancel</button>
                         </div>
                     </form>
                 </div>

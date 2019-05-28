@@ -18,13 +18,6 @@
                             </div>
                         </div>
                         <input type="hidden" name="id_customer" value="{{$addorder->id_customer}}">
-                        <!--/span-->
-                        {{-- <div class="col-md-3 hi">
-                            <div class="form-group has-success">
-                                <label class="control-label">TGL Transaksi</label>
-                                <input type="date" class="form-control form-control-danger" name="tgl_transaksi" placeholder="TGL Transaksi" autocomplete="off" required>
-                            </div>
-                        </div> --}}
                         <input type="hidden" name="tgl_transaksi" id="">
                         <div class="col-md-4">
                             <div class="form-group has-success">
@@ -35,12 +28,6 @@
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Status Order</label>
-                                {{-- <select class="form-control custom-select" name="status_order" required>
-                                    <option value="">-- Pilih Status Order --</option>
-                                    <option value="Selesai">Selesai</option>
-                                    <option value="Diambil">Diambil</option>
-                                    <option value="Proses">Proses</option>
-                                </select> --}}
                                 <input type="text" name="status_order" value="Proses" readonly class="form-control">
                             </div>
                         </div>
@@ -63,7 +50,7 @@
                                 <select id="id" name="id_jenis" class="form-control" required>
                                     <option value="#">-- Jenis Pakaian --</option>
                                     <?php
-                                    $jenis = App\Harga::select('id','jenis')->get();
+                                    $jenis = App\Harga::select('id','jenis')->where('status','1')->get();
                                     ?>
                                     @foreach($jenis as $jenis)
                                     <option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
@@ -71,13 +58,18 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <span id="select-hari"></span>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <span id="select-harga"></span>
                         </div>
-                        
+                        <div class="col-md-2">
+                            <div class="form-group has-success">
+                                <label class="control-label">Disc</label>
+                                <input type="number" name="status_order" placeholder="Tulis Numor" class="form-control">
+                            </div>
+                        </div>
                     </div>
 
                     <input type="hidden" name="tgl">

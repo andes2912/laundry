@@ -25,7 +25,13 @@
                             <br/> {{$data->alamat}}
                             <br/> {{$data->no_telp}}</p>
                         <p class="m-t-30"><b>Tanggal Masuk :</b> <i class="fa fa-calendar"></i> {{$data->tgl_transaksi}}</p>
-                        <p><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i> {{$data->tgl_ambil}}</p>
+                        <p><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i> 
+                            @if ($data->tgl_diambil == "")
+                                Belum Diambil
+                            @else
+                            {{$data->tgl_diambil}}
+                            @endif
+                        </p>
                     </address>
                 </div>
             </div>
@@ -36,8 +42,8 @@
                             <tr>
                                 <th class="text-center">#</th>
                                 <th>Jenis Pakaian</th>
-                                <th class="text-right">Jumlah /Kg</th>
-                                <th class="text-right">Harga /Kg</th>
+                                <th class="text-right">Berat</th>
+                                <th class="text-right">Harga</th>
                                 <th class="text-right">Total</th>
                             </tr>
                         </thead>
@@ -46,8 +52,8 @@
                                 <tr>
                                     <td class="text-center">1</td>
                                     <td>{{$item->jenis}}</td>
-                                    <td class="text-right">{{$item->kg_transaksi}}</td>
-                                    <td class="text-right">{{Rupiah::getRupiah($item->harga)}}</td>
+                                    <td class="text-right">{{$item->kg_transaksi}} Kg</td>
+                                    <td class="text-right">{{Rupiah::getRupiah($item->harga)}} /Kg</td>
                                     <td class="text-right">
                                         <input type="hidden" value="{{$hitung = $item->kg_transaksi * $item->harga}}">
                                         <p style="color:black">{{Rupiah::getRupiah($hitung)}}</p>
@@ -71,7 +77,7 @@
                     {{-- <input type="hiddene" value="{{$discon = ((15000 * 100) / 15)}}"> --}}
                     <p>Disc (10%) :  <input type="hidden" value="{{$disc = ($hitung * 10 ) / 100}}"> {{Rupiah::getRupiah($disc)}} </p>
                     <hr>
-                    <h3><b>Total :</b> {{Rupiah::getRupiah($hitung - $disc)}}</h3>
+                    <h3><b>Total Bayar :</b> {{Rupiah::getRupiah($hitung - $disc)}}</h3>
                 </div>
                 @endforeach
                 <div class="clearfix"></div>

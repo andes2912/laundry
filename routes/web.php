@@ -42,6 +42,9 @@ Route::resource('admin','AdminController');
     // Laporan
     Route::get('invoice-customer/{id}','AdminController@invoice');
 
+    // Notifikasi
+    Route::get('notif','AdminController@notif');
+
 // Modul Karyawan
 Route::resource('pelayanan','PelayananController');
     // Transaksi

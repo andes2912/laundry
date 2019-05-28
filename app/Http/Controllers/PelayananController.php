@@ -79,6 +79,8 @@ class PelayananController extends Controller
             $order->kg_transaksi      = $request->kg_transaksi;
             $order->hari    = $request->hari;
             $order->harga   = $request->harga;
+            $order->notif   = 0;
+            $order->disc    = $request->disc;
             $order->tgl     = Carbon::now()->day;
             // dd($order);
             $order->save();
