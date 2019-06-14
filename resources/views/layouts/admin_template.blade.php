@@ -250,7 +250,7 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('data-transaksi')}}">Transaksi</a></li>
                                 <li><a href="{{url('data-harga')}}">Harga Laundri</a></li>
-                                <li><a href="#">Laporan</a></li>
+                                {{-- <li><a href="#">Laporan</a></li> --}}
                             </ul>
                         </li>
                     </ul>

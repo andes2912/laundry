@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\customer;
 use App\transaksi;
-use App\Harga;
+use App\harga;
 use Auth;
 use DB;
 

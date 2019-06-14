@@ -50,7 +50,7 @@
                                 <select id="id" name="id_jenis" class="form-control" required>
                                     <option value="#">-- Jenis Pakaian --</option>
                                     <?php
-                                    $jenis = App\Harga::select('id','jenis')->where('status','1')->get();
+                                    $jenis = App\harga::select('id','jenis')->where('status','1')->get();
                                     ?>
                                     @foreach($jenis as $jenis)
                                     <option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
@@ -67,7 +67,7 @@
                         <div class="col-md-2">
                             <div class="form-group has-success">
                                 <label class="control-label">Disc</label>
-                                <input type="number" name="status_order" placeholder="Tulis Numor" class="form-control">
+                                <input type="number" name="disc" placeholder="Tulis Disc" class="form-control">
                             </div>
                         </div>
                     </div>

@@ -150,7 +150,15 @@
                             <h5>{{Auth::user()->name}}</h5>
                             <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                              <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
-                            <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+                            {{-- <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a> --}}
+                            <a data-toggle="tooltip" title="Logout"href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                            <i class="mdi mdi-power"></i>
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        </form>
 
                         <div class="dropdown-menu animated flipInY">
                         <!-- text--> 
@@ -275,7 +283,7 @@
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->
-    <script src="{{asset('asset/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    {{-- <script src="{{asset('asset/plugins/datatables/jquery.dataTables.min.js')}}"></script> --}}
     <script src="{{asset('asset/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
     @yield('script')
 </body>
