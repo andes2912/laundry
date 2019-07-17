@@ -91,7 +91,7 @@
     //    var jenis = $("#jenis").val();
             $.get('{{ Url("listhari") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
             $("#select-hari").html(resp);
-            $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,jenis:jenis}, function(resp){  
+            $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
             $("#select-harga").html(resp);
         });
         });

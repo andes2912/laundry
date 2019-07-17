@@ -13,10 +13,11 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>No Resi</th>
                             <th>TGL Transaksi</th>
                             <th>Customer</th>
                             <th>Status Order</th>
-                            <th>Status Pembayaran</th>
+                            <th>Status Payment</th>
                             <th>Jenis Laundri</th>
                             <th>Total</th>
                             <th>Action</th>
@@ -27,6 +28,7 @@
                         @foreach ($order as $item)
                         <tr>
                             <td>{{$no}}</td>
+                            <td style="font-weight:bold; font-color:black">{{$item->invoice}}</td>
                             <td>{{$item->tgl_transaksi}}</td>
                             <td>{{$item->customer}}</td>
                             <td>

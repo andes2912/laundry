@@ -26,10 +26,10 @@
                             <br/> {{$data->no_telp}}</p>
                         <p class="m-t-30"><b>Tanggal Masuk :</b> <i class="fa fa-calendar"></i> {{$data->tgl_transaksi}}</p>
                         <p><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i> 
-                            @if ($data->tgl_diambil == "")
+                            @if ($data->tgl_ambil == "")
                                 Belum Diambil
                             @else
-                            {{$data->tgl_diambil}}
+                            {{$data->tgl_ambil}}
                             @endif
                         </p>
                     </address>
@@ -75,7 +75,11 @@
                 <div class="pull-right m-t-10 text-right">
                     <p>Total : {{Rupiah::getRupiah($hitung)}}</p>
                     {{-- <input type="hiddene" value="{{$discon = ((15000 * 100) / 15)}}"> --}}
-                    <p>Disc (10%) :  <input type="hidden" value="{{$disc = ($hitung * 10 ) / 100}}"> {{Rupiah::getRupiah($disc)}} </p>
+                    <p>Disc @if ($item->disc == "")
+                        (0 %)
+                    @else
+                        ({{$item->disc}} %)
+                    @endif :  <input type="hidden" value="{{$disc = ($hitung * $item->disc ) / 100}}"> {{Rupiah::getRupiah($disc)}} </p>
                     <hr>
                     <h3><b>Total Bayar :</b> {{Rupiah::getRupiah($hitung - $disc)}}</h3>
                 </div>

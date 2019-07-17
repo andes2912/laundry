@@ -354,4 +354,34 @@ class AdminController extends Controller
         ]);
         return redirect('data-transaksi');
     }
+
+    // Hitung Jumlah Transaksi Keseluruhan
+    public function jmlTransaksi(Request $request)
+    {
+        $jml = customer::select(DB::raw('t.id_customer,t.nama,t.alamat,t.kelamin,t.no_telp'))
+        ->from(DB::raw('(SELECT * from customers order by created_at DESC) t'))
+        ->leftJoin('transaksis as a' ,'a.id_customer' , '=' , 't.id_customer')
+        ->groupBy('t.id_customer')
+        ->get();
+
+        // $jm = transaksi::select(DB::raw('t.kg_transaksi,t.id_customer'))
+        // ->from(DB::raw('(SELECT * from transaksis order by created_at DESC) t'))
+        // ->groupby('t.kg_transaksi')
+        // // ->where('t.id_customer',1)
+        // // ->sum('t.kg_transaksi')
+        // ->count();
+
+        // $jm = transaksi::orderby('created_at','DESC')->first();
+
+        // $jml = DB::table('transaksis')->sum('kg_transaksi')->get();
+        // $jml = customer::selectRaw('customers.id_customer,customers.nama')
+        // ->leftJoin('transaksis as A' , function($join){
+        //     $join->on('a.id_customer' ,'=' ,'customers.id_customer');
+        // })
+        // ->get();
+
+        // $jml = customer::all();
+
+        return view('modul_admin.customer.jmltransaksi', compact('jml','jm'));
+    }
 }

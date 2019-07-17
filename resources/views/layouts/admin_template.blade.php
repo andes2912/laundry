@@ -13,7 +13,8 @@
     <title>@yield('title')</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('asset/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> --}}
+    <link href="{{asset('asset/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('asset/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{asset('asset/css/style.css')}}" rel="stylesheet">
@@ -80,18 +81,17 @@
                         <!-- Comment -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-cart"></i>
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-cart"></i>                               
                                 <div class="notify"> 
-                                    <?php 
-                                        $notif = App\transaksi::all()->first();
+                                    <?php
+                                        $notif = App\transaksi::orderby('id','DESC')->first();
                                     ?>
                                     @if (@$notif->notif == 0)
-                                    <span class="heartbit"></span> <span class="point"></span>
+                                        <span class="heartbit"></span> <span class="point"></span>
                                     @endif
                                 </div>
                             </a>
                             <div class="dropdown-menu mailbox slideInUp">
-                               
                                 <ul>
                                     <li>
                                         <div class="drop-title">Order Masuk</div>
@@ -244,6 +244,7 @@
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Data Pelanggan</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('customer')}}">Pelanggan</a></li>
+                                <li><a href="{{url('jml-transaksi')}}">Jumlah Transaksi</a></li>
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Data Laundri</span></a>
@@ -339,7 +340,7 @@
     <!-- ChartJS -->
     <script src="{{asset('/highchart/js/highcharts.js')}}"></script>
     <script src="{{asset('/highchart/js/modules/exporting.js')}}"></script>
-    
+    <script src="{{asset('asset/plugins/sweetalert/sweetalert.min.js')}}"></script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

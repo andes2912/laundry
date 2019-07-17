@@ -97,7 +97,6 @@
             <tfoot>
                 <tr>
                     <th colspan="3">Total</th>
-                    {{-- <td>Rp {{ number_format($invoice->total_price) }}</td> --}}
                 </tr>
             </tfoot>
         </table>

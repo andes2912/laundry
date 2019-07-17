@@ -32,6 +32,7 @@ Route::resource('admin','AdminController');
     Route::get('customer-edit/{id_customer}','AdminController@editcustomer');
     Route::put('customer-update/{id_customer}','AdminController@updatecustomer');
     Route::delete('customer-delete/{id_customer}','AdminController@deletecustomer');
+    Route::get('jml-transaksi','AdminController@jmlTransaksi');
 
     // Data Laundri
     Route::get('data-transaksi','AdminController@datatransaksi');

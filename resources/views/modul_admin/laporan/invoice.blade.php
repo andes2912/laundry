@@ -74,8 +74,11 @@
                 </div>
                 <div class="pull-right m-t-10 text-right">
                     <p>Total : {{Rupiah::getRupiah($hitung)}}</p>
-                    {{-- <input type="hiddene" value="{{$discon = ((15000 * 100) / 15)}}"> --}}
-                    <p>Disc (10%) :  <input type="hidden" value="{{$disc = ($hitung * 10 ) / 100}}"> {{Rupiah::getRupiah($disc)}} </p>
+                    <p>Disc @if ($item->disc == "")
+                        (0 %)
+                    @else
+                        ({{$item->disc}} %)
+                    @endif :  <input type="hidden" value="{{$disc = ($hitung * $item->disc   ) / 100}}"> {{Rupiah::getRupiah($disc)}} </p>
                     <hr>
                     <h3><b>Total Bayar :</b> {{Rupiah::getRupiah($hitung - $disc)}}</h3>
                 </div>
