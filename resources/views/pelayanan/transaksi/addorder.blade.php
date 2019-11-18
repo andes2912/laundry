@@ -105,7 +105,6 @@
 
     $(document).on('change', '#id', function (e) { 
         var id = $(this).val();
-        // var id = $(this).val();
         $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
             $("#select-harga").html(resp);
         });

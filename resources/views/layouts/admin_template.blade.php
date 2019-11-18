@@ -55,14 +55,15 @@
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="{{asset('asset/images/logo-icon.png')}}" alt="homepage" class="dark-logo" />
+                            {{-- <img src="{{asset('asset/images/logo-icon.png')}}" alt="homepage" class="dark-logo" /> --}}
+                            <h2>Laundry</h2>
                             <!-- Light Logo icon -->
-                            <img src="{{asset('asset/images/logo-light-icon.png')}}" alt="homepage" class="light-logo" />
+                            {{-- <img src="{{asset('asset/images/logo-light-icon.png')}}" alt="homepage" class="light-logo" /> --}}
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text --><span>
                          <!-- dark Logo text -->
-                         <img src="{{asset('asset/images/logo-text.png')}}" alt="homepage" class="dark-logo" />
+                         {{-- <img src="{{asset('asset/images/logo-text.png')}}" alt="homepage" class="dark-logo" /> --}}
                          <!-- Light Logo text -->    
                          <img src="{{asset('asset/images/logo-light-text.png')}}" class="light-logo" alt="homepage" /></span> </a>
                 </div>
@@ -101,8 +102,8 @@
                                             <!-- Message -->
                                             
                                             <?php 
-                                                $aktif = App\transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,a.jenis')
-                                                ->where('notif',0)
+                                                $aktif = App\transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
+                                                // ->where('notif',0)
                                                 ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
                                                 ->get();
                                             ?>

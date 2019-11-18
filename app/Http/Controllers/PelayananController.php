@@ -167,7 +167,6 @@ class PelayananController extends Controller
         if (Auth::user()->auth == "Karyawan") {
             $list_harga = harga::select('id','harga')
             ->where('id',$request->id)
-            // ->where('jenis',$request->jenis)
             ->get();
             $select = '';
             $select .= '
