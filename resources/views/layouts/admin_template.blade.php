@@ -103,7 +103,7 @@
                                             
                                             <?php 
                                                 $aktif = App\transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
-                                                // ->where('notif',0)
+                                                ->where('notif',0)
                                                 ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
                                                 ->get();
                                             ?>
