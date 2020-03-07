@@ -189,6 +189,7 @@
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Data Transaksi</span></a>
                             <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{url('add-order')}}">Tambah Orders</a></li>
                                 <li><a href="{{route('pelayanan.index')}}">Orders Masuk</a></li>
                                 <li><a href="{{url('list-customer')}}">List Customer</a></li>
                             </ul>

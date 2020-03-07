@@ -60,7 +60,7 @@
                         <h3 style="color:coral">{{$data->nama_cabang}}</h3>
                         <p class="text-muted m-l-5"> Diterima Oleh <span style="margin-left:8px"> </span>: {{$data->name}}
                             <br/> Alamat <span style="margin-left:62px"> </span>: {{$data->alamat_cabang}},
-                            <br/> No. Telp <span style="margin-left:50px"> </span>: {{$data->telp_cabang}},
+                            <br/> No. Telp <span style="margin-left:50px"> </span>: {{$data->no_telpc}},
                             </p>
                     </td>
                     <td colspan="3">
@@ -92,9 +92,9 @@
                 <tr>
                     <td style="color:black">1</td>
                     <td style="color:black">{{$item->jenis}}</td>
-                    <td style="color:black">{{$item->kg_transaksi}} Kg</td>
+                    <td style="color:black">{{$item->kg}} Kg</td>
                     <td style="color:black">{{Rupiah::getRupiah($item->harga)}} /Kg</td>
-                    <td><input type="hidden" value="{{$hitung = $item->kg_transaksi * $item->harga}}">
+                    <td><input type="hidden" value="{{$hitung = $item->kg * $item->harga}}">
                         <p style="color:black">{{Rupiah::getRupiah($hitung)}}</p></td>
                 </tr>
                 @endforeach

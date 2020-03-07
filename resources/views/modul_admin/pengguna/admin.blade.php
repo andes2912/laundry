@@ -28,7 +28,7 @@
                             <td>{{$item->name}}</td>
                             <td>{{$item->email}}</td>
                             <td>
-                                @if ($item->status == 1)
+                                @if ($item->status == 'Aktif')
                                     <span class="label label-success">Aktif</span>
                                 @else
                                     <span class="label label-danger">Tidak Aktif</span>

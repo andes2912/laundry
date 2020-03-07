@@ -4,25 +4,37 @@
 <div class="col-lg-12">
     <div class="card card-outline-info">
         <div class="card-header">
-            <h4 class="m-b-0 text-white">Form Tambah Data Order</h4>
+            <h4 class="m-b-0 text-white">Form Tambah Data Order
+                <a href="{{url('list-customer-add')}}" class="btn btn-danger btn-sm">Customer Baru</a>
+            </h4>
         </div>
         <div class="card-body">
-            <form action="{{route('pelayanan.store', $addorder->id_customer)}}" method="POST">
+            <form action="{{route('pelayanan.store')}}" method="POST">
                 @csrf
                 <div class="form-body">
                     <div class="row p-t-20">
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Nama</label>
-                                <input type="text" class="form-control form-control-danger" name="customer" value="{{$addorder->nama}}" placeholder="Nama Customer" readonly>
+                                <select name="id_customer" id="id_customer" class="form-control">
+                                    <option value="">-- Pilih Customer --</option>
+                                    @foreach ($customer as $item)
+                                        <option value="{{$item->id_customer}}">{{$item->nama}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                        <input type="hidden" name="id_customer" value="{{$addorder->id_customer}}">
-                        <input type="hidden" name="tgl_transaksi" id="">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <div class="form-group has-success">
+                                <label class="control-label">No Transaksi</label>
+                                <input type="text" name="invoice" value="{{$newID}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                            <span id="select-customer"></span>
+                        <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Berat Pakaian</label>
-                                <input type="text" class="form-control form-control-danger" name="kg_transaksi" placeholder="Berat Pakaian" autocomplete="off" required>
+                                <input type="text" class="form-control form-control-danger" name="kg" placeholder="Berat Pakaian" autocomplete="off" required>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -86,9 +98,9 @@
 @endsection
 @section('script')
 <script type="text/javascript">
+    // Filter Harga 
     $(document).ready(function() {
        var id = $("#id").val();
-    //    var jenis = $("#jenis").val();
             $.get('{{ Url("listhari") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
             $("#select-hari").html(resp);
             $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
@@ -96,6 +108,7 @@
         });
         });
     });
+
     $(document).on('change', '#id', function (e) { 
       var id = $(this).val();
       $.get('{{ Url("listhari") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
@@ -108,6 +121,21 @@
         $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
             $("#select-harga").html(resp);
         });
+    });
+
+    // Filter Customer
+    $(document).ready(function() {
+       var id_customer = $("#id_customer").val();
+            $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){  
+            $("#select-customer").html(resp);
+        });
+    });
+
+    $(document).on('change', '#id_customer', function (e) { 
+      var id_customer = $(this).val();
+      $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){  
+        $("#select-customer").html(resp);
+      });
     });
 </script>
 @endsection

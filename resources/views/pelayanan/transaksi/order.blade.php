@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
-                <a href="{{url('list-customer')}}" class="btn btn-sm btn-primary">Tambah</a>
+                <a href="{{url('add-order')}}" class="btn btn-sm btn-primary">Tambah</a>
             </h4>
             <h6>Info : <code> Untuk Mengubah Status Order & Pembayaran Klik Pada Bagian 'Action' Masing-masing.</code></h6>
             <div class="table-responsive m-t-0">

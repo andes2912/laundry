@@ -30,8 +30,8 @@
                             <div class="form-group has-success">
                                 <label class="control-label">Status</label>
                                 <select class="form-control custom-select" name="status">
-                                    <option value="1">Aktif</option>
-                                    <option value="0">Tidak Aktif</option>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Tidak Aktif">Tidak Aktif</option>
                                 </select>
                             </div>
                         </div>

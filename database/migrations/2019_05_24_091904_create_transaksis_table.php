@@ -26,8 +26,10 @@ class CreateTransaksisTable extends Migration
             $table->string('kg');
             $table->string('hari');
             $table->string('harga');
+            $table->string('disc')->nullable();
             $table->string('tgl');
             $table->date('tgl_ambil')->nullable();
+            $table->string('notif');
             $table->timestamps();
         });
     }

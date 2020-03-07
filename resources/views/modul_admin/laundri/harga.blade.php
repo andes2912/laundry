@@ -9,8 +9,8 @@
                     <h4 class="card-title">
                         <a class="btn btn-sm btn-primary" style="color:white">Tambah</a>
                     </h4>
-                    <div class="table-responsive full-color-table full-inverse-table hover-table">
-                        <table class="table color-table info-table">
+                    <div class="table-responsive m-t-0">
+                        <table id="myTable" class="table display table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -19,6 +19,7 @@
                                     <th>Kg</th>
                                     <th>Harga</th>
                                     <th>Status</th>
+                                    <th>Cabang</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -38,6 +39,7 @@
                                         <span class="label label-warning">Tidak Aktif</span>
                                         @endif
                                     </td>
+                                    <td>{{$item->nama_cabang}}</td>
                                     <td>
                                         <form action="{{url('customer-delete', $item->id_customer)}}" method="POST">
                                             @csrf
@@ -68,6 +70,18 @@
                         <div class="form-body">
                             @if ($karyawan == !null)
                             <div class="row p-t-20">
+                                
+                                <div class="col-lg-12 col-xl-12">
+                                    <div class="form-group has-success">
+                                        <label class="control-label">Cabang</label>
+                                        <select name="id_cabang" class="form-control" required>
+                                            <option value="">-- Pilih Cabang --</option>
+                                            @foreach ($getcabang as $item)
+                                                <option value="{{$item->id}}">{{$item->nama_cabang}} - {{$item->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Jenis Pakaian</label>
@@ -161,5 +175,37 @@ $(document).on('click','#simpan_harga', function(){
         location.reload();
     });
  });
+
+
+ $(document).ready(function() {
+    $('#myTable').DataTable();
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+            "columnDefs": [{
+                "visible": false,
+                "targets": 2
+            }],
+            "order": [
+                [2, 'asc']
+            ],
+            "displayLength": 25,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
+                api.column(2, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+                        last = group;
+                    }
+                });
+            }
+        });
+    });
+});
 </script>
 @endsection

@@ -290,9 +290,12 @@ class AdminController extends Controller
     public function dataharga()
     {
        if (Auth::user()->auth == "Admin") {
-            $harga = harga::orderBy('id','DESC')->get(); // Ambil data harga
+            $harga = harga::selectRaw('hargas.*,a.nama_cabang')
+            ->leftJoin('Users as a','a.id','=','hargas.id_cabang')
+            ->orderBy('id','DESC')->get(); // Ambil data harga
             $karyawan = User::where('auth','Karyawan')->first(); // Cek Apakah sudah ada karyawan atau belum 
-            return view('modul_admin.laundri.harga', compact('harga','karyawan'));
+            $getcabang = User::where('auth','Karyawan')->where('status','Aktif')->get();
+            return view('modul_admin.laundri.harga', compact('harga','karyawan','getcabang'));
        } else {
            return redirect('home');
        }

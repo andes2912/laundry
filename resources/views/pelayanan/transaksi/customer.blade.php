@@ -37,9 +37,9 @@
                                 <form action="{{url('customer-delete', $item->id_customer)}}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{url('add-order', $item->id_customer)}}" class="btn btn-sm btn-primary" style="color:white">Add Order</a>
-                                    <a href="{{url('customer-edit', $item->id_customer)}}" class="btn btn-sm btn-info">Edit</a>
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    <a href="{{url('add-order')}}" class="btn btn-sm btn-primary" style="color:white">Add Order</a>
+                                    {{-- <a href="{{url('customer-edit', $item->id_customer)}}" class="btn btn-sm btn-info">Edit</a>
+                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button> --}}
                                 </form>
                             </td>
                         </tr>

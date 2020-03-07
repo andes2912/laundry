@@ -54,7 +54,7 @@
             <thead>
                 <tr>
                     <th colspan="3">Invoice <strong>#{{ $data->id }}</strong></th>
-                    <th>{{ $data->trgl_transaksi }}</th>
+                    <th>{{ $data->tgl_transaksi }}</th>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -85,10 +85,10 @@
                 <tr>
                     <td class="text-center">1</td>
                     <td>{{$item->jenis}}</td>
-                    <td class="text-right">{{$item->kg_transaksi}} Kg</td>
+                    <td class="text-right">{{$item->kg}} Kg</td>
                     <td class="text-right">{{Rupiah::getRupiah($item->harga)}} /Kg</td>
                     <td class="text-right">
-                        <input type="hidden" value="{{$hitung = $item->kg_transaksi * $item->harga}}">
+                        <input type="hidden" value="{{$hitung = $item->kg * $item->harga}}">
                         <p style="color:black">{{Rupiah::getRupiah($hitung)}}</p>
                     </td>
                 </tr>
