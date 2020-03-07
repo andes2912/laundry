@@ -66,43 +66,49 @@
                     <form action="{{url('harga-store')}}" method="POST">
                         @csrf
                         <div class="form-body">
+                            @if ($karyawan == !null)
                             <div class="row p-t-20">
-                                <div class="col-md-8">
+                                <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Jenis Pakaian</label>
-                                        <input type="text" name="jenis" class="form-control" placeholder="Tambahkan Jenis Pakaian" required autocomplete="off">
+                                        <input type="text" name="jenis" value="{{ old('jenis') }}" class="form-control" placeholder="Tambahkan Jenis Pakaian" required autocomplete="off">
                                         <small class="form-control-feedback "> Pisahkan Dengan format '+' Jika Jenis Lebih Dari Satu </small>
                                     </div>
                                 </div>
                                 <!--/span-->
-                                <div class="col-md-4">
+                                <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Berat Per-Kg</label>
-                                        <input type="text" class="form-control form-control-danger" name="kg" placeholder="Berat" autocomplete="off" required>
+                                        <input type="text" class="form-control form-control-danger" name="kg" value="{{ old('kg') }}" placeholder="Berat" autocomplete="off" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <!--/span-->
-                                <div class="col-md-6">
+                                <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Harga Per-Kg</label>
-                                        <input type="number" class="form-control form-control-danger" name="harga" placeholder="Harga Per-Kg" autocomplete="off" required>
+                                        <input type="number" class="form-control form-control-danger" name="harga" value="{{ old('harga') }}"placeholder="Harga Per-Kg" autocomplete="off" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Lama Hari</label>
-                                        <input type="number" name="hari" class="form-control" placeholder="Lama Hari" autocomplete="off" required>
+                                        <input type="number" name="hari" value="{{ old('hari') }}" class="form-control" placeholder="Lama Hari" autocomplete="off" required>
                                     </div>
                                 </div>
                             </div>
-                            <!--/row-->                  
+                            <!--/row-->      
+                                        
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
                             <button type="reset" class="btn btn-danger">Cancel</button>
                         </div>
+                        @else
+                            <h4>Upsss, data karyawan masih kosong nih !!!</h4> <br>
+                            <a href="{{url('kry')}}" class="btn btn-success btn-block">Tambah Karyawan</a>
+                        @endif
                     </form>
                 </div>
             </div>

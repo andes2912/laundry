@@ -33,7 +33,7 @@ class PelayananController extends Controller
     public function index()
     {
         if (Auth::user()->auth == "Karyawan") {
-            $order = transaksi::selectRaw('transaksis.id,transaksis.invoice,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,a.jenis')
+            $order = transaksi::selectRaw('transaksis.id,transaksis.invoice,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->orderBy('id','DESC')->get();
             return view('pelayanan.transaksi.order', compact('order'));
@@ -77,7 +77,7 @@ class PelayananController extends Controller
             $order->id_customer = $request->id_customer;
             $order->id_karyawan = Auth::user()->id;
             $order->customer = $request->customer;
-            $order->kg_transaksi      = $request->kg_transaksi;
+            $order->kg      = $request->kg;
             $order->hari    = $request->hari;
             $order->harga   = $request->harga;
             $order->notif   = 0;
@@ -293,12 +293,12 @@ class PelayananController extends Controller
     public function invoicekar(Request $request)
     {
         if (Auth::user()->auth == "Karyawan") {
-            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,transaksis.disc,a.jenis')
+            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,transaksis.disc,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->where('transaksis.id', $request->id)
             ->orderBy('id','DESC')->get();
 
-            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.tgl_ambil,transaksis.disc,transaksis.invoice,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.telp_cabang')
+            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.tgl_ambil,transaksis.disc,transaksis.invoice,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.telp_cabang')
             ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
             ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
             ->where('transaksis.id', $request->id)
@@ -313,12 +313,12 @@ class PelayananController extends Controller
     public function cetakinvoice(Request $request)
     {
         //GET DATA BERDASARKAN ID
-        $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,transaksis.disc,a.jenis')
+        $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,transaksis.disc,a.jenis')
         ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
         ->where('transaksis.id', $request->id)
         ->orderBy('id','DESC')->get();
 
-        $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.tgl_ambil,transaksis.invoice,transaksis.disc,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.telp_cabang,transaksis.created_at')
+        $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.tgl_ambil,transaksis.invoice,transaksis.disc,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.telp_cabang,transaksis.created_at')
             ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
             ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
             ->where('transaksis.id', $request->id)

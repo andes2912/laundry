@@ -14,9 +14,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Cabang</th>
+                            <th>Nama Karyawan</th>
+                            <th>Alamat Cabang</th>
+                            <th>Nama Cabang</th>
                             <th>No Telp</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -30,9 +30,9 @@
                             <td>{{$item->name}}</td>
                             <td>{{$item->alamat_cabang}}</td>
                             <td>{{$item->nama_cabang}}</td>
-                            <td>{{$item->telp_cabang}}</td>
+                            <td>{{$item->no_telp}}</td>
                             <td>
-                                @if ($item->status == 1)
+                                @if ($item->status == 'Aktif')
                                     <span class="label label-success">Aktif</span>
                                 @else
                                     <span class="label label-danger">Tidak Aktif</span>

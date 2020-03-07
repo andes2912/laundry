@@ -15,12 +15,15 @@ class CreateHargasTable extends Migration
     {
         Schema::create('hargas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('id_cabang');
             $table->string('jenis');
             $table->string('kg');
             $table->string('harga');
             $table->string('status');
             $table->string('hari');
             $table->timestamps();
+
+            $table->foreign('id_cabang')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

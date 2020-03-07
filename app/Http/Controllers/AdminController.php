@@ -81,16 +81,26 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->auth === "Admin") {
+
+            if (User::where('email', $request->email)->exists()) {
+                return redirect()->back()->withErrors(['errors' => 'Email Sudah Terdaftar !!']);
+            } elseif (User::where('nama_cabang', $request->nama_cabang)->exists()) {
+                return redirect()->back()->withErrors(['errors' => 'Nama Cabang Sudah Terdaftar !!']);
+            } elseif (User::where('alamat_cabang', $request->alamat_cabang)->exists()) {
+                return redirect()->back()->withErrors(['errors' => 'Alamat Cabang Sudah Terdaftar !!']);
+            }
+
             $adduser = New User();
             $adduser->name = $request->name;
             $adduser->email = $request->email;
-            $adduser->status = $request->status;
+            $adduser->status = 'Aktif';
             $adduser->nama_cabang = $request->nama_cabang;
             $adduser->alamat = $request->alamat;
+            $adduser->alamat_cabang = $request->alamat_cabang;
             $adduser->no_telp = $request->no_telp;
             $adduser->auth = $request->auth;
             $adduser->password = bcrypt('123456');
-            $adduser->save();
+            $adduser->save();            
 
             if ($adduser->auth == "Admin") {
                 return redirect('adm');
@@ -150,10 +160,10 @@ class AdminController extends Controller
             $adduser->email = $request->email;
             $adduser->status = $request->status;
             $adduser->nama_cabang = $request->nama_cabang;
+            $adduser->alamat = $request->alamat;
             $adduser->alamat_cabang = $request->alamat_cabang;
-            $adduser->telp_cabang = $request->telp_cabang;
+            $adduser->no_telp = $request->no_telp;
             $adduser->auth = $request->auth;
-            $adduser->password = bcrypt('123456');
             $adduser->save();
 
             if ($adduser->auth == "Admin") {
@@ -267,7 +277,7 @@ class AdminController extends Controller
     public function datatransaksi()
     {
         if (Auth::user()->auth == "Admin") {
-            $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,a.jenis')
+            $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->orderBy('id','DESC')->get();
             return view('modul_admin.laundri.transaksi', compact('transaksi'));
@@ -276,21 +286,26 @@ class AdminController extends Controller
         }
     }
 
+    // Tambah dan Data Harga
     public function dataharga()
     {
        if (Auth::user()->auth == "Admin") {
-            $harga = harga::orderBy('id','DESC')->get();
-            return view('modul_admin.laundri.harga', compact('harga'));
+            $harga = harga::orderBy('id','DESC')->get(); // Ambil data harga
+            $karyawan = User::where('auth','Karyawan')->first(); // Cek Apakah sudah ada karyawan atau belum 
+            return view('modul_admin.laundri.harga', compact('harga','karyawan'));
        } else {
            return redirect('home');
        }
        
     }
 
+    // Proses Simpan Harga
     public function hargastore(Request $request)
     {
         if (Auth::user()->auth == "Admin") {
+            
             $addharga = new harga();
+            $addharga->id_cabang = $request->id_cabang;
             $addharga->jenis = $request->jenis;
             $addharga->kg = $request->kg;
             $addharga->harga = $request->harga;
@@ -328,12 +343,12 @@ class AdminController extends Controller
     public function invoice( Request $request,$id)
     {
         if (Auth::user()->auth == "Admin") {
-            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.hari,transaksis.harga,a.jenis')
+            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->where('transaksis.id', $request->id)
             ->orderBy('id','DESC')->get();
 
-            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg_transaksi,transaksis.tgl_ambil,transaksis.invoice,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.telp_cabang')
+            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.tgl_ambil,transaksis.invoice,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.telp_cabang')
             ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
             ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
             ->where('transaksis.id', $request->id)
@@ -364,16 +379,16 @@ class AdminController extends Controller
         ->groupBy('t.id_customer')
         ->get();
 
-        // $jm = transaksi::select(DB::raw('t.kg_transaksi,t.id_customer'))
+        // $jm = transaksi::select(DB::raw('t.kg,t.id_customer'))
         // ->from(DB::raw('(SELECT * from transaksis order by created_at DESC) t'))
-        // ->groupby('t.kg_transaksi')
+        // ->groupby('t.kg')
         // // ->where('t.id_customer',1)
-        // // ->sum('t.kg_transaksi')
+        // // ->sum('t.kg')
         // ->count();
 
         // $jm = transaksi::orderby('created_at','DESC')->first();
 
-        // $jml = DB::table('transaksis')->sum('kg_transaksi')->get();
+        // $jml = DB::table('transaksis')->sum('kg')->get();
         // $jml = customer::selectRaw('customers.id_customer,customers.nama')
         // ->leftJoin('transaksis as A' , function($join){
         //     $join->on('a.id_customer' ,'=' ,'customers.id_customer');

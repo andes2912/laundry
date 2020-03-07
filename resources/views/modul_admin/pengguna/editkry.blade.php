@@ -31,8 +31,8 @@
                             <div class="form-group has-success">
                                 <label class="control-label">Status</label>
                                 <select class="form-control custom-select" name="status">
-                                    <option value="1"@if($edit->status=='1') selected='selected' @endif >Aktif</option>
-                                    <option value="0"@if($edit->status=='0') selected='selected' @endif >Tidak Aktif</option>
+                                    <option value="Aktif"@if($edit->status=='Aktif') selected='selected' @endif >Aktif</option>
+                                    <option value="Tidak Aktif"@if($edit->status=='Tidak Aktif') selected='selected' @endif >Tidak Aktif</option>
                                 </select>
                             </div>
                         </div>
@@ -47,8 +47,8 @@
                         <!--/span-->
                         <div class="col-md-4">
                             <div class="form-group has-success">
-                                <label class="control-label">Alamat</label>
-                                <input type="text" class="form-control form-control-danger" name="alamat" value="{{$edit->alamat}}" placeholder="Alamat" autocomplete="off">
+                                <label class="control-label">Alamat Cabang</label>
+                                <input type="text" class="form-control form-control-danger" name="alamat_cabang" value="{{$edit->alamat}}" placeholder="Alamat" autocomplete="off">
                             </div>
                         </div>
                         <!--/span-->

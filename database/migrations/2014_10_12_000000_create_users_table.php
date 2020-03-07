@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('auth');
             $table->string('status');
             $table->string('nama_cabang')->nullable();
+            $table->string('alamat_cabang')->nullable();
             $table->string('alamat')->nullable();
             $table->string('no_telp')->nullable();
             $table->string('password');

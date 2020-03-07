@@ -49,7 +49,7 @@
                             </td>
                             <td>{{$item->jenis}}</td>
                             <td>
-                                <input type="hidden" value="{{$hitung = $item->kg_transaksi * $item->harga}}">
+                                <input type="hidden" value="{{$hitung = $item->kg * $item->harga}}">
                                 <p style="color:black">{{Rupiah::getRupiah($hitung)}}</p>
                             </td>
                             <td>
