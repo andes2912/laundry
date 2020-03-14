@@ -34,7 +34,7 @@
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Berat Pakaian</label>
-                                <input type="text" class="form-control form-control-danger" name="kg" placeholder="Berat Pakaian" autocomplete="off" required>
+                                <input type="number" class="form-control form-control-danger" name="kg" placeholder="Berat Pakaian" autocomplete="off" required>
                             </div>
                         </div>
                         <div class="col-md-3">

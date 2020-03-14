@@ -70,3 +70,8 @@ Route::resource('pelayanan','PelayananController');
     // Laporan
     Route::get('invoice-kar/{id}','PelayananController@invoicekar');
     Route::get('cetak-invoice/{id}/print','PelayananController@cetakinvoice');
+
+    // Profile
+    Route::get('profile-karyawan/{id}','ProfileController@karyawanProfile');
+    Route::get('profile-karyawan/edit/{id}','ProfileController@karyawanProfileEdit');
+    Route::put('profile-karyawan/update/{id}','ProfileController@karyawanProfileSave');

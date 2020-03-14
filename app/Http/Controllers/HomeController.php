@@ -78,12 +78,12 @@ class HomeController extends Controller
                     ->  with('diambil',$diambil);
 
             } elseif(Auth::user()->auth === "Karyawan") {
-                $masuk = transaksi::whereIN('status_order',['Proses','Selesai','Diambil'])->count();
-                $selesai = transaksi::where('status_order','Selesai')->count();
-                $diambil = transaksi::where('status_order','Diambil')->count();
-                $customer = customer::all();
-                $sudahbayar = transaksi::where('status_payment','Lunas')->count();
-                $belumbayar = transaksi::where('status_payment','Belum')->count();
+                $masuk = transaksi::whereIN('status_order',['Proses','Selesai','Diambil'])->where('id_karyawan',auth::user()->id)->count();
+                $selesai = transaksi::where('status_order','Selesai')->where('id_karyawan',auth::user()->id)->count();
+                $diambil = transaksi::where('status_order','Diambil')->where('id_karyawan',auth::user()->id)->count();
+                $customer = customer::where('id_karyawan',auth::user()->id)->get();
+                $sudahbayar = transaksi::where('status_payment','Lunas')->where('id_karyawan',auth::user()->id)->count();
+                $belumbayar = transaksi::where('status_payment','Belum')->where('id_karyawan',auth::user()->id)->count();
 
                 // Statistik Harian
                 $hari = DB::table('transaksis')
@@ -91,6 +91,7 @@ class HomeController extends Controller
                 ->  whereYear('created_at','=',date("Y", strtotime(now())))
                 ->  whereMonth('created_at','=',date("m", strtotime(now())))
                 ->  groupBy('tgl')
+                ->where('id_karyawan',auth::user()->id)
                 ->  get();
 
                 $tanggal = '';

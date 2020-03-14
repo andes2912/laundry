@@ -37,7 +37,7 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <section id="wrapper">
-        <div class="login-register" style="background-image:url({{asset('asset/images/background/login-register.jpg')}}">
+        <div class="login-register" style="background-image:url({{asset('asset/images/background/bg-new.jpg')}}" width="100%">
             <div class="login-box card">
                 <div class="card-body">
                     <form class="form-horizontal form-material" id="loginform" method="POST" action="{{ route('login') }}">
@@ -51,25 +51,15 @@
                             <div class="col-xs-12">
                                 <input class="form-control" type="password" name="password" required="" placeholder="Password"> </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-md-12 font-14">
-                                <div class="checkbox checkbox-primary pull-left p-t-0">
-                                    <input id="checkbox-signup" type="checkbox">
-                                    <label for="checkbox-signup"> Remember me </label>
-                                </div> <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><!-- <i class="fa fa-lock m-r-5"></i> --> Forgot pwd?</a> </div>
-                        </div>
+                        
                         <div class="form-group text-center m-t-20">
                             <div class="col-xs-12">
                                 <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
                             </div>
                         </div>
-                        <div class="row">
-                            
-                        </div>
-                        <div class="form-group m-b-0">
-                            <div class="col-sm-12 text-center">
-                                {{-- <div>Don't have an account? <a href="pages-register.html" class="text-info m-l-5"><b>Sign Up</b></a></div> --}}
-                            </div>
+                        <div class="form-group row">
+                            <div class="col-md-12 font-14">
+                                <a href="{{url('/')}}"class="text-dark pull-left">Belum Punya Akun ?</a></div>
                         </div>
                     </form>
                     
