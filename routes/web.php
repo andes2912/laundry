@@ -43,6 +43,9 @@ Route::resource('admin','AdminController');
     // Laporan
     Route::get('invoice-customer/{id}','AdminController@invoice');
 
+    // Finance
+    Route::get('data-finance-cabang','AdminController@finance');
+
     // Notifikasi
     Route::get('notif','AdminController@notif');
 

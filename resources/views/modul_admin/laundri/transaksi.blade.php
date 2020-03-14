@@ -23,7 +23,7 @@
                         @foreach ($transaksi as $item)
                         <tr>
                             <td>{{$no}}</td>
-                            <td>{{$item->tgl_transaksi}}</td>
+                            <td>{{carbon\carbon::parse($item->tgl_transaksi)->format('d-m-y')}}</td>
                             <td>{{$item->customer}}</td>
                             <td>
                                 @if ($item->status_order == 'Selesai')

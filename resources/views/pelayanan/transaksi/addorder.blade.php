@@ -16,7 +16,7 @@
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Nama</label>
-                                <select name="id_customer" id="id_customer" class="form-control">
+                                <select name="id_customer" id="id_customer" class="form-control select2">
                                     <option value="">-- Pilih Customer --</option>
                                     @foreach ($customer as $item)
                                         <option value="{{$item->id_customer}}">{{$item->nama}}</option>
@@ -59,7 +59,7 @@
                         <div class="col-md-3">
                             <div class="orm-group has-success">
                                 <label class="control-label">Pilih Pakaian</label>
-                                <select id="id" name="id_jenis" class="form-control" required>
+                                <select id="id" name="id_jenis" class="form-control select2" required>
                                     <option value="#">-- Jenis Pakaian --</option>
                                     <?php
                                     $jenis = App\harga::select('id','jenis')->where('status','1')->get();

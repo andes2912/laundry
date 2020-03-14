@@ -16,6 +16,7 @@
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> --}}
     <link href="{{asset('asset/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
     <!-- Custom CSS -->
+    <link href="{{asset('asset/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('asset/css/style.css')}}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="{{asset('asset/css/colors/blue.css')}}" rel="stylesheet">
@@ -287,6 +288,13 @@
     <script src="{{asset('asset/plugins/sweetalert/sweetalert.min.js')}}"></script>
     <!-- ============================================================== -->
     <script src="{{asset('asset/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
+
+    {{-- Select2 --}}
+    <script src="{{asset('asset/plugins/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(".select2").select2();
+    </script>
+
     @yield('script')
 </body>
 

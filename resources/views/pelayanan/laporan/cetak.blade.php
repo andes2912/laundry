@@ -69,12 +69,12 @@
                             {{$data->nama}}
                             <br/> {{$data->alamat}}
                             <br/> {{$data->no_telp}}</p> <br>
-                        <p style="text-align:right"><b>Tanggal Masuk :</b> <i class="fa fa-calendar"></i> {{$data->tgl_transaksi}}</p>
+                        <p style="text-align:right"><b>Tanggal Masuk :</b> <i class="fa fa-calendar"></i> {{carbon\carbon::parse($data->tgl_transaksi)->format('d-m-y')}}</p>
                         <p style="text-align:right"><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i> 
                             @if ($data->tgl_ambil == "")
                                 Belum Diambil
                             @else
-                            {{$data->tgl_ambil}}
+                            {{carbon\carbon::parse($data->tgl_ambil)->format('d-m-y')}}
                             @endif
                         </p>
                     </td>

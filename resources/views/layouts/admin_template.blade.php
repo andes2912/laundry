@@ -18,6 +18,7 @@
     <link href="{{asset('asset/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{asset('asset/css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('asset/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- You can change the theme colors from here -->
     <link href="{{asset('asset/css/colors/blue.css')}}" rel="stylesheet">
     <!-- Morries chart CSS -->
@@ -242,17 +243,22 @@
                                 <li><a href="{{url('kry')}}">Karyawan</a></li>
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Data Pelanggan</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Data Customer</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{url('customer')}}">Pelanggan</a></li>
-                                <li><a href="{{url('jml-transaksi')}}">Jumlah Transaksi</a></li>
+                                <li><a href="{{url('customer')}}">Customer</a></li>
+                                {{-- <li><a href="{{url('jml-transaksi')}}">Transaksi Customer</a></li> --}}
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Data Laundri</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('data-transaksi')}}">Transaksi</a></li>
                                 <li><a href="{{url('data-harga')}}">Harga Laundri</a></li>
-                                {{-- <li><a href="#">Laporan</a></li> --}}
+                            </ul>
+                        </li>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-currency-usd"></i><span class="hide-menu">Data Finance</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{url('data-finance-cabang')}}">Cabang</a></li>
+                                {{-- <li><a href="{{url('data-harga')}}"></a></li> --}}
                             </ul>
                         </li>
                     </ul>
@@ -347,6 +353,9 @@
     <!-- ============================================================== -->
     <script src="{{asset('asset/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('asset/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
+
+    {{-- Select2 --}}
+    <script src="{{asset('asset/plugins/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
      {{-- Notifikasi --}}
      <script type="text/javascript">
         // Proses Mengubah Notifikasi Menjadi Null
@@ -362,6 +371,8 @@
             location.reload();
         });
         });
+
+        $(".select2").select2();
     </script>
  
     @yield('script')

@@ -376,30 +376,23 @@ class AdminController extends Controller
     // Hitung Jumlah Transaksi Keseluruhan
     public function jmlTransaksi(Request $request)
     {
-        $jml = customer::select(DB::raw('t.id_customer,t.nama,t.alamat,t.kelamin,t.no_telp'))
+        $jml = customer::select(DB::raw('t.id_customer,t.nama,t.alamat,t.kelamin,t.no_telp,a.kg'))
         ->from(DB::raw('(SELECT * from customers order by created_at DESC) t'))
         ->leftJoin('transaksis as a' ,'a.id_customer' , '=' , 't.id_customer')
         ->groupBy('t.id_customer')
         ->get();
 
-        // $jm = transaksi::select(DB::raw('t.kg,t.id_customer'))
-        // ->from(DB::raw('(SELECT * from transaksis order by created_at DESC) t'))
-        // ->groupby('t.kg')
-        // // ->where('t.id_customer',1)
-        // // ->sum('t.kg')
-        // ->count();
+        return view('modul_admin.customer.jmltransaksi', compact('jml'));
+    }
 
-        // $jm = transaksi::orderby('created_at','DESC')->first();
-
-        // $jml = DB::table('transaksis')->sum('kg')->get();
-        // $jml = customer::selectRaw('customers.id_customer,customers.nama')
-        // ->leftJoin('transaksis as A' , function($join){
-        //     $join->on('a.id_customer' ,'=' ,'customers.id_customer');
-        // })
-        // ->get();
-
-        // $jml = customer::all();
-
-        return view('modul_admin.customer.jmltransaksi', compact('jml','jm'));
+    // Data Finance Cabang
+    public function finance(Request $request)
+    {
+        if (auth::user()->auth == "Admin") {
+            $cabang = User::where('auth','Karyawan')->get();
+            $cek = User::where('auth','Karyawan')->first();
+            $hitung = transaksi::where('id_karyawan', $cek->id)->get();
+            return view('modul_admin.finance.cabang', compact('cabang','hitung'));
+        }
     }
 }
