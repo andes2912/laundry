@@ -11,7 +11,8 @@
 6. Kemudian jalan perintah 'php artisan db:seed --class=AdminSeeder', ini untuk mengenerate Akun <br>
 7. Login dengan user='admin@laundry.com' dan password='123456'<br> <br><br>
     
-Note : Aplikasi ini akan terus saya update.
+Note : Aplikasi ini akan terus saya update.<br>
+Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com</b>
 </p>
 ## License
 
