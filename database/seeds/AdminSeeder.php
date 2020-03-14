@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
         	'email' => 'admin@laundry.com',
         	'status' => 'Aktif',
             'auth' => 'Admin',
-            'password' => bcrypt('12345678')
+            'password' => bcrypt('123456')
         ]);
     }
 }
