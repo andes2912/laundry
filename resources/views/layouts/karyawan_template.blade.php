@@ -157,7 +157,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                <p style="color:black">© 2019 Aplikasi E-Lundry - SAI</p>
+                <p style="color:black">© 2020 Aplikasi E-Lundry with <img class="icon-hati" src="{{asset('asset/images/icon/love.gif')}}" > </p>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
