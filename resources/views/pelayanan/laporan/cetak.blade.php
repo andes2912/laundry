@@ -108,7 +108,7 @@
                 </tr>
                 <tr>
                     <th colspan="4">Total Bayar</th>
-                    <td style="color:black; font-weight:bold">{{Rupiah::getRupiah($hitung - $disc)}}</td>
+                    <td style="color:black; font-weight:bold">{{Rupiah::getRupiah($item->harga_akhir)}}</td>
                 </tr>
             </tbody>
             

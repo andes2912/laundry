@@ -49,8 +49,7 @@
                             </td>
                             <td>{{$item->jenis}}</td>
                             <td>
-                                <input type="hidden" value="{{$hitung = $item->kg * $item->harga}}">
-                                <p style="color:black">{{Rupiah::getRupiah($hitung)}}</p>
+                                <p style="color:black">{{Rupiah::getRupiah($item->harga_akhir)}}</p>
                             </td>
                             <td>
                                 @if ($item->status_payment == "Belum")

@@ -196,7 +196,7 @@
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-currency-usd"></i><span class="hide-menu">Data Finance</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{url('data-finance-cabang')}}">Cabang</a></li>
+                                <li><a href="{{url('data-finance')}}">Finance</a></li>
                                 {{-- <li><a href="{{url('data-harga')}}"></a></li> --}}
                             </ul>
                         </li>
@@ -247,7 +247,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                <p style="color:black">© 2020 Aplikasi E-Lundry with <img class="icon-hati" src="{{asset('asset/images/icon/love.gif')}}" > </p>
+                <p style="color:black">© 2020 Aplikasi E-Laundry with <img class="icon-hati" src="{{asset('asset/images/icon/love.gif')}}" > </p>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

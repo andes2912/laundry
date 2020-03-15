@@ -78,9 +78,9 @@
                         (0 %)
                     @else
                         ({{$item->disc}} %)
-                    @endif :  <input type="hidden" value="{{$disc = ($hitung * $item->disc ) / 100}}"> {{Rupiah::getRupiah($disc)}} </p>
+                    @endif :  </p>
                     <hr>
-                    <h3><b>Total Bayar :</b> {{Rupiah::getRupiah($hitung - $disc)}}</h3>
+                    <h3><b>Total Bayar :</b> {{Rupiah::getRupiah($item->harga_akhir)}}</h3>
                 </div>
                 @endforeach
                 <div class="clearfix"></div>

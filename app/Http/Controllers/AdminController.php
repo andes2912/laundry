@@ -9,7 +9,7 @@ use App\transaksi;
 use App\harga;
 use Auth;
 use DB;
-use App\Helpers\Rupiah;
+use Carbon\carbon;
 
 class AdminController extends Controller
 {
@@ -278,7 +278,7 @@ class AdminController extends Controller
     public function datatransaksi()
     {
         if (Auth::user()->auth == "Admin") {
-            $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
+            $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.harga_akhir,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->orderBy('id','DESC')->get();
 
@@ -349,12 +349,12 @@ class AdminController extends Controller
     public function invoice( Request $request,$id)
     {
         if (Auth::user()->auth == "Admin") {
-            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
+            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.harga_akhir,transaksis.kg,transaksis.hari,transaksis.harga,transaksis.disc,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->where('transaksis.id', $request->id)
             ->orderBy('id','DESC')->get();
 
-            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.tgl_ambil,transaksis.invoice,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
+            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.harga_akhir,transaksis.kg,transaksis.tgl_ambil,transaksis.invoice,transaksis.disc,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
             ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
             ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
             ->where('transaksis.id', $request->id)
@@ -392,10 +392,14 @@ class AdminController extends Controller
     public function finance(Request $request)
     {
         if (auth::user()->auth == "Admin") {
-            $cabang = User::where('auth','Karyawan')->get();
-            $cek = User::where('auth','Karyawan')->first();
-            $hitung = transaksi::where('id_karyawan', $cek->id)->get();
-            return view('modul_admin.finance.cabang', compact('cabang','hitung'));
+            $all = transaksi::sum('harga_akhir');
+            $bulan = transaksi::where('bulan', Carbon::now()->month)->sum('harga_akhir');
+            $tahun = transaksi::where('tahun', Carbon::now()->year)->sum('harga_akhir');
+
+            $kg = transaksi::sum('kg');
+            $transaksi = transaksi::get();
+            $user = transaksi::select('id_customer')->groupBy('id_customer')->get();
+            return view('modul_admin.finance.cabang', compact('all','bulan','tahun','kg','transaksi','user'));
         }
     }
 
@@ -404,7 +408,7 @@ class AdminController extends Controller
     {
         if (auth::check()) {
             if (auth::user()->auth == "Admin") {
-                $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
+                $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.harga_akhir,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
                 ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
                 ->where('transaksis.id_karyawan', $request->id_karyawan)
                 ->get();

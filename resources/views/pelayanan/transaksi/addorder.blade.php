@@ -62,7 +62,7 @@
                                 <select id="id" name="id_jenis" class="form-control select2" required>
                                     <option value="#">-- Jenis Pakaian --</option>
                                     <?php
-                                    $jenis = App\harga::select('id','jenis')->where('status','1')->get();
+                                    $jenis = App\harga::select('id','jenis')->where('status','1')->where('id_cabang',auth::user()->id)->get();
                                     ?>
                                     @foreach($jenis as $jenis)
                                     <option value="{{$jenis->id}}">{{$jenis->jenis}}</option>

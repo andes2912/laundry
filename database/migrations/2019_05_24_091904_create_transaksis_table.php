@@ -27,7 +27,10 @@ class CreateTransaksisTable extends Migration
             $table->string('hari');
             $table->string('harga');
             $table->string('disc')->nullable();
+            $table->string('harga_akhir')->nullable();
             $table->string('tgl');
+            $table->string('bulan');
+            $table->string('tahun');
             $table->date('tgl_ambil')->nullable();
             $table->string('notif');
             $table->timestamps();
