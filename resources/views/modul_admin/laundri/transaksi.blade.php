@@ -4,6 +4,21 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
+            <h4 class="card-title">
+               <div class="row">
+                    <div class="col-4">
+                        <select name="id_karyawan" id="id_karyawan" class="form-control">
+                            <option value="0">--Filter--</option>
+                                @foreach ($filter as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                        </select>
+                </div>
+                <div class="cl-3">
+                    <button class="btn btn-primary" id="filter">Filter</button>
+                </div>
+               </div>
+            </h4>
             <div class="table-responsive m-t-0">
                 <table id="myTable" class="table display table-bordered table-striped">
                     <thead>
@@ -18,7 +33,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="refresh_body">
                         <?php $no=1; ?>
                         @foreach ($transaksi as $item)
                         <tr>
@@ -98,6 +113,13 @@ $(document).ready(function() {
                 });
             }
         });
+    });
+});
+
+$("#filter").click(function(){
+    var id_karyawan  = $("#id_karyawan").val();
+    $.get('filter-transaksi',{'_token': $('meta[name=csrf-token]').attr('content'),id_karyawan:id_karyawan}, function(resp){
+    $("#refresh_body").html(resp); 
     });
 });
 </script>

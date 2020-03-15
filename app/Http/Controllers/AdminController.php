@@ -9,6 +9,7 @@ use App\transaksi;
 use App\harga;
 use Auth;
 use DB;
+use App\Helpers\Rupiah;
 
 class AdminController extends Controller
 {
@@ -280,7 +281,9 @@ class AdminController extends Controller
             $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->orderBy('id','DESC')->get();
-            return view('modul_admin.laundri.transaksi', compact('transaksi'));
+
+            $filter = User::select('id','name')->where('auth','Karyawan')->get();
+            return view('modul_admin.laundri.transaksi', compact('transaksi','filter'));
         } else {
             return redirect('home');
         }
@@ -393,6 +396,53 @@ class AdminController extends Controller
             $cek = User::where('auth','Karyawan')->first();
             $hitung = transaksi::where('id_karyawan', $cek->id)->get();
             return view('modul_admin.finance.cabang', compact('cabang','hitung'));
+        }
+    }
+
+    // Filter Transaksi
+    public function filtertransaksi(Request $request)
+    {
+        if (auth::check()) {
+            if (auth::user()->auth == "Admin") {
+                $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
+                ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
+                ->where('transaksis.id_karyawan', $request->id_karyawan)
+                ->get();
+
+                $return = "";
+                $no=1;
+                foreach($transaksi as $item) {
+                    $return .="<tr>
+                                    <td>".$no."</td>
+                                    <td>".$item->tgl_transaksi."</td>
+                                    <td>".$item->customer."</td>
+                                    <td>".$item->status_order."</td>
+                                    <td>".$item->status_payment."</td>
+                                    <td>".$item->jenis."</td>";
+                                    $return .="
+                                    <input type='hidden' value='".$item->kg * $item->harga."'>
+                                    <td>".Rupiah::getRupiah($item->kg * $item->harga)."</td>
+                                    ";
+                                    if ($item->status_order == "Diambil"){
+                                        $return .="<td><a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success style='color:white'>Invoice</a>
+                                        <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                                    }                                   
+                                elseif($item->status_order == "Selesai")
+                                  {
+                                    $return .="<td> <a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
+                                    <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                                  }
+                                elseif($item->status_order == "Proses")
+                                  {
+                                    $return .="<td> <a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
+                                    <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                                  }
+                    $return .= "</td>
+                    </tr>";
+                    $no++;
+                    }
+                    return $return;
+            }
         }
     }
 }

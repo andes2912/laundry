@@ -49,6 +49,9 @@ Route::resource('admin','AdminController');
     // Notifikasi
     Route::get('notif','AdminController@notif');
 
+    // Filter 
+    Route::get('filter-transaksi','AdminController@filtertransaksi');
+
 // Modul Karyawan
 Route::resource('pelayanan','PelayananController');
     // Transaksi
