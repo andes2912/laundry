@@ -1,0 +1,130 @@
+/* Section Container Setting */
+
+.section-container {
+    padding: 45px 0;
+    .clearfix();
+    
+    &.has-bg {
+        position: relative;
+        color: #fff;
+        
+        & .container {
+            position: relative;
+            z-index: 1020;
+        }
+        & .breadcrumb a {
+            color: #fff;
+        }
+        & .cover-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        
+            & img {
+                max-width: 100%;
+            }
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(36, 42, 48, 0.8);
+            }
+        }
+    }
+}
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: -5px 0 25px;
+    color: #212121;
+    
+    & a.pull-right {
+        font-size: 12px;
+        font-weight: bold;
+        color: #666;
+        border: 1px solid #ccc;
+        padding: 8px 15px;
+        line-height: 16px;
+        margin: -7px 0;
+        .border-radius(3px);
+        
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            background: #fff;
+            color: #212121;
+        }
+    }
+    & small {
+        margin-left: 5px;
+        font-weight: 400;
+        font-size: 14px;
+        color: #999;
+    }
+}
+
+
+/* Breadcrumb Setting */
+
+.breadcrumb {
+    padding: 0;
+    margin: 0;
+    background: none;
+    
+    & > li {
+        line-height: 28px;
+    
+        & a {
+            color: #333;
+        }
+    }
+}
+.ie8 .breadcrumb > li {
+    display: inline;
+}
+
+
+/* Page Header Setting */
+
+.page-header-container {
+    position: relative;
+}
+.page-header-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(36, 42, 48, 0.8);
+    }
+    & img {
+        max-width: 100%;
+    }
+}
+.page-header-container .container {
+    position: relative;
+}
+.page-header-container .page-header {
+    border: none;
+    color: #fff;
+    margin: 0;
+    font-size: 28px;
+    padding: 0;
+    text-align: center;
+}

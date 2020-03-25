@@ -1,0 +1,145 @@
+/* Navbar Setting */
+
+.header.navbar {
+    border-bottom: none;
+    .transition(all .2s linear);
+    
+    & .navbar-nav > li {
+        & > a {
+            font-size: 12px;
+            line-height: 20px;
+            color: #2d353c;
+            font-weight: 600;
+            padding: 25px 15px;
+        }
+        &.active > a,
+        & > a:hover,
+        & > a:focus {
+            background: none;
+        }
+    }
+}
+
+
+/* Navbar Brand Logo & Text Setting */
+
+.header .navbar-brand {
+    padding: 25px 15px;
+}
+.brand-logo {
+    float: left;
+    border: 15px solid;
+    border-color: #4DCACA #31A3A3 #1D8888;
+    margin-right: 10px;
+    margin-top: -5px;
+    border-radius: 4px;
+    
+    & + .brand-text {
+        margin-left: 42px;
+        display: block;
+        color: #2d353c;
+        font-size: 20px;
+        line-height: 20px;
+        display: block;
+    }
+}
+
+
+/* Navbar Mobile Toggle */
+
+.navbar-toggle {
+    margin-top: 18px;
+    margin-bottom: 18px;
+    .transition(all .2s linear);
+}
+
+
+/* Navbar Default Setting  */
+
+.header.navbar.navbar-default {
+    background: #fff;
+}
+
+
+/* Navbar Transparent & Inverse Setting  */
+
+.header.navbar.navbar-transparent {
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.header.navbar.navbar-transparent .navbar-nav > li > a,
+.header.navbar.navbar-inverse .navbar-nav > li > a {
+    color: #8F8E8E;
+}
+.header.navbar.navbar-transparent .brand-text,
+.header.navbar.navbar-inverse .brand-text {
+    color: #fff;
+}
+.navbar-transparent .navbar-toggle,
+.navbar-inverse .navbar-toggle {
+    border-color: #8F8E8E;
+}
+.navbar-transparent .navbar-toggle .icon-bar,
+.navbar-inverse .navbar-toggle .icon-bar {
+    background: #8f8e8e;
+}
+
+
+/* Navbar Small Setting */
+
+.header.navbar.navbar-small {
+    border-bottom: none;
+    .box-shadow(0 1px 2px rgba(0,0,0,0.2));
+    
+    & .navbar-brand,
+    & .navbar-nav > li > a {
+        padding: 15px;
+    }
+}
+.header.navbar.navbar-transparent.navbar-small {
+    background: #fff;
+    & .navbar-nav > li > a,
+    & .brand-logo + .brand-text {
+        color: #2d353c;
+    }
+}
+.navbar-small .navbar-toggle {
+    border-color: #ddd;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    
+    & .icon-bar {
+        background: #888;
+    }
+}
+
+
+/* Navbar Dropdown */
+
+.navbar-nav > li.dropdown:hover > .dropdown-menu,
+.navbar-nav > li.dropdown:focus > .dropdown-menu {
+    display: block;
+}
+.navbar-nav .dropdown-menu {
+    background: #333;
+    font-size: 12px;
+    padding: 0;
+    margin-top: 0;
+    border: none;
+    .border-radius(0);
+    
+    & > li {
+        & > a {
+            color: #999;
+            padding: 10px 15px;
+        }
+        &.active > a,
+        & > a:hover,
+        & > a:focus {
+            background: #222;
+            color: #00acac;
+        }
+        & + li {
+            border-top: 1px solid #444;
+        }
+    }
+}

@@ -1,0 +1,63 @@
+@import 'bootstrap/bootstrap';
+@import '_variable';
+@import '_mixins';
+@import '_header';
+@import '_content';
+@import '_footer';
+@import '_helper';
+@import '_pace_loader';
+@import '_page_setting';
+@import '_page_section_list';
+@import '_component_list';
+@import 'theme/_default';
+@import '_responsive';
+
+/* Reset and overrides */
+
+body {
+    background: @bg_body;
+    font-family: @body_font_family;
+    color: @body_text_color;
+    font-size: @body_font_size;
+}
+.ie8 body {
+    font-family: @ie8_body_font_family;
+}
+h1, h2, h3, h4, h5, h6{
+    font-weight: 500;
+    color: @heading_text_color;
+    margin-top: 0;
+    margin-bottom: 15px;
+    line-height: 1.25;
+}
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+    font-size: 60%;
+    font-weight: 300;
+    color: @heading_small_text_color;
+}
+a {
+    .transition(all .2s linear);
+}
+a:focus {
+    outline: none;
+}
+label {
+    color: @form_label_color;
+}
+p {
+    font-size: 12px;
+    line-height: 20px;
+}
+.row {
+    margin: 0 -15px;
+}
+.row > [class*="col-"] {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.contentAnimated {
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}

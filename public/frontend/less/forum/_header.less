@@ -1,0 +1,87 @@
+/* Navbar Element Setting */
+
+.navbar {
+    border: none;
+    .border-radius(0);
+    
+    &.navbar-default {
+        background: #fff;
+        .box-shadow(0 1px 3px rgba(0,0,0,0.125));
+        
+        & .navbar-brand {
+            color: #000;
+        }
+        & .navbar-nav > li > a {
+            color: #242a30;
+        }
+    }
+}
+.navbar-brand {
+    height: 60px;
+    line-height: 30px;
+    font-size: 16px;
+    
+    & img {
+    	display: block;
+    	max-height: 40px;
+    	margin: -5px 0;
+    }
+}
+.navbar-logo {
+    border: 15px solid transparent;
+    border-color: #4DCACA #31A3A3 #1D8888;
+    float: left;
+    margin-right: 10px;
+    .border-radius(6px);
+}
+.navbar-nav > li > a {
+    line-height: 30px;
+}
+.navbar-form,
+.navbar-toggle {
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+.navbar-form {
+    & .form-group {
+        position: relative;
+    }
+    & .form-control {
+        border-radius: 40px;
+        padding-right: 45px;
+    }
+    & .btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        background: none;
+        border: none;
+        font-size: 16px;
+        .border-radius(0 15px 15px 0);
+    }
+}
+
+
+/* Small Navbar Setting */
+
+.header.navbar .navbar-brand,
+.header.navbar .navbar-form,
+.header.navbar .navbar-nav > li > a,
+.header.navbar .navbar-toggle {
+    .transition(all .2s linear);
+}
+.navbar.navbar-sm {
+    & .navbar-brand {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 50px;
+    }
+    & .navbar-form,
+    & .navbar-toggle {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    & .navbar-nav > li > a {
+        line-height: 20px;
+    }
+}

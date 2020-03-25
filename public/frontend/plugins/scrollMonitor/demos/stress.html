@@ -1,0 +1,171 @@
+<!doctype html>
+<head>
+	<style type="text/css">
+		body {
+			font-family: helvetica, arial;
+		}
+		.center {
+			text-align: center;
+			margin: 20px;
+		}
+		#container span {
+			display: inline-block;
+			background-color: #ccc;
+			width: 75px;
+			height: 75px;
+			margin: 5px;
+			line-height: 75px;
+			text-align: center;
+			color: #999;
+			/*border: 1px solid black;*/
+		}
+		#container span.in {
+			background-color: #fcc;
+		}
+		#container span.partial-above {
+			background-color: #ccf;
+		}
+		#container span.partial-below {
+			background-color: #ffc;
+		}
+		
+		#counter {
+			position: fixed;
+			font-size: 30px;
+			top: 50%;
+			left: 50%;
+			color: black;
+			opacity: 0.8;
+			text-align: center;
+		}
+		#counter > div {
+			position: relative;
+			background-color: white;
+			padding: 30px;
+			border-radius: 30px;
+			left: -50%;
+			top: -80px;
+		}
+	​</style>
+</head>
+<body>
+<h1 class="center">scrollMonitor stress test</h1>
+<div class="center">
+	Showing <span class="fill-with-count"></span> elements.
+</div>
+<div class="center">
+	<a href="?100">100</a> -
+	<a href="?1000">1,000</a> -
+	<a href="?10000">10,000</a> -
+	<a href="?20000">20,000</a> -
+	<a href="?30000">30,000</a> -
+	<a href="?50000">50,000</a> -
+	<a href="?100000">100,000</a> -
+	<a href="?200000">200,000</a> -
+	<a href="?300000">300,000</a> -
+	<a href="?500000">500,000</a> -
+	<a href="?1000000">1,000,000</a>
+</div>
+<div id="container">
+</div>
+<div id="counter"><div><div id="status">Rendering elements...</div><div id="progress_numbers"></div><progress></progress></div></div>
+<a href="https://github.com/sakabako/scrollMonitor"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="../scrollMonitor.js"></script>
+<script type="text/javascript">
+	
+	var setImmediate = (function(){
+		var fnsQueue = [] 
+		  , hasSI = !!(window.setImmediate || window.msSetImmediate)
+		  , hasPM = window.addEventListener && window.postMessage 
+		
+		if ( !hasSI && hasPM  )
+		  window.addEventListener('message', function(e){
+			  if ( e.data === "sleipnirImmediate" ) if (fnsQueue.length)
+				fnsQueue.shift()() // take the first fn from the array and execute it
+		  }, false)
+		
+		return window.setImmediate || window.msSetImmediate ||
+			   (function(){
+				   if ( hasPM )
+					 return function(fn){
+						 fnsQueue.push(fn)
+						 window.postMessage('sleipnirImmediate', window.location.href)
+					 }
+				   return function(fn){
+					   setTimeout(fn, 0)
+				   }
+			   }())
+	}())
+	
+	//requirejs(['../scrollMonitor'], function( scrollMonitor ) {
+		var count = parseInt(window.location.search.substr(1), 10) || 10000;
+		$('.fill-with-count').html(count);
+		
+		var container = document.getElementById('container');
+		var counter = $('#progress_numbers')[0]
+		var progress = $('#counter progress')[0]
+		
+		var frag = document.createDocumentFragment();
+		var i = 0;
+		
+		function addElements() {
+			var elements = Array.prototype.slice.apply(frag.childNodes);
+			container.appendChild( frag );
+			elements.forEach(makeWatcher);
+		}
+		
+		function draw() {
+			var el;
+			while (i < count) {
+				el = document.createElement('span');
+				el.innerHTML = i += 1;
+				frag.appendChild(el);
+				
+				if ((i % 423) === 0) {
+					addElements();
+					counter.innerHTML = (i)+' of '+count;
+					progress.value = i;
+					break;
+				}
+			}
+			if (i === count) {
+				addElements();
+				$(counter).remove();
+				$('#status').html('recalculating locations...');
+				progress.removeAttribute('value');
+				setImmediate(function() {
+					scrollMonitor.recalculateLocations();
+					$('#counter').remove();
+				});
+			} else {
+				setImmediate(draw);
+			}
+		}
+		
+		progress.max = count;
+		draw();
+		
+		function makeWatcher( element ) {
+			var watcher = scrollMonitor.create( element );
+	
+			function addClass() {
+				if (!watcher.isInViewport) {
+					return
+				} else if (watcher.isFullyInViewport) {
+					element.style.backgroundColor = '#fcc'
+				} else if (watcher.isAboveViewport) {
+					element.style.backgroundColor = '#ccf'
+				} else if (watcher.isBelowViewport) {
+					element.style.backgroundColor = '#ffc'
+				}
+			}
+	
+			watcher.stateChange(addClass);
+			addClass();
+		}
+	
+	//});
+</script>
+
+</body>

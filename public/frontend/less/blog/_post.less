@@ -1,0 +1,171 @@
+/* Post List Setting */
+
+.post-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+    .clearfix();
+    
+    & > li {
+        padding: 0;
+        
+        & + li {
+            margin-top: 60px;
+        }
+    }
+}
+.post-left-info {
+    width: 50px;
+    float: left;
+    margin-right: 20px;
+}
+.post-date {
+    font-size: 12px;
+    line-height: 1.1;
+    margin: 0 auto 2px;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    
+    & .day {
+        color: #333;
+        font-size: 24px;
+        display: block;
+    }
+    & .month {
+        display: block;
+        font-size: 10px;
+        margin-top: 5px;
+        color: #333;
+    }
+    & + .post-likes {
+        border-top: 2px solid #ddd;
+    }
+}
+.post-likes {
+    padding: 10px 0;
+    text-align: center;
+    font-size: 12px;
+}
+.post-left-info + .post-content {
+    margin-left: 70px;
+}
+.post-image {
+    padding-top: 56%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 25px;
+    
+    & img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        max-width: 100%;
+    }
+}
+.post-image.post-image-with-carousel {
+    padding-top: 0;
+    
+    & .item {
+        padding-top: 56%;
+        overflow: hidden;
+    }
+}
+.post-video {
+    margin-bottom: 25px;
+}
+.post-list blockquote {
+    border: none;
+    background: #e9edef;
+    font-size: 18px;
+    padding: 30px;
+    color: #000;
+    margin-bottom: 25px;
+}
+.post-title {
+    margin: 0 0 5px;
+    font-size: 24px;
+    line-height: 30px;
+    color: #000;
+    
+    & a {
+        color: #000;
+    }
+}
+.post-by {
+    display: block;
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 20px;
+    padding: 0 0;
+    
+    & .divider {
+        margin: 0 5px;
+        font-size: 10px;
+        color: #333;
+        position: relative;
+        top: -1px;
+    }
+}
+.post-desc {
+    line-height: 20px;
+    color: #696969;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+.read-btn-container {
+    text-align: right;
+    font-size: 12px;
+    
+    & a {
+        color: #333;
+    }
+}
+
+
+/* Post Grid Setting */
+
+.post-grid {
+    margin: -10px;
+    
+    .clearfix();
+    
+    &.post-grid-2 > li,
+    &.post-grid-2 > .post-li {
+        width: 50%;
+    }
+    &.post-grid-3 > li,
+    &.post-grid-3 > .post-li {
+        width: 33.33%;
+    }
+    &.post-grid-4 > li,
+    &.post-grid-4 > .post-li {
+        width: 25%;
+    }
+    & .post-image,
+    & .post-video {
+        margin: -1px -1px 0;
+    }
+    & blockquote {
+        margin-bottom: 0;
+    }
+    & .post-title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+    & .post-content {
+        border: 1px solid rgba(0,0,0,0.125);
+    }
+    & .post-info {
+        padding: 15px;
+    }
+}
+.post-grid > li,
+.post-li {
+    width: 33.33%;
+    padding: 10px;
+}
+

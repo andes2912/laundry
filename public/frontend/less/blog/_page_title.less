@@ -1,0 +1,60 @@
+/* Page Title Element Setting */
+
+.page-title {
+    padding: 164px 0 100px;
+    text-align: center;
+    
+    & h1 {
+        margin: 0 0 10px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 48px;
+    }
+    & p {
+        display: block;
+        font-size: 21px;
+        color: rgba(255,255,255,0.8);
+        font-style: italic;
+        font-weight: 300;
+        font-family: Times New Roman;
+        margin: 0;
+    }
+}
+
+
+/* Section Title & Container Setting */
+
+.section-title {
+    font-size: 14px;
+    text-align: left;
+    margin: 0 0 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    color: #333;
+    text-align: center;
+    
+    & span {
+        position: relative;
+        z-index: 1020;
+        background: #fff;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        top: 0;
+        background: #222;
+        top: 50%;
+        margin-top: -1px;
+        z-index: 0;
+    }
+}
+.section-container {
+    margin-bottom: 50px;
+}

@@ -1,0 +1,57 @@
+<!doctype html>
+<head>
+	<style type="text/css">
+		body {
+			height: 10000px;
+		}
+		span {
+			position: absolute;
+			top: 100px;
+			left: 100px;
+			width: 300px;
+			height: 200px;
+
+			background-color: gray;
+		}
+		span.two {
+			left: 400px;
+			top: 1000px;
+			background-color: red;
+		}
+		span.three {
+			left: 700px;
+			top: 2000px;
+			background-color: blue;
+		}
+		span.fixed {
+			position: fixed;
+			top: 0;
+		}
+	​</style>
+</head>
+<body>
+<div>
+	<span class="one">One!</span>
+	<span class="two">Two!</span>
+	<span class="three">Three!</span>
+</div>
+<a href="https://github.com/sakabako/scrollMonitor"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="../scrollMonitor.js"></script>
+<script type="text/javascript">
+//requirejs(['../scrollMonitor'], function( scrollMonitor ) {
+
+	$('span').each(function(i, element) {
+
+		var watcher = scrollMonitor.create( element );
+
+		watcher.lock();
+
+		watcher.stateChange(function() {
+			$(element).toggleClass('fixed', this.isAboveViewport)
+		});
+
+	})
+//});
+</script>
+</body>

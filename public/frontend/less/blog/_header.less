@@ -1,0 +1,185 @@
+/* Header Setting */
+
+.header {
+    padding: 7px 0;
+    
+    &.navbar-sm {
+        padding: 2px 0;
+    }
+}
+
+
+/* Navbar Element Setting */
+
+.navbar {
+    border: none;
+    .transition(all .2s linear);
+    
+    .nav.navbar-nav {
+        & > li > a {
+            background: none;
+            padding: 15px 25px;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            color: #333;
+        }
+        & > li > a:hover,
+        & > li > a:focus {
+            background: none;
+        }
+        & > li.active > a,
+        & > li > a:hover,
+        & > li > a:focus {
+            color: #00a3a3;
+        }
+    }
+}
+
+
+/* Navbar Brand Setting */
+
+.navbar-brand {
+    line-height: 30px;
+    padding: 10px 15px;
+    
+    & img {
+    	height: 40px;
+    	display: block;
+    	margin: -5px 0;
+    }
+}
+.brand-text {   
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 16px;
+    color: #333;
+}   
+.brand-logo {
+    border: 15px solid transparent;
+    border-color: #4DCACA #31A3A3 #1D8888;
+    float: left;
+    margin-right: 10px;
+    border-radius: 20px;
+}
+
+
+/* Navbar Dropdown Setting */
+
+.navbar-sm .navbar-nav > li > .dropdown-menu {
+    margin-top: 2px;
+}
+.navbar-nav > li {
+    & > .dropdown-menu {
+        margin-top: 7px;
+        box-shadow: none;
+        padding: 0;
+        border: none;
+        font-size: 12px;
+        background: #f0f3f4;
+        border-radius: 0;
+    }
+    &.open .dropdown-menu {
+        background: #f0f3f4;
+    }
+    & > .dropdown-menu > li + li {
+        border-top: 1px solid #ddd;
+    }
+    & > .dropdown-menu > li > a {
+        line-height: 20px;
+        padding: 12px 20px;
+    }
+    & > .dropdown-menu > li > a:hover,
+    & > .dropdown-menu > li > a:focus {
+        background: #e4e7e8;
+    }
+}
+
+
+/* Navbar Theme - Default Setting */
+
+.navbar.navbar-default {
+    background: #fff;
+    .box-shadow(0 0 2px rgba(0,0,0,0.3));
+    
+    & .navbar-toggle {
+        background: #ddd;
+        
+        &:hover,
+        &:focus {
+            border-color: #ccc;
+            background: #ccc;
+        }
+        &:hover .icon-bar,
+        &:focus .icon-bar {
+            background: #333;
+        }
+    }
+}
+
+
+/* Navbar Theme - Transparent Setting */
+
+.navbar.navbar-transparent.navbar-sm {
+    background: #fff;
+    -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.3);
+    box-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+.navbar.navbar-transparent {
+    background: none;
+    
+    & .brand-text,
+    & .nav.navbar-nav > li > a {   
+        color: #fff;
+    }
+    &.navbar-sm .brand-text,
+    &.navbar-sm .nav.navbar-nav > li > a {
+        color: #333;
+    }
+    & .navbar-toggle {
+        border-color: transparent;
+        background: rgba(255,255,255,0.2);
+        
+        &:hover,
+        &:focus {
+            border-color: transparent;
+            background: rgba(255,255,255,0.5);
+        }
+        & .icon-bar,
+        & .icon-bar {
+            background: #fff;
+        }
+        &:hover .icon-bar,
+        &:focus .icon-bar {
+            background: #fff;
+        }
+    }
+}
+
+
+/* Navbar Theme - Inverse Setting */
+
+.navbar-inverse {
+    & .brand-text,
+    & .nav.navbar-nav > li > a {   
+        color: #fff;
+    }
+    & .navbar-toggle {
+        border-color: transparent;
+        background: rgba(255,255,255,0.2);
+        
+        &:hover,
+        &:focus {
+            border-color: transparent;
+            background: rgba(255,255,255,0.5);
+        }
+        & .icon-bar,
+        & .icon-bar {
+            background: #fff;
+        }
+        &:hover .icon-bar,
+        &:focus .icon-bar {
+            background: #fff;
+        }
+    }
+}

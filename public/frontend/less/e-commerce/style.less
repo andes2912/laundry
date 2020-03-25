@@ -1,0 +1,39 @@
+@import 'bootstrap/bootstrap';
+@import '_variable';
+@import '_mixins';
+@import '_top_nav';
+@import '_header';
+@import '_footer';
+@import '_footer_copyright';
+@import '_footer_policy_subscription';
+@import '_content';
+@import '_pace_loader';
+@import '_page_section_list';
+@import '_component_list';
+@import '_helper';
+@import 'theme/_default';
+@import '_responsive';
+
+/* Reset and Overrides */
+
+body {
+    background: @bg_body;
+    font-family: @body_font_family;
+    -webkit-font-smoothing: antialiased;
+}
+.dropdown.dropdown-hover:hover .dropdown-menu,
+.dropdown.dropdown-hover:focus .dropdown-menu {
+    display: block
+}
+a {
+    color: @green;
+    .transition(all 0.2s cubic-bezier(0.6, 0.045, 0.4, 1));
+}
+a:hover,
+a:focus,
+a:active {
+    color: @green;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+	font-weight: 600;
+}

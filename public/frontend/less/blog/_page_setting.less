@@ -1,0 +1,109 @@
+/* Details Page Setting */
+
+.post-detail {
+    & .post-image {
+        margin-bottom: 15px;
+    }
+    & .post-by {
+        font-size: 12px;
+    }
+    & .post-desc {
+        margin-bottom: 30px;
+    }
+    & .post-desc p {
+        margin-bottom: 0;
+        
+        & + p {
+            margin-top: 15px;
+        }
+    }
+}
+
+
+/* Details Page Comment Section Setting */
+
+.comment-list {
+    list-style-type: none;
+    margin: 0 0 30px;
+    padding: 0;
+    color: #2d353c;
+    
+    & > li {
+        padding: 20px;
+        
+        .clearfix();
+        
+        & + li {
+            border-top: 2px solid #eee;
+        }
+    }
+    & .comment-avatar {
+        width: 70px;
+        height: 70px;
+        overflow: hidden;
+        -webkit-border-radius: 70px;
+        -moz-border-radius: 70px;
+        border-radius: 70px;
+        margin-right: 20px;
+        float: left;
+        background: #d9e0e7;
+        text-align: center;
+        line-height: 84px;
+        font-size: 62px;
+        color: #929ba1;
+        
+        & img {
+            max-width: 100%;
+            display: block;
+        }
+        & + .comment-container {
+            margin-left: 90px;
+        }
+    }
+    & .comment-author {
+        font-size: 16px;
+        color: #2d353c;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    & .comment-date {
+        font-size: 12px;
+        font-weight: normal;
+        margin-left: 5px;
+        color: #999;
+    }
+    & .comment-content {
+        font-size: 13px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+    & .comment-rating {
+        font-size: 11px;
+        text-align: right;
+        font-weight: 600;
+        color: #999;
+        margin-bottom: 10px;
+    }
+    & .comment-btn {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+    & .comment-list {
+        border-bottom: none;
+        margin-top: 30px;
+        margin-bottom: 0;
+        border-top: 2px solid #eee;
+        
+        & > li {
+            padding-bottom: 0;
+        }
+    }
+}
+
+
+/* About Us Page Comment Section Setting */
+
+.about-me-desc {
+    line-height: 24px;
+    margin-bottom: 12px;
+}

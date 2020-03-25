@@ -1,0 +1,51 @@
+/* Top Navbar Element Setting */
+
+.top-nav {
+    background: @dark_black;
+    z-index: 1040;
+    position: relative;
+    
+    & .nav {
+        & > li > a {
+            font-size: 12px;
+            line-height: 20px;
+            padding: 10px;
+            color: #fff;
+            .transition(opacity 0.2s cubic-bezier(0.6, 0.045, 0.4, 1));
+        }
+        &:first-child {
+            margin-left: -15px;
+        }
+        & > li > a:hover,
+        & > li > a:focus {
+            background: none;
+            color: #fff;
+            .opacity(0.65);
+        }
+    }
+    
+    & .flag-img {
+        float: left;
+        margin-top: 4px;
+        margin-right: 5px;
+        height: 12px;
+    }
+    & .dropdown-menu {
+        background: @black;
+        
+        
+        & .flag-img {
+            margin-right: 10px;
+            margin-left: -5px;
+            width: 20px;
+        }
+        & > li > a {
+            line-height: 20px;
+            color: #fff;
+        }
+        & > li > a:hover,
+        & > li > a:focus {
+            background: @black;
+        }
+    }
+}

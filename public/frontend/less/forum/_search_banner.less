@@ -1,0 +1,77 @@
+/* Search Banner Element Setting */
+
+.search-banner {
+    padding: 60px 0;
+    
+    & h1 {
+        color: #fff;
+        font-size: 36px;
+        text-align: center;
+        margin: 0 0 15px;
+        font-weight: 600;
+    }
+    & p {
+        margin-bottom: 0;
+        color: rgba(255,255,255,0.8);
+    }
+    & .container {
+        width: 640px;
+    }
+    & .form-control {
+        padding-left: 20px;
+        padding-right: 20px;
+        font-size: 16px;
+        border: none;
+        .border-radius(6px);
+    }
+    & .form-group {
+        position: relative;
+    }
+    & .btn {
+        background: #fff;
+        color: #242a30;
+        .border-radius(6px);
+    }
+    & p {
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+        font-weight: 300;
+    }
+}
+
+
+/* Search Banner Popular Tags Setting */
+
+.popular-tags {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+    & > li {
+        display: inline-block;
+        margin-right: 3px;
+        margin-bottom: 5px;
+        
+        & > a {
+            padding: 3px 10px;
+            border: 2px solid #ccc;
+            color: #fff;
+            display: inline-block;
+            .border-radius(40px);
+        }
+        & > a:hover,
+        & > a:focus {
+            text-decoration: none;
+            color: #fff;
+            border-color: #fff;
+        }
+        & > a .fa {
+            font-size: 6px;
+            margin-right: 3px;
+            position: relative;
+            top: -2px;
+            color: #fff !important;
+        }
+    }
+}

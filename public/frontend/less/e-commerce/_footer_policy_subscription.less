@@ -1,0 +1,71 @@
+/* Footer Policy Element Setting */
+
+.policy {
+    & .policy-icon {
+        float: left;
+        width: 50px;
+        font-size: 38px;
+        line-height: 50px;
+        color: #999;
+        text-align: center;
+    }
+    & .policy-icon + .policy-info {
+        margin-left: 65px;
+    }
+    & .policy-info h4 {
+        margin: 0;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 600;
+    }
+    & .policy-info p {
+        font-size: 12px;
+        color: #777;
+        margin: 0;
+    }
+}
+
+
+/* Social & Subscription Element Setting */
+
+.social,
+.subscription {
+    display: table;
+    width: 100%;
+}
+.social .social-list,
+.social .social-intro,
+.subscription .subscription-intro,
+.subscription .subscription-form {
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+}
+.subscription .subscription-form {
+    padding: 0 30px;
+}
+.social .social-intro h4,
+.subscription .subscription-intro h4 {
+    margin: 0;
+    font-weight: 600;
+}
+.social .social-intro p,
+.subscription .subscription-intro p {
+    color: #666;
+    margin: 0;
+}
+.social .social-list {
+    text-align: center;
+}
+.social .social-list a {
+    color: #999;
+    font-size: 24px;
+}
+.social .social-list a:hover,
+.social .social-list a:focus {
+    color: #212221;
+    text-decoration: none;
+}
+.social .social-list a + a {
+    margin-left: 20px;
+}

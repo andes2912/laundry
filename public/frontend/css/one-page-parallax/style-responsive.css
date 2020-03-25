@@ -1,0 +1,251 @@
+/*
+Template Name: Color Admin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3 & 4
+Version: 4.0.0
+Author: Sean Ngu
+Website: http://www.seantheme.com/color-admin-v4.0/frontend/one-page-parallax/
+*/
+
+@media (min-width: 1920px) {
+	body {
+		font-size: 16px;
+	}
+	.container {
+		min-width: 1360px;
+	}
+    .content.has-bg .content-bg img {
+        width: 100%;
+    }
+	.header .navbar-brand {
+		height: auto;
+	}
+	.brand-logo {
+		border-width: 20px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	.brand-logo + .brand-text {
+		margin-left: 56px;
+		font-size: 26px;
+		line-height: 40px;
+	}
+	.skills .skills-name {
+		font-size: 16px;
+	}
+	.navbar-nav .dropdown-menu {
+		font-size: 16px;
+	}
+	.header.navbar .navbar-nav > li > a {
+		font-size: 16px;
+		line-height: 40px;
+	}
+	.about-author .author .info {
+		font-size: 16px;
+	}
+	.about-author .author .info small {
+		font-size: 14px;
+	}
+	.home-content h1 {
+		font-size: 80px;
+	}
+	.home-content h3 {
+		font-size: 36px;
+	}
+	.team .title {
+		font-size: 14px;
+	}
+	.quote {
+		font-size: 36px;
+	}
+	.quote small {
+		font-size: 16px;
+	}
+	.service .title {
+		font-size: 20px;
+	}
+	.service .icon {
+		width: 60px;
+		height: 60px;
+		line-height: 60px;
+    	font-size: 32px;
+	}
+	.service .icon + .info {
+		margin-left: 80px;
+	}
+	.action-box .icon-large {
+		font-size: 56px;
+		line-height: 60px;
+    	width: 60px;
+	}
+	.action-box h3 {
+		font-size: 28px;
+	}
+	.content .content-title {
+		font-size: 36px;
+	}
+	p {
+		line-height: 24px;
+	}
+	.btn {
+		font-size: 16px;
+		padding: 15px 30px;
+	}
+	.pricing-table h3 {
+		font-size: 16px;
+	}
+	.pricing-table .features > li {
+		padding: 15px 0;
+	}
+	.pricing-table .highlight .features > li {
+		padding: 20px 0;
+	}
+	.pricing-table .price .price-number {
+		font-size: 32px;
+	}
+	.pricing-table .price .price-tenure {
+		font-size: 14px;
+	}
+	.pricing-table .price .price-figure {
+		height: 90px;
+	}
+	.theme-panel {
+		width: 248px;
+		right: -248px;
+	}
+	.theme-panel .theme-list > li + li {
+		margin-left: 7px;
+	}
+	.theme-panel .theme-list > li > a {
+		width: 40px;
+		height: 40px;
+	}
+	.theme-panel .theme-panel-content {
+		padding: 10px;
+	}
+    .theme-panel .theme-collapse-btn {
+    	width: 60px;
+    	height: 60px;
+    	left: -60px;
+    	margin-top: -30px;
+    	font-size: 24px;
+    	line-height: 60px;
+    }
+    .theme-panel .theme-list > li.active > a:before {
+    	font-size: 20px;
+    	line-height: 40px;
+    }
+    .tooltip {
+    	font-size: 16px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .content.has-bg .content-bg img {
+        max-height: 100%;
+        max-width: inherit;
+    }
+    .content .content-desc {
+        margin-bottom: 30px;
+    }
+}
+@media (min-width: 768px) and (max-width: 992px) {
+    .header.navbar .navbar-nav > li > a {
+        padding: 25px 10px;
+    }
+    .header.navbar.navbar-small .navbar-nav > li > a {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .home-content h1 {
+        font-size: 48px;
+    }
+    .home-content h3 {
+        font-size: 24px;
+    }
+    .home-content h1, .home-content h2, .home-content h3, .home-content h4 {
+        margin: 0 0 15px;
+    }
+    .home-content p {
+        margin-bottom: 30px;
+    }
+}
+@media (max-width: 992px) { 
+    .about-author .author {
+        padding-left: 80px;
+    }
+    .about-author .author .image {
+        width: 80px;
+    }
+}
+@media (max-width: 767px) {
+    .header.navbar .navbar-nav > li > a {
+        padding: 10px 15px;
+    }
+    .navbar-transparent .navbar-collapse {
+        background: #000;
+        background: rgba(0,0,0,0.9);
+    }
+    .header.navbar-small.navbar-transparent .navbar-collapse {
+        background: #000;
+        background: rgba(0,0,0,0.9);
+    }
+    .header.navbar-small.navbar-transparent .navbar-collapse .navbar-nav > li > a {
+        color: #8F8E8E;
+    }
+    .header.navbar.navbar-small .navbar-nav > li > a {
+        padding: 10px 15px;
+    }
+    .navbar-nav > li.dropdown:hover > .dropdown-menu,
+    .navbar-nav > li.dropdown:focus > .dropdown-menu {
+        display: none;
+    }
+    .navbar-nav > li.dropdown.open > .dropdown-menu,
+    .navbar-nav > li.dropdown.open:hover > .dropdown-menu,
+    .navbar-nav > li.dropdown.open:hover > .dropdown-menu {
+        display: block;
+        -webkit-animation: none;
+        animation: none;
+    }
+    .navbar-nav > li.dropdown > .dropdown-menu {
+        border-top: 1px solid #444;
+        border-bottom: 1px solid #444;
+    }
+    .navbar-default .navbar-nav > li.dropdown > .dropdown-menu,
+    .navbar-default .navbar-nav > li.dropdown > .dropdown-menu > li + li {
+        border-color: #e7e7e7;
+    }
+    .home-content h1 {
+        font-size: 36px;
+    }
+    .home-content h3 {
+        font-size: 18px;
+    }
+    .home-content h1, .home-content h2, .home-content h3, .home-content h4 {
+        margin: 0 0 15px;
+    }
+    .home-content p {
+        margin-bottom: 30px;
+    }
+    .milestone-col + .milestone-col {
+        border: none;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        margin-top: 15px;
+        padding-top: 15px !important;
+    }
+    .team {
+        margin-bottom: 30px;
+    }
+    .action-box .btn {
+        margin-top: 15px;
+    }
+    .pricing-table.col-4 > li,
+    .pricing-table.col-3 > li {
+        width: 100%;
+    }
+    .pricing-table .highlight {
+        margin-top: 0 !important;
+        padding: 10px !important;
+    }
+}

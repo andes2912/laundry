@@ -1,0 +1,28 @@
+/*
+Template Name: Color Admin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3 & 4
+Version: 4.0.0
+Author: Sean Ngu
+Website: http://www.seantheme.com/color-admin-v4.0/frontend/blog/
+*/
+.brand-logo {
+    border-color: #6670AC #5b6392 #444a6d;
+}
+a,
+.sidebar-social-list > li a:hover,
+.sidebar-social-list > li a:focus,
+.navbar .nav.navbar-nav > li.active > a, 
+.navbar .nav.navbar-nav > li > a:focus, 
+.navbar .nav.navbar-nav > li > a:hover {
+    color: #727cb6;
+}
+a:hover,
+a:focus {
+    color: #5b6392;
+}
+.pace-progress {
+    background: #727cb6;
+}
+.pace .pace-activity {
+    border-top-color: #727cb6;
+    border-left-color: #727cb6;
+}

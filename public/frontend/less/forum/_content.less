@@ -1,0 +1,85 @@
+/* Content Element Setting */
+
+.content {
+    padding: 30px 0 60px;
+}
+
+
+/* Content Has Background Setting */
+
+.has-bg,
+.has-bg .container {
+    position: relative;
+    color: #fff;
+}
+.has-bg {
+    & .bg-cover,
+    & .bg-cover:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+    }
+    & .bg-cover:before {
+        content: '';
+        background: url('images/transparent/black-0.4.png');
+    }
+    & .bg-cover img {
+        max-width: 100%;
+        min-height: 100%;
+    }
+}
+
+
+/* Section Container Setting */
+
+.section-container {
+    margin-bottom: 30px;
+}
+
+
+/* Breadcrumb Setting */
+
+.breadcrumb {
+    background: #e2e7eb;
+    color: #242a30;
+    font-weight: bold;
+    
+    & > li a {
+        color: #242a30;
+    }
+     & > li + li:before {
+        font-weight: normal;
+    }
+}
+
+
+/* Page Title Setting */
+
+.page-title {
+    padding: 30px 0;
+    
+    & .breadcrumb {
+        background: none;
+        padding: 0;
+        font-weight: normal;
+        margin-bottom: 10px;
+    }
+    &.has-bg .breadcrumb {
+        color: #fff;
+    }
+    &.has-bg .breadcrumb > li a {
+        color: #ccc;
+    }
+    & h1 {
+        font-size: 28px;
+        margin: 0;
+    }
+    & h5 {
+        font-size: 12px;
+        font-weight: bold;
+        color: #fff;
+    }
+}

@@ -1,0 +1,51 @@
+/* -------------------------------
+   4.0 Content Setting
+------------------------------- */
+
+/* Content Element Setting */
+
+.content {
+    margin: 84px 0 60px;
+}
+.page-title + .content {
+    margin-top: 60px;
+}
+.breadcrumb {
+    font-size: 12px;
+    background: none;
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+
+/* Content Bg Setting */
+
+.has-bg {
+    position: relative;
+    overflow: hidden;
+    
+    & .bg-cover {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+    & .bg-cover:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: url('images/transparent/black-0.4.png');
+    }
+    & .bg-cover img {
+        max-width: 100%;
+        min-height: 100%;
+    }
+    & .container {
+        position: relative;
+        z-index: 1020;
+    }
+}

@@ -1,0 +1,96 @@
+/* Pagination & pager */
+
+.pager li > a, 
+.pager li > span,
+.pagination > li > a,
+.pagination > li > span {
+    border-color: #e2e7eb;
+    color: #242a30;
+    border: none;
+    padding: 7px 9px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #999;
+    .border-radius(5px) !important;
+}
+.pager.pager-without-border li > a, 
+.pager.pager-without-border li > span,
+.pagination.pagination-without-border > li > a {
+    border-color: #fff;
+}
+.pagination > .disabled > span, 
+.pagination > .disabled > span:hover, 
+.pagination > .disabled > span:focus, 
+.pagination > .disabled > a, 
+.pagination > .disabled > a:hover, 
+.pagination > .disabled > a:focus,
+.pager > .disabled > span,
+.pager > .disabled > a {
+    .opacity(0.6);
+    border-color: #ddd;
+}
+.pagination-sm > li > a, 
+.pagination-sm > li > span {
+    font-size: 10px;
+    margin-left: 4px;
+}
+.pagination-lg > li > a, 
+.pagination-lg > li > span {
+    font-size: 14px;
+    margin-left: 6px;
+}
+.pager li > a:hover, 
+.pager li > a:focus, 
+.pager li > span:hover,
+.pager li > span:focus,
+.pagination > li > a:hover,
+.pagination > li > a:focus {
+    color: #242a30;
+    background: #e2e7eb;
+    border-color: #d8dde1;
+}
+
+.pagination > {
+    & li > a,
+    & li > span {
+        color: #242a30;
+        margin-left: 6px;
+    }
+    & li:first-child > a {
+        margin-left: 0;
+    }
+    & .active > a,
+    & .active > span,
+    & .active > a:hover, 
+    & .active > span:hover, 
+    & .active > a:focus, 
+    & .active > span:focus {
+        background: #e2e7eb !important;
+        color: #242a30;
+    }
+    & li.text > span,
+    & li.text > span:hover,
+    & li.text > span:focus {
+        background: none;
+        color: #999;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    & li.active > a,
+    & li.active > a:hover,
+    & li.active > a:focus {
+        background: #e2e7eb !important;
+        color: #242a30;
+    }
+    & li.left > a,
+    & li.right > a {
+        background: #242a30;
+        color: #fff;
+    }
+    & li.left > a:hover,
+    & li.right > a:hover,
+    & li.left > a:focus,
+    & li.right > a:focus {
+        background: #00acac;
+    }
+}

@@ -1,0 +1,75 @@
+/* Sidebar Social List Setting */
+
+.sidebar-social-list {
+    line-height: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 0;
+    
+    & > li {
+        display: inline;
+        font-size: 18px;
+        float: left;
+        
+        & a {
+            color: #333;
+            padding: 0 10px;
+            
+            &:hover,
+            &:focus {
+                color: #00acac;
+            }
+        }
+    }
+}
+
+
+/* Sidebar Recent Post Setting */
+
+.sidebar-recent-post {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+    .clearfix();
+    
+    & > li {
+        padding: 10px 0;
+        
+        & + li {
+            border-top: 1px solid #ddd;
+        }
+        & .title {
+            margin: 0;
+            font-size: 13px;
+            text-transform: initial;
+            letter-spacing: 0;
+            line-height: 20px;
+        }
+        & .title a {
+            color: #333;
+        }
+        & .date {
+            font-size: 11px;
+            color: #999;
+        }
+    }
+}
+
+
+/* Sidebar List Setting */
+
+.sidebar-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    
+    &  > li > a {
+        line-height: 20px;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+        display: block;
+        padding: 10px 0;
+    }
+}

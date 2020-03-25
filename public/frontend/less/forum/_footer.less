@@ -1,0 +1,79 @@
+/* Footer Element Setting */
+
+.footer {
+    margin: 0;
+    border: none;
+    padding: 60px 0 30px;
+    background: #242a30;
+    .box-shadow(inset 0 100px 80px -80px rgba(0,0,0,.7));
+    
+    & h4 {
+        font-weight: 600;
+        color: #CFD0D1;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        margin: 0 0 20px;
+    }
+    & p {
+        color: #A6A9AB;
+        font-size: 12px;
+        line-height: 20px;
+        margin-bottom: 0;
+    }
+    & .latest-post {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        
+        & > li {
+            & + li {
+                margin-top: 10px;
+            }
+            & .title,
+            & .title a {
+                margin: 0;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 20px;
+                color: #CFD0D1;
+            }
+            & .time {
+                font-size: 11px;
+            }
+        }
+    }
+    
+    & .new-user {
+        list-style-type: none;
+        margin: -5px;
+        padding: 0;
+        
+        & > li {
+            float: left;
+            width: 20%;
+            padding: 5px;
+            
+            & img {
+                max-width: 100%;
+            }
+        }
+    }
+}
+
+
+/* Footer Copyright Setting */
+
+.footer-copyright {
+    padding: 20px 0;
+    color: #A6A9AB;
+    background: #1d2226;
+    
+    & a {
+        float: right;
+        color: #CFD0D1;
+        
+        & + a {
+            margin-right: 15px;
+        }
+    }
+}

@@ -1,0 +1,78 @@
+/* My Account Page Element Setting */
+
+.account-container {
+    background: #fff;
+    position: relative;
+    .border-radius(6px);
+    
+    & .account-sidebar {
+        width: 300px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        padding: 20px 30px;
+        overflow: hidden;
+        .border-radius(6px 0 0 6px);
+        
+        & .account-sidebar-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            
+            & img {
+                max-height: 100%;
+            }
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background: rgba(36, 42, 48, 0.8);
+            }
+        }
+        & .account-sidebar-content {
+            position: relative;
+            color: #fff;
+            
+            & h4 {
+                font-size: 24px;
+                font-weight: 500;
+            }
+            & p {
+                color: rgba(255,255,255,0.75);
+            }
+        }
+    }
+    & .account-body {
+        margin-left: 300px;
+        padding: 20px 30px;
+        
+        & h4 {
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 26px;
+            margin-bottom: 5px;
+        }
+        & .nav.nav-list {
+            margin-bottom: 30px;
+            
+            & > li > a {
+                padding: 0;
+                color: #777;                
+            }
+            & > li + li {
+                margin-top: 5px;
+            }
+            & > li > a:hover,
+            & > li > a:focus {
+                background: none;
+                color: #212121;
+            }
+        }
+    }
+}
