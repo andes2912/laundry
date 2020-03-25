@@ -93,7 +93,8 @@
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Berat Per-Kg</label>
-                                        <input type="text" class="form-control form-control-danger" name="kg" value="{{ old('kg') }}" placeholder="Berat" autocomplete="off" required>
+                                        <input type="number" class="form-control form-control-danger" name="kg" value="{{ old('kg') }}" placeholder="Berat" autocomplete="off" required>
+                                        <small class="form-control-feedback "> Tulisakan Angka 1-10 </small>
                                     </div>
                                 </div>
                             </div>
@@ -103,6 +104,7 @@
                                     <div class="form-group has-success">
                                         <label class="control-label">Harga Per-Kg</label>
                                         <input type="number" class="form-control form-control-danger" name="harga" value="{{ old('harga') }}"placeholder="Harga Per-Kg" autocomplete="off" required>
+                                        <small class="form-control-feedback "> Tuliskan Tanpa tanda ',' dan '.' </small>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-xl-12">
