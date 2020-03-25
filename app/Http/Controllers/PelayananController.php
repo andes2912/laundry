@@ -8,6 +8,7 @@ use App\customer;
 use App\harga;
 use Auth;
 use PDF;
+use Mail;
 use carbon\carbon;
 
 class PelayananController extends Controller
@@ -90,7 +91,23 @@ class PelayananController extends Controller
             $order->tgl     = Carbon::now()->day;
             $order->bulan     = Carbon::now()->month;
             $order->tahun     = Carbon::now()->year;
-            $order->save();
+            if ($order->save()) {
+
+                // Menyiapkan data
+                $email = 'andridesmana29@outlook.com';
+                $data = array(
+                    'invoice' => $order->invoice,
+                    'customer' => $order->customer,
+                    'tgl_transaksi' => $order->tgl_transaksi,
+                );
+                    
+                // Kirim Email
+                Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
+                $mail->to($email,'no-replay')
+                        ->subject("E-Laundry - Nomor Invoice");
+                $mail->from('laundri.dev@gmail.com');
+                });
+            }
 
             return redirect('pelayanan');
         } else {
@@ -258,7 +275,22 @@ class PelayananController extends Controller
             $statusorder->update([
                 'status_order' => $request->status_order,
             ]);
-            return $statusorder;
+            if ($statusorder->status_order == 'Selesai') {
+                 // Menyiapkan data
+                 $email = 'andridesmana29@outlook.com';
+                 $data = array(
+                     'invoice' => $statusorder->invoice,
+                     'customer' => $statusorder->customer,
+                     'tgl_transaksi' => $statusorder->tgl_transaksi,
+                 );
+                     
+                 // Kirim Email
+                 Mail::send('karyawan.email.selesai', $data, function($mail) use ($email, $data){
+                 $mail->to($email,'no-replay')
+                         ->subject("E-Laundry - Laundry Selesai");
+                 $mail->from('laundri.dev@gmail.com');
+                 });
+            }
         } else {
             return redirect('/home');
         }
