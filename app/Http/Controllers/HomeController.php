@@ -7,6 +7,7 @@ use App\transaksi;
 use App\customer;
 use Auth;
 use DB;
+use Carbon\carbon;
 
 class HomeController extends Controller
 {
@@ -66,6 +67,20 @@ class HomeController extends Controller
                     }
                 }
 
+                // Statistik Bulanan
+                $jan = transaksi::where('bulan', 1)->count();
+                $feb = transaksi::where('bulan', 2)->count();
+                $mar = transaksi::where('bulan', 3)->count();
+                $apr = transaksi::where('bulan', 4)->count();
+                $mey = transaksi::where('bulan', 5)->count();
+                $juni = transaksi::where('bulan', 6)->count();
+                $july = transaksi::where('bulan', 7)->count();
+                $aug = transaksi::where('bulan', 8)->count();
+                $sep = transaksi::where('bulan', 9)->count();
+                $oct = transaksi::where('bulan', 10)->count();
+                $nov = transaksi::where('bulan', 11)->count();
+                $dec = transaksi::where('bulan', 12)->count();
+
                 return view('modul_admin.index')
                     ->  with('data', $data)
                     ->  with('masuk',$masuk)
@@ -75,7 +90,8 @@ class HomeController extends Controller
                     ->  with('belumbayar', $belumbayar)
                     ->  with('_tanggal', substr($tanggal, 0,-1))
                     ->  with('_nilai', substr($nilai, 0, -1))
-                    ->  with('diambil',$diambil);
+                    ->  with('diambil',$diambil)
+                    ->  with('jan', $jan)->  with('feb', $feb)->  with('mar', $mar)->  with('apr', $apr)->  with('mey', $mey)->  with('juni', $juni)->  with('july', $july)->  with('aug', $aug)->  with('sep', $sep)->  with('oct', $oct)->  with('nov', $nov)->  with('dec', $dec);
 
             } elseif(Auth::user()->auth === "Karyawan") {
                 $masuk = transaksi::whereIN('status_order',['Proses','Selesai','Diambil'])->where('id_karyawan',auth::user()->id)->count();
@@ -111,7 +127,21 @@ class HomeController extends Controller
                     }
                 }
 
-                return view('pelayanan.index')
+                // Statistik Bulanan
+                $jan = transaksi::where('bulan', 1)->where('id_karyawan',auth::user()->id)->count();
+                $feb = transaksi::where('bulan', 2)->where('id_karyawan',auth::user()->id)->count();
+                $mar = transaksi::where('bulan', 3)->where('id_karyawan',auth::user()->id)->count();
+                $apr = transaksi::where('bulan', 4)->where('id_karyawan',auth::user()->id)->count();
+                $mey = transaksi::where('bulan', 5)->where('id_karyawan',auth::user()->id)->count();
+                $juni = transaksi::where('bulan', 6)->where('id_karyawan',auth::user()->id)->count();
+                $july = transaksi::where('bulan', 7)->where('id_karyawan',auth::user()->id)->count();
+                $aug = transaksi::where('bulan', 8)->where('id_karyawan',auth::user()->id)->count();
+                $sep = transaksi::where('bulan', 9)->where('id_karyawan',auth::user()->id)->count();
+                $oct = transaksi::where('bulan', 10)->where('id_karyawan',auth::user()->id)->count();
+                $nov = transaksi::where('bulan', 11)->where('id_karyawan',auth::user()->id)->count();
+                $dec = transaksi::where('bulan', 12)->where('id_karyawan',auth::user()->id)->count();
+
+                return view('karyawan.index')
                     ->  with('diambil', $diambil)
                     ->  with('masuk',$masuk)
                     ->  with('selesai',$selesai)
@@ -119,7 +149,8 @@ class HomeController extends Controller
                     ->  with('sudahbayar', $sudahbayar)
                     ->  with('belumbayar', $belumbayar)
                     ->  with('_tanggal', substr($tanggal, 0,-1))
-                    ->  with('_nilai', substr($nilai, 0, -1));
+                    ->  with('_nilai', substr($nilai, 0, -1))
+                    ->  with('jan', $jan)->  with('feb', $feb)->  with('mar', $mar)->  with('apr', $apr)->  with('mey', $mey)->  with('juni', $juni)->  with('july', $july)->  with('aug', $aug)->  with('sep', $sep)->  with('oct', $oct)->  with('nov', $nov)->  with('dec', $dec);
             }else{
                 Auth::logout();
             }

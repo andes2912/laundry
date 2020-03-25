@@ -1,16 +1,14 @@
-@extends('layouts.admin_template')
+@extends('layouts.backend')
 @section('title','Admin - Data Administrator')
 @section('header','Data Administrator')
 @section('content')
-<div class="col-lg-12">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
-                <a href="{{route('admin.create')}}" class="btn btn-sm btn-primary">Tambah</a>
+                
             </h4>
-            
-            <div class="table-responsive full-color-table full-inverse-table hover-table">
-                <table class="table color-table info-table">
+            <div class="table-responsive">
+                <table class="table zero-configuration">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -50,5 +48,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

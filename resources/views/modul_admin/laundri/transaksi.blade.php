@@ -1,4 +1,4 @@
-@extends('layouts.admin_template')
+@extends('layouts.backend')
 @section('title','Admin - Data Transaksi')
 @section('content')
 <div class="col-lg-12">

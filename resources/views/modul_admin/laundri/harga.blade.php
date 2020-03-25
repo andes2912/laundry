@@ -1,4 +1,4 @@
-@extends('layouts.admin_template')
+@extends('layouts.backend')
 @section('title','Admin - Data Harga Laundri')
 @section('content')
 <div class="col-lg-12">
@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">
-                        <a class="btn btn-sm btn-primary" style="color:white">Tambah</a>
+                        <a class="btn btn-primary" style="color:white">Tambah</a>
                     </h4>
                     <div class="table-responsive m-t-0">
                         <table id="myTable" class="table display table-bordered table-striped">

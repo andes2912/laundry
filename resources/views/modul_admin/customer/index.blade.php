@@ -1,4 +1,4 @@
-@extends('layouts.admin_template')
+@extends('layouts.backend')
 @section('title','Admin - Data Customer')
 @section('header','Data Customer')
 @section('content')
@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
-                <a href="{{url('customer-add')}}" class="btn btn-sm btn-primary">Tambah</a>
+                <a href="{{url('customer-add')}}" class="btn btn-primary">Tambah</a>
             </h4>
             
             <div class="table-responsive m-t-0">

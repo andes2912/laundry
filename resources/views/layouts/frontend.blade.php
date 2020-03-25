@@ -22,7 +22,12 @@
 	
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="{{asset('frontend/plugins/pace/pace.min.js')}}"></script>
-	<!-- ================== END BASE JS ================== -->
+    <!-- ================== END BASE JS ================== -->
+    <style type="text/css">
+        body {
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
     <!-- begin #header -->
@@ -36,7 +41,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="index.html" class="navbar-brand">
+                <a href="{{url('/')}}" class="navbar-brand">
                     <span class="navbar-logo"></span>
                     <span class="brand-text">
                         E-Laundry
@@ -47,7 +52,11 @@
             <!-- begin #header-navbar -->
             <div class="collapse navbar-collapse" id="header-navbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="javascript:;">Masuk</a></li>
+                    @auth
+                    <li> <a href="{{url('/home')}}">Welcome, {{auth::user()->name}}</a> </li>
+                    @else
+                    <li><a href="{{route('login')}}">Masuk</a></li>
+                    @endauth
                 </ul>
             </div>
             <!-- end #header-navbar -->
@@ -80,11 +89,9 @@
                 <div class="col-md-4">
                     <!-- begin section-container -->
                     <div class="section-container">
-                        <h4>About Color Admin</h4>
+                        <h4>Tentang E-Laundry</h4>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ultrices ipsum in elementum porttitor. 
-                            Cras porttitor fermentum nisl non elementum. Nulla in placerat libero. Nulla pharetra purus eget diam dictum 
-                            ullamcorper nec et eros. Suspendisse consectetur nulla ut volutpat aliquam.
+                           
                         </p>
                     </div>
                     <!-- end section-container -->
@@ -94,20 +101,9 @@
                 <div class="col-md-4">
                     <!-- begin section-container -->
                     <div class="section-container">
-                        <h4>Latest Post</h4>
+                        <h4>Ketentuan</h4>
                         <ul class="latest-post">
-                            <li>
-                                <h4 class="title"><a href="#">Consectetur adipiscing elit ultrices</a></h4>
-                                <p class="time">yesterday 10:42am</p>
-                            </li>
-                            <li>
-                                <h4 class="title"><a href="#">Fusce ultrices ipsum porttitor</a></h4>
-                                <p class="time">10/04/2015</p>
-                            </li>
-                            <li>
-                                <h4 class="title"><a href="#">Cras porttitor fermentum adipiscing</a></h4>
-                                <p class="time">02/04/2015</p>
-                            </li>
+                            
                         </ul>
                     </div>
                     <!-- end section-container -->
@@ -117,17 +113,9 @@
                 <div class="col-md-4">
                     <!-- begin section-container -->
                     <div class="section-container">
-                        <h4>New Users</h4>
+                        <h4>Hubungi Kami</h4>
                         <ul class="new-user">
-                            <li><a href="#"><img src="../assets/img/user/user-1.jpg" alt="" /></a></li>
-                            <li><a href="#"><img src="../assets/img/user/user-2.jpg" alt="" /></a></li>
-                            <li><a href="#"><img src="../assets/img/user/user-3.jpg" alt="" /></a></li>
-                            <li><a href="#"><img src="../assets/img/user/user-4.jpg" alt="" /></a></li>
-                            <li><a href="#"><img src="../assets/img/user/user-5.jpg" alt="" /></a></li>
-                            <li><a href="#"><img src="../assets/img/user/user-6.jpg" alt="" /></a></li>
-                            <li><a href="#"><img src="../assets/img/user/user-7.jpg" alt="" /></a></li>
-                            <li><a href="#"><img src="../assets/img/user/user-8.jpg" alt="" /></a></li>
-                            <li><a href="#"><img src="../assets/img/user/user-9.jpg" alt="" /></a></li>
+                           
                         </ul>
                     </div>
                     <!-- end section-container -->
@@ -143,8 +131,6 @@
     <div id="footer-copyright" class="footer-copyright">
         <div class="container">
             &copy; 2020 Dibangun Dengan Cinta - Andri Desmana
-            <a href="#">Contact Us</a> 
-            <a href="#">Knowledge Base</a>
         </div>
     </div>
     <!-- end #footer-copyright -->	

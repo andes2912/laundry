@@ -8,7 +8,9 @@ use App\customer;
 use App\transaksi;
 use App\harga;
 use Auth;
+use Rupiah;
 use DB;
+
 use Carbon\carbon;
 
 class AdminController extends Controller
@@ -87,9 +89,7 @@ class AdminController extends Controller
                 return redirect()->back()->withErrors(['errors' => 'Email Sudah Terdaftar !!']);
             } elseif (User::where('nama_cabang', $request->nama_cabang)->exists()) {
                 return redirect()->back()->withErrors(['errors' => 'Nama Cabang Sudah Terdaftar !!']);
-            } elseif (User::where('alamat_cabang', $request->alamat_cabang)->exists()) {
-                return redirect()->back()->withErrors(['errors' => 'Alamat Cabang Sudah Terdaftar !!']);
-            }
+            } 
 
             $adduser = New User();
             $adduser->name = $request->name;

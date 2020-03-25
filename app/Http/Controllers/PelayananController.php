@@ -37,7 +37,7 @@ class PelayananController extends Controller
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->where('id_karyawan',auth::user()->id)
             ->orderBy('id','DESC')->get();
-            return view('pelayanan.transaksi.order', compact('order'));
+            return view('karyawan.transaksi.order', compact('order'));
         } else {
             return redirect('home');
         }
@@ -52,7 +52,7 @@ class PelayananController extends Controller
     {
         if (Auth::user()->auth == "Karyawan") {
            
-            return view('pelayanan.transaksi.addorder');
+            return view('karyawan.transaksi.addorder');
         } else {
             return redirect('home');
         }
@@ -149,7 +149,7 @@ class PelayananController extends Controller
     {
         if (Auth::user()->auth == "Karyawan") {
             $customer = customer::orderBy('id_customer','DESC')->where('id_karyawan',auth::user()->id)->get();
-            return view('pelayanan.transaksi.customer', compact('customer'));
+            return view('karyawan.transaksi.customer', compact('customer'));
         } else {
             return redirect('home');
         }
@@ -167,7 +167,7 @@ class PelayananController extends Controller
             $newID = $number. '/ORDER'.'/'.$y;
 
             $tgl = date('d-m-Y');
-            return view('pelayanan.transaksi.addorder', compact('customer','newID'));
+            return view('karyawan.transaksi.addorder', compact('customer','newID'));
         } else {
             return redirect('home');
         }
@@ -300,7 +300,7 @@ class PelayananController extends Controller
     public function listcsadd()
     {
         if (Auth::user()->auth == "Karyawan") {
-            return view('pelayanan.transaksi.addcustomer');
+            return view('karyawan.transaksi.addcustomer');
         } else {
             return redirect('/home');
         }
@@ -345,7 +345,7 @@ class PelayananController extends Controller
             ->where('transaksis.id_karyawan',auth::user()->id)
             ->orderBy('id','DESC')->first();
             
-        return view('pelayanan.laporan.invoice', compact('invoice','data'));
+        return view('karyawan.laporan.invoice', compact('invoice','data'));
         } else {
             return redirect('/home');
         }
@@ -367,7 +367,7 @@ class PelayananController extends Controller
             ->where('transaksis.id_karyawan',auth::user()->id)
             ->orderBy('id','DESC')->first();
 
-        $pdf = PDF::loadView('pelayanan.laporan.cetak', compact('invoice','data'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('karyawan.laporan.cetak', compact('invoice','data'))->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 }

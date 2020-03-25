@@ -1,11 +1,11 @@
-@extends('layouts.admin_template')
+@extends('layouts.backend')
 @section('title','Form Edit Data Administrator')
 @section('header','Edit Administrator')
 @section('content')
 <div class="col-lg-12">
     <div class="card card-outline-info">
         <div class="card-header">
-            <h4 class="m-b-0 text-white">Form Edit Data Administrator</h4>
+            <h4 class="card-title">Form Edit Data Administrator</h4>
         </div>
         <div class="card-body">
             <form action="{{route('admin.update', $edit->id)}}" method="POST">

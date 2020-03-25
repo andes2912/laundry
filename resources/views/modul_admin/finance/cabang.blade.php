@@ -1,8 +1,8 @@
-@extends('layouts.admin_template')
+@extends('layouts.backend')
 @section('title','Admin - Data Finance')
 @section('header','Data Finance')
 @section('content')
-<div class="col-lg-12">
+{{-- <div class="col-lg-12">
     <div class="row">
         <div class="col-md-6 col-lg-4 col-xlg-2">
             <div class="card card-inverse card-info">
@@ -31,54 +31,127 @@
             </div>
         </div>
     </div>
-</div>
-<div class="col-lg-6">
-    <div class="card ">
-        <div class="card-body bg-info">
-            <h4 class="card-title m-b-0 text-white" style="font-size:25px">Finance Status</h4>
-        </div>
-        <div id="morris-donut-chart"></div>
-        <ul class="list-inline m-t-20 text-center" >
-            <li >
-                <h6 class="text-dark"><i class="fa fa-circle" style="color:#2f3d4a"></i> Bulan ini</h6>
-                <h4 class="m-b-0 text-dark">
-                    {{Rupiah::getRupiah($bulan)}}
+</div> --}}
+<div class="row">
+    <div class="col-lg-4 col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h4 class="card-title">Data Finance</h4>
 
-                </h4>
-            </li>
-            <li >
-                <h6 class="text-dark"><i class="fa fa-circle" style="color:#55ce63"></i> Tahun ini</h6>
-                <h4 class="m-b-0 text-dark">
-                    {{Rupiah::getRupiah($tahun)}}
-                </h4>
-            </li>
-            <li >
-                <h6 class="text-dark"><i class="fa fa-circle" style="color:#009efb"></i> Keseluruhan</h6>
-                <h4 class="m-b-0 text-dark">
-                    {{Rupiah::getRupiah($all)}}
-                </h4>
-            </li>
-        </ul>
+            </div>
+            <div class="card-content">
+                <div class="card-body pt-50">
+                    <div id="product-order-chart" class="mb-2"></div>
+                    <div class="chart-info d-flex justify-content-between mb-1">
+                        <div class="series-info d-flex align-items-center">
+                            <i class="fa fa-circle-o text-bold-700 text-primary"></i>
+                            <span class="text-bold-600 ml-50">Bulan Ini</span>
+                        </div>
+                        <div class="product-result">
+                            <span>{{Rupiah::getRupiah($bulan)}}</span>
+                        </div>
+                    </div>
+                    <div class="chart-info d-flex justify-content-between mb-1">
+                        <div class="series-info d-flex align-items-center">
+                            <i class="fa fa-circle-o text-bold-700 text-warning"></i>
+                            <span class="text-bold-600 ml-50">Tahun Ini</span>
+                        </div>
+                        <div class="product-result">
+                            <span>{{Rupiah::getRupiah($tahun)}}</span>
+                        </div>
+                    </div>
+                    <div class="chart-info d-flex justify-content-between mb-25">
+                        <div class="series-info d-flex align-items-center">
+                            <i class="fa fa-circle-o text-bold-700 text-danger"></i>
+                            <span class="text-bold-600 ml-50">Total</span>
+                        </div>
+                        <div class="product-result">
+                            <span>{{Rupiah::getRupiah($all)}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 @endsection
 @section('script')
 <script type="text/javascript">
-Morris.Donut({
-        element: 'morris-donut-chart',
-        data: [{
-            label: "Keseluruhan",
-            value: [{{$all}}],
 
-        }, {
-            label: "Tahun Ini",
-            value: [{{$tahun}}],
-        }, {
-            label: "Bulan Ini",
-            value: [{{$bulan}}],
-        }],
-        resize: true,
-        colors:['#009efb', '#55ce63', '#2f3d4a']
-    });
+var $primary = '#7367F0';
+var $danger = '#EA5455';
+var $warning = '#FF9F43';
+var $primary_light = '#9c8cfc';
+var $warning_light = '#FFC085';
+var $danger_light = '#f29292';
+
+// Data Finance
+var orderChartoptions = {
+        chart: {
+            height: 325,
+            type: 'radialBar',
+        },
+        colors: [$primary, $warning, $danger],
+        fill: {
+            type: 'gradient',
+            gradient: {
+                // enabled: true,
+                shade: 'dark',
+                type: 'vertical',
+                shadeIntensity: 0.5,
+                gradientToColors: [$primary_light, $warning_light, $danger_light],
+                inverseColors: false,
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 100]
+            },
+        },
+        stroke: {
+            lineCap: 'round'
+        },
+        plotOptions: {
+            radialBar: {
+              size: 150,
+                hollow: {
+                    size: '20%'
+                },
+                track: {
+                    strokeWidth: '100%',
+                    margin: 15,
+                },
+                dataLabels: {
+                    name: {
+                        fontSize: '18px',
+                    },
+                    value: {
+                        fontSize: '16px',
+                    },
+                    total: {
+                        show: true,
+                        label: 'Total',
+
+                        formatter: function (w) {
+                            // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+                            return [{{$all}}]
+                        }
+                    }
+                }
+            }
+        },
+        series: [{{$bulan}}, {{$tahun}}, {{$all}}],
+        labels: ['Bulan Ini', 'Tahun Ini', 'Total'],
+
+    }
+
+   var orderChart = new ApexCharts(
+        document.querySelector("#product-order-chart"),
+        orderChartoptions
+    );
+
+    orderChart.render();
+// End Data Finance
+
+
 </script>
 @endsection
