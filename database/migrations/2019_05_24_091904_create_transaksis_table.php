@@ -20,6 +20,7 @@ class CreateTransaksisTable extends Migration
             $table->string('id_karyawan');
             $table->date('tgl_transaksi');
             $table->string('customer');
+            $table->string('email_customer');
             $table->string('status_order');
             $table->string('status_payment');
             $table->string('id_jenis');

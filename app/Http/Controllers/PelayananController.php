@@ -79,6 +79,7 @@ class PelayananController extends Controller
             $order->id_customer = $request->id_customer;
             $order->id_karyawan = Auth::user()->id;
             $order->customer = $request->customer;
+            $order->email_customer = $request->email_customer;
             $order->hari    = $request->hari;
             $order->kg      = $request->kg;
             $order->harga   = $request->harga;
@@ -94,7 +95,7 @@ class PelayananController extends Controller
             if ($order->save()) {
 
                 // Menyiapkan data
-                $email = 'andridesmana29@outlook.com';
+                $email = $order->email_customer;
                 $data = array(
                     'invoice' => $order->invoice,
                     'customer' => $order->customer,
@@ -267,6 +268,31 @@ class PelayananController extends Controller
         }
     }
 
+    public function getemailcustomer(Request $request)
+    {
+        if (auth::user()->auth == "Karyawan") {
+            $customer = customer::select('id_customer','email_customer')
+            ->where('id_customer',$request->id_customer)
+            ->where('id_karyawan',auth::user()->id)
+            ->get();
+
+            $select = '';
+            $select .= '
+                    <div class="form-group has-success" hidden>
+                    <select class="form-control" name="email_customer">
+                    ';
+                    foreach ($customer as $item) {
+            $select .= '<option value="'.$item->email_customer.'">'.$item->email_customer.'</option>';
+                        }'
+                        </select>
+                        </div>';
+            return $select;
+
+        } else {
+            return redirect('/home');
+        }
+    }
+
     // Proses Ubah Status Order
     public function ubahstatusorder(Request $request)
     {
@@ -277,7 +303,7 @@ class PelayananController extends Controller
             ]);
             if ($statusorder->status_order == 'Selesai') {
                  // Menyiapkan data
-                 $email = 'andridesmana29@outlook.com';
+                 $email = $statusorder->email_customer;
                  $data = array(
                      'invoice' => $statusorder->invoice,
                      'customer' => $statusorder->customer,
@@ -345,6 +371,7 @@ class PelayananController extends Controller
         if (Auth::user()->auth == "Karyawan") {
             $addplg = New customer();
             $addplg->nama = $request->nama;
+            $addplg->email_customer = $request->email_customer;
             $addplg->alamat = $request->alamat;
             $addplg->kelamin = $request->kelamin;
             $addplg->no_telp = $request->no_telp;

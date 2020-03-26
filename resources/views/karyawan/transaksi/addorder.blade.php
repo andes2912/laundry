@@ -23,6 +23,7 @@
                                 </select>
                             </div>
                         </div>
+                            
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">No Transaksi</label>
@@ -30,6 +31,7 @@
                             </div>
                         </div>
                             <span id="select-customer"></span>
+                            <span id="select-email-customer"></span>
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Berat Pakaian</label>
@@ -133,6 +135,20 @@
       var id_customer = $(this).val();
       $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){  
         $("#select-customer").html(resp);
+      });
+    });
+
+    $(document).ready(function() {
+       var id_customer = $("#id_customer").val();
+            $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){  
+            $("#select-email-customer").html(resp);
+        });
+    });
+
+    $(document).on('change', '#id_customer', function (e) { 
+      var id_customer = $(this).val();
+      $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){  
+        $("#select-email-customer").html(resp);
       });
     });
 </script>

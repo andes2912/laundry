@@ -69,6 +69,7 @@ Route::resource('pelayanan','PelayananController');
     Route::get('listharga','PelayananController@listharga');
     Route::get('listhari','PelayananController@listhari');
     Route::get('get-customer','PelayananController@getcustomer');
+    Route::get('get-email-customer','PelayananController@getemailcustomer');
 
     // Laporan
     Route::get('invoice-kar/{id}','PelayananController@invoicekar');

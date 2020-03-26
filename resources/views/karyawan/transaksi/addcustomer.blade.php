@@ -12,17 +12,23 @@
                 @csrf
                 <div class="form-body">
                     <div class="row p-t-20">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group has-success">
                                 <label class="control-label">Nama</label>
                                 <input type="text" class="form-control form-control-danger" name="nama" placeholder="Nama Customer" autocomplete="off">
                             </div>
                         </div>
                         <!--/span-->
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group has-success">
-                                <label class="control-label">Alamat</label>
-                                <input type="text" class="form-control form-control-danger" name="alamat" placeholder="Alamat" autocomplete="off">
+                                <label class="control-label">Email</label>
+                                <input type="email" class="form-control form-control-danger" name="email_customer" placeholder="Alamat" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group has-success">
+                                <label class="control-label">No. Telp</label>
+                                <input type="number" class="form-control form-control-danger" name="no_telp" placeholder="Nomor Telpon" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -30,10 +36,11 @@
                         <!--/span-->
                         <div class="col-md-6">
                             <div class="form-group has-success">
-                                <label class="control-label">No. Telp</label>
-                                <input type="number" class="form-control form-control-danger" name="no_telp" placeholder="Nomor Telpon" autocomplete="off">
+                                <label class="control-label">Alamat</label>
+                                <textarea name="alamat" class="form-control" rows="3" placeholder="Alamat Customer"></textarea>
                             </div>
                         </div>
+                       
                         <div class="col-md-6">
                             <div class="form-group has-success">
                                 <label class="control-label">Gender</label>
