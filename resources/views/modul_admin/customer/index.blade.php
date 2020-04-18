@@ -55,7 +55,7 @@
     </div>
 </div>
 @endsection
-@section('script')
+@section('scripts')
 
 <script type="text/javascript">
     $(document).ready(function() {

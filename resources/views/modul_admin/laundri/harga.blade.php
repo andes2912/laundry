@@ -133,7 +133,7 @@
     </div>
 </div>
 @endsection
-@section('script')
+@section('scripts')
 <script type="text/javascript">
 
 // Tampilkan Modal Edit Harga

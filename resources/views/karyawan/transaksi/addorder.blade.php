@@ -105,7 +105,7 @@
         </div>
     @endif
 @endsection
-@section('script')
+@section('scripts')
 <script type="text/javascript">
     // Filter Harga 
     $(document).ready(function() {

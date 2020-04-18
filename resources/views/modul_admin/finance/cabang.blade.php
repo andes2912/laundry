@@ -76,7 +76,7 @@
 </div>
 
 @endsection
-@section('script')
+@section('scripts')
 <script type="text/javascript">
 
 var $primary = '#7367F0';

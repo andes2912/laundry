@@ -65,7 +65,6 @@ class ProfileController extends Controller
                 ]);
                 
                 return $reset;
-                alert()->success('Reste Password Berhasil');
             }
         }
     }

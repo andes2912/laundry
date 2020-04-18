@@ -50,7 +50,7 @@
     </div>
 </div>
 @endsection
-@section('script')
+@section('scripts')
 <script type="text/javascript">
 // DataTable
 $(document).ready(function() {

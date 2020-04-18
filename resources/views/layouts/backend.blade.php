@@ -288,7 +288,7 @@
             });
     </script>
     @endif
-    @yield('script')
+    @yield('scripts')
 </body>
 <!-- END: Body-->
 
