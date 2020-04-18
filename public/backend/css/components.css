@@ -100,7 +100,7 @@ html {
     html body p {
       line-height: 1.5rem; }
     html body.bg-full-screen-image {
-      background: url({{asset('backend/images/pages/vuexy-login-bg.jpg')}}) no-repeat center center;
+      background: url('../images/pages/vuexy-login-bg.jpg') no-repeat center center;
       background-size: cover; }
     html body.blank-page .content {
       margin-left: 0; }

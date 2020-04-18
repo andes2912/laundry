@@ -1,4 +1,4 @@
-@extends('layouts.admin_template')
+@extends('layouts.backend')
 @section('title','Form Edit Data Customer')
 @section('header','Edit Customer')
 @section('content')

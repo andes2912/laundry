@@ -1,4 +1,4 @@
-@extends('layouts.admin_template')
+@extends('layouts.backend')
 @section('title','Admin - Transaksi Customer')
 @section('header','Transaksi Customer')
 @section('content')

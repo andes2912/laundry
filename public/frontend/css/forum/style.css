@@ -701,13 +701,6 @@ a:focus {
     color: #A6A9AB;
     background: #1d2226;
 }
-.footer-copyright a {
-    float: right;
-    color: #CFD0D1;
-}
-.footer-copyright a + a {
-    margin-right: 15px;
-}
 
 
 

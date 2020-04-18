@@ -18,7 +18,9 @@ Route::get('/', function () {
 // Frontend
 Route::get('pencarian-laundry','FrontController@search');
 
-Auth::routes();
+Auth::routes([
+    'register' => false,
+]);
 
 
 Route::get('/home', 'HomeController@index')->name('home');

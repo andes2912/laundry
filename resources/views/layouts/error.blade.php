@@ -10,8 +10,8 @@
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
     <title>@yield('title')</title>
-    <link rel="apple-touch-icon" href="{{asset('backend/images/ico/apple-icon-120.png')}}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('backend/images/ico/favicon.ico')}}">
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
@@ -24,12 +24,12 @@
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/colors.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/components.css')}}">
     <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/core/menu/menu-types/vertical-menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/core/colors/palette-gradient.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/pages/authentication.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/pages/error.css')}}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/style.css')}}">
     <!-- END: Custom CSS-->
 
 </head>
@@ -46,7 +46,10 @@
             <div class="content-header row">
             </div>
             <div class="content-body">
+                <!-- error -->
                 @yield('content')
+                <!-- error end -->
+
             </div>
         </div>
     </div>

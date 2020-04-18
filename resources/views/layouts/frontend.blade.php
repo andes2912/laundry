@@ -15,17 +15,18 @@
 	<link href="{{asset('frontend/plugins/bootstrap3/css/bootstrap.min.css')}}" rel="stylesheet" />
 	<link href="{{asset('frontend/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" />
 	<link href="{{asset('frontend/plugins/animate/animate.min.css')}}" rel="stylesheet" />
-	<link href="{{asset('frontend/css/forum/style.min.css')}}" rel="stylesheet" />
+	<link href="{{asset('frontend/css/forum/style.css')}}" rel="stylesheet" />
 	<link href="{{asset('frontend/css/forum/style-responsive.min.css')}}" rel="stylesheet" />
 	<link href="{{asset('frontend/css/forum/theme/default.css')}}" id="theme" rel="stylesheet" />
 	<!-- ================== END BASE CSS STYLE ================== -->
 	
 	<!-- ================== BEGIN BASE JS ================== -->
-	<script src="{{asset('frontend/plugins/pace/pace.min.js')}}"></script>
+    <script src="{{asset('frontend/plugins/pace/pace.min.js')}}"></script>
+    
     <!-- ================== END BASE JS ================== -->
     <style type="text/css">
         body {
-            overflow: hidden;
+            overflow-x: hidden;
         }
     </style>
 </head>
@@ -82,11 +83,11 @@
     <!-- begin #footer -->
     <div id="footer" class="footer">
         <!-- begin container -->
-        <div class="container">
+        <div class="container-fluid">
             <!-- begin row -->
             <div class="row">
                 <!-- begin col-4 -->
-                <div class="col-md-4">
+                <div class="col-xl-4 col-lg-4 col-12">
                     <!-- begin section-container -->
                     <div class="section-container">
                         <h4>Tentang E-Laundry</h4>
@@ -98,7 +99,7 @@
                 </div>
                 <!-- end col-4 -->
                 <!-- begin col-4 -->
-                <div class="col-md-4">
+                <div class="col-xl-4 col-lg-4 col-12">
                     <!-- begin section-container -->
                     <div class="section-container">
                         <h4>Ketentuan</h4>
@@ -110,7 +111,7 @@
                 </div>
                 <!-- end col-4 -->
                 <!-- begin col-4 -->
-                <div class="col-md-4">
+                <div class="col-xl-4 col-lg-4 col-12">
                     <!-- begin section-container -->
                     <div class="section-container">
                         <h4>Hubungi Kami</h4>
@@ -128,9 +129,9 @@
     </div>
     <!-- end #footer -->
     <!-- begin #footer-copyright -->
-    <div id="footer-copyright" class="footer-copyright">
-        <div class="container">
-            &copy; 2020 Dibangun Dengan Cinta - Andri Desmana
+    <div class="footer-copyright">
+        <div class="container-fluid">
+            &copy; 2020 Build With <i class="fa fa-heart" style="color:red"></i> - <a href="https://www.instagram.com/andridesmana/" target="_blank" style="text-decoration:none">Andri Desmana</a>
         </div>
     </div>
     <!-- end #footer-copyright -->	

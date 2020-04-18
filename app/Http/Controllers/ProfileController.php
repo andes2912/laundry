@@ -13,7 +13,7 @@ class ProfileController extends Controller
         if (auth::check()) {
             if (auth::user()->auth == "Karyawan") {
                 $user = User::find($id);
-                return view('pelayanan.profile.index', compact('user'));
+                return view('karyawan.profile.index', compact('user'));
             }
         }
     }
@@ -24,7 +24,7 @@ class ProfileController extends Controller
         if (auth::check()) {
             if (auth::user()->auth == "Karyawan") {
                 $edit = User::find($id);
-                return view('pelayanan.profile.edit', compact('edit'));
+                return view('karyawan.profile.edit', compact('edit'));
             }
         }
     }
@@ -34,7 +34,8 @@ class ProfileController extends Controller
     {
         if (auth::check()) {
             if (auth::user()->auth == "Karyawan") {
-                $edit = User::find($id);
+                $edit = User::FindorFail($id);
+                $edit->id = $request->id;
                 $edit->name = $request->name;
                 $edit->email = $request->email;
                 $edit->alamat = $request->alamat;
@@ -42,13 +43,14 @@ class ProfileController extends Controller
                 $edit->nama_cabang = $request->nama_cabang;
                 $edit->alamat_cabang = $request->alamat_cabang;
                 if ($edit->password == '') {
-                    '123456';
+                    $edit->password = bcrypt('123456');
                 } else{
                     $edit->password = bcrypt($request->password);
                 }
                 $edit->save();
                 
-                return redirect()->back();
+                $id = $edit->id;
+                return redirect('profile-karyawan/' .$id.'');
             }
         }
     }

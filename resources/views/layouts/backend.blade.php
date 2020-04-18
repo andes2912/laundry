@@ -16,8 +16,6 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/vendors.min.css')}}">
-    {{-- <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/charts/apexcharts.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/extensions/tether-theme-arrows.css')}}"> --}}
     <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/extensions/tether.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/extensions/shepherd-theme-default.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/tables/datatable/datatables.min.css')}}">
@@ -35,8 +33,6 @@
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/core/menu/menu-types/vertical-menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/core/colors/palette-gradient.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/pages/dashboard-analytics.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/pages/card-analytics.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/plugins/tour/tour.css')}}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -116,7 +112,13 @@
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                 <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{auth::user()->name}}</span><span class="user-status">{{auth::user()->auth}}</span></div><span><img class="round" src="{{asset('backend/images/portrait/small/avatar-s-11.jpg')}}" alt="avatar" height="40" width="40"></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if (auth::user()->auth == 'Admin')
+                                    
+                                @else
+                                <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
+                                </a>
+                                @endif
                                 <div class="dropdown-divider"></div>
                                 <a href="{{ route('logout') }}" class="dropdown-item"
                                     onclick="event.preventDefault();
@@ -228,7 +230,7 @@
 
     <!-- BEGIN: Footer-->
     <footer class="footer footer-static footer-light">
-        <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="text-bold-800 grey darken-2" href="" target="_blank">Andri Desmana,</a>All rights Reserved</span><span class="float-md-right d-none d-md-block">Dibangun Dengan<i class="feather icon-heart pink"></i></span>
+        <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="text-bold-800 grey darken-2" href="https://www.instagram.com/andridesmana/" target="_blank">Andri Desmana,</a>All rights Reserved</span><span class="float-md-right d-none d-md-block">Build With <i class="feather icon-heart pink"></i></span>
             <button class="btn btn-primary btn-icon scroll-top" type="button"><i class="feather icon-arrow-up"></i></button>
         </p>
     </footer>
