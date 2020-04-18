@@ -86,4 +86,5 @@ Route::resource('pelayanan','PelayananController');
     Route::get('profile-karyawan/{id}','ProfileController@karyawanProfile');
     Route::get('profile-karyawan/edit/{id}','ProfileController@karyawanProfileEdit');
     Route::put('profile-karyawan/update/{id}','ProfileController@karyawanProfileSave');
+    Route::get('reset-password','ProfileController@reset_password');
     

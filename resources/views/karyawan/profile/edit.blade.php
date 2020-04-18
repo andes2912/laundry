@@ -56,12 +56,6 @@
                             <textarea class="form-control" name="alamat" rows="3">{{$edit->alamat}}</textarea> 
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group has-success">
-                            <label class="control-label">Password</label>
-                            <input type="password" name="password" class="form-control">
-                        </div>
-                    </div>
                     <hr>
                     <h4 class="card-title">Data Laundry</h4>
                     <div class="col-md-12">
@@ -85,4 +79,5 @@
         </div>
     </div>
 </div>
+{{-- @include('sweetalert::alert') --}}
 @endsection

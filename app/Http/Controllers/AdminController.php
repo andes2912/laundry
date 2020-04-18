@@ -10,6 +10,7 @@ use App\harga;
 use Auth;
 use Rupiah;
 use DB;
+use Alert;
 
 use Carbon\carbon;
 
@@ -103,9 +104,12 @@ class AdminController extends Controller
             $adduser->password = bcrypt('123456');
             $adduser->save();            
 
+            
             if ($adduser->auth == "Admin") {
+                alert()->success('Admin Berhasil Dibuat');
                 return redirect('adm');
             } else {
+                alert()->success('Tambah Karyawan Berhasil');
                 return redirect('kry');
             }
             
@@ -168,8 +172,10 @@ class AdminController extends Controller
             $adduser->save();
 
             if ($adduser->auth == "Admin") {
+                alert()->success('Update Data Berhasil');
                 return redirect('adm');
             } else {
+                alert()->success('Update Data Berhasil');
                 return redirect('kry');
             }
             
@@ -231,6 +237,7 @@ class AdminController extends Controller
             $addplg->no_telp = $request->no_telp;
             $addplg->save();
 
+            alert()->success('Tambah Customer Berhasil');
             return redirect('customer');
         } else {
             return redirect('home');
@@ -257,6 +264,7 @@ class AdminController extends Controller
             $addplg->no_telp = $request->no_telp;
             $addplg->save();
 
+            alert()->success('Update Data Berhasil');
             return redirect('customer');
         } else {
             return redirect('home');
@@ -319,6 +327,7 @@ class AdminController extends Controller
             $addharga->status = 1;
             $addharga->save();
 
+            alert()->success('Tambah Data Harga Berhasil');
             return redirect('data-harga');
         } else {
             return redirect('home');

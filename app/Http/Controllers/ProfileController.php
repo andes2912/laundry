@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Auth;
+Use Alert;
+
 class ProfileController extends Controller
 {
     // Profile Karyawan Cabang
@@ -42,15 +44,28 @@ class ProfileController extends Controller
                 $edit->no_telp = $request->no_telp;
                 $edit->nama_cabang = $request->nama_cabang;
                 $edit->alamat_cabang = $request->alamat_cabang;
-                if ($edit->password == '') {
-                    $edit->password = bcrypt('123456');
-                } else{
-                    $edit->password = bcrypt($request->password);
-                }
                 $edit->save();
+
                 
+                alert()->success('Update Data Berhasil');
                 $id = $edit->id;
                 return redirect('profile-karyawan/' .$id.'');
+            }
+        }
+    }
+
+    // Reset Password Karyawan
+    public function reset_password(Request $request)
+    {
+        if (auth::check()) {
+            if (auth::user()->auth == "Karyawan") {
+                $reset = User::find($request->id);
+                $reset->update([
+                    'password' => bcrypt('12345678'),
+                ]);
+                
+                return $reset;
+                alert()->success('Reste Password Berhasil');
             }
         }
     }

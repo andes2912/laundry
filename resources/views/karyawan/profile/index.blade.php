@@ -11,7 +11,6 @@
                         </h4>
                         <h6 class="card-subtitle">Karyawan</h6>
                     </div>
-                    <a href="{{url('profile-karyawan/edit', auth::user()->id)}}" class="btn btn-primary mt-2">Edit Profile</a>
                 </div>
             </div>
             <div>
@@ -25,6 +24,8 @@
                 <button class="btn btn-circle btn-secondary"><i class="fa fa-facebook"></i></button>
                 <button class="btn btn-circle btn-secondary"><i class="fa fa-twitter"></i></button>
                 <button class="btn btn-circle btn-secondary"><i class="fa fa-youtube"></i></button>
+                <a href="{{url('profile-karyawan/edit', auth::user()->id)}}" class="btn btn-primary mt-2">Edit</a>
+                <a href="" id="reset_password" data-id="{{$user->id}}" class="btn btn-warning mt-2">Reset Password</a>
             </div>
         </div>
     </div>
@@ -44,4 +45,14 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+    <script>
+        $(document).on('click','#reset_password', function () {
+            var id = $(this).attr('data-id');
+            $.get(' {{Url("reset-password")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
+                location.reload();
+            });
+        });
+    </script>
 @endsection

@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 @section('title','Tambah Data Order')
 @section('content')
+    @if (@$cek_harga->id_cabang == !null || @$cek_harga->id_cabang == auth::user()->id)
     <div class="card card-outline-info">
         <div class="card-header">
             <h4 class="card-title">Form Tambah Data Order
@@ -95,7 +96,15 @@
             </form>
         </div>
     </div>
-    @endsection
+    @else
+        <div class="card">
+            <div class="col text-center">
+                <h2>Data Harga Kosong !</h2>
+                <h4>Mohon hubungi Administrator :)</h4>
+            </div>
+        </div>
+    @endif
+@endsection
 @section('script')
 <script type="text/javascript">
     // Filter Harga 

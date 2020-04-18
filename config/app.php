@@ -166,6 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
+        // RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -228,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Rupiah' => App\Helpers\Rupiah::class,       
+        // 'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
     ],
 
 ];

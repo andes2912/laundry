@@ -10,6 +10,7 @@ use Auth;
 use PDF;
 use Mail;
 use carbon\carbon;
+use Alert;
 
 class PelayananController extends Controller
 
@@ -110,6 +111,7 @@ class PelayananController extends Controller
                 });
             }
 
+            alert()->success('Data Laundry Berhasil Ditambah');
             return redirect('pelayanan');
         } else {
             return redirect('/home');
@@ -183,9 +185,10 @@ class PelayananController extends Controller
             $number = mt_rand(1000, 9999);
             // Nomor Form otomatis
             $newID = $number. auth::user()->id .''.$y;
-
             $tgl = date('d-m-Y');
-            return view('karyawan.transaksi.addorder', compact('customer','newID'));
+
+            $cek_harga = harga::where('id_cabang',auth::user()->id)->first();
+            return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga'));
         } else {
             return redirect('home');
         }
@@ -393,9 +396,8 @@ class PelayananController extends Controller
             $addplg->id_karyawan = auth::user()->id;
             $addplg->save();
 
-            $addplg->save();
-
-        return redirect('list-customer');
+            alert()->success('Data Customer Berhasil Ditambah');
+            return redirect('list-customer');
         } else {
             return redirect('/home');
         }
