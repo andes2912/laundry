@@ -138,7 +138,8 @@
 	<script src="{{asset('frontend/plugins/jquery/jquery-3.2.1.min.js')}}"></script>
 	<script src="{{asset('frontend/plugins/bootstrap3/js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('frontend/plugins/js-cookie/js.cookie.js')}}"></script>
-	<script src="{{asset('frontend/js/forum/apps.min.js')}}"></script>
+    <script src="{{asset('frontend/js/forum/apps.min.js')}}"></script>
+    <script src="{{asset('frontend/js/swal/sweetalert2.all.min.js')}}"></script>
 	<!-- ================== END BASE JS ================== -->
 	
 	<script>    
@@ -146,6 +147,6 @@
 	        App.init();
 	    });
     </script>
-    @yield('script')
+    @yield('scripts')
 </body>
 </html>

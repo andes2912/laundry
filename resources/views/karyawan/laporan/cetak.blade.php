@@ -47,9 +47,6 @@
 <body>
     <div class="container-fluid">
         <table>
-            {{-- <caption>
-                Daengweb Invoice App
-            </caption> --}}
             <thead>
                 <tr>
                     <th colspan="4">Invoice <strong>{{$data->invoice}}</strong></th>

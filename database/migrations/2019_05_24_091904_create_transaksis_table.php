@@ -18,7 +18,7 @@ class CreateTransaksisTable extends Migration
             $table->string('invoice');
             $table->string('id_customer');
             $table->string('id_karyawan');
-            $table->date('tgl_transaksi');
+            $table->string('tgl_transaksi');
             $table->string('customer');
             $table->string('email_customer');
             $table->string('status_order');
@@ -32,7 +32,7 @@ class CreateTransaksisTable extends Migration
             $table->string('tgl');
             $table->string('bulan');
             $table->string('tahun');
-            $table->date('tgl_ambil')->nullable();
+            $table->string('tgl_ambil')->nullable();
             $table->string('notif');
             $table->timestamps();
         });

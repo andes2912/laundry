@@ -212,7 +212,7 @@ var salesavgChartoptions = {
           x: { show: false }
       },
       series: [{
-            name: "Sales",
+            name: "Laundry",
             data: [{{$jan}}, {{$feb}}, {{$mar}}, {{$apr}}, {{$mey}}, {{$juni}}, {{$july}}, {{$aug}}, {{$sep}}, {{$oct}}, {{$nov}}, {{$dec}}]
         }],
 

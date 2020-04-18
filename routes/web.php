@@ -15,7 +15,12 @@ Route::get('/', function () {
     return view('frontend.index');
 });
 
+// Frontend
+Route::get('pencarian-laundry','FrontController@search');
+
 Auth::routes();
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Modul Admin

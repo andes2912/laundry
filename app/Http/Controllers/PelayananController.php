@@ -69,10 +69,9 @@ class PelayananController extends Controller
     {
         if (Auth::user()->auth == "Karyawan") {
 
-            // $invoice = transaksi::selectRaw('LPAD(CONVERT(COUNT("id") + 1, char(8)) , 8,"0") as invoice')-> first();
             $order = new transaksi();
             $order->invoice = $request->invoice;
-            $order->tgl_transaksi = Carbon::now();
+            $order->tgl_transaksi = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
             $order->status_order = $request->status_order;
             $order->status_payment = $request->status_payment;
             $order->id_jenis = $request->id_jenis;
@@ -182,7 +181,7 @@ class PelayananController extends Controller
             $y = date('Y');
             $number = mt_rand(1000, 9999);
             // Nomor Form otomatis
-            $newID = $number. '/ORDER'.'/'.$y;
+            $newID = $number. auth::user()->id .''.$y;
 
             $tgl = date('d-m-Y');
             return view('karyawan.transaksi.addorder', compact('customer','newID'));
@@ -335,7 +334,6 @@ class PelayananController extends Controller
        } else {
            return redirect('/home');
        }
-       
     }
 
     // Proses Ubah Status Diambil
@@ -347,7 +345,23 @@ class PelayananController extends Controller
             'tgl_ambil' => Carbon::today(),
             'status_order' => 'Diambil'
         ]);
-        return $statusbayar;
+        if ($statusbayar->status_order == 'Diambil') {
+            // Menyiapkan data
+            $email = $statusbayar->email_customer;
+            $data = array(
+                'invoice' => $statusbayar->invoice,
+                'customer' => $statusbayar->customer,
+                'tgl_transaksi' => $statusbayar->tgl_transaksi,
+                'tgl_ambil' => $statusbayar->tgl_ambil,
+            );
+                
+            // Kirim Email
+            Mail::send('karyawan.email.diambil', $data, function($mail) use ($email, $data){
+            $mail->to($email,'no-replay')
+                    ->subject("E-Laundry - Laundry Sudah Diambil");
+            $mail->from('laundri.dev@gmail.com');
+            });
+       }
        } else {
            return redirect('/home');
        }
