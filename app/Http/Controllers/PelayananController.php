@@ -88,6 +88,7 @@ class PelayananController extends Controller
             $total = $hitung - $disc;
             $order->harga_akhir = $total;
             $order->notif   = 0;
+            $order->notif_admin   = 0;
             $order->tgl     = Carbon::now()->day;
             $order->bulan     = Carbon::now()->month;
             $order->tahun     = Carbon::now()->year;

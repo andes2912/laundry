@@ -54,7 +54,7 @@ Route::resource('admin','AdminController');
     Route::get('data-finance','AdminController@finance');
 
     // Notifikasi
-    Route::get('notif','AdminController@notif');
+    Route::get('read-notification','AdminController@notif');
 
     // Filter 
     Route::get('filter-transaksi','AdminController@filtertransaksi');
@@ -86,3 +86,4 @@ Route::resource('pelayanan','PelayananController');
     Route::get('profile-karyawan/{id}','ProfileController@karyawanProfile');
     Route::get('profile-karyawan/edit/{id}','ProfileController@karyawanProfileEdit');
     Route::put('profile-karyawan/update/{id}','ProfileController@karyawanProfileSave');
+    

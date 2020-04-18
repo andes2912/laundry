@@ -369,11 +369,20 @@ class AdminController extends Controller
     // Notifikasi 
     public function notif(Request $request)
     {
-        $aktif = transaksi::find($request->id);
-        $aktif->update([
-            'notif' => 1
-        ]);
-        return redirect('data-transaksi');
+        $notif = transaksi::find($request->id);
+        if (auth::user()->auth == "Admin") {
+            $notif->update([
+                'notif_admin' => 1
+            ]);
+        } else {
+            $notif->update([
+                'notif' => 1
+            ]);
+        }
+        
+
+        return $notif;
+        
     }
 
     // Hitung Jumlah Transaksi Keseluruhan
