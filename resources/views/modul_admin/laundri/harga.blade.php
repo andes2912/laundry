@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">
+                    <h4 class="card-title"> Data Harga Laundry Per-Cabang
                         <a class="btn btn-primary" style="color:white">Tambah</a>
                     </h4>
                     <div class="table-responsive m-t-0">
@@ -62,7 +62,7 @@
         <div class="col-lg-4">
             <div class="card card-outline-info">
                 <div class="card-header">
-                    <h4 class="m-b-0 text-white">Form Tambah Data Harga</h4>
+                    <h4 class="m-b-0 text-black">Form Tambah Data Harga</h4>
                 </div>
                 <div class="card-body">
                     <form action="{{url('harga-store')}}" method="POST">

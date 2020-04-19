@@ -5,7 +5,7 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">
+            <h4 class="card-title"> Data Karyawan / Cabang
                 <a href="{{url('kry-add')}}" class="btn btn-primary">Tambah</a>
             </h4>
             

@@ -4,7 +4,7 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">
+            <h4 class="card-title"> Data Transaksi
                <div class="row">
                     <div class="col-4">
                         <select name="id_karyawan" id="id_karyawan" class="form-control">

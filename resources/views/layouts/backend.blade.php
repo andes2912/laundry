@@ -167,7 +167,7 @@
                             </ul>
                         </li>
 
-                        <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Laundry</span></a>
+                        <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
                             <ul class="menu-content">
                                 <li><a href="{{url('data-transaksi')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Transaksi</span></a>
                                 </li>
@@ -175,6 +175,7 @@
                                 </li>
                             </ul>
                         </li>
+                        
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="User">Data Finance</span></a>
                             <ul class="menu-content">

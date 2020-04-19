@@ -133,13 +133,13 @@ var orderChartoptions = {
 
                         formatter: function (w) {
                             // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-                            return [{{$all}}]
+                            return [{{$al->count() / 100 * 2}}, '%']
                         }
                     }
                 }
             }
         },
-        series: [{{$bulan}}, {{$tahun}}, {{$all}}],
+        series: [{{($bln->count() / 100 * 2 )}} , {{$thn->count() / 100 * 2}}, {{$al->count() / 100 * 2}}],
         labels: ['Bulan Ini', 'Tahun Ini', 'Total'],
 
     }

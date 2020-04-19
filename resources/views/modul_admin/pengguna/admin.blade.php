@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
-                
+                Data Administrator
             </h4>
             <div class="table-responsive">
                 <table class="table zero-configuration">
@@ -33,11 +33,11 @@
                                 @endif
                             </td>
                             <td>
-                                <form action="{{ route('admin.destroy',$item->id) }}" method="POST">
+                                {{-- <form action="{{ route('admin.destroy',$item->id) }}" method="POST">
                                     @csrf
-                                    @method('DELETE')
+                                    @method('DELETE') --}}
                                     <a href="{{route('admin.edit', $item->id)}}" class="btn btn-sm btn-info">Edit</a>
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    {{-- <button type="submit" class="btn btn-danger btn-sm">Hapus</button> --}}
                                 </form>
                             </td>
                         </tr>

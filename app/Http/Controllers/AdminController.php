@@ -218,31 +218,33 @@ class AdminController extends Controller
         }
     }
 
-    public function addcustomer()
-    {
-        if (Auth::user()->auth == "Admin") {
-            return view('modul_admin.customer.create');
-        } else {
-            return redirect('home');
-        }
-    }
+    // DISABLED
+    // public function addcustomer()
+    // {
+    //     if (Auth::user()->auth == "Admin") {
+    //         return view('modul_admin.customer.create');
+    //     } else {
+    //         return redirect('home');
+    //     }
+    // }
 
-    public function storecustomer(Request $request)
-    {
-        if (Auth::user()->auth == "Admin") {
-            $addplg = New customer();
-            $addplg->nama = $request->nama;
-            $addplg->alamat = $request->alamat;
-            $addplg->kelamin = $request->kelamin;
-            $addplg->no_telp = $request->no_telp;
-            $addplg->save();
+    // DISABLED
+    // public function storecustomer(Request $request)
+    // {
+    //     if (Auth::user()->auth == "Admin") {
+    //         $addplg = New customer();
+    //         $addplg->nama = $request->nama;
+    //         $addplg->alamat = $request->alamat;
+    //         $addplg->kelamin = $request->kelamin;
+    //         $addplg->no_telp = $request->no_telp;
+    //         $addplg->save();
 
-            alert()->success('Tambah Customer Berhasil');
-            return redirect('customer');
-        } else {
-            return redirect('home');
-        }
-    }
+    //         alert()->success('Tambah Customer Berhasil');
+    //         return redirect('customer');
+    //     } else {
+    //         return redirect('home');
+    //     }
+    // }
 
     public function editcustomer($id_customer)
     {
@@ -271,16 +273,17 @@ class AdminController extends Controller
         }
     }
 
-    public function deletecustomer($id_customer)
-    {
-        if (Auth::user()->auth == "Admin") {
-            $del = customer::find($id_customer);
-            $del->delete();
-                return redirect('customer');
-        } else {
-            return redirect('home');
-        }
-    }
+    // DISABLED
+    // public function deletecustomer($id_customer)
+    // {
+    //     if (Auth::user()->auth == "Admin") {
+    //         $del = customer::find($id_customer);
+    //         $del->delete();
+    //             return redirect('customer');
+    //     } else {
+    //         return redirect('home');
+    //     }
+    // }
 
 // Modul Data Laundri
     public function datatransaksi()
@@ -414,10 +417,14 @@ class AdminController extends Controller
             $bulan = transaksi::where('bulan', Carbon::now()->month)->sum('harga_akhir');
             $tahun = transaksi::where('tahun', Carbon::now()->year)->sum('harga_akhir');
 
+            $bln = transaksi::where('bulan', Carbon::now()->month)->get();
+            $thn = transaksi::where('tahun', Carbon::now()->year)->get();
+            $al = transaksi::all();
+
             $kg = transaksi::sum('kg');
             $transaksi = transaksi::get();
             $user = transaksi::select('id_customer')->groupBy('id_customer')->get();
-            return view('modul_admin.finance.cabang', compact('all','bulan','tahun','kg','transaksi','user'));
+            return view('modul_admin.finance.cabang', compact('all','bulan','tahun','kg','transaksi','user','bln','al','thn'));
         }
     }
 
