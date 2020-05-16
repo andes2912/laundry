@@ -197,7 +197,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a href="{{url('/')}}"><i class="feather icon-browser"></i><span class="menu-title" data-i18n="Dashboard">Frontend</span></a>
+                        <li class="nav-item"><a href="{{url('/')}}" target="_blank"><i class="feather icon-square"></i><span class="menu-title" data-i18n="Dashboard">Frontend</span></a>
                         </li>
                     @endif
                 {{--End  --}}
