@@ -16,7 +16,7 @@
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Nama</label>
-                                <select name="id_customer" id="id_customer" class="form-control select2">
+                                <select name="id_customer" id="id_customer" class="form-control select2" required>
                                     <option value="">-- Pilih Customer --</option>
                                     @foreach ($customer as $item)
                                         <option value="{{$item->id_customer}}">{{$item->nama}}</option>

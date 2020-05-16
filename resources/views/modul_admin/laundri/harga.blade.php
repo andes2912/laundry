@@ -93,8 +93,7 @@
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Berat Per-Kg</label>
-                                        <input type="number" class="form-control form-control-danger" name="kg" value="{{ old('kg') }}" placeholder="Berat" autocomplete="off" required>
-                                        <small class="form-control-feedback "> Tulisakan Angka 1-10 </small>
+                                        <input type="text" class="form-control form-control-danger" value="1000 gram" placeholder="Berat" readonly autocomplete="off" required>
                                     </div>
                                 </div>
                             </div>

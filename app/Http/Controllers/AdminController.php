@@ -305,7 +305,7 @@ class AdminController extends Controller
     {
        if (Auth::user()->auth == "Admin") {
             $harga = harga::selectRaw('hargas.*,a.nama_cabang')
-            ->leftJoin('Users as a','a.id','=','hargas.id_cabang')
+            ->leftJoin('users as a','a.id','=','hargas.id_cabang')
             ->orderBy('id','DESC')->get(); // Ambil data harga
             $karyawan = User::where('auth','Karyawan')->first(); // Cek Apakah sudah ada karyawan atau belum 
             $getcabang = User::where('auth','Karyawan')->where('status','Aktif')->get();
@@ -313,7 +313,6 @@ class AdminController extends Controller
        } else {
            return redirect('home');
        }
-       
     }
 
     // Proses Simpan Harga
@@ -324,10 +323,10 @@ class AdminController extends Controller
             $addharga = new harga();
             $addharga->id_cabang = $request->id_cabang;
             $addharga->jenis = $request->jenis;
-            $addharga->kg = $request->kg;
+            $addharga->kg = 1000; // satuan gram
             $addharga->harga = $request->harga;
             $addharga->hari = $request->hari;
-            $addharga->status = 1;
+            $addharga->status = 1; //aktif
             $addharga->save();
 
             alert()->success('Tambah Data Harga Berhasil');

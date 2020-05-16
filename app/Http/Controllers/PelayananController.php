@@ -84,7 +84,7 @@ class PelayananController extends Controller
             $order->kg      = $request->kg;
             $order->harga   = $request->harga;
             $order->disc    = $request->disc;
-            $hitung = $order->kg * $order->harga;
+            $hitung = ( $order->kg * $order->harga) / 1000;
             $disc = ($hitung * $order->disc) / 100;
             $total = $hitung - $disc;
             $order->harga_akhir = $total;
@@ -110,6 +110,8 @@ class PelayananController extends Controller
                 $mail->from('laundri.dev@gmail.com');
                 });
             }
+
+            dd($order);
 
             alert()->success('Data Laundry Berhasil Ditambah');
             return redirect('pelayanan');

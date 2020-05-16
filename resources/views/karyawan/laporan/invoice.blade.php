@@ -1,4 +1,4 @@
-@extends('layouts.karyawan_template')
+@extends('layouts.backend')
 @section('title','Karyawan - Invoice Customer')
 @section('header','Invoice Customer')
 @section('content')
@@ -52,8 +52,8 @@
                                 <tr>
                                     <td class="text-center">1</td>
                                     <td>{{$item->jenis}}</td>
-                                    <td class="text-right">{{$item->kg}} Kg</td>
-                                    <td class="text-right">{{Rupiah::getRupiah($item->harga)}} /Kg</td>
+                                    <td class="text-right">{{$item->kg}} / gram</td>
+                                    <td class="text-right">{{Rupiah::getRupiah($item->harga)}} /gram</td>
                                     <td class="text-right">
                                         <input type="hidden" value="{{$hitung = $item->kg * $item->harga}}">
                                         <p style="color:black">{{Rupiah::getRupiah($hitung)}}</p>
