@@ -8,13 +8,14 @@
             <h4 class="card-title"> Data Karyawan / Cabang
                 <a href="{{url('kry-add')}}" class="btn btn-primary">Tambah</a>
             </h4>
-            
+
             <div class="table-responsive">
                 <table class="table zero-configuration">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Nama Karyawan</th>
+                            <th>Email</th>
                             <th>Alamat Cabang</th>
                             <th>Nama Cabang</th>
                             <th>No Telp</th>
@@ -28,6 +29,7 @@
                         <tr>
                             <td>{{$no}}</td>
                             <td>{{$item->name}}</td>
+                            <td>{{$item->email}}</td>
                             <td>{{$item->alamat_cabang}}</td>
                             <td>{{$item->nama_cabang}}</td>
                             <td>{{$item->no_telp}}</td>
