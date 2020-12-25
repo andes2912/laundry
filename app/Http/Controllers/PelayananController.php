@@ -20,7 +20,7 @@ class PelayananController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     private $user ;
     function __construct(Request $request)
     {
@@ -53,7 +53,7 @@ class PelayananController extends Controller
     public function create()
     {
         if (Auth::user()->auth == "Karyawan") {
-           
+
             return view('karyawan.transaksi.addorder');
         } else {
             return redirect('home');
@@ -72,28 +72,28 @@ class PelayananController extends Controller
 
             try {
                 $order = new transaksi();
-                $order->invoice = $request->invoice;
-                $order->tgl_transaksi = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
-                $order->status_order = $request->status_order;
-                $order->status_payment = $request->status_payment;
-                $order->id_jenis = $request->id_jenis;
-                $order->id_customer = $request->id_customer;
-                $order->id_karyawan = Auth::user()->id;
-                $order->customer = $request->customer;
-                $order->email_customer = $request->email_customer;
-                $order->hari    = $request->hari;
-                $order->kg      = $request->kg;
-                $order->harga   = $request->harga;
-                $order->disc    = $request->disc;
-                $hitung = ( $order->kg * $order->harga) / 1000;
-                $disc = ($hitung * $order->disc) / 100;
-                $total = $hitung - $disc;
-                $order->harga_akhir = $total;
-                $order->notif   = 0;
-                $order->notif_admin   = 0;
-                $order->tgl     = Carbon::now()->day;
-                $order->bulan     = Carbon::now()->month;
-                $order->tahun     = Carbon::now()->year;
+                $order->invoice         = $request->invoice;
+                $order->tgl_transaksi   = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
+                $order->status_order    = $request->status_order;
+                $order->status_payment  = $request->status_payment;
+                $order->id_jenis        = $request->id_jenis;
+                $order->id_customer     = $request->id_customer;
+                $order->id_karyawan     = Auth::user()->id;
+                $order->customer        = $request->customer;
+                $order->email_customer  = $request->email_customer;
+                $order->hari            = $request->hari;
+                $order->kg              = $request->kg;
+                $order->harga           = $request->harga;
+                $order->disc            = $request->disc;
+                $hitung                 = ( $order->kg * $order->harga) / 1000;
+                $disc                   = ($hitung * $order->disc) / 100;
+                $total                  = $hitung - $disc;
+                $order->harga_akhir     = $total;
+                $order->notif           = 0;
+                $order->notif_admin     = 0;
+                $order->tgl             = Carbon::now()->day;
+                $order->bulan           = Carbon::now()->month;
+                $order->tahun           = Carbon::now()->year;
                 if ($order->save()) {
 
                     // Menyiapkan data
@@ -103,7 +103,7 @@ class PelayananController extends Controller
                         'customer' => $order->customer,
                         'tgl_transaksi' => $order->tgl_transaksi,
                     );
-                        
+
                     // Kirim Email
                     Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
                     $mail->to($email,'no-replay')
@@ -316,7 +316,7 @@ class PelayananController extends Controller
                         'customer' => $statusorder->customer,
                         'tgl_transaksi' => $statusorder->tgl_transaksi,
                     );
-                        
+
                     // Kirim Email
                     Mail::send('karyawan.email.selesai', $data, function($mail) use ($email, $data){
                     $mail->to($email,'no-replay')
@@ -369,7 +369,7 @@ class PelayananController extends Controller
                         'tgl_transaksi' => $statusbayar->tgl_transaksi,
                         'tgl_ambil' => $statusbayar->tgl_ambil,
                     );
-                        
+
                     // Kirim Email
                     Mail::send('karyawan.email.diambil', $data, function($mail) use ($email, $data){
                     $mail->to($email,'no-replay')
@@ -383,7 +383,7 @@ class PelayananController extends Controller
         } else {
            return redirect('/home');
         }
-       
+
     }
 
     // Tambah Customer
@@ -394,7 +394,7 @@ class PelayananController extends Controller
         } else {
             return redirect('/home');
         }
-        
+
     }
 
     // Proses Tambah Customer
@@ -419,7 +419,7 @@ class PelayananController extends Controller
         } else {
             return redirect('/home');
         }
-        
+
     }
 
     // Invoice
@@ -438,7 +438,7 @@ class PelayananController extends Controller
             ->where('transaksis.id', $request->id)
             ->where('transaksis.id_karyawan',auth::user()->id)
             ->orderBy('id','DESC')->first();
-            
+
         return view('karyawan.laporan.invoice', compact('invoice','data'));
         } else {
             return redirect('/home');

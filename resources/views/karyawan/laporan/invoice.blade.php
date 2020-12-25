@@ -25,7 +25,7 @@
                             <br/> {{$data->alamat}}
                             <br/> {{$data->no_telp}}</p>
                         <p class="m-t-30"><b>Tanggal Masuk :</b> <i class="fa fa-calendar"></i> {{carbon\carbon::parse($data->tgl_transaksi)->format('d-m-Y')}}</p>
-                        <p><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i> 
+                        <p><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i>
                             @if ($data->tgl_ambil == "")
                                 Belum Diambil
                             @else
@@ -52,14 +52,14 @@
                                 <tr>
                                     <td class="text-center">1</td>
                                     <td>{{$item->jenis}}</td>
-                                    <td class="text-right">{{$item->kg}} / gram</td>
-                                    <td class="text-right">{{Rupiah::getRupiah($item->harga)}} /gram</td>
+                                    <td class="text-right">{{$item->kg}} / kg</td>
+                                    <td class="text-right">{{Rupiah::getRupiah($item->harga)}} /kg</td>
                                     <td class="text-right">
                                         <input type="hidden" value="{{$hitung = $item->kg * $item->harga}}">
                                         <p style="color:black">{{Rupiah::getRupiah($hitung)}}</p>
                                     </td>
                                 </tr>
-                            
+
                         </tbody>
                     </table>
                 </div>
