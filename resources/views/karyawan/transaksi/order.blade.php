@@ -101,7 +101,14 @@ $(document).on('click','#save_status', function(){
         $("#customer").val('');
         $("#status_order").val('');
  
-        location.reload();
+        localStorage.setItem("swal", JSON.stringify({
+			    title: "Password Berhasil Di Reset!",
+			    text: 'Thanks',
+			    icon: "success",
+			    button: false
+			}));
+
+			swal(JSON.parse(localStorage.getItem("swal"))).then(() => location.reload());
     });
 });
 
@@ -126,7 +133,14 @@ $(document).on('click','#simpan_status', function(){
         $("#id_bayar").val(''); 
         $("#customer_pay").val('');
         $("#status_payment").val('');
-        location.reload();
+        localStorage.setItem("swal", JSON.stringify({
+			    title: "Password Berhasil Di Reset!",
+			    text: 'Thanks',
+			    icon: "success",
+			    button: false
+			}));
+
+			swal(JSON.parse(localStorage.getItem("swal"))).then(() => location.reload());
     });
 });
 
@@ -134,9 +148,16 @@ $(document).on('click','#simpan_status', function(){
  $(document).on('click','#ambil', function () {
     var id = $(this).attr('data-id-ambil');
     $.get(' {{Url("ubah-status-ambil")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-        location.reload();
+        localStorage.setItem("swal", JSON.stringify({
+			    title: "Password Berhasil Di Reset!",
+			    text: 'Thanks',
+			    icon: "success",
+			    button: false
+			}));
+
+			swal(JSON.parse(localStorage.getItem("swal"))).then(() => location.reload());
     });
-    });
+});
 
     // DATATABLE
 $(document).ready(function() {
