@@ -44,7 +44,7 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+<body class="vertical-layout vertical-menu-modern dark-layout content-left-sidebar chat-application navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar" data-layout="dark-layout">
 
     <!-- BEGIN: Header-->
     <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu floating-nav navbar-light navbar-shadow">
@@ -70,7 +70,7 @@
                                 ->get();
                             }
 
-                            
+
                         ?>
                         <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up">{{$notif->count()}}</span></a>
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
@@ -107,7 +107,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 @if (auth::user()->auth == 'Admin')
-                                    
+
                                 @else
                                 <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
                                 </a>
@@ -148,7 +148,7 @@
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="nav-item"><a href="{{url('home')}}"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
                 </li>
-               
+
                 {{-- Menu Admin --}}
                     @if (auth::user()->auth == "Admin")
                         <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="User">Data Pengguna</span></a>
@@ -175,7 +175,7 @@
                                 </li>
                             </ul>
                         </li>
-                        
+
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="User">Data Finance</span></a>
                             <ul class="menu-content">
@@ -217,7 +217,7 @@
                 @yield('content')
                 @include('sweetalert::alert')
             </div>
-            
+
         </div>
     </div>
     <!-- END: Content-->
@@ -272,7 +272,7 @@
                     // location.reload();
                     if (data) {
                         window.location = '/data-transaksi';
-                    } 
+                    }
                 });
             });
     </script>
