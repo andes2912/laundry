@@ -241,20 +241,20 @@ class AdminController extends Controller
     //     }
     // }
 
-    public function editcustomer($id_customer)
+    public function editcustomer($id)
     {
        if (Auth::user()->auth == "Admin") {
-            $edit = customer::find($id_customer);
+            $edit = customer::find($id);
             return view('modul_admin.customer.edit', compact('edit'));
        } else {
            return redirect('home');
        }
     }
 
-    public function updatecustomer(Request $request,$id_customer)
+    public function updatecustomer(Request $request,$id)
     {
         if (Auth::user()->auth == "Admin") {
-            $addplg =  customer::find($id_customer);
+            $addplg =  customer::find($id);
             $addplg->nama = $request->nama;
             $addplg->alamat = $request->alamat;
             $addplg->kelamin = $request->kelamin;
@@ -368,8 +368,8 @@ class AdminController extends Controller
             ->orderBy('id','DESC')->get();
 
             $data = transaksi::selectRaw('transaksis.*,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
-            ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
-            ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
+            ->leftJoin('customers as a' , 'a.id' , '=' ,'transaksis.customer_id')
+            ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.user_id')
             ->where('transaksis.id', $request->id)
             ->orderBy('id','DESC')->first();
 
@@ -401,10 +401,10 @@ class AdminController extends Controller
     // Hitung Jumlah Transaksi Keseluruhan
     public function jmlTransaksi(Request $request)
     {
-        $jml = customer::select(DB::raw('t.id_customer,t.nama,t.alamat,t.kelamin,t.no_telp,a.kg'))
+        $jml = customer::select(DB::raw('t.id,t.nama,t.alamat,t.kelamin,t.no_telp,a.kg'))
         ->from(DB::raw('(SELECT * from customers order by created_at DESC) t'))
-        ->leftJoin('transaksis as a' ,'a.id_customer' , '=' , 't.id_customer')
-        ->groupBy('t.id_customer')
+        ->leftJoin('transaksis as a' ,'a.customer_id' , '=' , 't.id')
+        ->groupBy('t.id')
         ->get();
 
         return view('modul_admin.customer.jmltransaksi', compact('jml'));
@@ -416,7 +416,7 @@ class AdminController extends Controller
         if (auth::user()->auth == "Admin") {
 
             // Uang yg di dapat by keseluruhan
-            $all = transaksi::sum('harga_akhir');
+            $all = transaksi::where('status_payment','Success')->sum('harga_akhir');
 
             // Uang yg di dapat by hari
             $hari = transaksi::where('status_payment','Success')->where('tgl', Carbon::now()->day)->where('bulan', Carbon::now()->month)->where('tahun', Carbon::now()->year)->sum('harga_akhir');
@@ -458,7 +458,7 @@ class AdminController extends Controller
 
             $transaksi = transaksi::get();
 
-            $user = transaksi::select('id_customer')->groupBy('id_customer')->get();
+            $user = transaksi::select('customer_id')->groupBy('customer_id')->get();
             return view('modul_admin.finance.cabang', compact('all','hari','bulan','tahun','kg','transaksi','user','ny','nm','nd'));
         }
     }
@@ -470,7 +470,7 @@ class AdminController extends Controller
         if (auth::user()->auth == "Admin") {
             $transaksi = transaksi::selectRaw('transaksis.*,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
-            ->where('transaksis.id_karyawan', $request->id_karyawan)
+            ->where('transaksis.user_id', $request->user_id)
             ->orderBy('transaksis.created_at','desc')
             ->get();
 
