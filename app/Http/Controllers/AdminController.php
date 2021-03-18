@@ -85,21 +85,13 @@ class AdminController extends Controller
     {
         if (Auth::user()->auth === "Admin") {
 
-            if (User::where('email', $request->email)->exists()) {
-                return redirect()->back()->withErrors(['errors' => 'Email Sudah Terdaftar !!']);
-            } elseif (User::where('nama_cabang', $request->nama_cabang)->exists()) {
-                return redirect()->back()->withErrors(['errors' => 'Nama Cabang Sudah Terdaftar !!']);
-            }
-
             $request->validate([
               'name'          => 'required|max:20',
               'email'         => 'required|unique:users|max:25',
               'nama_cabang'   => 'required|max:20',
-              'alamat'        => 'required',
-              'alamat_cabang' => 'required',
+              'alamat'        => 'required|max:25',
+              'alamat_cabang' => 'required|unique:users',
               'no_telp'       => 'required|max:15',
-              'auth'          => 'required',
-
             ]);
 
             $adduser = New User();
@@ -109,8 +101,10 @@ class AdminController extends Controller
             $adduser->alamat = $request->alamat;
             $adduser->alamat_cabang = $request->alamat_cabang;
             $adduser->no_telp = $request->no_telp;
+            $adduser->status = 'Active';
             $adduser->auth = 'Karyawan';
             $adduser->password = bcrypt('123456');
+            // dd($adduser);
             $adduser->save();
 
             if ($adduser) {
@@ -291,7 +285,7 @@ class AdminController extends Controller
     {
         if (Auth::user()->auth == "Admin") {
             $transaksi = transaksi::selectRaw('transaksis.*,a.jenis')
-            ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
+            ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
             ->orderBy('id','DESC')->get();
 
             $filter = User::select('id','name')->where('auth','Karyawan')->get();
@@ -306,10 +300,10 @@ class AdminController extends Controller
     {
        if (Auth::user()->auth == "Admin") {
             $harga = harga::selectRaw('hargas.*,a.nama_cabang')
-            ->leftJoin('users as a','a.id','=','hargas.id_cabang')
+            ->leftJoin('users as a','a.id','=','hargas.user_id')
             ->orderBy('id','DESC')->get(); // Ambil data harga
             $karyawan = User::where('auth','Karyawan')->first(); // Cek Apakah sudah ada karyawan atau belum
-            $getcabang = User::where('auth','Karyawan')->where('status','Aktif')->get();
+            $getcabang = User::where('auth','Karyawan')->where('status','Active')->get();
             return view('modul_admin.laundri.harga', compact('harga','karyawan','getcabang'));
        } else {
            return redirect('home');
@@ -321,8 +315,14 @@ class AdminController extends Controller
     {
         if (Auth::user()->auth == "Admin") {
 
+            $request->validate([
+              'jenis' => 'required',
+              'harga' => 'required',
+              'hari'  => 'required'
+            ]);
+
             $addharga = new harga();
-            $addharga->id_cabang = $request->id_cabang;
+            $addharga->user_id = $request->user_id;
             $addharga->jenis = $request->jenis;
             $addharga->kg = 1000; // satuan gram
             $addharga->harga = $request->harga;
@@ -330,7 +330,7 @@ class AdminController extends Controller
             $addharga->status = 1; //aktif
             $addharga->save();
 
-            alert()->success('Tambah Data Harga Berhasil');
+            Session::flash('success','Tambah Data Harga Berhasil');
             return redirect('data-harga');
         } else {
             return redirect('home');
@@ -348,6 +348,7 @@ class AdminController extends Controller
             'hari' => $request->hari,
             'status' => $request->status,
         ]);
+        Session::flash('success','Edit Data Harga Berhasil');
         return $editharga;
        } else {
            return redirect('/home');
@@ -362,7 +363,7 @@ class AdminController extends Controller
     {
         if (Auth::user()->auth == "Admin") {
             $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
-            ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
+            ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
             ->where('transaksis.id', $request->id)
             ->orderBy('id','DESC')->get();
 
@@ -434,7 +435,7 @@ class AdminController extends Controller
         if (auth::check()) {
             if (auth::user()->auth == "Admin") {
                 $transaksi = transaksi::selectRaw('transaksis.*,a.jenis')
-                ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
+                ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
                 ->where('transaksis.id_karyawan', $request->id_karyawan)
                 ->get();
 

@@ -45,7 +45,7 @@
                             <td>{{$item->nama_cabang}}</td>
                             <td>{{$item->no_telp}}</td>
                             <td>
-                                @if ($item->status == 'Aktif')
+                                @if ($item->status == 'Active')
                                     <span class="label label-success">Aktif</span>
                                 @else
                                     <span class="label label-danger">Tidak Aktif</span>

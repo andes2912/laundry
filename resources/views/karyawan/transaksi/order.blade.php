@@ -6,6 +6,11 @@
   <button type="button" class="close" data-dismiss="alert">×</button>
     <strong>{{ $message }}</strong>
   </div>
+@elseif ($message = Session::get('error'))
+  <div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
 @endif
 <div class="card">
     <div class="card-body">
@@ -38,18 +43,18 @@
                         <td>{{carbon\carbon::parse($item->tgl_transaksi)->format('d-m-y')}}</td>
                         <td>{{$item->customer}}</td>
                         <td>
-                            @if ($item->status_order == 'Selesai')
+                            @if ($item->status_order == 'Done')
                                 <span class="label label-success">Selesai</span>
-                            @elseif($item->status_order == 'Diambil')
+                            @elseif($item->status_order == 'Delivery')
                                 <span class="label label-primary">Sudah Diambil</span>
-                            @elseif($item->status_order == 'Proses')
+                            @elseif($item->status_order == 'Process')
                                 <span class="label label-info">Sedang Proses</span>
                             @endif
                         </td>
                         <td>
-                            @if ($item->status_payment == 'Lunas')
+                            @if ($item->status_payment == 'Success')
                                 <span class="label label-success">Sudah Dibayar</span>
-                            @elseif($item->status_payment == 'Belum')
+                            @elseif($item->status_payment == 'Pending')
                                 <span class="label label-info">Belum Dibayar</span>
                             @endif
                         </td>
@@ -58,16 +63,16 @@
                             {{Rupiah::getRupiah($item->harga_akhir)}}
                         </td>
                         <td>
-                            @if ($item->status_payment == "Belum")
+                            @if ($item->status_payment == "Pending")
                                 <a class="btn btn-sm btn-danger" data-toggle="modal" data-id-pay="{{$item->id}}" data-id-name="{{$item->customer}}" data-id-bayar="{{$item->status_payment}}" id="klick" data-target="#ubah_status_pay" style="color:white">Bayar</a>
                                 <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
-                            @elseif($item->status_payment == "Lunas")
-                                @if ($item->status_order == "Selesai")
+                            @elseif($item->status_payment == "Success")
+                                @if ($item->status_order == "Done")
                                 <a class="btn btn-sm btn-success" data-id-ambil="{{$item->id}}" id="ambil" style="color:white">Ambil</a>
-                                @elseif($item->status_order == "Proses")
+                                @elseif($item->status_order == "Process")
                                     <a class="btn btn-sm btn-info" data-toggle="modal" data-id="{{$item->id}}" data-id-nama="{{$item->customer}}" data-id-order="{{$item->status_order}}" id="klikmodal" data-target="#ubah_status" style="color:white">Selesai</a>
                                     <a href="{{url('invoice-kar', $item->id)}}"  class="btn btn-sm btn-primary">Invoice</a>
-                                @elseif($item->status_order == "Diambil")
+                                @elseif($item->status_order == "Delivery")
                                     <a href="" class="btn btn-sm btn-warning">Detail</a>
                                     <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
                                 @endif
@@ -104,18 +109,11 @@ $(document).on('click','#save_status', function(){
     var status_order = $("#status_order").val();
 
     $.get('{{Url("ubah-status-order")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,customer:customer,status_order:status_order}, function(resp){
-        $("#id").val('');
-        $("#customer").val('');
-        $("#status_order").val('');
+      $("#id").val('');
+      $("#customer").val('');
+      $("#status_order").val('');
 
-        localStorage.setItem("swal", JSON.stringify({
-			    title: "Password Berhasil Di Reset!",
-			    text: 'Thanks',
-			    icon: "success",
-			    button: false
-			}));
-
-			swal(JSON.parse(localStorage.getItem("swal"))).then(() => location.reload());
+      location.reload();
     });
 });
 
@@ -137,17 +135,10 @@ $(document).on('click','#simpan_status', function(){
     var status_payment = $("#status_payment").val();
 
     $.get('{{Url("ubah-status-bayar")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,customer:customer,status_payment:status_payment}, function(resp){
-        $("#id_bayar").val('');
-        $("#customer_pay").val('');
-        $("#status_payment").val('');
-        localStorage.setItem("swal", JSON.stringify({
-			    title: "Password Berhasil Di Reset!",
-			    text: 'Thanks',
-			    icon: "success",
-			    button: false
-			}));
-
-			swal(JSON.parse(localStorage.getItem("swal"))).then(() => location.reload());
+      $("#id_bayar").val('');
+      $("#customer_pay").val('');
+      $("#status_payment").val('');
+			location.reload();
     });
 });
 
@@ -155,14 +146,7 @@ $(document).on('click','#simpan_status', function(){
  $(document).on('click','#ambil', function () {
     var id = $(this).attr('data-id-ambil');
     $.get(' {{Url("ubah-status-ambil")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-        localStorage.setItem("swal", JSON.stringify({
-			    title: "Password Berhasil Di Reset!",
-			    text: 'Thanks',
-			    icon: "success",
-			    button: false
-			}));
-
-			swal(JSON.parse(localStorage.getItem("swal"))).then(() => location.reload());
+      location.reload();
     });
 });
 
