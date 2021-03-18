@@ -2,15 +2,27 @@
 @section('title','Karyawan - Data Customer')
 @section('header','Data Customer')
 @section('content')
+@if ($message = Session::get('success'))
+  <div class="alert alert-success alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+@elseif($message = Session::get('error'))
+  <div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+@endif
 <div class="card">
-    <div class="card-body">     
+    <div class="card-body">
         <div class="table-responsive m-t-5">
-                <a href="{{url('list-customer-add')}}" class="btn btn-primary">Tambah Customer</a>       
+                <a href="{{url('list-customer-add')}}" class="btn btn-primary">Tambah Customer</a>
             <table id="myTable" class="table table-bordered table-striped">
                 <thead>
                     <tr align="center" style="color:black; font-weight:bold">
                         <th>#</th>
                         <th>Nama</th>
+                        <th>Email</th>
                         <th>Alamat</th>
                         <th>No Telpon</th>
                         <th>Kelamin</th>
@@ -23,6 +35,7 @@
                     <tr align="center" style="color:black;">
                         <td>{{$no}}</td>
                         <td>{{$item->nama}}</td>
+                        <td>{{$item->email_customer}}</td>
                         <td>{{$item->alamat}}</td>
                         <td>{{$item->no_telp}}</td>
                         <td>
@@ -37,8 +50,6 @@
                                 @csrf
                                 @method('DELETE')
                                 <a href="{{url('add-order')}}" class="btn btn-sm btn-primary" style="color:white">Add Order</a>
-                                {{-- <a href="{{url('customer-edit', $item->id_customer)}}" class="btn btn-sm btn-info">Edit</a>
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button> --}}
                             </form>
                         </td>
                     </tr>

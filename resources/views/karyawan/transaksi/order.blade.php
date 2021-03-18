@@ -1,6 +1,12 @@
 @extends('layouts.backend')
 @section('title','Dashboard Karyawan')
 @section('content')
+@if ($message = Session::get('success'))
+  <div class="alert alert-success alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+@endif
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">
@@ -47,9 +53,9 @@
                                 <span class="label label-info">Belum Dibayar</span>
                             @endif
                         </td>
-                        <td>{{$item->Harga[0]['jenis']}}</td>
+                        <td>{{$item->Harga->jenis}}</td>
                         <td>
-                            <p>{{Rupiah::getRupiah($item->harga_akhir)}}</p>
+                            {{Rupiah::getRupiah($item->harga_akhir)}}
                         </td>
                         <td>
                             @if ($item->status_payment == "Belum")

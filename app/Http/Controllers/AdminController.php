@@ -7,7 +7,7 @@ use App\Models\{User,customer,transaksi,harga};
 use Auth;
 use Rupiah;
 use DB;
-use Alert;
+use Session;
 
 use Carbon\carbon;
 
@@ -79,6 +79,8 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //  Add Karyawan
     public function store(Request $request)
     {
         if (Auth::user()->auth === "Admin") {
@@ -89,24 +91,31 @@ class AdminController extends Controller
                 return redirect()->back()->withErrors(['errors' => 'Nama Cabang Sudah Terdaftar !!']);
             }
 
+            $request->validate([
+              'name'          => 'required|max:20',
+              'email'         => 'required|unique:users|max:25',
+              'nama_cabang'   => 'required|max:20',
+              'alamat'        => 'required',
+              'alamat_cabang' => 'required',
+              'no_telp'       => 'required|max:15',
+              'auth'          => 'required',
+
+            ]);
+
             $adduser = New User();
             $adduser->name = $request->name;
             $adduser->email = $request->email;
-            $adduser->status = 'Aktif';
             $adduser->nama_cabang = $request->nama_cabang;
             $adduser->alamat = $request->alamat;
             $adduser->alamat_cabang = $request->alamat_cabang;
             $adduser->no_telp = $request->no_telp;
-            $adduser->auth = $request->auth;
+            $adduser->auth = 'Karyawan';
             $adduser->password = bcrypt('123456');
             $adduser->save();
 
-            if ($adduser->auth == "Admin") {
-                alert()->success('Admin Berhasil Dibuat');
-                return redirect('adm');
-            } else {
-                alert()->success('Tambah Karyawan Berhasil');
-                return redirect('kry');
+            if ($adduser) {
+              Session::flash('success','Tambah Karyawan Berhasil');
+              return redirect('kry');
             }
 
         } else {
@@ -156,6 +165,7 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         if (Auth::user()->auth === "Admin") {
+
             $adduser = User::find($id);
             $adduser->name = $request->name;
             $adduser->email = $request->email;
@@ -164,15 +174,11 @@ class AdminController extends Controller
             $adduser->alamat = $request->alamat;
             $adduser->alamat_cabang = $request->alamat_cabang;
             $adduser->no_telp = $request->no_telp;
-            $adduser->auth = $request->auth;
             $adduser->save();
 
-            if ($adduser->auth == "Admin") {
-                alert()->success('Update Data Berhasil');
-                return redirect('adm');
-            } else {
-                alert()->success('Update Data Berhasil');
-                return redirect('kry');
+            if ($adduser) {
+              Session::flash('success','Edit Karyawan Berhasil');
+              return redirect('kry');
             }
 
         } else {
@@ -192,10 +198,9 @@ class AdminController extends Controller
             $del = User::find($id);
             $del->delete();
 
-            if ($del->auth == "Admin") {
-                return redirect('adm');
-            } else {
-                return redirect('kry');
+            if ($del) {
+              Session::flash('success','Hapus Karyawan Berhasil');
+              return redirect('kry');
             }
 
         } else {

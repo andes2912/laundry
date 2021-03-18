@@ -12,6 +12,6 @@ class transaksi extends Model
 
     public function harga()
     {
-      return $this->hasMany('App\Models\harga','id');
+      return $this->belongsTo(harga::class);
     }
 }

@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('auth');
-            $table->string('status');
+            $table->enum('auth',['Admin','Karyawan']);
+            $table->enum('status',['Active','Not Active'])->default('Active');
             $table->string('nama_cabang')->nullable();
             $table->string('alamat_cabang')->nullable();
             $table->string('alamat')->nullable();

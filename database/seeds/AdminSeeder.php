@@ -15,9 +15,9 @@ class AdminSeeder extends Seeder
         DB::table('users')->insert([
         	'name' => 'Administrator',
         	'email' => 'admin@laundry.com',
-        	'status' => 'Aktif',
-            'auth' => 'Admin',
-            'password' => bcrypt('123456')
+        	'status' => 'Active',
+          'auth' => 'Admin',
+          'password' => bcrypt('123456')
         ]);
     }
 }

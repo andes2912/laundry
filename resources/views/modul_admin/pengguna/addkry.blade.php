@@ -82,10 +82,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="auth" value="Karyawan">
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
-                                <button type="reset" class="btn btn-outline-warning mr-1 mb-1">Reset</button>
+                              <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+                              <button type="reset" class="btn btn-outline-warning mr-1 mb-1">Reset</button>
                             </div>
                         </div>
                     </div>

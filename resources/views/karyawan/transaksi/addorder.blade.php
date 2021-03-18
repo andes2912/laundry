@@ -2,6 +2,13 @@
 @section('title','Tambah Data Order')
 @section('content')
     @if (@$cek_harga->id_cabang == !null || @$cek_harga->id_cabang == auth::user()->id)
+
+    @if($message = Session::get('error'))
+      <div class="alert alert-danger alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+      </div>
+    @endif
     <div class="card card-outline-info">
         <div class="card-header">
             <h4 class="card-title">Form Tambah Data Order
@@ -16,19 +23,29 @@
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Nama</label>
-                                <select name="id_customer" id="id_customer" class="form-control select2" required>
+                                <select name="id_customer" id="id_customer" class="form-control select2 @error('id_customer') is-invalid @enderror" required>
                                     <option value="">-- Pilih Customer --</option>
                                     @foreach ($customer as $item)
                                         <option value="{{$item->id_customer}}">{{$item->nama}}</option>
                                     @endforeach
                                 </select>
+                                @error('id_customer')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">No Transaksi</label>
-                                <input type="text" name="invoice" value="{{$newID}}" class="form-control" readonly>
+                                <input type="text" name="invoice" value="{{$newID}}" class="form-control @error('invoice') is-invalid @enderror" readonly>
+                                @error('invoice')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
                             </div>
                         </div>
                             <span id="select-customer"></span>
@@ -36,13 +53,12 @@
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Berat Pakaian</label>
-                                <input type="number" class="form-control form-control-danger" name="kg" placeholder="Berat Pakaian" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group has-success">
-                                <label class="control-label">Status Order</label>
-                                <input type="text" name="status_order" value="Proses" readonly class="form-control">
+                                <input type="number" class="form-control form-control-danger @error('kg') is-invalid @enderror" name="kg" placeholder="Berat Pakaian" autocomplete="off" required>
+                                @error('kg')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -51,17 +67,22 @@
                     <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Status Payment</label>
-                                <select class="form-control custom-select" name="status_payment" required>
+                                <select class="form-control custom-select @error('status_payment') is-invalid @enderror" name="status_payment" required>
                                     <option value="">-- Pilih Status Payment --</option>
-                                    <option value="Belum">Belum Dibayar</option>
-                                    <option value="Lunas">Sudah Dibayar</option>
+                                    <option value="Pending">Belum Dibayar</option>
+                                    <option value="Success">Sudah Dibayar</option>
                                 </select>
+                                @error('status_payment')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="orm-group has-success">
                                 <label class="control-label">Pilih Pakaian</label>
-                                <select id="id" name="harga_id" class="form-control select2" required>
+                                <select id="id" name="harga_id" class="form-control select2 @error('harga_id') is-invalid @enderror" required>
                                     <option value="">-- Jenis Pakaian --</option>
                                     <?php
                                     $jenis = App\Models\harga::select('id','jenis')->where('status','1')->where('id_cabang',auth::user()->id)->get();
@@ -70,6 +91,11 @@
                                       <option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
                                     @endforeach
                                 </select>
+                                @error('harga_id')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -81,7 +107,12 @@
                         <div class="col-md-2">
                             <div class="form-group has-success">
                                 <label class="control-label">Disc</label>
-                                <input type="number" name="disc" placeholder="Tulis Disc" class="form-control">
+                                <input type="number" name="disc" placeholder="Tulis Disc" class="form-control @error('disc') is-invalid @enderror">
+                                @error('disc')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
