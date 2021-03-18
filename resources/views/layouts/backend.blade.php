@@ -37,7 +37,6 @@
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/style.css')}}">
     <!-- END: Custom CSS-->
 
 </head>
@@ -242,7 +241,7 @@
 
 
     <!-- BEGIN: Vendor JS-->
-    <script src="{{asset('backend/vendors/js/vendors.min.js')}}"></script>
+    <script src="{{asset('backend/vendors/js/vendors.js')}}"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
