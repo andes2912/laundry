@@ -432,47 +432,48 @@ class AdminController extends Controller
     // Filter Transaksi
     public function filtertransaksi(Request $request)
     {
-        if (auth::check()) {
-            if (auth::user()->auth == "Admin") {
-                $transaksi = transaksi::selectRaw('transaksis.*,a.jenis')
-                ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
-                ->where('transaksis.id_karyawan', $request->id_karyawan)
-                ->get();
+      if (auth::check()) {
+        if (auth::user()->auth == "Admin") {
+            $transaksi = transaksi::selectRaw('transaksis.*,a.jenis')
+            ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
+            ->where('transaksis.id_karyawan', $request->id_karyawan)
+            ->orderBy('transaksis.created_at','desc')
+            ->get();
 
-                $return = "";
-                $no=1;
-                foreach($transaksi as $item) {
-                    $return .="<tr>
-                      <td>".$no."</td>
-                      <td>".$item->tgl_transaksi."</td>
-                      <td>".$item->customer."</td>
-                      <td>".$item->status_order."</td>
-                      <td>".$item->status_payment."</td>
-                      <td>".$item->jenis."</td>";
-                      $return .="
-                      <input type='hidden' value='".$item->kg * $item->harga."'>
-                      <td>".Rupiah::getRupiah($item->kg * $item->harga)."</td>
-                      ";
-                      if ($item->status_order == "Diambil"){
-                          $return .="<td><a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success style='color:white'>Invoice</a>
-                          <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-                      }
-                      elseif($item->status_order == "Selesai")
-                      {
-                        $return .="<td> <a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
-                        <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-                      }
-                      elseif($item->status_order == "Proses")
-                      {
-                        $return .="<td> <a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
-                        <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-                      }
-                    $return .= "</td>
-                    </tr>";
-                    $no++;
-                    }
-                    return $return;
-            }
+            $return = "";
+            $no=1;
+            foreach($transaksi as $item) {
+                $return .="<tr>
+                  <td>".$no."</td>
+                  <td>".$item->tgl_transaksi."</td>
+                  <td>".$item->customer."</td>
+                  <td>".$item->status_order."</td>
+                  <td>".$item->status_payment."</td>
+                  <td>".$item->jenis."</td>";
+                  $return .="
+                  <input type='hidden' value='".$item->kg * $item->harga."'>
+                  <td>".Rupiah::getRupiah($item->kg * $item->harga)."</td>
+                  ";
+                  if ($item->status_order == "Delivery"){
+                      $return .="<td><a href='invoice-customer/$item->id' class='btn btn-sm btn-success style='color:white'>Invoice</a>
+                      <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                  }
+                  elseif($item->status_order == "Done")
+                  {
+                    $return .="<td> <a href='invoice-customer/$item->id' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
+                    <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                  }
+                  elseif($item->status_order == "Process")
+                  {
+                    $return .="<td> <a href='invoice-customer/$item->id' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
+                    <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                  }
+                $return .= "</td>
+                </tr>";
+                $no++;
+                }
+                return $return;
         }
+      }
     }
 }

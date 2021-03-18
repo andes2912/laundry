@@ -41,35 +41,35 @@
                             <td>{{carbon\carbon::parse($item->tgl_transaksi)->format('d-m-y')}}</td>
                             <td>{{$item->customer}}</td>
                             <td>
-                                @if ($item->status_order == 'Selesai')
+                                @if ($item->status_order == 'Done')
                                     <span class="label label-success">Selesai</span>
-                                @elseif($item->status_order == 'Diambil')
+                                @elseif($item->status_order == 'Delivery')
                                     <span class="label label-info">Sudah Diambil</span>
-                                @elseif($item->status_order == 'Proses')
+                                @elseif($item->status_order == 'Process')
                                     <span class="label label-info">Sedang Proses</span>
                                 @endif
                             </td>
                             <td>
-                                @if ($item->status_payment == 'Lunas')
+                                @if ($item->status_payment == 'Success')
                                     <span class="label label-success">Sudah Dibayar</span>
-                                @elseif($item->status_payment == 'Belum')
+                                @elseif($item->status_payment == 'Pending')
                                     <span class="label label-info">Belum Dibayar</span>
                                 @endif
                             </td>
                             <td>{{$item->jenis}}</td>
                             <td>
-                                    <p style="color:black">{{Rupiah::getRupiah($item->harga_akhir)}}</p>    
+                                    <p style="color:black">{{Rupiah::getRupiah($item->harga_akhir)}}</p>
                             </td>
                             <td align="center">
-                                @if ($item->status_order == "Diambil")
+                                @if ($item->status_order == "Delivery")
                                     <a href="{{url('invoice-customer', $item->id)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
                                     <a class="btn btn-sm btn-info" style="color:white">Detail</a>
-                                @elseif($item->status_order == "Selesai")
+                                @elseif($item->status_order == "Done")
                                     <a href="{{url('invoice-customer', $item->id)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
                                     <a class="btn btn-sm btn-info" style="color:white">Detail</a>
-                                @elseif($item->status_order == "Proses")
+                                @elseif($item->status_order == "Process")
                                     <a href="{{url('invoice-customer', $item->id)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
-                                    <a class="btn btn-sm btn-info" style="color:white">Detail</a>    
+                                    <a class="btn btn-sm btn-info" style="color:white">Detail</a>
                                 @endif
                             </td>
                         </tr>
@@ -118,7 +118,7 @@ $(document).ready(function() {
 $("#filter").click(function(){
     var id_karyawan  = $("#id_karyawan").val();
     $.get('filter-transaksi',{'_token': $('meta[name=csrf-token]').attr('content'),id_karyawan:id_karyawan}, function(resp){
-    $("#refresh_body").html(resp); 
+    $("#refresh_body").html(resp);
     });
 });
 </script>
