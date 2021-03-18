@@ -88,27 +88,34 @@
                                 </li> --}}
                             </ul>
                         </li>
-                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{auth::user()->name}}</span><span class="user-status">{{auth::user()->auth}}</span></div><span><img class="round" src="{{asset('backend/images/portrait/small/avatar-s-11.jpg')}}" alt="avatar" height="40" width="40"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                @if (auth::user()->auth == 'Admin')
-
-                                @else
-                                <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
-                                </a>
-                                @endif
-                                <div class="dropdown-divider"></div>
-                                <a href="{{ route('logout') }}" class="dropdown-item"
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();" data-toggle="tooltip" title="Logout">
-                                    <i class="feather icon-power"></i>
-                                    Logout
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
+                        <li class="dropdown dropdown-user nav-item">
+                          <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                            <div class="user-nav d-sm-flex d-none">
+                              <span class="user-name text-bold-600">{{auth::user()->name}}</span>
+                              <span class="user-status">{{auth::user()->auth}}</span>
                             </div>
+                            <span>
+                              <img class="round" src="{{asset('backend/images/profile/user.jpg')}}" alt="avatar" height="40" width="40">
+                            </span>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            @if (auth::user()->auth == 'Admin')
+
+                            @else
+                            <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
+                            </a>
+                            @endif
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('logout') }}" class="dropdown-item"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();" data-toggle="tooltip" title="Logout">
+                                <i class="feather icon-power"></i>
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                          </div>
                         </li>
                     </ul>
                 </div>

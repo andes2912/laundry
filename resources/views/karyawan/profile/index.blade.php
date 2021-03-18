@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="col text-center">
-                    <div class="m-t-30"> <img src="{{asset('backend/images/profile/user-uploads/user-01.jpg')}}" class="rounded" width="230" />
+                    <div class="m-t-30"> <img src="{{asset('backend/images/profile/user.jpg')}}" class="rounded" width="230" />
                         <h4 class="card-title m-t-10">{{$user->name}}
                         </h4>
                         <h6 class="card-subtitle">Karyawan</h6>

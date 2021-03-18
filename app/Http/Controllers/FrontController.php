@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\transaksi;
+use App\Models\transaksi;
 
 class FrontController extends Controller
 {
