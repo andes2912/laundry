@@ -132,14 +132,14 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="nav-item"><a href="{{url('home')}}"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
+                <li class="nav-item {{ (request()->is('home')) ? 'active' : '' }}"><a href="{{url('home')}}"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
                 </li>
 
                 {{-- Menu Admin --}}
                     @if (auth::user()->auth == "Admin")
                         <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="User">Data Pengguna</span></a>
                             <ul class="menu-content">
-                              <li>
+                              <li class="nav-item {{ (request()->is('kry')) ? 'active' : '' }}">
                                 <a href="{{url('kry')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Karyawan</span></a>
                               </li>
                             </ul>
@@ -147,7 +147,7 @@
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="User">Data Customer</span></a>
                             <ul class="menu-content">
-                                <li>
+                                <li class="nav-item {{ (request()->is('customer')) ? 'active' : '' }}">
                                   <a href="{{url('customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Customer</span></a>
                                 </li>
                             </ul>
@@ -155,10 +155,10 @@
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
                             <ul class="menu-content">
-                                <li>
+                                <li class="nav-item {{ (request()->is('data-transaksi')) ? 'active' : '' }}">
                                   <a href="{{url('data-transaksi')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Transaksi</span></a>
                                 </li>
-                                <li>
+                                <li class="nav-item {{ (request()->is('data-harga')) ? 'active' : '' }}">
                                   <a href="{{url('data-harga')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Harga Laundry</span></a>
                                 </li>
                             </ul>
@@ -167,7 +167,7 @@
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="User">Data Finance</span></a>
                             <ul class="menu-content">
-                                <li>
+                                <li class="nav-item {{ (request()->is('data-finance')) ? 'active' : '' }}">
                                   <a href="{{url('data-finance')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Finance</span></a>
                                 </li>
                             </ul>
@@ -178,13 +178,13 @@
                     @elseif(auth::user()->auth == "Karyawan")
                         <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
                             <ul class="menu-content">
-                                <li>
+                                <li class="nav-item {{ (request()->is('pelayanan')) ? 'active' : '' }}">
                                   <a href="{{route('pelayanan.index')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Order Masuk</span></a>
                                 </li>
-                                <li>
+                                <li class="nav-item {{ (request()->is('add-order')) ? 'active' : '' }}">
                                   <a href="{{url('add-order')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Tambah Order</span></a>
                                 </li>
-                                <li>
+                                <li class="nav-item {{ (request()->is('list-customer')) ? 'active' : '' }}">
                                   <a href="{{url('list-customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Data Customer</span></a>
                                 </li>
                             </ul>
