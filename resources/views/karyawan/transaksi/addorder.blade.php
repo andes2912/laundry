@@ -24,7 +24,7 @@
                                 </select>
                             </div>
                         </div>
-                            
+
                         <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">No Transaksi</label>
@@ -61,14 +61,14 @@
                         <div class="col-md-3">
                             <div class="orm-group has-success">
                                 <label class="control-label">Pilih Pakaian</label>
-                                <select id="id" name="id_jenis" class="form-control select2" required>
+                                <select id="id" name="harga_id" class="form-control select2" required>
                                     <option value="">-- Jenis Pakaian --</option>
                                     <?php
-                                    $jenis = App\harga::select('id','jenis')->where('status','1')->where('id_cabang',auth::user()->id)->get();
+                                    $jenis = App\Models\harga::select('id','jenis')->where('status','1')->where('id_cabang',auth::user()->id)->get();
                                     ?>
                                     @foreach($jenis as $jenis)
-                                    <option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
-                                    @endforeach									
+                                      <option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                     </div>
 
                     <input type="hidden" name="tgl">
-                    <!--/row-->                  
+                    <!--/row-->
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary mr-1 mb-1">Tambah</button>
@@ -107,27 +107,27 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
-    // Filter Harga 
+    // Filter Harga
     $(document).ready(function() {
        var id = $("#id").val();
-            $.get('{{ Url("listhari") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
+            $.get('{{ Url("listhari") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
             $("#select-hari").html(resp);
-            $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
+            $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
             $("#select-harga").html(resp);
         });
         });
     });
 
-    $(document).on('change', '#id', function (e) { 
+    $(document).on('change', '#id', function (e) {
       var id = $(this).val();
-      $.get('{{ Url("listhari") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
+      $.get('{{ Url("listhari") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
         $("#select-hari").html(resp);
       });
     });
 
-    $(document).on('change', '#id', function (e) { 
+    $(document).on('change', '#id', function (e) {
         var id = $(this).val();
-        $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){  
+        $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
             $("#select-harga").html(resp);
         });
     });
@@ -135,28 +135,28 @@
     // Filter Customer
     $(document).ready(function() {
        var id_customer = $("#id_customer").val();
-            $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){  
+            $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){
             $("#select-customer").html(resp);
         });
     });
 
-    $(document).on('change', '#id_customer', function (e) { 
+    $(document).on('change', '#id_customer', function (e) {
       var id_customer = $(this).val();
-      $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){  
+      $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){
         $("#select-customer").html(resp);
       });
     });
 
     $(document).ready(function() {
        var id_customer = $("#id_customer").val();
-            $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){  
+            $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){
             $("#select-email-customer").html(resp);
         });
     });
 
-    $(document).on('change', '#id_customer', function (e) { 
+    $(document).on('change', '#id_customer', function (e) {
       var id_customer = $(this).val();
-      $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){  
+      $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id_customer:id_customer}, function(resp){
         $("#select-email-customer").html(resp);
       });
     });

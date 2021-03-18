@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Auth;
 Use Alert;
 
@@ -46,7 +46,7 @@ class ProfileController extends Controller
                 $edit->alamat_cabang = $request->alamat_cabang;
                 $edit->save();
 
-                
+
                 alert()->success('Update Data Berhasil');
                 $id = $edit->id;
                 return redirect('profile-karyawan/' .$id.'');
@@ -63,7 +63,7 @@ class ProfileController extends Controller
                 $reset->update([
                     'password' => bcrypt('12345678'),
                 ]);
-                
+
                 return $reset;
             }
         }

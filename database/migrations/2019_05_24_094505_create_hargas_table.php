@@ -14,7 +14,7 @@ class CreateHargasTable extends Migration
     public function up()
     {
         Schema::create('hargas', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('id_cabang');
             $table->string('jenis');
             $table->string('kg');

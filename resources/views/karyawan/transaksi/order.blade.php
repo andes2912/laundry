@@ -23,6 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                  {{-- {{dd($order)}} --}}
                     <?php $no=1; ?>
                     @foreach ($order as $item)
                     <tr>
@@ -46,9 +47,9 @@
                                 <span class="label label-info">Belum Dibayar</span>
                             @endif
                         </td>
-                        <td>{{$item->jenis}}</td>
+                        <td>{{$item->Harga[0]['jenis']}}</td>
                         <td>
-                            <p style="color:black">{{Rupiah::getRupiah($item->harga_akhir)}}</p>
+                            <p>{{Rupiah::getRupiah($item->harga_akhir)}}</p>
                         </td>
                         <td>
                             @if ($item->status_payment == "Belum")
@@ -97,10 +98,10 @@ $(document).on('click','#save_status', function(){
     var status_order = $("#status_order").val();
 
     $.get('{{Url("ubah-status-order")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,customer:customer,status_order:status_order}, function(resp){
-        $("#id").val(''); 
+        $("#id").val('');
         $("#customer").val('');
         $("#status_order").val('');
- 
+
         localStorage.setItem("swal", JSON.stringify({
 			    title: "Password Berhasil Di Reset!",
 			    text: 'Thanks',
@@ -130,7 +131,7 @@ $(document).on('click','#simpan_status', function(){
     var status_payment = $("#status_payment").val();
 
     $.get('{{Url("ubah-status-bayar")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,customer:customer,status_payment:status_payment}, function(resp){
-        $("#id_bayar").val(''); 
+        $("#id_bayar").val('');
         $("#customer_pay").val('');
         $("#status_payment").val('');
         localStorage.setItem("swal", JSON.stringify({

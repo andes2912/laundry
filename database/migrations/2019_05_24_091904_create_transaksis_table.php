@@ -14,7 +14,7 @@ class CreateTransaksisTable extends Migration
     public function up()
     {
         Schema::create('transaksis', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('invoice');
             $table->string('id_customer');
             $table->string('id_karyawan');
@@ -23,7 +23,7 @@ class CreateTransaksisTable extends Migration
             $table->string('email_customer');
             $table->string('status_order');
             $table->string('status_payment');
-            $table->string('id_jenis');
+            $table->integer('harga_id');
             $table->string('kg');
             $table->string('hari');
             $table->string('harga');
@@ -36,6 +36,7 @@ class CreateTransaksisTable extends Migration
             $table->string('notif')->default(0);
             $table->string('notif_admin')->default(0);
             $table->timestamps();
+
         });
     }
 

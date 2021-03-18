@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\customer;
-use App\transaksi;
-use App\harga;
+use App\Models\{User,customer,transaksi,harga};
 use Auth;
 use Rupiah;
 use DB;
@@ -21,7 +18,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     private $user ;
     function __construct(Request $request)
     {
@@ -64,7 +61,7 @@ class AdminController extends Controller
             return view('modul_admin.pengguna.addadm');
         } else {
             return redirect('home');
-        }   
+        }
     }
 
     public function addkry()
@@ -90,7 +87,7 @@ class AdminController extends Controller
                 return redirect()->back()->withErrors(['errors' => 'Email Sudah Terdaftar !!']);
             } elseif (User::where('nama_cabang', $request->nama_cabang)->exists()) {
                 return redirect()->back()->withErrors(['errors' => 'Nama Cabang Sudah Terdaftar !!']);
-            } 
+            }
 
             $adduser = New User();
             $adduser->name = $request->name;
@@ -102,9 +99,8 @@ class AdminController extends Controller
             $adduser->no_telp = $request->no_telp;
             $adduser->auth = $request->auth;
             $adduser->password = bcrypt('123456');
-            $adduser->save();            
+            $adduser->save();
 
-            
             if ($adduser->auth == "Admin") {
                 alert()->success('Admin Berhasil Dibuat');
                 return redirect('adm');
@@ -112,7 +108,7 @@ class AdminController extends Controller
                 alert()->success('Tambah Karyawan Berhasil');
                 return redirect('kry');
             }
-            
+
         } else {
             return redirect('home');
         }
@@ -144,7 +140,7 @@ class AdminController extends Controller
             } else {
                 return view('modul_admin.pengguna.editkry', compact('edit'));
             }
-            
+
         } else {
             return redirect('home');
         }
@@ -178,7 +174,7 @@ class AdminController extends Controller
                 alert()->success('Update Data Berhasil');
                 return redirect('kry');
             }
-            
+
         } else {
             return redirect('home');
         }
@@ -201,7 +197,7 @@ class AdminController extends Controller
             } else {
                 return redirect('kry');
             }
-            
+
         } else {
             return redirect('home');
         }
@@ -289,7 +285,7 @@ class AdminController extends Controller
     public function datatransaksi()
     {
         if (Auth::user()->auth == "Admin") {
-            $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.harga_akhir,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
+            $transaksi = transaksi::selectRaw('transaksis.*,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->orderBy('id','DESC')->get();
 
@@ -307,7 +303,7 @@ class AdminController extends Controller
             $harga = harga::selectRaw('hargas.*,a.nama_cabang')
             ->leftJoin('users as a','a.id','=','hargas.id_cabang')
             ->orderBy('id','DESC')->get(); // Ambil data harga
-            $karyawan = User::where('auth','Karyawan')->first(); // Cek Apakah sudah ada karyawan atau belum 
+            $karyawan = User::where('auth','Karyawan')->first(); // Cek Apakah sudah ada karyawan atau belum
             $getcabang = User::where('auth','Karyawan')->where('status','Aktif')->get();
             return view('modul_admin.laundri.harga', compact('harga','karyawan','getcabang'));
        } else {
@@ -319,7 +315,7 @@ class AdminController extends Controller
     public function hargastore(Request $request)
     {
         if (Auth::user()->auth == "Admin") {
-            
+
             $addharga = new harga();
             $addharga->id_cabang = $request->id_cabang;
             $addharga->jenis = $request->jenis;
@@ -351,7 +347,7 @@ class AdminController extends Controller
        } else {
            return redirect('/home');
        }
-       
+
     }
 
 // Laporan
@@ -360,12 +356,12 @@ class AdminController extends Controller
     public function invoice( Request $request,$id)
     {
         if (Auth::user()->auth == "Admin") {
-            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.harga_akhir,transaksis.kg,transaksis.hari,transaksis.harga,transaksis.disc,a.jenis')
+            $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->where('transaksis.id', $request->id)
             ->orderBy('id','DESC')->get();
 
-            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.harga_akhir,transaksis.kg,transaksis.tgl_ambil,transaksis.invoice,transaksis.disc,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
+            $data = transaksi::selectRaw('transaksis.*,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
             ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
             ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
             ->where('transaksis.id', $request->id)
@@ -377,7 +373,7 @@ class AdminController extends Controller
         }
     }
 
-    // Notifikasi 
+    // Notifikasi
     public function notif(Request $request)
     {
         $notif = transaksi::find($request->id);
@@ -390,10 +386,10 @@ class AdminController extends Controller
                 'notif' => 1
             ]);
         }
-        
+
 
         return $notif;
-        
+
     }
 
     // Hitung Jumlah Transaksi Keseluruhan
@@ -432,7 +428,7 @@ class AdminController extends Controller
     {
         if (auth::check()) {
             if (auth::user()->auth == "Admin") {
-                $transaksi = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.harga_akhir,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,a.jenis')
+                $transaksi = transaksi::selectRaw('transaksis.*,a.jenis')
                 ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
                 ->where('transaksis.id_karyawan', $request->id_karyawan)
                 ->get();
@@ -441,30 +437,30 @@ class AdminController extends Controller
                 $no=1;
                 foreach($transaksi as $item) {
                     $return .="<tr>
-                                    <td>".$no."</td>
-                                    <td>".$item->tgl_transaksi."</td>
-                                    <td>".$item->customer."</td>
-                                    <td>".$item->status_order."</td>
-                                    <td>".$item->status_payment."</td>
-                                    <td>".$item->jenis."</td>";
-                                    $return .="
-                                    <input type='hidden' value='".$item->kg * $item->harga."'>
-                                    <td>".Rupiah::getRupiah($item->kg * $item->harga)."</td>
-                                    ";
-                                    if ($item->status_order == "Diambil"){
-                                        $return .="<td><a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success style='color:white'>Invoice</a>
-                                        <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-                                    }                                   
-                                elseif($item->status_order == "Selesai")
-                                  {
-                                    $return .="<td> <a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
-                                    <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-                                  }
-                                elseif($item->status_order == "Proses")
-                                  {
-                                    $return .="<td> <a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
-                                    <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-                                  }
+                      <td>".$no."</td>
+                      <td>".$item->tgl_transaksi."</td>
+                      <td>".$item->customer."</td>
+                      <td>".$item->status_order."</td>
+                      <td>".$item->status_payment."</td>
+                      <td>".$item->jenis."</td>";
+                      $return .="
+                      <input type='hidden' value='".$item->kg * $item->harga."'>
+                      <td>".Rupiah::getRupiah($item->kg * $item->harga)."</td>
+                      ";
+                      if ($item->status_order == "Diambil"){
+                          $return .="<td><a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success style='color:white'>Invoice</a>
+                          <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                      }
+                      elseif($item->status_order == "Selesai")
+                      {
+                        $return .="<td> <a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
+                        <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                      }
+                      elseif($item->status_order == "Proses")
+                      {
+                        $return .="<td> <a href='{{url('invoice-customer', $item->id)}}' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
+                        <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                      }
                     $return .= "</td>
                     </tr>";
                     $no++;

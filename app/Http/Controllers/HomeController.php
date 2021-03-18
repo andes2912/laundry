@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\transaksi;
-use App\customer;
+use App\Models\{transaksi,customer};
 use Auth;
 use DB;
 use Carbon\carbon;
@@ -128,18 +127,18 @@ class HomeController extends Controller
                 }
 
                 // Statistik Bulanan
-                $jan = transaksi::where('bulan', 1)->where('id_karyawan',auth::user()->id)->count();
-                $feb = transaksi::where('bulan', 2)->where('id_karyawan',auth::user()->id)->count();
-                $mar = transaksi::where('bulan', 3)->where('id_karyawan',auth::user()->id)->count();
-                $apr = transaksi::where('bulan', 4)->where('id_karyawan',auth::user()->id)->count();
-                $mey = transaksi::where('bulan', 5)->where('id_karyawan',auth::user()->id)->count();
-                $juni = transaksi::where('bulan', 6)->where('id_karyawan',auth::user()->id)->count();
-                $july = transaksi::where('bulan', 7)->where('id_karyawan',auth::user()->id)->count();
-                $aug = transaksi::where('bulan', 8)->where('id_karyawan',auth::user()->id)->count();
-                $sep = transaksi::where('bulan', 9)->where('id_karyawan',auth::user()->id)->count();
-                $oct = transaksi::where('bulan', 10)->where('id_karyawan',auth::user()->id)->count();
-                $nov = transaksi::where('bulan', 11)->where('id_karyawan',auth::user()->id)->count();
-                $dec = transaksi::where('bulan', 12)->where('id_karyawan',auth::user()->id)->count();
+                $jan = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 1)->where('id_karyawan',auth::user()->id)->count();
+                $feb = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 2)->where('id_karyawan',auth::user()->id)->count();
+                $mar = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 3)->where('id_karyawan',auth::user()->id)->count();
+                $apr = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 4)->where('id_karyawan',auth::user()->id)->count();
+                $mey = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 5)->where('id_karyawan',auth::user()->id)->count();
+                $juni = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 6)->where('id_karyawan',auth::user()->id)->count();
+                $july = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 7)->where('id_karyawan',auth::user()->id)->count();
+                $aug = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 8)->where('id_karyawan',auth::user()->id)->count();
+                $sep = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 9)->where('id_karyawan',auth::user()->id)->count();
+                $oct = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 10)->where('id_karyawan',auth::user()->id)->count();
+                $nov = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 11)->where('id_karyawan',auth::user()->id)->count();
+                $dec = transaksi::where('tahun', Carbon::now()->format('Y'))->where('bulan', 12)->where('id_karyawan',auth::user()->id)->count();
 
                 return view('karyawan.index')
                     ->  with('diambil', $diambil)

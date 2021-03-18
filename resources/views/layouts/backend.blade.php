@@ -57,30 +57,15 @@
                         </ul>
                     </div>
                     <ul class="nav navbar-nav float-right">
-                        {{-- Notification --}}
-                        <?php
-                            if (auth::user()->auth == 'Karyawan') {
-                                $notif = App\transaksi::Where('notif',0)
-                                ->Where('id_karyawan', Auth::user()->id)
-                                ->orderBy('id','DESC')
-                                ->get();
-                            }elseif(auth::user()->auth == "Admin"){
-                                $notif = App\transaksi::where('notif_admin', 0)
-                                ->orderBy('id','DESC')
-                                ->get();
-                            }
-
-
-                        ?>
-                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up">{{$notif->count()}}</span></a>
+                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up"></span></a>
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                 <li class="dropdown-menu-header">
                                     <div class="dropdown-header m-0 p-2">
-                                        <h3 class="white">{{$notif->count()}}</h3><span class="notification-title">App Notifications</span>
+                                        <h3 class="white"></h3><span class="notification-title">App Notifications</span>
                                     </div>
                                 </li>
                                 <li class="scrollable-container media-list">
-                                    @foreach ($notif as $item)
+                                    {{-- @foreach ($notif as $item)
                                         <a class="d-flex justify-content-between" id="notif" data-id="{{$item->id}}">
                                             <div class="media d-flex align-items-start">
                                                 <div class="media-left">
@@ -95,7 +80,7 @@
                                                 </small>
                                             </div>
                                         </a>
-                                    @endforeach
+                                    @endforeach --}}
                                 </li>
                                 {{-- <li class="dropdown-menu-footer">
                                     <a class="dropdown-item p-1 text-center" href="javascript:void(0)">Read all notifications</a>

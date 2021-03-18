@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\transaksi;
-use App\customer;
-use App\harga;
+use App\Models\{transaksi,customer,harga,Notification};
 use Auth;
 use PDF;
 use Mail;
@@ -35,9 +33,7 @@ class PelayananController extends Controller
     public function index()
     {
         if (Auth::user()->auth == "Karyawan") {
-            $order = transaksi::selectRaw('transaksis.id,transaksis.invoice,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,transaksis.id_karyawan,transaksis.harga_akhir,a.jenis')
-            ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
-            ->where('id_karyawan',auth::user()->id)
+            $order = transaksi::with('harga')->where('id_karyawan',auth::user()->id)
             ->orderBy('id','DESC')->get();
             return view('karyawan.transaksi.order', compact('order'));
         } else {
@@ -76,7 +72,7 @@ class PelayananController extends Controller
                 $order->tgl_transaksi   = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
                 $order->status_order    = $request->status_order;
                 $order->status_payment  = $request->status_payment;
-                $order->id_jenis        = $request->id_jenis;
+                $order->harga_id        = $request->harga_id;
                 $order->id_customer     = $request->id_customer;
                 $order->id_karyawan     = Auth::user()->id;
                 $order->customer        = $request->customer;
@@ -85,31 +81,41 @@ class PelayananController extends Controller
                 $order->kg              = $request->kg;
                 $order->harga           = $request->harga;
                 $order->disc            = $request->disc;
-                $hitung                 = ( $order->kg * $order->harga) / 1000;
-                $disc                   = ($hitung * $order->disc) / 100;
-                $total                  = $hitung - $disc;
-                $order->harga_akhir     = $total;
-                $order->notif           = 0;
-                $order->notif_admin     = 0;
+                $hitung                 = $order->kg * $order->harga;
+                if ($request->disc != NULL) {
+                   $disc                = ($hitung * $order->disc) / 100;
+                   $total               = $hitung - $disc;
+                   $order->harga_akhir  = $total;
+                } else {
+                  $order->harga_akhir     = $hitung;
+                }
+
                 $order->tgl             = Carbon::now()->day;
                 $order->bulan           = Carbon::now()->month;
                 $order->tahun           = Carbon::now()->year;
+
+                // dd($order);
                 if ($order->save()) {
 
-                    // Menyiapkan data
-                    $email = $order->email_customer;
-                    $data = array(
-                        'invoice' => $order->invoice,
-                        'customer' => $order->customer,
-                        'tgl_transaksi' => $order->tgl_transaksi,
-                    );
+                  // Set to notification table
+                  Notification::create([
+                    'transaction_id' => $order->id
+                  ]);
 
-                    // Kirim Email
-                    Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
-                    $mail->to($email,'no-replay')
-                            ->subject("E-Laundry - Nomor Invoice");
-                    $mail->from('laundri.dev@gmail.com');
-                    });
+                  // Menyiapkan data Email
+                  $email = $order->email_customer;
+                  $data = array(
+                      'invoice' => $order->invoice,
+                      'customer' => $order->customer,
+                      'tgl_transaksi' => $order->tgl_transaksi,
+                  );
+
+                  // Kirim Email
+                  Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
+                  $mail->to($email,'no-replay')
+                          ->subject("E-Laundry - Nomor Invoice");
+                  $mail->from('laundri.dev@gmail.com');
+                  });
                 }
                 alert()->success('Data Laundry Berhasil Ditambah');
             } catch (\Throwable $e) {
@@ -402,7 +408,7 @@ class PelayananController extends Controller
     {
         if (Auth::user()->auth == "Karyawan") {
             try {
-                    $addplg = New customer();
+                $addplg = New customer();
                 $addplg->nama = $request->nama;
                 $addplg->email_customer = $request->email_customer;
                 $addplg->alamat = $request->alamat;
@@ -426,13 +432,13 @@ class PelayananController extends Controller
     public function invoicekar(Request $request)
     {
         if (Auth::user()->auth == "Karyawan") {
-            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,transaksis.disc,transaksis.id_karyawan,transaksis.harga_akhir,a.jenis')
+            $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
             ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
             ->where('transaksis.id', $request->id)
             ->where('transaksis.id_karyawan',auth::user()->id)
             ->orderBy('id','DESC')->get();
 
-            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.tgl_ambil,transaksis.disc,transaksis.invoice,transaksis.id_karyawan,transaksis.harga_akhir,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
+            $data = transaksi::selectRaw('transaksis.*,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
             ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
             ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
             ->where('transaksis.id', $request->id)
@@ -448,13 +454,13 @@ class PelayananController extends Controller
     public function cetakinvoice(Request $request)
     {
         //GET DATA BERDASARKAN ID
-        $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.harga_akhir,transaksis.hari,transaksis.harga,transaksis.disc,transaksis.id_karyawan,a.jenis')
+        $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
         ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
         ->where('transaksis.id', $request->id)
         ->where('transaksis.id_karyawan',auth::user()->id)
         ->orderBy('id','DESC')->get();
 
-        $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.tgl_ambil,transaksis.invoice,transaksis.disc,transaksis.id_karyawan,transaksis.harga_akhir,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc,transaksis.created_at')
+        $data = transaksi::selectRaw('transaksis.*,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
             ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
             ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
             ->where('transaksis.id', $request->id)
