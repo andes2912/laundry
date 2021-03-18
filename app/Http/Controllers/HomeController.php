@@ -29,12 +29,12 @@ class HomeController extends Controller
     {
         if(Auth::check()){
             if (Auth::user()->auth === "Admin") {
-                $masuk = transaksi::whereIN('status_order',['Proses','Selesai','Diambil'])->count();
-                $selesai = transaksi::where('status_order','Selesai')->count();
-                $diambil = transaksi::where('status_order','Diambil')->count();
+                $masuk = transaksi::whereIN('status_order',['Process','Done','Delivery'])->count();
+                $selesai = transaksi::where('status_order','Done')->count();
+                $diambil = transaksi::where('status_order','Delivery')->count();
                 $customer = customer::all();
-                $sudahbayar = transaksi::where('status_payment','Lunas')->count();
-                $belumbayar = transaksi::where('status_payment','Belum')->count();
+                $sudahbayar = transaksi::where('status_payment','Success')->count();
+                $belumbayar = transaksi::where('status_payment','Pending')->count();
                 $data = DB::table("transaksis")
                     ->select("id" ,DB::raw("(COUNT(*)) as customer"))
                     ->orderBy('created_at')
@@ -67,18 +67,18 @@ class HomeController extends Controller
                 }
 
                 // Statistik Bulanan
-                $jan = transaksi::where('bulan', 1)->count();
-                $feb = transaksi::where('bulan', 2)->count();
-                $mar = transaksi::where('bulan', 3)->count();
-                $apr = transaksi::where('bulan', 4)->count();
-                $mey = transaksi::where('bulan', 5)->count();
-                $juni = transaksi::where('bulan', 6)->count();
-                $july = transaksi::where('bulan', 7)->count();
-                $aug = transaksi::where('bulan', 8)->count();
-                $sep = transaksi::where('bulan', 9)->count();
-                $oct = transaksi::where('bulan', 10)->count();
-                $nov = transaksi::where('bulan', 11)->count();
-                $dec = transaksi::where('bulan', 12)->count();
+                $jan = transaksi::where('bulan', 1)->where('tahun', Carbon::now()->format('Y'))->count();
+                $feb = transaksi::where('bulan', 2)->where('tahun', Carbon::now()->format('Y'))->count();
+                $mar = transaksi::where('bulan', 3)->where('tahun', Carbon::now()->format('Y'))->count();
+                $apr = transaksi::where('bulan', 4)->where('tahun', Carbon::now()->format('Y'))->count();
+                $mey = transaksi::where('bulan', 5)->where('tahun', Carbon::now()->format('Y'))->count();
+                $juni = transaksi::where('bulan', 6)->where('tahun', Carbon::now()->format('Y'))->count();
+                $july = transaksi::where('bulan', 7)->where('tahun', Carbon::now()->format('Y'))->count();
+                $aug = transaksi::where('bulan', 8)->where('tahun', Carbon::now()->format('Y'))->count();
+                $sep = transaksi::where('bulan', 9)->where('tahun', Carbon::now()->format('Y'))->count();
+                $oct = transaksi::where('bulan', 10)->where('tahun', Carbon::now()->format('Y'))->count();
+                $nov = transaksi::where('bulan', 11)->where('tahun', Carbon::now()->format('Y'))->count();
+                $dec = transaksi::where('bulan', 12)->where('tahun', Carbon::now()->format('Y'))->count();
 
                 return view('modul_admin.index')
                     ->  with('data', $data)
@@ -90,15 +90,26 @@ class HomeController extends Controller
                     ->  with('_tanggal', substr($tanggal, 0,-1))
                     ->  with('_nilai', substr($nilai, 0, -1))
                     ->  with('diambil',$diambil)
-                    ->  with('jan', $jan)->  with('feb', $feb)->  with('mar', $mar)->  with('apr', $apr)->  with('mey', $mey)->  with('juni', $juni)->  with('july', $july)->  with('aug', $aug)->  with('sep', $sep)->  with('oct', $oct)->  with('nov', $nov)->  with('dec', $dec);
+                    ->  with('jan', $jan)
+                    ->  with('feb', $feb)
+                    ->  with('mar', $mar)
+                    ->  with('apr', $apr)
+                    ->  with('mey', $mey)
+                    ->  with('juni', $juni)
+                    ->  with('july', $july)
+                    ->  with('aug', $aug)
+                    ->  with('sep', $sep)
+                    ->  with('oct', $oct)
+                    ->  with('nov', $nov)
+                    ->  with('dec', $dec);
 
             } elseif(Auth::user()->auth === "Karyawan") {
-                $masuk = transaksi::whereIN('status_order',['Proses','Selesai','Diambil'])->where('id_karyawan',auth::user()->id)->count();
-                $selesai = transaksi::where('status_order','Selesai')->where('id_karyawan',auth::user()->id)->count();
-                $diambil = transaksi::where('status_order','Diambil')->where('id_karyawan',auth::user()->id)->count();
+                $masuk = transaksi::whereIN('status_order',['Process','Done','Delivery'])->where('id_karyawan',auth::user()->id)->count();
+                $selesai = transaksi::where('status_order','Deone')->where('id_karyawan',auth::user()->id)->count();
+                $diambil = transaksi::where('status_order','Delivery')->where('id_karyawan',auth::user()->id)->count();
                 $customer = customer::where('id_karyawan',auth::user()->id)->get();
-                $sudahbayar = transaksi::where('status_payment','Lunas')->where('id_karyawan',auth::user()->id)->count();
-                $belumbayar = transaksi::where('status_payment','Belum')->where('id_karyawan',auth::user()->id)->count();
+                $sudahbayar = transaksi::where('status_payment','Success')->where('id_karyawan',auth::user()->id)->count();
+                $belumbayar = transaksi::where('status_payment','Pending')->where('id_karyawan',auth::user()->id)->count();
 
                 // Statistik Harian
                 $hari = DB::table('transaksis')

@@ -8,7 +8,9 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h4 class="card-title">Data Finance</h4>
-
+                <h4 class="card-title">
+                  <span>{{Rupiah::getRupiah($all)}}</span>
+                </h4>
             </div>
             <div class="card-content">
                 <div class="card-body pt-50">
@@ -77,53 +79,52 @@ var orderChartoptions = {
         },
         colors: [$primary, $warning, $danger],
         fill: {
-            type: 'gradient',
-            gradient: {
-              enabled: true,
-              shade: 'dark',
-              type: 'vertical',
-              shadeIntensity: 0.5,
-              gradientToColors: [$primary_light, $warning_light, $danger_light],
-              inverseColors: false,
-              opacityFrom: 1,
-              opacityTo: 1,
-              stops: [0, 100]
-            },
+          type: 'gradient',
+          gradient: {
+            enabled: true,
+            shade: 'dark',
+            type: 'vertical',
+            shadeIntensity: 0.5,
+            gradientToColors: [$primary_light, $warning_light, $danger_light],
+            inverseColors: false,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 100]
+          },
         },
         stroke: {
             lineCap: 'round'
         },
         plotOptions: {
-            radialBar: {
-              size: 150,
-                hollow: {
-                    size: '20%'
-                },
-                track: {
-                    strokeWidth: '100%',
-                    margin: 15,
-                },
-                dataLabels: {
-                    name: {
-                        fontSize: '18px',
-                    },
-                    value: {
-                        fontSize: '16px',
-                    },
-                    total: {
-                        show: true,
-                        label: 'Total',
+          radialBar: {
+            size: 150,
+              hollow: {
+                  size: '20%'
+              },
+              track: {
+                  strokeWidth: '100%',
+                  margin: 15,
+              },
+              dataLabels: {
+                  name: {
+                      fontSize: '12px',
+                  },
+                  value: {
+                      fontSize: '16px',
+                  },
+                  total: {
+                      show: true,
+                      label: 'Total Transaksi',
 
-                        formatter: function (w) {
-                            return [{{$transaksi->count()}}]
-                        }
-                    }
-                }
-            }
+                      formatter: function (w) {
+                          return [{{$transaksi->count()}}]
+                      }
+                  }
+              }
+          }
         },
         series: [{{$ny}}, {{$nm}} , {{$nd}} ],
         labels: ['Tahun Ini', 'Bulan Ini',  'Hari Ini'],
-
     }
 
    var orderChart = new ApexCharts(
