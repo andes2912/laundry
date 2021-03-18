@@ -166,11 +166,19 @@
 
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="User">Data Finance</span></a>
-                            <ul class="menu-content">
-                                <li class="nav-item {{ (request()->is('data-finance')) ? 'active' : '' }}">
-                                  <a href="{{url('data-finance')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Finance</span></a>
-                                </li>
-                            </ul>
+                          <ul class="menu-content">
+                            <li class="nav-item {{ (request()->is('data-finance')) ? 'active' : '' }}">
+                              <a href="{{url('data-finance')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Finance</span></a>
+                            </li>
+                          </ul>
+                        </li>
+
+                        <li class=" nav-item"><a href="#"><i class="feather icon-settings"></i><span class="menu-title" data-i18n="User">Other</span></a>
+                          <ul class="menu-content">
+                            <li class="nav-item {{ (request()->is('settings')) ? 'active' : '' }}">
+                              <a href="{{url('settings')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Setting</span></a>
+                            </li>
+                          </ul>
                         </li>
                     {{-- End Menu Admin --}}
 

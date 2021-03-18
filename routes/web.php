@@ -56,8 +56,11 @@ Route::resource('admin','AdminController');
     // Notifikasi
     Route::get('read-notification','AdminController@notif');
 
-    // Filter 
+    // Filter
     Route::get('filter-transaksi','AdminController@filtertransaksi');
+
+    // Setting
+    Route::get('settings','AdminController@setting');
 
 // Modul Karyawan
 Route::resource('pelayanan','PelayananController');
@@ -87,4 +90,4 @@ Route::resource('pelayanan','PelayananController');
     Route::get('profile-karyawan/edit/{id}','ProfileController@karyawanProfileEdit');
     Route::put('profile-karyawan/update/{id}','ProfileController@karyawanProfileSave');
     Route::get('reset-password','ProfileController@reset_password');
-    
+

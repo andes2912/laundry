@@ -477,37 +477,43 @@ class AdminController extends Controller
             $return = "";
             $no=1;
             foreach($transaksi as $item) {
-                $return .="<tr>
-                  <td>".$no."</td>
-                  <td>".$item->tgl_transaksi."</td>
-                  <td>".$item->customer."</td>
-                  <td>".$item->status_order."</td>
-                  <td>".$item->status_payment."</td>
-                  <td>".$item->jenis."</td>";
-                  $return .="
-                  <input type='hidden' value='".$item->kg * $item->harga."'>
-                  <td>".Rupiah::getRupiah($item->kg * $item->harga)."</td>
-                  ";
-                  if ($item->status_order == "Delivery"){
-                      $return .="<td><a href='invoice-customer/$item->id' class='btn btn-sm btn-success style='color:white'>Invoice</a>
-                      <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-                  }
-                  elseif($item->status_order == "Done")
-                  {
-                    $return .="<td> <a href='invoice-customer/$item->id' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
+              $return .="<tr>
+                <td>".$no."</td>
+                <td>".$item->tgl_transaksi."</td>
+                <td>".$item->customer."</td>
+                <td>".$item->status_order."</td>
+                <td>".$item->status_payment."</td>
+                <td>".$item->jenis."</td>";
+                $return .="
+                <input type='hidden' value='".$item->kg * $item->harga."'>
+                <td>".Rupiah::getRupiah($item->kg * $item->harga)."</td>
+                ";
+                if ($item->status_order == "Delivery"){
+                    $return .="<td><a href='invoice-customer/$item->id' class='btn btn-sm btn-success style='color:white'>Invoice</a>
                     <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-                  }
-                  elseif($item->status_order == "Process")
-                  {
-                    $return .="<td> <a href='invoice-customer/$item->id' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
-                    <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-                  }
-                $return .= "</td>
-                </tr>";
-                $no++;
                 }
-                return $return;
+                elseif($item->status_order == "Done")
+                {
+                  $return .="<td> <a href='invoice-customer/$item->id' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
+                  <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                }
+                elseif($item->status_order == "Process")
+                {
+                  $return .="<td> <a href='invoice-customer/$item->id' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
+                  <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
+                }
+              $return .= "</td>
+              </tr>";
+              $no++;
+            }
+            return $return;
         }
       }
+    }
+
+    // Settings
+    public function setting()
+    {
+      return view('modul_admin.setting.index');
     }
 }
