@@ -34,7 +34,7 @@ class PelayananController extends Controller
     public function index()
     {
         if (Auth::user()->auth == "Karyawan") {
-          $order = transaksi::with('harga')->where('id_karyawan',auth::user()->id)
+          $order = transaksi::with('harga')->where('user_id',auth::user()->id)
             ->orderBy('id','DESC')->get();
             return view('karyawan.transaksi.order', compact('order'));
         } else {
@@ -79,8 +79,8 @@ class PelayananController extends Controller
             $order->tgl_transaksi   = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
             $order->status_payment  = $request->status_payment;
             $order->harga_id        = $request->harga_id;
-            $order->id_customer     = $request->id_customer;
-            $order->id_karyawan     = Auth::user()->id;
+            $order->customer_id     = $request->customer_id;
+            $order->user_id         = Auth::user()->id;
             $order->customer        = $request->customer;
             $order->email_customer  = $request->email_customer;
             $order->hari            = $request->hari;
@@ -99,10 +99,9 @@ class PelayananController extends Controller
             $order->tgl             = Carbon::now()->day;
             $order->bulan           = Carbon::now()->month;
             $order->tahun           = Carbon::now()->year;
+            dd($order);
 
-            // dd($order);
             if ($order->save()) {
-
               // Set to notification table
               Notification::create([
                 'transaction_id' => $order->id
@@ -186,7 +185,7 @@ class PelayananController extends Controller
     public function listcs()
     {
         if (Auth::user()->auth == "Karyawan") {
-            $customer = customer::orderBy('id_customer','DESC')->where('id_karyawan',auth::user()->id)->get();
+            $customer = customer::orderBy('id','DESC')->where('user_id',auth::user()->id)->get();
             return view('karyawan.transaksi.customer', compact('customer'));
         } else {
             return redirect('home');
@@ -197,7 +196,7 @@ class PelayananController extends Controller
     public function addorders()
     {
         if (Auth::user()->auth == "Karyawan") {
-            $customer = customer::where('id_karyawan',auth::user()->id)->get();
+            $customer = customer::where('user_id',auth::user()->id)->get();
 
             $y = date('Y');
             $number = mt_rand(1000, 9999);
@@ -206,7 +205,7 @@ class PelayananController extends Controller
             $tgl = date('d-m-Y');
 
             $cek_harga = harga::where('user_id',auth::user()->id)->first();
-            $cek_customer = customer::select('id','id_karyawan')->where('id_karyawan',auth::id())->count();
+            $cek_customer = customer::select('id','user_id')->where('user_id',auth::id())->count();
             return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga','cek_customer'));
         } else {
             return redirect('home');
@@ -268,9 +267,9 @@ class PelayananController extends Controller
     public function getcustomer(Request $request)
     {
         if (auth::user()->auth == "Karyawan") {
-            $customer = customer::select('id_customer','nama')
-            ->where('id_customer',$request->id_customer)
-            ->where('id_karyawan',auth::user()->id)
+            $customer = customer::select('id','nama')
+            ->where('id',$request->customer_id)
+            ->where('user_id',auth::user()->id)
             ->get();
 
             $select = '';
@@ -293,9 +292,9 @@ class PelayananController extends Controller
     public function getemailcustomer(Request $request)
     {
         if (auth::user()->auth == "Karyawan") {
-            $customer = customer::select('id_customer','email_customer')
-            ->where('id_customer',$request->id_customer)
-            ->where('id_karyawan',auth::user()->id)
+            $customer = customer::select('id','email_customer')
+            ->where('id',$request->customer_id)
+            ->where('user_id',auth::user()->id)
             ->get();
 
             $select = '';
@@ -426,7 +425,7 @@ class PelayananController extends Controller
           'alamat'              => 'required',
           'kelamin'             => 'required',
           'no_telp'             => 'required|unique:customers',
-          'id_karyawan'         => 'rrquired',
+          'user_id'         => 'rrquired',
         ]);
 
         $addplg = New customer();
@@ -435,7 +434,7 @@ class PelayananController extends Controller
         $addplg->alamat = $request->alamat;
         $addplg->kelamin = $request->kelamin;
         $addplg->no_telp = $request->no_telp;
-        $addplg->id_karyawan = auth::user()->id;
+        $addplg->user_id = auth::user()->id;
         $addplg->save();
 
         Session::flash('success','Customer Berhasil Ditambah !');
@@ -454,14 +453,14 @@ class PelayananController extends Controller
         $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
         ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
         ->where('transaksis.id', $request->id)
-        ->where('transaksis.id_karyawan',auth::user()->id)
+        ->where('transaksis.user_id',auth::user()->id)
         ->orderBy('id','DESC')->get();
 
         $data = transaksi::selectRaw('transaksis.*,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
-        ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
-        ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
+        ->leftJoin('customers as a' , 'a.id' , '=' ,'transaksis.id')
+        ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.user_id')
         ->where('transaksis.id', $request->id)
-        ->where('transaksis.id_karyawan',auth::user()->id)
+        ->where('transaksis.user_id',auth::user()->id)
         ->orderBy('id','DESC')->first();
 
       return view('karyawan.laporan.invoice', compact('invoice','data'));
@@ -476,14 +475,14 @@ class PelayananController extends Controller
       $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
       ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
       ->where('transaksis.id', $request->id)
-      ->where('transaksis.id_karyawan',auth::user()->id)
+      ->where('transaksis.user_id',auth::user()->id)
       ->orderBy('id','DESC')->get();
 
       $data = transaksi::selectRaw('transaksis.*,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
-          ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
-          ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
+          ->leftJoin('customers as a' , 'a.id' , '=' ,'transaksis.id')
+          ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.user_id')
           ->where('transaksis.id', $request->id)
-          ->where('transaksis.id_karyawan',auth::user()->id)
+          ->where('transaksis.user_id',auth::user()->id)
           ->orderBy('id','DESC')->first();
 
       $pdf = PDF::loadView('karyawan.laporan.cetak', compact('invoice','data'))->setPaper('a4', 'landscape');

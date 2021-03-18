@@ -16,8 +16,8 @@ class CreateTransaksisTable extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->string('invoice');
-            $table->string('id_customer');
-            $table->string('id_karyawan');
+            $table->string('customer_id');
+            $table->string('user_id');
             $table->string('tgl_transaksi');
             $table->string('customer');
             $table->string('email_customer');
