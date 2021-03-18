@@ -414,18 +414,52 @@ class AdminController extends Controller
     public function finance(Request $request)
     {
         if (auth::user()->auth == "Admin") {
+
+            // Uang yg di dapat by keseluruhan
             $all = transaksi::sum('harga_akhir');
-            $bulan = transaksi::where('bulan', Carbon::now()->month)->sum('harga_akhir');
-            $tahun = transaksi::where('tahun', Carbon::now()->year)->sum('harga_akhir');
 
-            $bln = transaksi::where('bulan', Carbon::now()->month)->get();
-            $thn = transaksi::where('tahun', Carbon::now()->year)->get();
-            $al = transaksi::all();
+            // Uang yg di dapat by hari
+            $hari = transaksi::where('status_payment','Success')->where('tgl', Carbon::now()->day)->sum('harga_akhir');
 
+            // Uang yg di dapat by bulan
+            $bulan = transaksi::where('status_payment','Success')->where('bulan', Carbon::now()->month)->sum('harga_akhir');
+
+            // Uang yg di dapat by tahunan
+            $tahun = transaksi::where('status_payment','Success')->where('tahun', Carbon::now()->year)->sum('harga_akhir');
+
+            $tTahun = 200; //Target tahunan
+            $tBulan = 20; //Target Bulanan
+            $tHari  = 1; //Target Harian
+
+            $thn = transaksi::where('status_payment','Success')->where('tahun', Carbon::now()->year)->count();
+            $bln = transaksi::where('status_payment','Success')->where('bulan', Carbon::now()->month)->count();
+            $hri = transaksi::where('status_payment','Success')->where('tgl', Carbon::now()->day)->count();
+
+            // Ambil data persen by year
+            $year = ($tTahun - $thn) * 100;
+            $hy = $year * 100 / $tTahun;
+            $hys = $hy / 100;
+            $ny = 100 - $hys;
+
+            // Ambil data persen by month
+            $month = ($tBulan - $bln) * 100;
+            $hm = $month * 100 / $tBulan;
+            $hms = $hm / 100;
+            $nm = 100 - $hms;
+
+            // Ambil data persen by day
+            $day = ($tHari - $hri) * 100;
+            $hd = $day * 100 / $tHari;
+            $hds = $hd / 100;
+            $nd = 100 - $hds;
+
+            // Jumlah laundry by kg
             $kg = transaksi::sum('kg');
+
             $transaksi = transaksi::get();
+
             $user = transaksi::select('id_customer')->groupBy('id_customer')->get();
-            return view('modul_admin.finance.cabang', compact('all','bulan','tahun','kg','transaksi','user','bln','al','thn'));
+            return view('modul_admin.finance.cabang', compact('all','hari','bulan','tahun','kg','transaksi','user','ny','nm','nd'));
         }
     }
 
