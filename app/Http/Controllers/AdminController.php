@@ -241,6 +241,7 @@ class AdminController extends Controller
     //     }
     // }
 
+    // Edit Customer
     public function editcustomer($id)
     {
        if (Auth::user()->auth == "Admin") {
@@ -251,6 +252,7 @@ class AdminController extends Controller
        }
     }
 
+    // Update Customer
     public function updatecustomer(Request $request,$id)
     {
         if (Auth::user()->auth == "Admin") {
@@ -357,7 +359,6 @@ class AdminController extends Controller
     }
 
 // Laporan
-
     // Invoice
     public function invoice( Request $request,$id)
     {
@@ -515,5 +516,29 @@ class AdminController extends Controller
     public function setting()
     {
       return view('modul_admin.setting.index');
+    }
+
+    // Profile
+    public function profile()
+    {
+      $profile = User::where('id',auth::id())->first();
+      return view('modul_admin.setting.profile', compact('profile'));
+    }
+
+    // Proses edit profile
+    public function edit_profile(Request $request)
+    {
+      if (Auth::user()->auth == 'Admin') {
+        $profile = User::find($request->id_profile);
+        $profile->update([
+          'name'  => $request->name,
+          'email'  => $request->email
+        ]);
+
+        Session::flash('success','Update Profile Berhasil');
+        return $profile;
+      } else {
+        abort(403);
+      }
     }
 }

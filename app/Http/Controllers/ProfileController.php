@@ -16,6 +16,8 @@ class ProfileController extends Controller
             if (auth::user()->auth == "Karyawan") {
                 $user = User::find($id);
                 return view('karyawan.profile.index', compact('user'));
+            } else {
+              abort(403);
             }
         }
     }
@@ -27,6 +29,8 @@ class ProfileController extends Controller
             if (auth::user()->auth == "Karyawan") {
                 $edit = User::find($id);
                 return view('karyawan.profile.edit', compact('edit'));
+            } else {
+              abort(403);
             }
         }
     }

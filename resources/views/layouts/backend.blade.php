@@ -99,10 +99,11 @@
                           </a>
                           <div class="dropdown-menu dropdown-menu-right">
                             @if (auth::user()->auth == 'Admin')
-
+                              <a class="dropdown-item" href="{{url('profile-admin', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
+                              </a>
                             @else
-                            <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
-                            </a>
+                              <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
+                              </a>
                             @endif
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('logout') }}" class="dropdown-item"

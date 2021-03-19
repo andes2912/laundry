@@ -62,6 +62,10 @@ Route::resource('admin','AdminController');
     // Setting
     Route::get('settings','AdminController@setting');
 
+    // Profile
+    Route::get('profile-admin/{id}','AdminController@profile');
+    Route::get('profile-admin-edit','AdminController@edit_profile');
+
 // Modul Karyawan
 Route::resource('pelayanan','PelayananController');
     // Transaksi
