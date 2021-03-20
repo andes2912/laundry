@@ -1,18 +1,32 @@
-{{-- Header --}}
-        <div class="bg-cover">
-        <img src="{{asset('frontend/img/header/header.jpg')}}" alt="" />
-    </div>
-    <!-- end bg-cover -->
-    <!-- begin container -->
-    <div class="container">
-        <h3>Lacak Status Laundry Kamu Disini...</h3>
-        <div class="input-group m-b-20">
-            <input type="text" class="form-control input-lg" id="search_status" placeholder="Contoh : TR0392928" />
-            <span class="input-group-btn">
-                <button type="submit" class="btn btn-lg" id="search-btn"><i class="fa fa-search"></i></button>
-            </span>
-        </div>
-        @include('frontend.modal')
-    </div>
-
-{{-- End Header --}}
+<div id="header" class="header navbar navbar-default navbar-fixed-top">
+  <!-- begin container -->
+  <div class="container">
+      <!-- begin navbar-header -->
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <a href="{{url('/')}}" class="navbar-brand">
+              <span class="navbar-logo"></span>
+              <span class="brand-text">
+                  {{$setpage->judul != NULL ? $setpage->judul : 'Judul Disini'}}
+              </span>
+          </a>
+      </div>
+      <!-- end navbar-header -->
+      <!-- begin #header-navbar -->
+      <div class="collapse navbar-collapse" id="header-navbar">
+          <ul class="nav navbar-nav navbar-right">
+              @auth
+              <li> <a href="{{url('/home')}}">Welcome, {{auth::user()->name}}</a> </li>
+              @else
+              <li><a href="{{route('login')}}">Masuk</a></li>
+              @endauth
+          </ul>
+      </div>
+      <!-- end #header-navbar -->
+  </div>
+  <!-- end container -->
+</div>

@@ -512,12 +512,6 @@ class AdminController extends Controller
       }
     }
 
-    // Settings
-    public function setting()
-    {
-      return view('modul_admin.setting.index');
-    }
-
     // Profile
     public function profile()
     {
