@@ -7,8 +7,7 @@
 2. Silahkan Clone dengan perintah 'Git Clone https://github.com/andes2912/laundry.git'. <br>
 3. Jalankan perintah 'Composer Install' pada direktori project <br>
 4. File .env sudah include, kalian hanya perlu menyesuaikan nama database<br>
-5. Buat DB dan jalankan perintah 'php artisan migrate'<br>
-6. Kemudian jalan perintah 'php artisan db:seed --class=AdminSeeder', ini untuk mengenerate Akun <br>
+5. Buat DB dan jalankan perintah 'php artisan migrate --seed'<br>
 
 Note : Aplikasi ini akan terus saya update.<br>
 Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com</b>
