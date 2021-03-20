@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\transaksi;
-use App\customer;
-use App\harga;
+use App\Models\{transaksi,customer,harga,Notification};
 use Auth;
 use PDF;
 use Mail;
 use carbon\carbon;
 use Alert;
+use Session;
 
 class PelayananController extends Controller
 
@@ -35,13 +34,11 @@ class PelayananController extends Controller
     public function index()
     {
         if (Auth::user()->auth == "Karyawan") {
-            $order = transaksi::selectRaw('transaksis.id,transaksis.invoice,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,transaksis.id_karyawan,transaksis.harga_akhir,a.jenis')
-            ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
-            ->where('id_karyawan',auth::user()->id)
+          $order = transaksi::with('harga')->where('user_id',auth::user()->id)
             ->orderBy('id','DESC')->get();
             return view('karyawan.transaksi.order', compact('order'));
         } else {
-            return redirect('home');
+          return redirect('home');
         }
     }
 
@@ -53,8 +50,7 @@ class PelayananController extends Controller
     public function create()
     {
         if (Auth::user()->auth == "Karyawan") {
-
-            return view('karyawan.transaksi.addorder');
+          return view('karyawan.transaksi.addorder');
         } else {
             return redirect('home');
         }
@@ -69,54 +65,72 @@ class PelayananController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->auth == "Karyawan") {
+          try {
+            $request->validate([
+            'status_payment'  => 'required',
+            'customer'        => 'required',
+            'email_customer'  => 'required',
+            'hari'            => 'required',
+            'harga'           => 'required',
+            ]);
 
-            try {
-                $order = new transaksi();
-                $order->invoice         = $request->invoice;
-                $order->tgl_transaksi   = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
-                $order->status_order    = $request->status_order;
-                $order->status_payment  = $request->status_payment;
-                $order->id_jenis        = $request->id_jenis;
-                $order->id_customer     = $request->id_customer;
-                $order->id_karyawan     = Auth::user()->id;
-                $order->customer        = $request->customer;
-                $order->email_customer  = $request->email_customer;
-                $order->hari            = $request->hari;
-                $order->kg              = $request->kg;
-                $order->harga           = $request->harga;
-                $order->disc            = $request->disc;
-                $hitung                 = ( $order->kg * $order->harga) / 1000;
-                $disc                   = ($hitung * $order->disc) / 100;
-                $total                  = $hitung - $disc;
-                $order->harga_akhir     = $total;
-                $order->notif           = 0;
-                $order->notif_admin     = 0;
-                $order->tgl             = Carbon::now()->day;
-                $order->bulan           = Carbon::now()->month;
-                $order->tahun           = Carbon::now()->year;
-                if ($order->save()) {
-
-                    // Menyiapkan data
-                    $email = $order->email_customer;
-                    $data = array(
-                        'invoice' => $order->invoice,
-                        'customer' => $order->customer,
-                        'tgl_transaksi' => $order->tgl_transaksi,
-                    );
-
-                    // Kirim Email
-                    Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
-                    $mail->to($email,'no-replay')
-                            ->subject("E-Laundry - Nomor Invoice");
-                    $mail->from('laundri.dev@gmail.com');
-                    });
-                }
-                alert()->success('Data Laundry Berhasil Ditambah');
-            } catch (\Throwable $e) {
-                alert()->error('SMTP MAIL BELUM DI SETTING !');
+            $order = new transaksi();
+            $order->invoice         = $request->invoice;
+            $order->tgl_transaksi   = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
+            $order->status_payment  = $request->status_payment;
+            $order->harga_id        = $request->harga_id;
+            $order->customer_id     = $request->customer_id;
+            $order->user_id         = Auth::user()->id;
+            $order->customer        = $request->customer;
+            $order->email_customer  = $request->email_customer;
+            $order->hari            = $request->hari;
+            $order->kg              = $request->kg;
+            $order->harga           = $request->harga;
+            $order->disc            = $request->disc;
+            $hitung                 = $order->kg * $order->harga;
+            if ($request->disc != NULL) {
+                $disc                = ($hitung * $order->disc) / 100;
+                $total               = $hitung - $disc;
+                $order->harga_akhir  = $total;
+            } else {
+              $order->harga_akhir    = $hitung;
             }
 
+            $order->tgl             = Carbon::now()->day;
+            $order->bulan           = Carbon::now()->month;
+            $order->tahun           = Carbon::now()->year;
+            dd($order);
+
+            if ($order->save()) {
+              // Set to notification table
+              Notification::create([
+                'transaction_id' => $order->id
+              ]);
+
+              // Menyiapkan data Email
+              $email = $order->email_customer;
+              $data = array(
+                  'invoice' => $order->invoice,
+                  'customer' => $order->customer,
+                  'tgl_transaksi' => $order->tgl_transaksi,
+              );
+
+              // Kirim Email
+              Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
+              $mail->to($email,'no-replay')
+                      ->subject("E-Laundry - Nomor Invoice");
+              $mail->from('laundri.dev@gmail.com');
+              });
+
+              Session::flash('success','Order Berhasil Ditambah !');
+              return redirect('pelayanan');
+            }
+          } catch (\Throwable $th) {
+            Session::flash('error','SMTP MAIL BELUM DI SETTING !');
             return redirect('pelayanan');
+          }
+
+
         } else {
             return redirect('/home');
         }
@@ -171,7 +185,7 @@ class PelayananController extends Controller
     public function listcs()
     {
         if (Auth::user()->auth == "Karyawan") {
-            $customer = customer::orderBy('id_customer','DESC')->where('id_karyawan',auth::user()->id)->get();
+            $customer = customer::orderBy('id','DESC')->where('user_id',auth::user()->id)->get();
             return view('karyawan.transaksi.customer', compact('customer'));
         } else {
             return redirect('home');
@@ -182,7 +196,7 @@ class PelayananController extends Controller
     public function addorders()
     {
         if (Auth::user()->auth == "Karyawan") {
-            $customer = customer::where('id_karyawan',auth::user()->id)->get();
+            $customer = customer::where('user_id',auth::user()->id)->get();
 
             $y = date('Y');
             $number = mt_rand(1000, 9999);
@@ -190,8 +204,9 @@ class PelayananController extends Controller
             $newID = $number. auth::user()->id .''.$y;
             $tgl = date('d-m-Y');
 
-            $cek_harga = harga::where('id_cabang',auth::user()->id)->first();
-            return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga'));
+            $cek_harga = harga::where('user_id',auth::user()->id)->first();
+            $cek_customer = customer::select('id','user_id')->where('user_id',auth::id())->count();
+            return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga','cek_customer'));
         } else {
             return redirect('home');
         }
@@ -202,7 +217,7 @@ class PelayananController extends Controller
     {
         if (Auth::user()->auth == "Karyawan") {
             $list_harga = harga::select('id','harga')
-            ->where('id_cabang',auth::user()->id)
+            ->where('user_id',auth::user()->id)
             ->where('id',$request->id)
             ->get();
             $select = '';
@@ -228,7 +243,7 @@ class PelayananController extends Controller
     {
        if (Auth::user()->auth == "Karyawan") {
         $list_jenis = harga::select('id','hari')
-        ->where('id_cabang',auth::user()->id)
+        ->where('user_id',auth::user()->id)
         ->where('id',$request->id)
         ->get();
         $select = '';
@@ -252,9 +267,9 @@ class PelayananController extends Controller
     public function getcustomer(Request $request)
     {
         if (auth::user()->auth == "Karyawan") {
-            $customer = customer::select('id_customer','nama')
-            ->where('id_customer',$request->id_customer)
-            ->where('id_karyawan',auth::user()->id)
+            $customer = customer::select('id','nama')
+            ->where('id',$request->customer_id)
+            ->where('user_id',auth::user()->id)
             ->get();
 
             $select = '';
@@ -277,9 +292,9 @@ class PelayananController extends Controller
     public function getemailcustomer(Request $request)
     {
         if (auth::user()->auth == "Karyawan") {
-            $customer = customer::select('id_customer','email_customer')
-            ->where('id_customer',$request->id_customer)
-            ->where('id_karyawan',auth::user()->id)
+            $customer = customer::select('id','email_customer')
+            ->where('id',$request->customer_id)
+            ->where('user_id',auth::user()->id)
             ->get();
 
             $select = '';
@@ -308,7 +323,7 @@ class PelayananController extends Controller
                 $statusorder->update([
                     'status_order' => $request->status_order,
                 ]);
-                if ($statusorder->status_order == 'Selesai') {
+                if ($statusorder->status_order == 'Done') {
                     // Menyiapkan data
                     $email = $statusorder->email_customer;
                     $data = array(
@@ -323,9 +338,10 @@ class PelayananController extends Controller
                             ->subject("E-Laundry - Laundry Selesai");
                     $mail->from('laundri.dev@gmail.com');
                     });
+                  Session::flash('success','Status Laundry Berhasil Diubah !');
                 }
             } catch (\Throwable $th) {
-                alert()->error('SMTP MAIL BELUM DI SETTING !');
+                Session::flash('error','SMTP MAIL BELUM DI SETTING !');
             }
         } else {
             return redirect('/home');
@@ -336,17 +352,18 @@ class PelayananController extends Controller
     public function ubahstatusbayar(Request $request)
     {
         if (Auth::user()->auth == "Karyawan") {
-            try {
-                $statusbayar = transaksi::find($request->id);
-                $statusbayar->update([
-                    'status_payment' => $request->status_payment,
-                ]);
-                return $statusbayar;
-            } catch (\Throwable $th) {
-                alert()->error('Ups ada yang tidak beres !');
-            }
+          try {
+              $statusbayar = transaksi::find($request->id);
+              $statusbayar->update([
+                  'status_payment' => $request->status_payment,
+              ]);
+              Session::flash('success','Status Pembayaran Berhasil Diubah !');
+              return $statusbayar;
+          } catch (\Throwable $th) {
+              Session::flash('error','Status Pembayaran Gagal Diubah !');
+          }
         } else {
-            return redirect('/home');
+          return redirect('/home');
         }
     }
 
@@ -354,34 +371,35 @@ class PelayananController extends Controller
     public function ubahstatusambil(Request $request)
     {
         if (Auth::user()->auth == "Karyawan") {
-            try {
-                $statusbayar = transaksi::find($request->id);
-                $statusbayar->update([
-                    'tgl_ambil' => Carbon::today(),
-                    'status_order' => 'Diambil'
-                ]);
-                if ($statusbayar->status_order == 'Diambil') {
-                    // Menyiapkan data
-                    $email = $statusbayar->email_customer;
-                    $data = array(
-                        'invoice' => $statusbayar->invoice,
-                        'customer' => $statusbayar->customer,
-                        'tgl_transaksi' => $statusbayar->tgl_transaksi,
-                        'tgl_ambil' => $statusbayar->tgl_ambil,
-                    );
+          try {
+            $statusbayar = transaksi::find($request->id);
+            $statusbayar->update([
+                'tgl_ambil' => Carbon::today(),
+                'status_order' => 'Delivery'
+            ]);
+            if ($statusbayar->status_order == 'Delivery') {
+              // Menyiapkan data
+              $email = $statusbayar->email_customer;
+              $data = array(
+                  'invoice' => $statusbayar->invoice,
+                  'customer' => $statusbayar->customer,
+                  'tgl_transaksi' => $statusbayar->tgl_transaksi,
+                  'tgl_ambil' => $statusbayar->tgl_ambil,
+              );
 
-                    // Kirim Email
-                    Mail::send('karyawan.email.diambil', $data, function($mail) use ($email, $data){
-                    $mail->to($email,'no-replay')
-                            ->subject("E-Laundry - Laundry Sudah Diambil");
-                    $mail->from('laundri.dev@gmail.com');
-                    });
-                }
-            } catch (\Throwable $th) {
-                alert()->error('SMTP MAIL BELUM DI SETTING !');
+              // Kirim Email
+              Mail::send('karyawan.email.diambil', $data, function($mail) use ($email, $data){
+              $mail->to($email,'no-replay')
+                      ->subject("E-Laundry - Laundry Sudah Diambil");
+              $mail->from('laundri.dev@gmail.com');
+              });
+              Session::flash('success','Status Laundry Berhasi Diubah !');
             }
+          } catch (\Throwable $th) {
+              Session::flash('error','SMTP MAIL BELUM DI SETTING !');
+          }
         } else {
-           return redirect('/home');
+          return redirect('/home');
         }
 
     }
@@ -389,79 +407,85 @@ class PelayananController extends Controller
     // Tambah Customer
     public function listcsadd()
     {
-        if (Auth::user()->auth == "Karyawan") {
-            return view('karyawan.transaksi.addcustomer');
-        } else {
-            return redirect('/home');
-        }
+      if (Auth::user()->auth == "Karyawan") {
+          return view('karyawan.transaksi.addcustomer');
+      } else {
+          return redirect('/home');
+      }
 
     }
 
     // Proses Tambah Customer
     public function addcs(Request $request)
     {
-        if (Auth::user()->auth == "Karyawan") {
-            try {
-                    $addplg = New customer();
-                $addplg->nama = $request->nama;
-                $addplg->email_customer = $request->email_customer;
-                $addplg->alamat = $request->alamat;
-                $addplg->kelamin = $request->kelamin;
-                $addplg->no_telp = $request->no_telp;
-                $addplg->id_karyawan = auth::user()->id;
-                $addplg->save();
+      if (Auth::user()->auth == "Karyawan") {
+        $request->validate([
+          'nama'                => 'required|unique:customers|max:25',
+          'email_customer'      => 'required|unique:customers',
+          'alamat'              => 'required',
+          'kelamin'             => 'required',
+          'no_telp'             => 'required|unique:customers',
+          'user_id'         => 'rrquired',
+        ]);
 
-                alert()->success('Data Customer Berhasil Ditambah');
-            } catch (\Throwable $th) {
-                alert()->success('Data Customer Gagal Ditambah !');
-            }
-            return redirect('list-customer');
-        } else {
-            return redirect('/home');
-        }
+        $addplg = New customer();
+        $addplg->nama = $request->nama;
+        $addplg->email_customer = $request->email_customer;
+        $addplg->alamat = $request->alamat;
+        $addplg->kelamin = $request->kelamin;
+        $addplg->no_telp = $request->no_telp;
+        $addplg->user_id = auth::user()->id;
+        $addplg->save();
+
+        Session::flash('success','Customer Berhasil Ditambah !');
+
+        return redirect('list-customer');
+      } else {
+        return redirect('/home');
+      }
 
     }
 
     // Invoice
     public function invoicekar(Request $request)
     {
-        if (Auth::user()->auth == "Karyawan") {
-            $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,transaksis.disc,transaksis.id_karyawan,transaksis.harga_akhir,a.jenis')
-            ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
-            ->where('transaksis.id', $request->id)
-            ->where('transaksis.id_karyawan',auth::user()->id)
-            ->orderBy('id','DESC')->get();
+      if (Auth::user()->auth == "Karyawan") {
+        $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
+        ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
+        ->where('transaksis.id', $request->id)
+        ->where('transaksis.user_id',auth::user()->id)
+        ->orderBy('id','DESC')->get();
 
-            $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.tgl_ambil,transaksis.disc,transaksis.invoice,transaksis.id_karyawan,transaksis.harga_akhir,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
-            ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
-            ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
-            ->where('transaksis.id', $request->id)
-            ->where('transaksis.id_karyawan',auth::user()->id)
-            ->orderBy('id','DESC')->first();
+        $data = transaksi::selectRaw('transaksis.*,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
+        ->leftJoin('customers as a' , 'a.id' , '=' ,'transaksis.id')
+        ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.user_id')
+        ->where('transaksis.id', $request->id)
+        ->where('transaksis.user_id',auth::user()->id)
+        ->orderBy('id','DESC')->first();
 
-        return view('karyawan.laporan.invoice', compact('invoice','data'));
-        } else {
-            return redirect('/home');
-        }
+      return view('karyawan.laporan.invoice', compact('invoice','data'));
+      } else {
+        return redirect('/home');
+      }
     }
 
     public function cetakinvoice(Request $request)
     {
-        //GET DATA BERDASARKAN ID
-        $invoice = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.harga_akhir,transaksis.hari,transaksis.harga,transaksis.disc,transaksis.id_karyawan,a.jenis')
-        ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
-        ->where('transaksis.id', $request->id)
-        ->where('transaksis.id_karyawan',auth::user()->id)
-        ->orderBy('id','DESC')->get();
+      //GET DATA BERDASARKAN ID
+      $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
+      ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
+      ->where('transaksis.id', $request->id)
+      ->where('transaksis.user_id',auth::user()->id)
+      ->orderBy('id','DESC')->get();
 
-        $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.tgl_ambil,transaksis.invoice,transaksis.disc,transaksis.id_karyawan,transaksis.harga_akhir,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc,transaksis.created_at')
-            ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
-            ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
-            ->where('transaksis.id', $request->id)
-            ->where('transaksis.id_karyawan',auth::user()->id)
-            ->orderBy('id','DESC')->first();
+      $data = transaksi::selectRaw('transaksis.*,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
+          ->leftJoin('customers as a' , 'a.id' , '=' ,'transaksis.id')
+          ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.user_id')
+          ->where('transaksis.id', $request->id)
+          ->where('transaksis.user_id',auth::user()->id)
+          ->orderBy('id','DESC')->first();
 
-        $pdf = PDF::loadView('karyawan.laporan.cetak', compact('invoice','data'))->setPaper('a4', 'landscape');
-        return $pdf->stream();
+      $pdf = PDF::loadView('karyawan.laporan.cetak', compact('invoice','data'))->setPaper('a4', 'landscape');
+      return $pdf->stream();
     }
 }

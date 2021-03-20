@@ -2,6 +2,17 @@
 @section('title','Admin - Data Karyawan')
 @section('header','Data Karyawan')
 @section('content')
+@if ($message = Session::get('success'))
+  <div class="alert alert-success alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+@elseif($message = Session::get('error'))
+  <div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+@endif
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
@@ -34,7 +45,7 @@
                             <td>{{$item->nama_cabang}}</td>
                             <td>{{$item->no_telp}}</td>
                             <td>
-                                @if ($item->status == 'Aktif')
+                                @if ($item->status == 'Active')
                                     <span class="label label-success">Aktif</span>
                                 @else
                                     <span class="label label-danger">Tidak Aktif</span>

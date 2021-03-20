@@ -14,8 +14,8 @@ class CreateHargasTable extends Migration
     public function up()
     {
         Schema::create('hargas', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_cabang');
+            $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('jenis');
             $table->string('kg');
             $table->string('harga');
@@ -23,7 +23,7 @@ class CreateHargasTable extends Migration
             $table->string('hari');
             $table->timestamps();
 
-            $table->foreign('id_cabang')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

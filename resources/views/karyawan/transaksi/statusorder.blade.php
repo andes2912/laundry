@@ -17,9 +17,9 @@
                             <label for="recipient-name" class="control-label">Status Order :</label>
                             <select class="form-control custom-select" name="status_order" id="status_order" required>
                                 <option value="">-- Pilih Status Order --</option>
-                                <option value="Selesai">Selesai</option>
-                                <option value="Diambil">Diambil</option>
-                                <option value="Proses">Proses</option>
+                                <option value="Done">Selesai</option>
+                                <option value="Delivery">Diambil</option>
+                                <option value="Process">Proses</option>
                             </select>
                         </div>
                     </form>

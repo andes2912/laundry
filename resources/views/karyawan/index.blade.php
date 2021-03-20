@@ -168,19 +168,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6 col-xl-6 col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between">
-                    <h4 class="card-title">Data Per-bulan</h4>
-                </div>
-                <div class="card-content">
-                    <div class="card-body pb-0">
-                        <div id="data-bulan"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-xl-6 col-12">
+      <div class="col-lg-7 col-xl-7 col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h4 class="card-title">Data Per-hari</h4>
@@ -188,6 +176,19 @@
                 <div class="card-content">
                     <div class="card-body pb-0">
                         <div id="data-hari"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 col-xl-5 col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h4 class="card-title">Data Per-bulan</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body pb-0">
+                        <div id="data-bulan"></div>
                     </div>
                 </div>
             </div>
@@ -275,7 +276,7 @@ var salesavgChartoptions = {
           x: { show: false }
       },
       series: [{
-            name: "Bulan",
+            name: "Laundry Masuk",
             data: [{{$jan}}, {{$feb}}, {{$mar}}, {{$apr}}, {{$mey}}, {{$juni}}, {{$july}}, {{$aug}}, {{$sep}}, {{$oct}}, {{$nov}}, {{$dec}}]
         }],
 
@@ -364,7 +365,7 @@ var salesavgChartoptions = {
           x: { show: false }
       },
       series: [{
-            name: "Tanggal",
+            name: "Laundry Masuk",
             data: [{{$_nilai}}]
         }],
 

@@ -17,8 +17,8 @@
                             <label for="recipient-name" class="control-label">Status Pembayaran :</label>
                             <select class="form-control custom-select" name="status_payment" id="status_payment" required>
                                 <option value="">-- Pilih Status Payment --</option>
-                                <option value="Belum">Belum Dibayar</option>
-                                <option value="Lunas">Sudah Dibayar</option>
+                                <option value="Pending">Belum Dibayar</option>
+                                <option value="Success">Sudah Dibayar</option>
                             </select>
                         </div>
                     </form>

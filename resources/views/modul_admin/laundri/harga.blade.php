@@ -1,6 +1,17 @@
 @extends('layouts.backend')
 @section('title','Admin - Data Harga Laundri')
 @section('content')
+@if ($message = Session::get('success'))
+  <div class="alert alert-success alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+@elseif($message = Session::get('error'))
+  <div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+@endif
 <div class="col-lg-12">
     <div class="row">
         <div class="col-md-8">
@@ -41,12 +52,7 @@
                                     </td>
                                     <td>{{$item->nama_cabang}}</td>
                                     <td>
-                                        <form action="{{url('customer-delete', $item->id_customer)}}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a class="btn btn-sm btn-success" data-toggle="modal" data-id="{{$item->id}}" data-id-jenis="{{$item->jenis}}" data-id-kg="{{$item->kg}}" data-id-harga="{{$item->harga}}" data-id-hari="{{$item->hari}}" data-id-status="{{$item->status}}" id="click_harga" data-target="#edit_harga" style="color:white">Edit</a>
-                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                        </form>
+                                        <a class="btn btn-sm btn-success" data-toggle="modal" data-id="{{$item->id}}" data-id-jenis="{{$item->jenis}}" data-id-kg="{{$item->kg}}" data-id-harga="{{$item->harga}}" data-id-hari="{{$item->hari}}" data-id-status="{{$item->status}}" id="click_harga" data-target="#edit_harga" style="color:white">Edit</a>
                                     </td>
                                 </tr>
                                 <?php $no++; ?>
@@ -58,7 +64,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="col-lg-4">
             <div class="card card-outline-info">
                 <div class="card-header">
@@ -70,23 +76,33 @@
                         <div class="form-body">
                             @if ($karyawan == !null)
                             <div class="row p-t-20">
-                                
+
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Cabang</label>
-                                        <select name="id_cabang" class="form-control" required>
+                                        <select name="user_id" class="form-control @error('user_id') is-invalid @enderror" required>
                                             <option value="">-- Pilih Cabang --</option>
                                             @foreach ($getcabang as $item)
                                                 <option value="{{$item->id}}">{{$item->nama_cabang}} - {{$item->name}}</option>
                                             @endforeach
                                         </select>
+                                        @error('user_id')
+                                          <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $message }}</strong>
+                                          </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Jenis Pakaian</label>
-                                        <input type="text" name="jenis" value="{{ old('jenis') }}" class="form-control" placeholder="Tambahkan Jenis Pakaian" required autocomplete="off">
+                                        <input type="text" name="jenis" value="{{ old('jenis') }}" class="form-control @error('jenis') is-invalid @enderror" placeholder="Tambahkan Jenis Pakaian" required autocomplete="off">
                                         <small class="form-control-feedback "> Pisahkan Dengan format '+' Jika Jenis Lebih Dari Satu </small>
+                                        @error('jenis')
+                                          <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $message }}</strong>
+                                          </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <!--/span-->
@@ -102,26 +118,36 @@
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Harga Per-Kg</label>
-                                        <input type="number" class="form-control form-control-danger" name="harga" value="{{ old('harga') }}"placeholder="Harga Per-Kg" autocomplete="off" required>
+                                        <input type="number" class="form-control form-control-danger @error('harga') is-invalid @enderror" name="harga" value="{{ old('harga') }}"placeholder="Harga Per-Kg" autocomplete="off" required>
                                         <small class="form-control-feedback "> Tuliskan Tanpa tanda ',' dan '.' </small>
+                                        @error('harga')
+                                          <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $message }}</strong>
+                                          </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Lama Hari</label>
-                                        <input type="number" name="hari" value="{{ old('hari') }}" class="form-control" placeholder="Lama Hari" autocomplete="off" required>
+                                        <input type="number" name="hari" value="{{ old('hari') }}" class="form-control @error('hari') is-invalid @enderror" placeholder="Lama Hari" autocomplete="off" required>
+                                        @error('hari')
+                                          <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $message }}</strong>
+                                          </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-                            <!--/row-->      
-                                        
+                            <!--/row-->
+
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
                             <button type="reset" class="btn btn-danger">Cancel</button>
                         </div>
                         @else
-                            <h4>Upsss, data karyawan masih kosong nih !!!</h4> <br>
+                            <h5 class="text-danger">Upsss, data karyawan/cabang masih kosong nih !!!</h5> <br>
                             <a href="{{url('kry')}}" class="btn btn-success btn-block">Tambah Karyawan</a>
                         @endif
                     </form>
@@ -159,21 +185,16 @@ $(document).on('click','#simpan_harga', function(){
     var hari = $("#hari").val();
     var harga = $("#harga").val();
     var status = $("#status").val();
-    
+
     $.get('{{Url("edit-harga")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id_harga:id_harga,hari:hari,jenis:jenis,kg:kg,harga:harga,status:status}, function(resp){
-            swal({
-            html :  "Berhasil Edit Harga",
-            showConfirmButton :  false,
-            type: "success",
-            timer: 1000 
-            });
-        $("#id_harga").val(''); 
-        $("#jenis").val('');
-        $("#kg").val('');
-        $("#hari").val('');
-        $("#harga").val(''); 
-        $("#status").val('');  
-        location.reload();
+
+    $("#id_harga").val('');
+    $("#jenis").val('');
+    $("#kg").val('');
+    $("#hari").val('');
+    $("#harga").val('');
+    $("#status").val('');
+    location.reload();
     });
  });
 

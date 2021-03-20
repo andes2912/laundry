@@ -1,47 +1,6 @@
 @extends('layouts.backend')
 @section('title','Dashboard Admin')
 @section('content')
-    <!-- Column -->
-    {{-- 
-
-    <div class="col-lg-7">
-        <!-- LINE CHART -->
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title m-b-0">Grafik Jumlah Laundry Masuk</h4>
-        </div>
-          <div class="card-body">
-            <div class="amp-pxl m-t-90" style="height: 390px;" id="linechart"></div>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-    </div>
-    <div class="col-md-5">
-        <!-- Column -->
-        <div class="card card-default">
-            <div class="card-header">
-                <h4 class="card-title m-b-0">Payment Stats</h4>
-            </div>
-            <div class="card-body collapse show">
-            <div id="morris-donut-chart" class="ecomm-donute" style="height: 317px;"></div>
-                <ul class="list-inline m-t-20 text-center">
-                <li >
-                    <h6 class="text-muted"><i class="fa fa-circle text-info"></i> Masuk</h6>
-                    <h4 class="m-b-0">{{$masuk}}</h4>
-                </li>
-                <li>
-                    <h6 class="text-muted"><i class="fa fa-circle text-danger"></i> Belum Bayar</h6>
-                    <h4 class="m-b-0">{{$belumbayar}}</h4>
-                </li>
-                <li>
-                    <h6 class="text-muted"> <i class="fa fa-circle text-success"></i> Sudah Bayar</h6>
-                    <h4 class="m-b-0">{{$sudahbayar}}</h4>
-                </li>
-            </ul>
-            </div>
-        </div>
-    </div> --}}
 <div class="row">
     <div class="col-lg-3 col-sm-6 col-12">
         <div class="card">
@@ -212,7 +171,7 @@ var salesavgChartoptions = {
           x: { show: false }
       },
       series: [{
-            name: "Laundry",
+            name: "Laundry Masuk",
             data: [{{$jan}}, {{$feb}}, {{$mar}}, {{$apr}}, {{$mey}}, {{$juni}}, {{$july}}, {{$aug}}, {{$sep}}, {{$oct}}, {{$nov}}, {{$dec}}]
         }],
 
@@ -300,7 +259,7 @@ var salesavgChartoptions = {
           x: { show: false }
       },
       series: [{
-            name: "Tanggal",
+            name: "Laundry Masuk",
             data: [{{$_nilai}}],
         }],
 

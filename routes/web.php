@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.index');
-});
+Route::get('/', 'FrontController@index');
 
 // Frontend
 Route::get('pencarian-laundry','FrontController@search');
@@ -56,8 +54,16 @@ Route::resource('admin','AdminController');
     // Notifikasi
     Route::get('read-notification','AdminController@notif');
 
-    // Filter 
+    // Filter
     Route::get('filter-transaksi','AdminController@filtertransaksi');
+
+    // Setting
+    Route::get('settings','SettingsController@setting');
+    Route::put('proses-setting-page/{id}','SettingsController@proses_set_page')->name('seting-page.update');
+
+    // Profile
+    Route::get('profile-admin/{id}','AdminController@profile');
+    Route::get('profile-admin-edit','AdminController@edit_profile');
 
 // Modul Karyawan
 Route::resource('pelayanan','PelayananController');
@@ -87,4 +93,4 @@ Route::resource('pelayanan','PelayananController');
     Route::get('profile-karyawan/edit/{id}','ProfileController@karyawanProfileEdit');
     Route::put('profile-karyawan/update/{id}','ProfileController@karyawanProfileSave');
     Route::get('reset-password','ProfileController@reset_password');
-    
+

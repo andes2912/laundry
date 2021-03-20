@@ -33,10 +33,10 @@
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/core/menu/menu-types/vertical-menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/core/colors/palette-gradient.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/pages/dashboard-analytics.css')}}">
+
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/style.css')}}">
     <!-- END: Custom CSS-->
 
 </head>
@@ -44,7 +44,7 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+<body class="vertical-layout vertical-menu-modern dark-layout content-left-sidebar chat-application navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar" data-layout="dark-layout">
 
     <!-- BEGIN: Header-->
     <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu floating-nav navbar-light navbar-shadow">
@@ -57,30 +57,15 @@
                         </ul>
                     </div>
                     <ul class="nav navbar-nav float-right">
-                        {{-- Notification --}}
-                        <?php
-                            if (auth::user()->auth == 'Karyawan') {
-                                $notif = App\transaksi::Where('notif',0)
-                                ->Where('id_karyawan', Auth::user()->id)
-                                ->orderBy('id','DESC')
-                                ->get();
-                            }elseif(auth::user()->auth == "Admin"){
-                                $notif = App\transaksi::where('notif_admin', 0)
-                                ->orderBy('id','DESC')
-                                ->get();
-                            }
-
-                            
-                        ?>
-                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up">{{$notif->count()}}</span></a>
+                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up"></span></a>
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                 <li class="dropdown-menu-header">
                                     <div class="dropdown-header m-0 p-2">
-                                        <h3 class="white">{{$notif->count()}}</h3><span class="notification-title">App Notifications</span>
+                                        <h3 class="white"></h3><span class="notification-title">App Notifications</span>
                                     </div>
                                 </li>
                                 <li class="scrollable-container media-list">
-                                    @foreach ($notif as $item)
+                                    {{-- @foreach ($notif as $item)
                                         <a class="d-flex justify-content-between" id="notif" data-id="{{$item->id}}">
                                             <div class="media d-flex align-items-start">
                                                 <div class="media-left">
@@ -95,34 +80,42 @@
                                                 </small>
                                             </div>
                                         </a>
-                                    @endforeach
+                                    @endforeach --}}
                                 </li>
                                 {{-- <li class="dropdown-menu-footer">
                                     <a class="dropdown-item p-1 text-center" href="javascript:void(0)">Read all notifications</a>
                                 </li> --}}
                             </ul>
                         </li>
-                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{auth::user()->name}}</span><span class="user-status">{{auth::user()->auth}}</span></div><span><img class="round" src="{{asset('backend/images/portrait/small/avatar-s-11.jpg')}}" alt="avatar" height="40" width="40"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                @if (auth::user()->auth == 'Admin')
-                                    
-                                @else
-                                <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
-                                </a>
-                                @endif
-                                <div class="dropdown-divider"></div>
-                                <a href="{{ route('logout') }}" class="dropdown-item"
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();" data-toggle="tooltip" title="Logout">
-                                    <i class="feather icon-power"></i>
-                                    Logout
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
+                        <li class="dropdown dropdown-user nav-item">
+                          <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                            <div class="user-nav d-sm-flex d-none">
+                              <span class="user-name text-bold-600">{{auth::user()->name}}</span>
+                              <span class="user-status">{{auth::user()->auth}}</span>
                             </div>
+                            <span>
+                              <img class="round" src="{{asset('backend/images/profile/user.jpg')}}" alt="avatar" height="40" width="40">
+                            </span>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            @if (auth::user()->auth == 'Admin')
+                              <a class="dropdown-item" href="{{url('profile-admin', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
+                              </a>
+                            @else
+                              <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
+                              </a>
+                            @endif
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('logout') }}" class="dropdown-item"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();" data-toggle="tooltip" title="Logout">
+                                <i class="feather icon-power"></i>
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                          </div>
                         </li>
                     </ul>
                 </div>
@@ -146,42 +139,53 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="nav-item"><a href="{{url('home')}}"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
+                <li class="nav-item {{ (request()->is('home')) ? 'active' : '' }}"><a href="{{url('home')}}"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
                 </li>
-               
+
                 {{-- Menu Admin --}}
                     @if (auth::user()->auth == "Admin")
                         <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="User">Data Pengguna</span></a>
                             <ul class="menu-content">
-                                <li><a href="{{url('adm')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Administrator</span></a>
-                                </li>
-                                <li><a href="{{url('kry')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Karyawan</span></a>
-                                </li>
+                              <li class="nav-item {{ (request()->is('kry')) ? 'active' : '' }}">
+                                <a href="{{url('kry')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Karyawan</span></a>
+                              </li>
                             </ul>
                         </li>
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="User">Data Customer</span></a>
                             <ul class="menu-content">
-                                <li><a href="{{url('customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Customer</span></a>
+                                <li class="nav-item {{ (request()->is('customer')) ? 'active' : '' }}">
+                                  <a href="{{url('customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Customer</span></a>
                                 </li>
                             </ul>
                         </li>
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
                             <ul class="menu-content">
-                                <li><a href="{{url('data-transaksi')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Transaksi</span></a>
+                                <li class="nav-item {{ (request()->is('data-transaksi')) ? 'active' : '' }}">
+                                  <a href="{{url('data-transaksi')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Transaksi</span></a>
                                 </li>
-                                <li><a href="{{url('data-harga')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Harga Laundry</span></a>
+                                <li class="nav-item {{ (request()->is('data-harga')) ? 'active' : '' }}">
+                                  <a href="{{url('data-harga')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Harga Laundry</span></a>
                                 </li>
                             </ul>
                         </li>
-                        
+
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="User">Data Finance</span></a>
-                            <ul class="menu-content">
-                                <li><a href="{{url('data-finance')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Finance</span></a>
-                                </li>
-                            </ul>
+                          <ul class="menu-content">
+                            <li class="nav-item {{ (request()->is('data-finance')) ? 'active' : '' }}">
+                              <a href="{{url('data-finance')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Finance</span></a>
+                            </li>
+                          </ul>
+                        </li>
+
+                        <li class=" nav-item"><a href="#"><i class="feather icon-settings"></i><span class="menu-title" data-i18n="User">Other</span></a>
+                          <ul class="menu-content">
+                            <li class="nav-item {{ (request()->is('settings')) ? 'active' : '' }}">
+                              <a href="{{url('settings')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Setting</span></a>
+                            </li>
+                          </ul>
                         </li>
                     {{-- End Menu Admin --}}
 
@@ -189,11 +193,14 @@
                     @elseif(auth::user()->auth == "Karyawan")
                         <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
                             <ul class="menu-content">
-                                <li><a href="{{route('pelayanan.index')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Order Masuk</span></a>
+                                <li class="nav-item {{ (request()->is('pelayanan')) ? 'active' : '' }}">
+                                  <a href="{{route('pelayanan.index')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Order Masuk</span></a>
                                 </li>
-                                <li><a href="{{url('add-order')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Tambah Order</span></a>
+                                <li class="nav-item {{ (request()->is('add-order')) ? 'active' : '' }}">
+                                  <a href="{{url('add-order')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Tambah Order</span></a>
                                 </li>
-                                <li><a href="{{url('list-customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Data Customer</span></a>
+                                <li class="nav-item {{ (request()->is('list-customer')) ? 'active' : '' }}">
+                                  <a href="{{url('list-customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Data Customer</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -217,7 +224,7 @@
                 @yield('content')
                 @include('sweetalert::alert')
             </div>
-            
+
         </div>
     </div>
     <!-- END: Content-->
@@ -235,7 +242,7 @@
 
 
     <!-- BEGIN: Vendor JS-->
-    <script src="{{asset('backend/vendors/js/vendors.min.js')}}"></script>
+    <script src="{{asset('backend/vendors/js/vendors.js')}}"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
@@ -261,35 +268,6 @@
     <!-- BEGIN: Page JS-->
     <script src="{{asset('backend/js/scripts/datatables/datatable.js')}}"></script>
     <!-- END: Page JS-->
-
-    {{-- Notification --}}
-    @if (auth::user()->auth == "Admin")
-    <script type="text/javascript">
-        var data =  <?= Auth::user()->auth == 'Admin' ?>;
-         $(document).on('click','#notif', function () {
-                var id = $(this).attr('data-id');
-                $.get(' {{Url("read-notification")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-                    // location.reload();
-                    if (data) {
-                        window.location = '/data-transaksi';
-                    } 
-                });
-            });
-    </script>
-    @else
-    <script type="text/javascript">
-        var data =  <?= Auth::user()->auth == 'Karyawan' ?>;
-         $(document).on('click','#notif', function () {
-                var id = $(this).attr('data-id');
-                $.get(' {{Url("read-notification")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-                    // location.reload();
-                    if (data) {
-                        window.location = '/pelayanan';
-                    }
-                });
-            });
-    </script>
-    @endif
     @yield('scripts')
 </body>
 <!-- END: Body-->

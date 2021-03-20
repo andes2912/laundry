@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="col text-center">
-                    <div class="m-t-30"> <img src="{{asset('backend/images/profile/user-uploads/user-01.jpg')}}" class="rounded" width="230" />
+                    <div class="m-t-30"> <img src="{{asset('backend/images/profile/user.jpg')}}" class="rounded" width="230" />
                         <h4 class="card-title m-t-10">{{$user->name}}
                         </h4>
                         <h6 class="card-subtitle">Karyawan</h6>
@@ -24,12 +24,16 @@
                 <button class="btn btn-circle btn-secondary"><i class="fa fa-facebook"></i></button>
                 <button class="btn btn-circle btn-secondary"><i class="fa fa-twitter"></i></button>
                 <button class="btn btn-circle btn-secondary"><i class="fa fa-youtube"></i></button>
-                <a href="{{url('profile-karyawan/edit', auth::user()->id)}}" class="btn btn-primary mt-2">Edit</a>
-                <a href="" id="reset_password" data-id="{{$user->id}}" class="btn btn-warning mt-2">Reset Password</a>
+
+                <div class="d-flex justify-content-between">
+              <a href="{{url('profile-karyawan/edit', auth::user()->id)}}" class="btn btn-primary mt-2">Edit</a>
+              <a href="" id="reset_password" data-id="{{$user->id}}" class="btn btn-warning mt-2">Reset Password</a>
             </div>
+            </div>
+
         </div>
     </div>
-    
+
     <div class="col-lg-8 col-xlg-9 col-md-7">
         <div class="card">
             <!-- Nav tabs -->
@@ -38,7 +42,7 @@
                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Coming Soon</a> </li>
                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Coming Soon</a> </li>
             </ul>
-    
+
             <div class="card-body">
                 <h5>COMING SOON !!!</h5>
             </div>
