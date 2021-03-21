@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PageSettings;
+use App\Models\{PageSettings,User};
 use auth;
 use Session;
 
@@ -54,6 +54,39 @@ class SettingsController extends Controller
       } else {
         abort(403);
       }
+    }
+  }
+
+  // Check Setting Theme & Email
+  public function set_theme_email(Request $request)
+  {
+    $id = auth::id();
+    $user = User::all();
+
+    $set_theme_email = User::findOrFail($id);
+    if ($request->theme == NULL) {
+      $set_theme_email->theme = '0';
+    } else {
+      $set_theme_email->theme = $request->theme;
+    }
+
+    if ($request->email_set == NULL) {
+      $set_theme_email->email_set = '0';
+    } else {
+      $set_theme_email->email_set = $request->email_set;
+    }
+
+    $set_theme_email->save();
+
+    if ($set_theme_email) {
+      foreach ($user as $users) {
+        $users->email_set = $set_theme_email->email_set;
+      }
+
+      $users->save();
+
+      Session::flash('success','Setting Berhasil Disimpan !');
+      return back();
     }
   }
 }

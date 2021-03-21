@@ -41,6 +41,9 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+    'db' => env('DB_DATABASE','db_laundry'),
+
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -176,7 +179,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        
+
 
     ],
 
@@ -228,7 +231,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Rupiah' => App\Helpers\Rupiah::class,       
+        'Rupiah' => App\Helpers\Rupiah::class,
         // 'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
     ],
 
