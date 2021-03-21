@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Karyawan;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{transaksi,customer,harga,Notification};
 use Auth;
@@ -201,7 +202,7 @@ class PelayananController extends Controller
             $newID = $number. auth::user()->id .''.$y;
             $tgl = date('d-m-Y');
 
-            $cek_harga = harga::where('user_id',auth::user()->id)->first();
+            $cek_harga = harga::where('user_id',auth::user()->id)->where('status',1)->first();
             $cek_customer = customer::select('id','user_id')->where('user_id',auth::id())->count();
             return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga','cek_customer'));
         } else {

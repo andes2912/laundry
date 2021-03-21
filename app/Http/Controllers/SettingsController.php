@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{PageSettings,User};
+use App\Models\{PageSettings,User,LaundrySetting};
 use auth;
 use Session;
 
@@ -14,8 +14,9 @@ class SettingsController extends Controller
   public function setting()
   {
     $setpage = PageSettings::first();
+    $settarget = LaundrySetting::first();
 
-    return view('modul_admin.setting.index', compact('setpage'));
+    return view('modul_admin.setting.index', compact('setpage','settarget'));
   }
 
   // Proses setting page
@@ -87,6 +88,23 @@ class SettingsController extends Controller
 
       Session::flash('success','Setting Berhasil Disimpan !');
       return back();
+    }
+  }
+
+  // Setting Laundry Target
+  public function set_target_laundry(Request $request, $id)
+  {
+    if (auth::check()) {
+      if (auth::user()->auth == 'Admin') {
+        $set_target = LaundrySetting::findOrFail($id);
+        $set_target->target_day = $request->target_day;
+        $set_target->target_month = $request->target_month;
+        $set_target->target_year = $request->target_year;
+        $set_target->save();
+
+        Session::flash('success','Target Berhasil Diupdate !');
+        return back();
+      }
     }
   }
 }

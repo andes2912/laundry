@@ -1,110 +1,6 @@
 @extends('layouts.backend')
 @section('title','Dashboard Karyawan')
 @section('content')
-    {{-- <!-- Column -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <!-- Row -->
-                <div class="row">
-                    <div class="col-8"><h2>{{$customer->count()}} <i class=" font-14 text-danger"></i></h2>
-                        <h6>Jumlah Customer</h6></div>
-                    <div class="col-4 align-self-center text-right  p-l-0">
-                        <div id="sparklinedash3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Column -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <!-- Row -->
-                <div class="row">
-                    <div class="col-8"><h2 class="">{{$masuk}} <i class=" font-14 text-success"></i></h2>
-                        <h6>Laundry Masuk</h6></div>
-                    <div class="col-4 align-self-center text-right p-l-0">
-                        <div id="sparklinedash"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Column -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <!-- Row -->
-                <div class="row">
-                    <div class="col-8"><h2>{{$selesai}} <i class=" font-14 text-success"></i></h2>
-                        <h6>Laundry Selesai</h6></div>
-                    <div class="col-4 align-self-center text-right p-l-0">
-                        <div id="sparklinedash2"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Column -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <!-- Row -->
-                <div class="row">
-                    <div class="col-8"><h2>{{$diambil}} <i class=" font-14 text-danger"></i></h2>
-                        <h6>Laundry Diambil</h6></div>
-                    <div class="col-4 align-self-center text-right p-l-0">
-                        <div id="sparklinedash4"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-7">
-        <!-- LINE CHART -->
-        <div class="card">
-            <div class="card-body">
-            <h4 class="card-title m-b-0">Grafik Jumlah Laundry Masuk</h4>
-        </div>
-            <div class="card-body">
-            <div class="amp-pxl m-t-90" style="height: 390px;" id="linechart"></div>
-            </div>
-            <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-    </div>
-    <div class="col-md-5">
-        <!-- Column -->
-        <div class="card card-default">
-            <div class="card-header">
-                <div class="card-actions">
-                    <a class="" data-action="collapse"><i class="ti-minus"></i></a>
-                    <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
-                    <a class="btn-close" data-action="close"><i class="ti-close"></i></a>
-                </div>
-                <h4 class="card-title m-b-0">Payment Stats</h4>
-            </div>
-            <div class="card-body collapse show">
-            <div id="morris-donut-chart" class="ecomm-donute" style="height: 317px;"></div>
-                <ul class="list-inline m-t-20 text-center">
-                <li >
-                    <h6 class="text-muted"><i class="fa fa-circle text-info"></i> Masuk</h6>
-                    <h4 class="m-b-0">{{$masuk}}</h4>
-                </li>
-                <li>
-                    <h6 class="text-muted"><i class="fa fa-circle text-success"></i> Sudah Bayar</h6>
-                    <h4 class="m-b-0">{{$sudahbayar}}</h4>
-                </li>
-                <li>
-                    <h6 class="text-muted"> <i class="fa fa-circle text-danger"></i> Belum Bayar</h6>
-                    <h4 class="m-b-0">{{$belumbayar}}</h4>
-                </li>
-            </ul>
-            </div>
-        </div>
-    </div> --}}
     <div class="row">
         <div class="col-lg-3 col-sm-6 col-12">
             <div class="card">
@@ -115,7 +11,7 @@
                     </div>
                     <div class="avatar bg-rgba-primary p-50 m-0">
                         <div class="avatar-content">
-                            <i class="feather icon-cpu text-primary font-medium-5"></i>
+                            <i class="feather icon-users text-primary font-medium-5"></i>
                         </div>
                     </div>
                 </div>
@@ -130,7 +26,7 @@
                     </div>
                     <div class="avatar bg-rgba-success p-50 m-0">
                         <div class="avatar-content">
-                            <i class="feather icon-server text-success font-medium-5"></i>
+                            <i class="feather icon-box text-success font-medium-5"></i>
                         </div>
                     </div>
                 </div>
@@ -145,7 +41,7 @@
                     </div>
                     <div class="avatar bg-rgba-danger p-50 m-0">
                         <div class="avatar-content">
-                            <i class="feather icon-activity text-danger font-medium-5"></i>
+                            <i class="feather icon-check text-danger font-medium-5"></i>
                         </div>
                     </div>
                 </div>
@@ -160,7 +56,7 @@
                     </div>
                     <div class="avatar bg-rgba-warning p-50 m-0">
                         <div class="avatar-content">
-                            <i class="feather icon-alert-octagon text-warning font-medium-5"></i>
+                            <i class="feather icon-check-square text-warning font-medium-5"></i>
                         </div>
                     </div>
                 </div>

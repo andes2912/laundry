@@ -14,7 +14,9 @@
                 </div>
             </div>
             <div>
-                <hr> </div>
+              <hr>
+            </div>
+
             <div class="card-body"> <small class="text-muted">Email address </small>
                 <h6>{{$user->email}}</h6> <small class="text-muted p-t-30 db">Phone</small>
                 <h6>{{$user->no_telp}}</h6> <small class="text-muted p-t-30 db">Address</small>

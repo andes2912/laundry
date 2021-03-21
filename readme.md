@@ -1,6 +1,6 @@
 <p>Halo, ini adalah aplikasi Laundry yang dibangun dengan cinta (love). Aplikasi ini sudah bisa multi toko loh, alias kamu bisa membuat cabang laundry.<br>
-    
-    
+
+
 <h3><b>Cara Install</b></h3>
 <p>
 1. Pastikan kamu sudah menginstall tools yg diperlukan untuk menggunakan laravel, karena project ini di bangun dengan Framework      Laravel. <br>
@@ -8,6 +8,7 @@
 3. Jalankan perintah 'Composer Install' pada direktori project <br>
 4. File .env sudah include, kalian hanya perlu menyesuaikan nama database<br>
 5. Buat DB dan jalankan perintah 'php artisan migrate --seed'<br>
+6. Login dengan 'admin@laundry.com' & password '123456' <br>
 
 Note : Aplikasi ini akan terus saya update.<br>
 Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com</b>

@@ -29,7 +29,7 @@
           <li class="nav-item">
               <a class="nav-link d-flex py-75" id="pill-notifications" data-toggle="pill" href="#vertical-notifications" aria-expanded="false">
                   <i class="feather icon-message-circle mr-50 font-medium-3"></i>
-                  Notifications
+                  Target Laundry
               </a>
           </li>
 
@@ -143,62 +143,43 @@
                 </div>
 
                 <div class="tab-pane fade" id="vertical-notifications" role="tabpanel" aria-labelledby="pill-notifications" aria-expanded="false">
+                  <form action="{{route('set-target.update', auth::user()->id)}}" method="post">
+                    @csrf
+                    @method('PUT')
                     <div class="row">
-                        <h6 class="m-1">Activity</h6>
-                        <div class="col-12 mb-1">
-                            <div class="custom-control custom-switch custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" checked id="accountSwitch1">
-                                <label class="custom-control-label mr-1" for="accountSwitch1"></label>
-                                <span class="switch-label w-100">Email me when someone comments
-                                    onmy
-                                    article</span>
-                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <div class="controls">
+                            <label for="Target Hari">Target per-hari</label>
+                            <input type="number" class="form-control" name="target_day" value="{{$settarget->target_day}}" placeholder="Target Hari" required>
+                          </div>
                         </div>
-                        <div class="col-12 mb-1">
-                            <div class="custom-control custom-switch custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" checked id="accountSwitch2">
-                                <label class="custom-control-label mr-1" for="accountSwitch2"></label>
-                                <span class="switch-label w-100">Email me when someone answers on
-                                    my
-                                    form</span>
-                            </div>
+                      </div>
+
+                       <div class="col-md-4">
+                        <div class="form-group">
+                          <div class="controls">
+                            <label for="Target Bulan">Target per-bulan</label>
+                            <input type="number" class="form-control" name="target_month" value="{{$settarget->target_month}}" placeholder="Target Bulan" required>
+                          </div>
                         </div>
-                        <div class="col-12 mb-1">
-                            <div class="custom-control custom-switch custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="accountSwitch3">
-                                <label class="custom-control-label mr-1" for="accountSwitch3"></label>
-                                <span class="switch-label w-100">Email me hen someone follows
-                                    me</span>
-                            </div>
+                      </div>
+
+                       <div class="col-md-4">
+                        <div class="form-group">
+                          <div class="controls">
+                            <label for="Target Tahun">Target per-tahun</label>
+                            <input type="number" class="form-control" name="target_year" value="{{$settarget->target_year}}" placeholder="Target Tahun" required>
+                          </div>
                         </div>
-                        <h6 class="m-1">Application</h6>
-                        <div class="col-12 mb-1">
-                            <div class="custom-control custom-switch custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" checked id="accountSwitch4">
-                                <label class="custom-control-label mr-1" for="accountSwitch4"></label>
-                                <span class="switch-label w-100">News and announcements</span>
-                            </div>
-                        </div>
-                        <div class="col-12 mb-1">
-                            <div class="custom-control custom-switch custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="accountSwitch5">
-                                <label class="custom-control-label mr-1" for="accountSwitch5"></label>
-                                <span class="switch-label w-100">Weekly product updates</span>
-                            </div>
-                        </div>
-                        <div class="col-12 mb-1">
-                            <div class="custom-control custom-switch custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" checked id="accountSwitch6">
-                                <label class="custom-control-label mr-1" for="accountSwitch6"></label>
-                                <span class="switch-label w-100">Weekly blog digest</span>
-                            </div>
-                        </div>
-                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
-                            <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
-                                changes</button>
-                            <button type="reset" class="btn btn-outline-warning">Cancel</button>
-                        </div>
+                      </div>
+
+                      <div class="col-12 d-flex flex-sm-row flex-column justify-content-start">
+                        <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save changes</button>
+                        <button type="reset" class="btn btn-outline-warning">Cancel</button>
+                      </div>
                     </div>
+                  </form>
                 </div>
 
                 <div class="tab-pane fade" id="vertical-theme" role="tabpanel" aria-labelledby="pill-theme" aria-expanded="false">
@@ -223,6 +204,9 @@
                                 <span class="switch-label w-100">Aktifkan Jika Ingin Menggunakan Email Notifications</span>
                             </div>
                         </div>
+                        @if (auth::user()->email_set == 1)
+                          <small class="m-1 alert alert-danger">Pastikan Sudah mengatur setting mail driver pada file .env</small>
+                        @endif
 
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-start">
                           <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
