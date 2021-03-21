@@ -36,7 +36,7 @@
           <li class="nav-item">
               <a class="nav-link d-flex py-75" id="pill-theme" data-toggle="pill" href="#vertical-theme" aria-expanded="false">
                   <i class="feather icon-feather mr-50 font-medium-3"></i>
-                  Theme
+                  Theme & Email Notification
               </a>
           </li>
 
@@ -202,11 +202,11 @@
                 </div>
 
                 <div class="tab-pane fade" id="vertical-theme" role="tabpanel" aria-labelledby="pill-theme" aria-expanded="false">
-                  <form action="{{route('setting-theme.update', auth::id())}}" method="post">
+                  <form action="{{route('setting-theme-email.update', auth::id())}}" method="post">
                     @csrf
                     @method('PUT')
                       <div class="row">
-                        <h5 class="m-1">Theme Dark</h5>
+                        <h5 class="m-1">Theme Dark <i class=" {{auth::user()->theme == 1 ? 'fa fa-check' : ''}} " style="color: chartreuse"></i> </h5>
                         <div class="col-12 mb-1">
                             <div class="custom-control custom-switch custom-control-inline">
                                 <input type="checkbox" class="custom-control-input" name="theme" {{auth::user()->theme == 1 ? 'checked' : ''}} value="1" id="theme">
@@ -214,6 +214,16 @@
                                 <span class="switch-label w-100">Aktifkan Jika Ingin Menggunakan Theme Dark</span>
                             </div>
                         </div>
+
+                        <h5 class="m-1">Email Notification</h5>
+                        <div class="col-12 mb-1">
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" name="email_set" {{auth::user()->email_set == 1 ? 'checked' : ''}} value="1" id="email_set">
+                                <label class="custom-control-label mr-1" for="email_set"></label>
+                                <span class="switch-label w-100">Aktifkan Jika Ingin Menggunakan Email Notifications</span>
+                            </div>
+                        </div>
+
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-start">
                           <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
                               changes</button>

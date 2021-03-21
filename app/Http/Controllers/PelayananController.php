@@ -65,7 +65,6 @@ class PelayananController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->auth == "Karyawan") {
-          try {
             $request->validate([
             'status_payment'  => 'required',
             'customer'        => 'required',
@@ -99,7 +98,7 @@ class PelayananController extends Controller
             $order->tgl             = Carbon::now()->day;
             $order->bulan           = Carbon::now()->month;
             $order->tahun           = Carbon::now()->year;
-            dd($order);
+            // dd($order);
 
             if ($order->save()) {
               // Set to notification table
@@ -107,28 +106,26 @@ class PelayananController extends Controller
                 'transaction_id' => $order->id
               ]);
 
-              // Menyiapkan data Email
-              $email = $order->email_customer;
-              $data = array(
-                  'invoice' => $order->invoice,
-                  'customer' => $order->customer,
-                  'tgl_transaksi' => $order->tgl_transaksi,
-              );
+              if (auth::user()->email_set == 1) {
+                // Menyiapkan data Email
+                $email = $order->email_customer;
+                $data = array(
+                    'invoice' => $order->invoice,
+                    'customer' => $order->customer,
+                    'tgl_transaksi' => $order->tgl_transaksi,
+                );
 
-              // Kirim Email
-              Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
-              $mail->to($email,'no-replay')
-                      ->subject("E-Laundry - Nomor Invoice");
-              $mail->from('laundri.dev@gmail.com');
-              });
+                // Kirim Email
+                Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
+                $mail->to($email,'no-replay')
+                        ->subject("E-Laundry - Nomor Invoice");
+                $mail->from('laundri.dev@gmail.com');
+                });
+              }
 
               Session::flash('success','Order Berhasil Ditambah !');
               return redirect('pelayanan');
             }
-          } catch (\Throwable $th) {
-            Session::flash('error','SMTP MAIL BELUM DI SETTING !');
-            return redirect('pelayanan');
-          }
 
 
         } else {
@@ -318,31 +315,33 @@ class PelayananController extends Controller
     public function ubahstatusorder(Request $request)
     {
         if (Auth::user()->auth == "Karyawan") {
-            try {
-                $statusorder = transaksi::find($request->id);
-                $statusorder->update([
-                    'status_order' => $request->status_order,
-                ]);
-                if ($statusorder->status_order == 'Done') {
-                    // Menyiapkan data
-                    $email = $statusorder->email_customer;
-                    $data = array(
-                        'invoice' => $statusorder->invoice,
-                        'customer' => $statusorder->customer,
-                        'tgl_transaksi' => $statusorder->tgl_transaksi,
-                    );
 
-                    // Kirim Email
-                    Mail::send('karyawan.email.selesai', $data, function($mail) use ($email, $data){
-                    $mail->to($email,'no-replay')
-                            ->subject("E-Laundry - Laundry Selesai");
-                    $mail->from('laundri.dev@gmail.com');
-                    });
-                  Session::flash('success','Status Laundry Berhasil Diubah !');
-                }
-            } catch (\Throwable $th) {
-                Session::flash('error','SMTP MAIL BELUM DI SETTING !');
+          $statusorder = transaksi::find($request->id);
+          $statusorder->update([
+              'status_order' => $request->status_order,
+          ]);
+          if ($statusorder->status_order == 'Done') {
+
+            // Cek email notif
+            if (auth::user()->email_set == 1) {
+              // Menyiapkan data
+              $email = $statusorder->email_customer;
+              $data = array(
+                  'invoice' => $statusorder->invoice,
+                  'customer' => $statusorder->customer,
+                  'tgl_transaksi' => $statusorder->tgl_transaksi,
+              );
+
+              // Kirim Email
+              Mail::send('karyawan.email.selesai', $data, function($mail) use ($email, $data){
+              $mail->to($email,'no-replay')
+                      ->subject("E-Laundry - Laundry Selesai");
+              $mail->from('laundri.dev@gmail.com');
+              });
             }
+
+            Session::flash('success','Status Laundry Berhasil Diubah !');
+          }
         } else {
             return redirect('/home');
         }
@@ -371,33 +370,34 @@ class PelayananController extends Controller
     public function ubahstatusambil(Request $request)
     {
         if (Auth::user()->auth == "Karyawan") {
-          try {
-            $statusbayar = transaksi::find($request->id);
-            $statusbayar->update([
-                'tgl_ambil' => Carbon::today(),
-                'status_order' => 'Delivery'
-            ]);
-            if ($statusbayar->status_order == 'Delivery') {
-              // Menyiapkan data
-              $email = $statusbayar->email_customer;
-              $data = array(
-                  'invoice' => $statusbayar->invoice,
-                  'customer' => $statusbayar->customer,
-                  'tgl_transaksi' => $statusbayar->tgl_transaksi,
-                  'tgl_ambil' => $statusbayar->tgl_ambil,
-              );
 
-              // Kirim Email
-              Mail::send('karyawan.email.diambil', $data, function($mail) use ($email, $data){
-              $mail->to($email,'no-replay')
-                      ->subject("E-Laundry - Laundry Sudah Diambil");
-              $mail->from('laundri.dev@gmail.com');
-              });
-              Session::flash('success','Status Laundry Berhasi Diubah !');
-            }
-          } catch (\Throwable $th) {
-              Session::flash('error','SMTP MAIL BELUM DI SETTING !');
+          $statusbayar = transaksi::find($request->id);
+          $statusbayar->update([
+              'tgl_ambil' => Carbon::today(),
+              'status_order' => 'Delivery'
+          ]);
+          if ($statusbayar->status_order == 'Delivery') {
+              // Cek email notif
+              if (auth::user()->email_set == 1) {
+                // Menyiapkan data
+                $email = $statusbayar->email_customer;
+                $data = array(
+                    'invoice' => $statusbayar->invoice,
+                    'customer' => $statusbayar->customer,
+                    'tgl_transaksi' => $statusbayar->tgl_transaksi,
+                    'tgl_ambil' => $statusbayar->tgl_ambil,
+                );
+
+                // Kirim Email
+                Mail::send('karyawan.email.diambil', $data, function($mail) use ($email, $data){
+                $mail->to($email,'no-replay')
+                        ->subject("E-Laundry - Laundry Sudah Diambil");
+                $mail->from('laundri.dev@gmail.com');
+                });
+              }
+            Session::flash('success','Status Laundry Berhasi Diubah !');
           }
+
         } else {
           return redirect('/home');
         }

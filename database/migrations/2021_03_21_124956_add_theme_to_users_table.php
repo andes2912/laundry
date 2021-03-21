@@ -15,6 +15,7 @@ class AddThemeToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
           $table->enum('theme',[0,1])->default(0)->after('no_telp');
+          $table->enum('email_set',[0,1])->default(0)->after('no_telp');
         });
     }
 
@@ -27,6 +28,7 @@ class AddThemeToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
           $table->dropColumn('theme');
+          $table->dropColumn('email_set');
         });
     }
 }

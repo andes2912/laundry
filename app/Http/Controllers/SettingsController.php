@@ -57,19 +57,34 @@ class SettingsController extends Controller
     }
   }
 
-  // Check Setting Theme
-  public function set_theme(Request $request)
+  // Check Setting Theme & Email
+  public function set_theme_email(Request $request)
   {
     $id = auth::id();
-    $set_theme = User::findOrFail($id);
-    if ($set_theme->theme == 1) {
-    $set_theme->theme = 0;
-    } else {
-      $set_theme->theme = $request->theme;
-    }
-    $set_theme->save();
+    $user = User::all();
 
-    if ($set_theme) {
+    $set_theme_email = User::findOrFail($id);
+    if ($request->theme == NULL) {
+      $set_theme_email->theme = '0';
+    } else {
+      $set_theme_email->theme = $request->theme;
+    }
+
+    if ($request->email_set == NULL) {
+      $set_theme_email->email_set = '0';
+    } else {
+      $set_theme_email->email_set = $request->email_set;
+    }
+
+    $set_theme_email->save();
+
+    if ($set_theme_email) {
+      foreach ($user as $users) {
+        $users->email_set = $set_theme_email->email_set;
+      }
+
+      $users->save();
+
       Session::flash('success','Setting Berhasil Disimpan !');
       return back();
     }

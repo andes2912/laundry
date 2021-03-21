@@ -60,7 +60,7 @@ Route::resource('admin','AdminController');
     // Setting
     Route::get('settings','SettingsController@setting');
     Route::put('proses-setting-page/{id}','SettingsController@proses_set_page')->name('seting-page.update');
-    Route::put('set-theme/{id}','SettingsController@set_theme')->name('setting-theme.update');
+    Route::put('set-theme-email/{id}','SettingsController@set_theme_email')->name('setting-theme-email.update');
 
     // Profile
     Route::get('profile-admin/{id}','AdminController@profile');
