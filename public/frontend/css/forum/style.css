@@ -311,6 +311,7 @@ a:focus {
     right: 0;
     bottom: 0;
     overflow: hidden;
+    height: 300px !important;
 }
 .has-bg .bg-cover:before {
     content: '';
@@ -380,7 +381,8 @@ a:focus {
 /* 5.1 Panel Forum Setting */
 
 .panel.panel-forum {
-    border: 2px solid #e2e7eb;
+    border: 1px solid #e2e7eb;
+    box-shadow: 10px ghostwhite !important;
 }
 .panel.panel-forum .panel-heading {
     background: #e2e7eb;
@@ -519,118 +521,6 @@ a:focus {
     color: #999;
     margin-bottom: 2px;
 }
-
-
-/* 5.4 Forum Threads List Setting */
-
-.threads-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    font-size: 11px;
-}
-.threads-list > li:before,
-.threads-list > li:after {
-    content: '';
-    display: table;
-    clear: both;
-}
-.threads-list > li {
-    margin: 0 15px;
-    padding: 15px 0;
-}
-.threads-list > li + li {
-    border-top: 2px solid #e2e7eb;
-}
-.threads-list > li .title {
-    font-size: 12px;
-    margin: 0 0 3px;
-    line-height: 16px;
-    font-weight: 600;
-}
-
-
-/* 5.5 Forum Detail List Setting */
-
-.forum-list.forum-detail-list {
-    border: none;
-    margin-bottom: 20px;
-}
-.forum-list.forum-detail-list > li {
-    padding: 0;
-}
-.forum-list.forum-detail-list > li + li {
-    border: none;
-    margin-top: 20px;
-}
-.forum-list.forum-detail-list .media img {
-    margin-bottom: 10px;
-}
-.forum-list.forum-detail-list .media .label {
-    font-size: 12px;
-    display: block;
-    padding: 3px 6px;
-}
-.forum-list.forum-detail-list .info-container {
-    margin-left: 80px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    border: 2px solid #e2e7eb;
-    padding: 15px 20px;
-    background: #f3f5f7;
-    position: relative;
-}
-.forum-list.forum-detail-list .info-container:before,
-.forum-list.forum-detail-list .info-container:after {
-    content: '';
-    position: absolute;
-    left: -15.5px;
-    top: 15px;
-    border: 7px solid transparent;
-    border-right-color: #e2e7eb;
-}
-.forum-list.forum-detail-list .info-container:after {
-    left: -12.5px;
-    border-right-color: #f3f5f7;
-}
-.forum-list.forum-detail-list .info-container > div {
-    float: none;
-}
-.forum-list.forum-detail-list .post-user {
-    font-size: 15px;
-    margin-bottom: 15px;
-}
-.forum-list.forum-detail-list .post-user small {
-    font-weight: bold;
-    color: #9fa2a5;
-    font-size: 16px;
-    margin-left: 5px;
-}
-.forum-list.forum-detail-list .post-content {
-    font-size: 14px;
-    line-height: 23px;
-    color: #242a30;
-    margin-bottom: 15px;
-}
-.forum-list.forum-detail-list .post-content pre {
-    background: #d6dbdf;
-    border: none;
-    margin-bottom: 23px;
-}
-.forum-list.forum-detail-list .post-time {
-    color: #a7aaac;
-}
-.comment-banner-msg {
-    border: 2px solid #e2e7eb;
-    padding: 15px 20px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 
 
 /* -------------------------------

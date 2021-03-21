@@ -44,7 +44,9 @@
     <!-- begin content -->
     <div class="content">
         <!-- begin container -->
-        @yield('content')
+        <div class="container-fluid">
+          @yield('content')
+        </div>
         <!-- end container -->
     </div>
     <!-- end content -->
@@ -55,7 +57,7 @@
 
     <!-- begin #footer-copyright -->
     <div class="footer-copyright">
-        <div class="container-fluid">
+        <div class="container">
             &copy; <?php echo date("Y") ?> Build With <i class="fa fa-heart" style="color:red"></i> - <a href="https://www.andridesmana.pw" target="_blank" style="text-decoration:none">Andri Desmana</a>
         </div>
     </div>

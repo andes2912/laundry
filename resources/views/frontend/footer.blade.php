@@ -1,6 +1,6 @@
 <div id="footer" class="footer">
     <!-- begin container -->
-    <div class="container-fluid">
+    <div class="container">
         <!-- begin row -->
         <div class="row">
             <!-- begin col-4 -->
@@ -21,7 +21,17 @@
                 <div class="section-container">
                     <h4>Ketentuan</h4>
                     <ul class="latest-post">
+                      <li>
+                        <a href="">FAQ</a>
+                      </li>
 
+                      <li>
+                        <a href="">Join Laundry</a>
+                      </li>
+
+                      <li>
+                        <a href="">Investasi</a>
+                      </li>
                     </ul>
                 </div>
                 <!-- end section-container -->
