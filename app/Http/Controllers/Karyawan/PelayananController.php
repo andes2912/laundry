@@ -70,6 +70,7 @@ class PelayananController extends Controller
             'status_payment'  => 'required',
             'customer'        => 'required',
             'email_customer'  => 'required',
+            'kg'              => 'required|regex:/^[0-9.]+$/',
             'hari'            => 'required',
             'harga'           => 'required',
             ]);

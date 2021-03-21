@@ -7,7 +7,7 @@
             <h4 class="card-title"> Data Transaksi
                <div class="row">
                     <div class="col-4">
-                        <select name="id_karyawan" id="id_karyawan" class="form-control">
+                        <select name="user_id" id="user_id" class="form-control">
                             <option value="0">--Filter--</option>
                                 @foreach ($filter as $item)
                                     <option value="{{$item->id}}">{{$item->name}}</option>
@@ -116,8 +116,8 @@ $(document).ready(function() {
 });
 
 $("#filter").click(function(){
-    var id_karyawan  = $("#id_karyawan").val();
-    $.get('filter-transaksi',{'_token': $('meta[name=csrf-token]').attr('content'),id_karyawan:id_karyawan}, function(resp){
+    var user_id  = $("#user_id").val();
+    $.get('filter-transaksi',{'_token': $('meta[name=csrf-token]').attr('content'),user_id:user_id}, function(resp){
     $("#refresh_body").html(resp);
     });
 });
