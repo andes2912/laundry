@@ -11,7 +11,7 @@
                 </div>
                 <div class="avatar bg-rgba-primary p-50 m-0">
                     <div class="avatar-content">
-                        <i class="feather icon-cpu text-primary font-medium-5"></i>
+                        <i class="feather icon-users text-primary font-medium-5"></i>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="avatar bg-rgba-success p-50 m-0">
                     <div class="avatar-content">
-                        <i class="feather icon-server text-success font-medium-5"></i>
+                        <i class="feather icon-box text-success font-medium-5"></i>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="avatar bg-rgba-danger p-50 m-0">
                     <div class="avatar-content">
-                        <i class="feather icon-activity text-danger font-medium-5"></i>
+                        <i class="feather icon-check text-danger font-medium-5"></i>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="avatar bg-rgba-warning p-50 m-0">
                     <div class="avatar-content">
-                        <i class="feather icon-alert-octagon text-warning font-medium-5"></i>
+                        <i class="feather icon-check-square text-warning font-medium-5"></i>
                     </div>
                 </div>
             </div>
@@ -64,19 +64,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-6 col-xl-6 col-12">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <h4 class="card-title">Data Per-bulan</h4>
-            </div>
-            <div class="card-content">
-                <div class="card-body pb-0">
-                    <div id="data-bulan"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-xl-6 col-12">
+    <div class="col-lg-7 col-xl-7 col-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h4 class="card-title">Data Per-hari</h4>
@@ -84,6 +72,19 @@
             <div class="card-content">
                 <div class="card-body pb-0">
                     <div id="data-hari"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5 col-xl-5 col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h4 class="card-title">Data Per-bulan</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body pb-0">
+                    <div id="data-bulan"></div>
                 </div>
             </div>
         </div>

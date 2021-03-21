@@ -95,3 +95,6 @@ Route::resource('pelayanan','PelayananController');
     Route::put('profile-karyawan/update/{id}','ProfileController@karyawanProfileSave');
     Route::get('reset-password','ProfileController@reset_password');
 
+    // Setting
+    Route::get('karyawa/setting','Karyawan\SettingsController@setting');
+    Route::put('proses-setting-karyawan/{id}','Karyawan\SettingsController@proses_setting_karyawan')->name('proses-setting-karyawan.update');

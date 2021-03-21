@@ -223,6 +223,9 @@
                                 <span class="switch-label w-100">Aktifkan Jika Ingin Menggunakan Email Notifications</span>
                             </div>
                         </div>
+                        @if (auth::user()->email_set == 1)
+                          <small class="m-1 alert alert-danger">Pastikan Sudah mengatur setting mail driver pada file .env</small>
+                        @endif
 
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-start">
                           <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
