@@ -2,7 +2,6 @@
 @section('title','Admin - Data Finance')
 @section('header','Data Finance')
 @section('content')
-
 <div class="row">
     <div class="col-lg-4 col-12">
         <div class="card">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{User,customer,transaksi,harga};
+use App\Models\{User,customer,transaksi,harga,LaundrySetting};
 use Auth;
 use Rupiah;
 use DB;
@@ -428,29 +428,47 @@ class AdminController extends Controller
             // Uang yg di dapat by tahunan
             $tahun = transaksi::where('status_payment','Success')->where('tahun', Carbon::now()->year)->sum('harga_akhir');
 
-            $tTahun = 200; //Target tahunan
-            $tBulan = 20; //Target Bulanan
-            $tHari  = 1; //Target Harian
+            $tTahun = LaundrySetting::first(); //Target tahunan
+            $tBulan = LaundrySetting::first(); //Target Bulanan
+            $tHari  = LaundrySetting::first(); //Target Harian
 
             $thn = transaksi::where('status_payment','Success')->where('tahun', Carbon::now()->year)->count();
             $bln = transaksi::where('status_payment','Success')->where('bulan', Carbon::now()->month)->where('tahun', Carbon::now()->year)->count();
             $hri = transaksi::where('status_payment','Success')->where('tgl', Carbon::now()->day)->where('bulan', Carbon::now()->month)->where('tahun', Carbon::now()->year)->count();
 
             // Ambil data persen by year
-            $year = ($tTahun - $thn) * 100;
-            $hy = $year * 100 / $tTahun;
+            $hy = NULL;
+            $year = ($tTahun->target_year - $thn) * 100;
+            if ($tTahun->target_year == 0) {
+              $hy = 0;
+            } else {
+              $hy = $year * 100 / $tTahun->target_year;
+            }
+
             $hys = $hy / 100;
             $ny = 100 - $hys;
 
             // Ambil data persen by month
-            $month = ($tBulan - $bln) * 100;
-            $hm = $month * 100 / $tBulan;
+            $hm = NULL;
+            $month = ($tBulan->target_month - $bln) * 100;
+
+            if ($tBulan->target_month == 0) {
+              $hm = 0;
+            } else {
+              $hm = $month * 100 / $tBulan->target_month;
+            }
             $hms = $hm / 100;
             $nm = 100 - $hms;
 
             // Ambil data persen by day
-            $day = ($tHari - $hri) * 100;
-            $hd = $day * 100 / $tHari;
+            $hd = null;
+            $day = ($tHari->target_day - $hri) * 100;
+            if ($tHari->target_day == 0) {
+              $hd= 0;
+            } else {
+            $hd = $day * 100 / $tHari->target_day;
+
+            }
             $hds = $hd / 100;
             $nd = 100 - $hds;
 

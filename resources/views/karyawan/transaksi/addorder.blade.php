@@ -142,7 +142,7 @@
     @else
         <div class="card">
             <div class="col text-center">
-                <h2>Data Harga Kosong !</h2>
+                <h2>Data Harga Kosong / Tidak Aktif !</h2>
                 <h4>Mohon hubungi Administrator :)</h4>
             </div>
         </div>

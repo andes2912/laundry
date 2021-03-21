@@ -61,39 +61,40 @@ Route::resource('admin','AdminController');
     Route::get('settings','SettingsController@setting');
     Route::put('proses-setting-page/{id}','SettingsController@proses_set_page')->name('seting-page.update');
     Route::put('set-theme-email/{id}','SettingsController@set_theme_email')->name('setting-theme-email.update');
+    Route::put('set-target-laundry/{id}','SettingsController@set_target_laundry')->name('set-target.update');
 
     // Profile
     Route::get('profile-admin/{id}','AdminController@profile');
     Route::get('profile-admin-edit','AdminController@edit_profile');
 
 // Modul Karyawan
-Route::resource('pelayanan','PelayananController');
+Route::resource('pelayanan','Karyawan\PelayananController');
     // Transaksi
-    Route::get('add-order','PelayananController@addorders');
-    Route::get('ubah-status-order','PelayananController@ubahstatusorder');
-    Route::get('ubah-status-bayar','PelayananController@ubahstatusbayar');
-    Route::get('ubah-status-ambil','PelayananController@ubahstatusambil');
+    Route::get('add-order','Karyawan\PelayananController@addorders');
+    Route::get('ubah-status-order','Karyawan\PelayananController@ubahstatusorder');
+    Route::get('ubah-status-bayar','Karyawan\PelayananController@ubahstatusbayar');
+    Route::get('ubah-status-ambil','Karyawan\PelayananController@ubahstatusambil');
 
     // Customer
-    Route::get('list-customer','PelayananController@listcs');
-    Route::get('list-customer-add','PelayananController@listcsadd');
-    Route::post('list-costomer-store','PelayananController@addcs');
+    Route::get('list-customer','Karyawan\PelayananController@listcs');
+    Route::get('list-customer-add','Karyawan\PelayananController@listcsadd');
+    Route::post('list-costomer-store','Karyawan\PelayananController@addcs');
 
     // Filter
-    Route::get('listharga','PelayananController@listharga');
-    Route::get('listhari','PelayananController@listhari');
-    Route::get('get-customer','PelayananController@getcustomer');
-    Route::get('get-email-customer','PelayananController@getemailcustomer');
+    Route::get('listharga','Karyawan\PelayananController@listharga');
+    Route::get('listhari','Karyawan\PelayananController@listhari');
+    Route::get('get-customer','Karyawan\PelayananController@getcustomer');
+    Route::get('get-email-customer','Karyawan\PelayananController@getemailcustomer');
 
     // Laporan
-    Route::get('invoice-kar/{id}','PelayananController@invoicekar');
-    Route::get('cetak-invoice/{id}/print','PelayananController@cetakinvoice');
+    Route::get('invoice-kar/{id}','Karyawan\PelayananController@invoicekar');
+    Route::get('cetak-invoice/{id}/print','Karyawan\PelayananController@cetakinvoice');
 
     // Profile
-    Route::get('profile-karyawan/{id}','ProfileController@karyawanProfile');
-    Route::get('profile-karyawan/edit/{id}','ProfileController@karyawanProfileEdit');
-    Route::put('profile-karyawan/update/{id}','ProfileController@karyawanProfileSave');
-    Route::get('reset-password','ProfileController@reset_password');
+    Route::get('profile-karyawan/{id}','Karyawan\ProfileController@karyawanProfile');
+    Route::get('profile-karyawan/edit/{id}','Karyawan\ProfileController@karyawanProfileEdit');
+    Route::put('profile-karyawan/update/{id}','Karyawan\ProfileController@karyawanProfileSave');
+    Route::get('reset-password','Karyawan\ProfileController@reset_password');
 
     // Setting
     Route::get('karyawa/setting','Karyawan\SettingsController@setting');
