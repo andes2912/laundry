@@ -142,12 +142,12 @@ $(document).on('click','#simpan_status', function(){
     });
 });
 
- // Ubah Status Menjadi Diambil
- $(document).on('click','#ambil', function () {
-    var id = $(this).attr('data-id-ambil');
-    $.get(' {{Url("ubah-status-ambil")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-      location.reload();
-    });
+// Ubah Status Menjadi Diambil
+$(document).on('click','#ambil', function () {
+  var id = $(this).attr('data-id-ambil');
+  $.get(' {{Url("ubah-status-ambil")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
+    location.reload();
+  });
 });
 
     // DATATABLE

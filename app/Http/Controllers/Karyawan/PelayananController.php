@@ -427,7 +427,7 @@ class PelayananController extends Controller
           'alamat'              => 'required',
           'kelamin'             => 'required',
           'no_telp'             => 'required|unique:customers',
-          'user_id'         => 'rrquired',
+          'user_id'             => 'required',
         ]);
 
         $addplg = New customer();

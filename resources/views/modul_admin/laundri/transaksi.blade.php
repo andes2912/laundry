@@ -58,7 +58,7 @@
                             </td>
                             <td>{{$item->jenis}}</td>
                             <td>
-                                    <p style="color:black">{{Rupiah::getRupiah($item->harga_akhir)}}</p>
+                                    <p>{{Rupiah::getRupiah($item->harga_akhir)}}</p>
                             </td>
                             <td align="center">
                                 @if ($item->status_order == "Delivery")
