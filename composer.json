@@ -41,7 +41,11 @@
         "Database\\Seeders\\": "database/seeders/"
         },
         "files":  [
-            "app/Helpers/Rupiah.php"
+            "app/Helpers/Model.php"
+        ],
+        "classmap": [
+            "database/seeders",
+            "database/factories"
         ]
     },
     "autoload-dev": {
