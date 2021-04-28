@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-  @include('frontend.content')
+    @include('frontend.content')
 @endsection
 
 @section('footer')

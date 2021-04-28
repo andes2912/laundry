@@ -45,7 +45,9 @@
     <div class="content">
         <!-- begin container -->
         <div class="container-fluid">
-          @yield('content')
+          <div id="app">
+            @yield('content')
+          </div>
         </div>
         <!-- end container -->
     </div>
@@ -63,6 +65,7 @@
     </div>
     <!-- end #footer-copyright -->
 	<!-- ================== BEGIN BASE JS ================== -->
+  <script src="{{ asset('js/app.js') }}" ></script>
 	<script src="{{asset('frontend/plugins/jquery/jquery-3.2.1.min.js')}}"></script>
 	<script src="{{asset('frontend/plugins/bootstrap3/js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('frontend/plugins/js-cookie/js.cookie.js')}}"></script>

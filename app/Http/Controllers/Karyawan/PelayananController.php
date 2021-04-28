@@ -70,6 +70,7 @@ class PelayananController extends Controller
             'status_payment'  => 'required',
             'customer'        => 'required',
             'email_customer'  => 'required',
+            'kg'              => 'required|regex:/^[0-9.]+$/',
             'hari'            => 'required',
             'harga'           => 'required',
             ]);
@@ -426,7 +427,7 @@ class PelayananController extends Controller
           'alamat'              => 'required',
           'kelamin'             => 'required',
           'no_telp'             => 'required|unique:customers',
-          'user_id'         => 'rrquired',
+          'user_id'             => 'required',
         ]);
 
         $addplg = New customer();

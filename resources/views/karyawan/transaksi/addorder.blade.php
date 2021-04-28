@@ -56,7 +56,7 @@
                   <div class="col-md-3">
                     <div class="form-group has-success">
                         <label class="control-label">Berat Pakaian</label>
-                        <input type="number" class="form-control form-control-danger @error('kg') is-invalid @enderror" name="kg" placeholder="Berat Pakaian" autocomplete="off" required>
+                        <input type="text" class="form-control form-control-danger @error('kg') is-invalid @enderror" name="kg" placeholder="Berat Pakaian" autocomplete="off" required>
                         @error('kg')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
