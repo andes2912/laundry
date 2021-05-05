@@ -427,7 +427,6 @@ class PelayananController extends Controller
           'alamat'              => 'required',
           'kelamin'             => 'required',
           'no_telp'             => 'required|unique:customers',
-          'user_id'             => 'required',
         ]);
 
         $addplg = New customer();
@@ -436,7 +435,7 @@ class PelayananController extends Controller
         $addplg->alamat = $request->alamat;
         $addplg->kelamin = $request->kelamin;
         $addplg->no_telp = $request->no_telp;
-        $addplg->user_id = auth::user()->id;
+        $addplg->user_id = Auth::user()->id;
         $addplg->save();
 
         Session::flash('success','Customer Berhasil Ditambah !');
