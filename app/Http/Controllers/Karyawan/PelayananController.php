@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{transaksi,customer,harga,Notification};
+use App\Models\{transaksi,customer,harga};
 use Auth;
 use PDF;
 use Mail;
@@ -37,8 +37,6 @@ class PelayananController extends Controller
     {
       $request->validate([
         'status_payment'  => 'required',
-        'customer'        => 'required',
-        'email_customer'  => 'required',
         'kg'              => 'required|regex:/^[0-9.]+$/',
         'hari'            => 'required',
         'harga'           => 'required',
@@ -51,8 +49,8 @@ class PelayananController extends Controller
       $order->harga_id        = $request->harga_id;
       $order->customer_id     = $request->customer_id;
       $order->user_id         = Auth::user()->id;
-      $order->customer        = $request->customer;
-      $order->email_customer  = $request->email_customer;
+      $order->customer        = namaCustomer($order->customer_id);
+      $order->email_customer  = email_customer($order->customer_id);
       $order->hari            = $request->hari;
       $order->kg              = $request->kg;
       $order->harga           = $request->harga;
@@ -69,14 +67,9 @@ class PelayananController extends Controller
       $order->tgl             = Carbon::now()->day;
       $order->bulan           = Carbon::now()->month;
       $order->tahun           = Carbon::now()->year;
-      // dd($order);
+      $order->save();
 
-      if ($order->save()) {
-        // Set to notification table
-        Notification::create([
-          'transaction_id' => $order->id
-        ]);
-
+      if ($order) {
         if (auth::user()->email_set == 1) {
           // Menyiapkan data Email
           $email = $order->email_customer;
@@ -163,48 +156,6 @@ class PelayananController extends Controller
                     }'
                     </select>
                     </div>
-                    </div>';
-        return $select;
-    }
-
-    // Get nama customer
-    public function getcustomer(Request $request)
-    {
-      $customer = customer::select('id','nama')
-        ->where('id',$request->customer_id)
-        ->where('user_id',auth::user()->id)
-        ->get();
-
-        $select = '';
-        $select .= '
-                <div class="form-group has-success" hidden>
-                <select class="form-control" name="customer">
-                ';
-                foreach ($customer as $item) {
-        $select .= '<option value="'.$item->nama.'">'.$item->nama.'</option>';
-                    }'
-                    </select>
-                    </div>';
-        return $select;
-    }
-
-    // Get email customer
-    public function getemailcustomer(Request $request)
-    {
-      $customer = customer::select('id','email_customer')
-        ->where('id',$request->customer_id)
-        ->where('user_id',auth::user()->id)
-        ->get();
-
-        $select = '';
-        $select .= '
-                <div class="form-group has-success" hidden>
-                <select class="form-control" name="email_customer">
-                ';
-                foreach ($customer as $item) {
-        $select .= '<option value="'.$item->email_customer.'">'.$item->email_customer.'</option>';
-                    }'
-                    </select>
                     </div>';
         return $select;
     }

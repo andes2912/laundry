@@ -28,8 +28,8 @@
                           <label class="control-label">Nama Customer</label>
                           <select name="customer_id" id="customer_id" class="form-control select2 @error('customer_id') is-invalid @enderror" required>
                               <option value="">-- Pilih Customer --</option>
-                              @foreach ($customer as $item)
-                                  <option value="{{$item->id}}">{{$item->nama}}</option>
+                              @foreach ($customer as $customers)
+                                  <option value="{{$customers->id}}">{{$customers->nama}}</option>
                               @endforeach
                           </select>
                           @error('customer_id')
@@ -51,8 +51,8 @@
                           @enderror
                       </div>
                   </div>
-                  <span id="select-customer"></span>
-                  <span id="select-email-customer"></span>
+                  {{-- <span id="select-customer"></span>
+                  <span id="select-email-customer"></span> --}}
                   <div class="col-md-3">
                     <div class="form-group has-success">
                         <label class="control-label">Berat Pakaian</label>
@@ -173,35 +173,6 @@
         $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
             $("#select-harga").html(resp);
         });
-    });
-
-    // Filter Customer
-    $(document).ready(function() {
-       var customer_id = $("#customer_id").val();
-            $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),customer_id:customer_id}, function(resp){
-            $("#select-customer").html(resp);
-        });
-    });
-
-    $(document).on('change', '#customer_id', function (e) {
-      var customer_id = $(this).val();
-      $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),customer_id:customer_id}, function(resp){
-        $("#select-customer").html(resp);
-      });
-    });
-
-    $(document).ready(function() {
-       var customer_id = $("#customer_id").val();
-            $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),customer_id:customer_id}, function(resp){
-            $("#select-email-customer").html(resp);
-        });
-    });
-
-    $(document).on('change', '#customer_id', function (e) {
-      var customer_id = $(this).val();
-      $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),customer_id:customer_id}, function(resp){
-        $("#select-email-customer").html(resp);
-      });
     });
 </script>
 @endsection

@@ -87,8 +87,6 @@ Route::middleware('auth')->group(function () {
     // Filter
     Route::get('listharga','Karyawan\PelayananController@listharga');
     Route::get('listhari','Karyawan\PelayananController@listhari');
-    Route::get('get-customer','Karyawan\PelayananController@getcustomer');
-    Route::get('get-email-customer','Karyawan\PelayananController@getemailcustomer');
 
     // Laporan
     Route::get('invoice-kar/{id}','Karyawan\PelayananController@invoicekar');
