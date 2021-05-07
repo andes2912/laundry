@@ -25,48 +25,48 @@ Route::middleware('auth')->group(function () {
 
   // Modul Admin
   Route::prefix('/')->middleware('role:Admin')->group(function () {
-    Route::resource('admin','AdminController');
+    Route::resource('admin','Admin\AdminController');
     // Pengguna
-    Route::get('adm','AdminController@adm');
-    Route::get('kry','AdminController@kry');
-    Route::get('kry-add','AdminController@addkry');
+    Route::get('adm','Admin\AdminController@adm');
+    Route::get('kry','Admin\AdminController@kry');
+    Route::get('kry-add','Admin\AdminController@addkry');
 
     // Customer
-    Route::get('customer','AdminController@customer');
-    Route::get('customer-add','AdminController@addcustomer');
-    Route::post('customer-store','AdminController@storecustomer');
-    Route::get('customer-edit/{id_customer}','AdminController@editcustomer');
-    Route::put('customer-update/{id_customer}','AdminController@updatecustomer');
-    Route::delete('customer-delete/{id_customer}','AdminController@deletecustomer');
-    Route::get('jml-transaksi','AdminController@jmlTransaksi');
+    Route::get('customer','Admin\AdminController@customer');
+    Route::get('customer-add','Admin\AdminController@addcustomer');
+    Route::post('customer-store','Admin\AdminController@storecustomer');
+    Route::get('customer-edit/{id_customer}','Admin\AdminController@editcustomer');
+    Route::put('customer-update/{id_customer}','Admin\AdminController@updatecustomer');
+    Route::delete('customer-delete/{id_customer}','Admin\AdminController@deletecustomer');
+    Route::get('jml-transaksi','Admin\AdminController@jmlTransaksi');
 
     // Data Laundri
-    Route::get('data-transaksi','AdminController@datatransaksi');
-    Route::get('data-harga','AdminController@dataharga');
-    Route::post('harga-store','AdminController@hargastore');
-    Route::get('edit-harga','AdminController@hargaedit');
+    Route::get('data-transaksi','Admin\AdminController@datatransaksi');
+    Route::get('data-harga','Admin\AdminController@dataharga');
+    Route::post('harga-store','Admin\AdminController@hargastore');
+    Route::get('edit-harga','Admin\AdminController@hargaedit');
 
     // Laporan
-    Route::get('invoice-customer/{id}','AdminController@invoice');
+    Route::get('invoice-customer/{id}','Admin\AdminController@invoice');
 
     // Finance
-    Route::get('data-finance','AdminController@finance');
+    Route::get('data-finance','Admin\AdminController@finance');
 
     // Notifikasi
-    Route::get('read-notification','AdminController@notif');
+    Route::get('read-notification','Admin\AdminController@notif');
 
     // Filter
-    Route::get('filter-transaksi','AdminController@filtertransaksi');
+    Route::get('filter-transaksi','Admin\AdminController@filtertransaksi');
 
     // Setting
-    Route::get('settings','SettingsController@setting');
-    Route::put('proses-setting-page/{id}','SettingsController@proses_set_page')->name('seting-page.update');
-    Route::put('set-theme-email/{id}','SettingsController@set_theme_email')->name('setting-theme-email.update');
-    Route::put('set-target-laundry/{id}','SettingsController@set_target_laundry')->name('set-target.update');
+    Route::get('settings','Admin\SettingsController@setting');
+    Route::put('proses-setting-page/{id}','Admin\SettingsController@proses_set_page')->name('seting-page.update');
+    Route::put('set-theme-email/{id}','Admin\SettingsController@set_theme_email')->name('setting-theme-email.update');
+    Route::put('set-target-laundry/{id}','Admin\SettingsController@set_target_laundry')->name('set-target.update');
 
     // Profile
-    Route::get('profile-admin/{id}','AdminController@profile');
-    Route::get('profile-admin-edit','AdminController@edit_profile');
+    Route::get('profile-admin/{id}','Admin\AdminController@profile');
+    Route::get('profile-admin-edit','Admin\AdminController@edit_profile');
   });
 
   // Modul Karyawan

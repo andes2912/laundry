@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{User,customer,transaksi,harga,LaundrySetting};
 use Auth;
@@ -14,58 +15,34 @@ use Carbon\carbon;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    private $user ;
-    function __construct(Request $request)
-    {
-        $this->middleware('auth');
-        $this->user = \Auth::user();
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Halaman admin
     public function adm()
     {
       $adm = User::where('auth','Admin')->get();
       return view('modul_admin.pengguna.admin', compact('adm'));
     }
 
+    // Hlaman karyawan
     public function kry()
     {
       $kry = User::where('auth','Karyawan')->get();
       return view('modul_admin.pengguna.kry', compact('kry'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Halaman create admin
     public function create()
     {
       return view('modul_admin.pengguna.addadm');
     }
 
+    // Halaman create karyawan
     public function addkry()
     {
        return view('modul_admin.pengguna.addkry');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
 
-    //  Add Karyawan
+    // Proses simpan Karyawan
     public function store(Request $request)
     {
       $request->validate([
@@ -96,40 +73,14 @@ class AdminController extends Controller
       }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Halman edit karyawan
     public function edit($id)
     {
       $edit = User::find($id);
-      if ($edit->auth == "Admin") {
-          return view('modul_admin.pengguna.editadm', compact('edit'));
-      } else {
-          return view('modul_admin.pengguna.editkry', compact('edit'));
-      }
+      return view('modul_admin.pengguna.editadm', compact('edit'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Proses edit karayawan
     public function update(Request $request, $id)
     {
       $adduser = User::find($id);
@@ -148,12 +99,7 @@ class AdminController extends Controller
       }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Proses hapus karyawan
     public function destroy($id)
     {
       $del = User::find($id);
@@ -238,6 +184,7 @@ class AdminController extends Controller
       return redirect('data-harga');
     }
 
+    // Proses edit harga
     public function hargaedit(Request $request)
     {
       $editharga = harga::find($request->id_harga);

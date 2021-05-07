@@ -15,23 +15,8 @@ use Session;
 class PelayananController extends Controller
 
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
-    private $user ;
-    function __construct(Request $request)
-    {
-        $this->middleware('auth');
-        $this->user = \Auth::user();
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Halaman list order masuk
     public function index()
     {
       $order = transaksi::with('harga')->where('user_id',auth::user()->id)
@@ -39,22 +24,15 @@ class PelayananController extends Controller
       return view('karyawan.transaksi.order', compact('order'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    // Halaman create order
     public function create()
     {
       return view('karyawan.transaksi.addorder');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+    // Proses simpan order
     public function store(Request $request)
     {
       $request->validate([
@@ -121,50 +99,6 @@ class PelayananController extends Controller
       }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     // Daftar Costomer
     public function listcs()
@@ -233,6 +167,7 @@ class PelayananController extends Controller
         return $select;
     }
 
+    // Get nama customer
     public function getcustomer(Request $request)
     {
       $customer = customer::select('id','nama')
@@ -253,6 +188,7 @@ class PelayananController extends Controller
         return $select;
     }
 
+    // Get email customer
     public function getemailcustomer(Request $request)
     {
       $customer = customer::select('id','email_customer')
@@ -396,9 +332,9 @@ class PelayananController extends Controller
       return view('karyawan.laporan.invoice', compact('invoice','data'));
     }
 
+    // Cetak invoice
     public function cetakinvoice(Request $request)
     {
-      //GET DATA BERDASARKAN ID
       $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
       ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
       ->where('transaksis.id', $request->id)
