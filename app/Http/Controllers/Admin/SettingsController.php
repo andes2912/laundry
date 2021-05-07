@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{PageSettings,User,LaundrySetting};
+use App\Models\{PageSettings,User,LaundrySetting,DataBank};
 use auth;
 use Session;
 
@@ -16,8 +16,9 @@ class SettingsController extends Controller
   {
     $setpage = PageSettings::first();
     $settarget = LaundrySetting::first();
+    $databank = DataBank::where('user_id',Auth::id())->get();
 
-    return view('modul_admin.setting.index', compact('setpage','settarget'));
+    return view('modul_admin.setting.index', compact('setpage','settarget','databank'));
   }
 
   // Proses setting page
@@ -98,4 +99,26 @@ class SettingsController extends Controller
     Session::flash('success','Target Berhasil Diupdate !');
     return back();
   }
+
+  // Simpan Bank
+  public function bank(Request $request)
+  {
+
+    $request->validate([
+      'nama_bank'   => 'required|unique:data_banks',
+      'no_rekening' => 'required|unique:data_banks',
+      'no_rekening' => 'required',
+    ]);
+
+    DataBank::create([
+      'nama_bank'     => $request->nama_bank,
+      'no_rekening'   => $request->no_rekening,
+      'nama_pemilik'  => $request->nama_pemilik,
+      'user_id'       => Auth::id(),
+    ]);
+
+    Session::flash('success','Bank Berhasil Ditambah !');
+    return back();
+  }
+
 }

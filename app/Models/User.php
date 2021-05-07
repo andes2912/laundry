@@ -37,4 +37,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    function bank()
+    {
+      return $this->hasOne(DataBank::class);
+    }
 }

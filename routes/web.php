@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::put('proses-setting-page/{id}','Admin\SettingsController@proses_set_page')->name('seting-page.update');
     Route::put('set-theme-email/{id}','Admin\SettingsController@set_theme_email')->name('setting-theme-email.update');
     Route::put('set-target-laundry/{id}','Admin\SettingsController@set_target_laundry')->name('set-target.update');
+    Route::post('add-bank','Admin\SettingsController@bank')->name('setting.bank');
 
     // Profile
     Route::get('profile-admin/{id}','Admin\AdminController@profile');

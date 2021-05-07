@@ -40,6 +40,13 @@
               </a>
           </li>
 
+          <li class="nav-item">
+              <a class="nav-link d-flex py-75" id="pill-bank" data-toggle="pill" href="#vertical-bank" aria-expanded="false">
+                  <i class="feather icon-credit-card mr-50 font-medium-3"></i>
+                  Data Bank
+              </a>
+          </li>
+
         </ul>
       </div>
       <!-- right content section -->
@@ -48,6 +55,7 @@
           <div class="card-content">
             <div class="card-body">
               <div class="tab-content">
+                {{-- Panel General --}}
                 <div role="tabpanel" class="tab-pane active" id="vertical-general" aria-labelledby="pill-general" aria-expanded="true">
                   <form action="{{route('seting-page.update', $setpage->id)}}" method="POST">
                     @csrf
@@ -142,6 +150,7 @@
                   </form>
                 </div>
 
+                {{-- Panel Notification --}}
                 <div class="tab-pane fade" id="vertical-notifications" role="tabpanel" aria-labelledby="pill-notifications" aria-expanded="false">
                   <form action="{{route('set-target.update', auth::user()->id)}}" method="post">
                     @csrf
@@ -182,6 +191,7 @@
                   </form>
                 </div>
 
+                {{-- Panel Theme --}}
                 <div class="tab-pane fade" id="vertical-theme" role="tabpanel" aria-labelledby="pill-theme" aria-expanded="false">
                   <form action="{{route('setting-theme-email.update', auth::id())}}" method="post">
                     @csrf
@@ -217,6 +227,62 @@
                   </form>
                 </div>
 
+                {{-- Panel Bank --}}
+                <div class="tab-pane fade" id="vertical-bank" role="tabpanel" aria-labelledby="pill-bank" aria-expanded="false">
+                  <form action="" method="post">
+                  @csrf
+                    <div class="row">
+                      @if (Auth::User()->bank == NULL)
+                        <div class="col-md-4">
+                          <a data-toggle="modal" data-target="#addpayment">
+                            <div class="card bg-primary">
+                              <div class="card-body">
+                                <div class="card-title text-white">
+                                  Tambah Akun Bank
+                                </div>
+                                <div class="text-center text-white">
+                                  <i class="feather icon-plus"></i>
+                                </div> <br>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      @else
+                        @foreach ($databank as $bank)
+                          <div class="col-md-4">
+                            <a data-toggle="modal" data-target="#editpayment">
+                              <div class="card bg-danger">
+                                <div class="card-body text-center">
+                                  <div class="card-title text-white">
+                                    {{$bank->nama_bank}}
+                                  </div>
+                                  <span class="text-white">{{$bank->no_rekening}}</span> <br>
+                                  <small class="text-white">{{$bank->nama_pemilik}}</small>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                        @endforeach
+
+                        <div class="col-md-4">
+                          <a data-toggle="modal" data-target="#addpayment">
+                            <div class="card bg-primary">
+                              <div class="card-body">
+                                <div class="card-title text-white">
+                                  Tambah Akun Bank
+                                </div>
+                                <div class="text-center text-white">
+                                  <i class="feather icon-plus"></i>
+                                </div> <br>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      @endif
+
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -224,5 +290,15 @@
       </div>
     </div>
   </section>
+  @include('modul_admin.setting.modal')
 </div>
+@endsection
+@section('scripts')
+<script>
+  @if (count($errors) > 0)
+    $(function() {
+      $('#addpayment').modal('show');
+    });
+  @endif
+</script>
 @endsection
