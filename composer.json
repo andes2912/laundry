@@ -14,7 +14,9 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "realrashid/sweet-alert": "^3.1"
+        "laravelcollective/html": "^6.2",
+        "realrashid/sweet-alert": "^3.1",
+        "spatie/laravel-permission": "^4.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

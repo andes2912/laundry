@@ -20,11 +20,12 @@ Auth::routes([
     'register' => false,
 ]);
 
+Route::middleware('auth')->group(function () {
+  Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-// Modul Admin
-Route::resource('admin','AdminController');
+  // Modul Admin
+  Route::prefix('/')->middleware('role:Admin')->group(function () {
+    Route::resource('admin','AdminController');
     // Pengguna
     Route::get('adm','AdminController@adm');
     Route::get('kry','AdminController@kry');
@@ -66,9 +67,11 @@ Route::resource('admin','AdminController');
     // Profile
     Route::get('profile-admin/{id}','AdminController@profile');
     Route::get('profile-admin-edit','AdminController@edit_profile');
+  });
 
-// Modul Karyawan
-Route::resource('pelayanan','Karyawan\PelayananController');
+  // Modul Karyawan
+  Route::prefix('/')->middleware('role:Karyawan')->group(function () {
+    Route::resource('pelayanan','Karyawan\PelayananController');
     // Transaksi
     Route::get('add-order','Karyawan\PelayananController@addorders');
     Route::get('ubah-status-order','Karyawan\PelayananController@ubahstatusorder');
@@ -97,5 +100,7 @@ Route::resource('pelayanan','Karyawan\PelayananController');
     Route::get('reset-password','Karyawan\ProfileController@reset_password');
 
     // Setting
-    Route::get('karyawa/setting','Karyawan\SettingsController@setting');
+    Route::get('karyawan/setting','Karyawan\SettingsController@setting');
     Route::put('proses-setting-karyawan/{id}','Karyawan\SettingsController@proses_setting_karyawan')->name('proses-setting-karyawan.update');
+  });
+});

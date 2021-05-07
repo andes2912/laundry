@@ -104,7 +104,7 @@
                             @else
                               <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
                               </a>
-                              <a class="dropdown-item" href="{{url('karyawa/setting' )}}"><i class="feather icon-settings"></i>Settings
+                              <a class="dropdown-item" href="{{url('karyawan/setting' )}}"><i class="feather icon-settings"></i>Settings
                               </a>
                             @endif
                             <div class="dropdown-divider"></div>

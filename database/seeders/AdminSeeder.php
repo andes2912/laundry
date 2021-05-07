@@ -2,7 +2,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use DB;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class AdminSeeder extends Seeder
 {
@@ -14,12 +15,15 @@ class AdminSeeder extends Seeder
     public function run()
     {
         // insert data ke table pegawai
-        DB::table('users')->insert([
+        $user = User::create([
         	'name' => 'Administrator',
         	'email' => 'admin@laundry.com',
         	'status' => 'Active',
           'auth' => 'Admin',
           'password' => bcrypt('123456')
         ]);
+
+        $role = Role::create(['name' => 'Admin']);
+        $user->assignRole('Admin');
     }
 }

@@ -22,39 +22,33 @@ class SettingsController extends Controller
   // Proses setting page
   public function proses_set_page(Request $request, $id)
   {
-    if (auth::check()) {
-      if (auth::user()->auth == 'Admin') {
-        $request->validate([
-          'judul'   => 'required|max:15'
-        ]);
+    $request->validate([
+      'judul'   => 'required|max:15'
+    ]);
 
-        $img_hero = $request->file('img_hero');
-        if ($img_hero) {
-            $img_heros = time()."_".$img_hero->getClientoriginalName();
-            // Folder Penyimpanan
-            $tujuan_upload = 'frontend/img/logo';
-            $img_hero->move($tujuan_upload, $img_heros);
-        }
+    $img_hero = $request->file('img_hero');
+    if ($img_hero) {
+        $img_heros = time()."_".$img_hero->getClientoriginalName();
+        // Folder Penyimpanan
+        $tujuan_upload = 'frontend/img/logo';
+        $img_hero->move($tujuan_upload, $img_heros);
+    }
 
-        $setpage = PageSettings::find($id);
-        $setpage->judul     = $request->judul;
-        $setpage->img_hero  = $img_hero;
-        $setpage->tentang   = $request->tentang;
-        $setpage->facebook  = $request->facebook;
-        $setpage->instagram = $request->instagram;
-        $setpage->twitter   = $request->twitter;
-        $setpage->whatsapp  = $request->whatsapp;
-        $setpage->no_telp   = $request->no_telp;
-        $setpage->email     = $request->email;
-        $setpage->save();
+    $setpage = PageSettings::find($id);
+    $setpage->judul     = $request->judul;
+    $setpage->img_hero  = $img_hero;
+    $setpage->tentang   = $request->tentang;
+    $setpage->facebook  = $request->facebook;
+    $setpage->instagram = $request->instagram;
+    $setpage->twitter   = $request->twitter;
+    $setpage->whatsapp  = $request->whatsapp;
+    $setpage->no_telp   = $request->no_telp;
+    $setpage->email     = $request->email;
+    $setpage->save();
 
-        if ($setpage) {
-          Session::flash('success','Setting Berhasil Disimpan !');
-          return back();
-        }
-      } else {
-        abort(403);
-      }
+    if ($setpage) {
+      Session::flash('success','Setting Berhasil Disimpan !');
+      return back();
     }
   }
 
@@ -94,17 +88,13 @@ class SettingsController extends Controller
   // Setting Laundry Target
   public function set_target_laundry(Request $request, $id)
   {
-    if (auth::check()) {
-      if (auth::user()->auth == 'Admin') {
-        $set_target = LaundrySetting::findOrFail($id);
-        $set_target->target_day = $request->target_day;
-        $set_target->target_month = $request->target_month;
-        $set_target->target_year = $request->target_year;
-        $set_target->save();
+    $set_target = LaundrySetting::findOrFail($id);
+    $set_target->target_day = $request->target_day;
+    $set_target->target_month = $request->target_month;
+    $set_target->target_year = $request->target_year;
+    $set_target->save();
 
-        Session::flash('success','Target Berhasil Diupdate !');
-        return back();
-      }
-    }
+    Session::flash('success','Target Berhasil Diupdate !');
+    return back();
   }
 }
