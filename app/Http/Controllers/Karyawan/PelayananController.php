@@ -36,10 +36,11 @@ class PelayananController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-        'status_payment'  => 'required',
-        'kg'              => 'required|regex:/^[0-9.]+$/',
-        'hari'            => 'required',
-        'harga'           => 'required',
+        'status_payment'    => 'required',
+        'kg'                => 'required|regex:/^[0-9.]+$/',
+        'hari'              => 'required',
+        'harga'             => 'required',
+        'jenis_pembayaran'  => 'required'
       ]);
 
       $order = new transaksi();
@@ -63,10 +64,10 @@ class PelayananController extends Controller
       } else {
         $order->harga_akhir    = $hitung;
       }
-
-      $order->tgl             = Carbon::now()->day;
-      $order->bulan           = Carbon::now()->month;
-      $order->tahun           = Carbon::now()->year;
+      $order->jenis_pembayaran  = $request->jenis_pembayaran;
+      $order->tgl               = Carbon::now()->day;
+      $order->bulan             = Carbon::now()->month;
+      $order->tahun             = Carbon::now()->year;
       $order->save();
 
       if ($order) {

@@ -85,6 +85,22 @@
               <div class="row">
 
                 <div class="col-md-3">
+                    <div class="form-group has-success">
+                        <label class="control-label">Jenis Pembayaran</label>
+                        <select class="form-control custom-select @error('jenis_pembayaran') is-invalid @enderror" name="jenis_pembayaran" required>
+                          <option value="">-- Pilih Jenis Pembayaran --</option>
+                          <option value="Tunai">Tunai</option>
+                          <option value="Transfer">Transfer</option>
+                        </select>
+                        @error('jenis_pembayaran')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
+                    </div>
+                  </div>
+
+                <div class="col-md-3">
                   <div class="orm-group has-success">
                       <label class="control-label">Pilih Pakaian</label>
                       <select id="id" name="harga_id" class="form-control select2 @error('harga_id') is-invalid @enderror" required>
