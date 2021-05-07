@@ -16,7 +16,7 @@ class FrontController extends Controller
     return view('frontend.index', compact('setpage'));
   }
 
-  //search
+  //Search
   public function search(Request $request)
   {
       $search = transaksi::where('invoice', $request->search_status);

@@ -118,28 +118,6 @@ class AdminController extends Controller
       return view('modul_admin.customer.index', compact('customer'));
     }
 
-    // Edit Customer
-    public function editcustomer($id)
-    {
-      $edit = customer::find($id);
-      return view('modul_admin.customer.edit', compact('edit'));
-    }
-
-    // Update Customer
-    public function updatecustomer(Request $request,$id)
-    {
-      $addplg =  customer::find($id);
-      $addplg->nama = $request->nama;
-      $addplg->alamat = $request->alamat;
-      $addplg->kelamin = $request->kelamin;
-      $addplg->no_telp = $request->no_telp;
-      $addplg->save();
-
-      alert()->success('Update Data Berhasil');
-      return redirect('customer');
-    }
-
-
     // Modul Data Laundri
     public function datatransaksi()
     {
@@ -216,22 +194,6 @@ class AdminController extends Controller
       ->orderBy('id','DESC')->first();
 
       return view('modul_admin.laporan.invoice', compact('invoice','data'));
-    }
-
-    // Notifikasi
-    public function notif(Request $request)
-    {
-      $notif = transaksi::find($request->id);
-      if (auth::user()->auth == "Admin") {
-          $notif->update([
-              'notif_admin' => 1
-          ]);
-      } else {
-          $notif->update([
-              'notif' => 1
-          ]);
-      }
-      return $notif;
     }
 
     // Hitung Jumlah Transaksi Keseluruhan

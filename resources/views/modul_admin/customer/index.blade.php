@@ -9,7 +9,7 @@
                 <h4 class="card-title"> Data Customer
                     {{-- <a href="{{url('customer-add')}}" class="btn btn-primary">Tambah</a> --}}
                 </h4>
-                
+
                 <div class="table-responsive m-t-0">
                     <table id="myTable" class="table display table-bordered table-striped">
                         <thead>
@@ -19,7 +19,6 @@
                                 <th>Alamat</th>
                                 <th>No Telpon</th>
                                 <th>Kelamin</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,10 +35,6 @@
                                     @else
                                         <span class="label label-info">Perempuan</span>
                                     @endif
-                                </td>
-                                <td>
-                                    <a href="{{url('customer-edit', $item->id_customer)}}" class="btn btn-sm btn-info">Edit</a>
-                                    </form>
                                 </td>
                             </tr>
                             <?php $no++; ?>
