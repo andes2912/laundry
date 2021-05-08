@@ -51,8 +51,6 @@
                           @enderror
                       </div>
                   </div>
-                  {{-- <span id="select-customer"></span>
-                  <span id="select-email-customer"></span> --}}
                   <div class="col-md-3">
                     <div class="form-group has-success">
                         <label class="control-label">Berat Pakaian</label>
@@ -156,12 +154,13 @@
       </div>
     </div>
     @else
-        <div class="card">
-            <div class="col text-center">
-                <h2>Data Harga Kosong / Tidak Aktif !</h2>
-                <h4>Mohon hubungi Administrator :)</h4>
-            </div>
+      <div class="card">
+        <div class="col text-center">
+          <img src="{{asset('backend/images/pages/empty.svg')}}" style="height:500px; width:100%; margin-top:10px">
+          <h2 class="mt-1">Data Harga Kosong / Tidak Aktif !</h2>
+          <h4>Mohon hubungi Administrator :)</h4>
         </div>
+      </div>
     @endif
 @endsection
 @section('scripts')
