@@ -77,7 +77,7 @@ class AdminController extends Controller
     public function edit($id)
     {
       $edit = User::find($id);
-      return view('modul_admin.pengguna.editadm', compact('edit'));
+      return view('modul_admin.pengguna.editkry', compact('edit'));
     }
 
     // Proses edit karayawan
