@@ -11,6 +11,7 @@ use Mail;
 use carbon\carbon;
 use Alert;
 use Session;
+use App\Notifications\{OrderMasuk,OrderSelesai};
 
 class PelayananController extends Controller
 
@@ -71,6 +72,7 @@ class PelayananController extends Controller
       $order->save();
 
       if ($order) {
+        $order->notify(new OrderMasuk());
         if (auth::user()->email_set == 1) {
           // Menyiapkan data Email
           $email = $order->email_customer;
@@ -187,6 +189,10 @@ class PelayananController extends Controller
           $mail->from('laundri.dev@gmail.com');
           });
         }
+
+        // Cek status notif untuk telegram
+        $statusorder->notify(new OrderSelesai());
+
         Session::flash('success','Status Laundry Berhasil Diubah !');
       }
     }
