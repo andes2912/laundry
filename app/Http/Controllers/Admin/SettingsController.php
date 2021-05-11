@@ -58,7 +58,7 @@ class SettingsController extends Controller
   // Check Setting Theme
   public function set_theme(Request $request)
   {
-    $id = auth::id();
+    $id = Auth::id();
     $user = User::all();
 
     $set_theme = User::findOrFail($id);
