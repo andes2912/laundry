@@ -72,8 +72,13 @@ class PelayananController extends Controller
       $order->save();
 
       if ($order) {
-        $order->notify(new OrderMasuk());
-        if (auth::user()->email_set == 1) {
+        // Notification Telegram
+        if (setNotificationTelegramIn(1) == 1) {
+          $order->notify(new OrderMasuk());
+        }
+
+        // Notification email
+        if (setNotificationEmail(1) == 1) {
           // Menyiapkan data Email
           $email = $order->email_customer;
           $data = array(
@@ -173,7 +178,8 @@ class PelayananController extends Controller
       if ($statusorder->status_order == 'Done') {
 
         // Cek email notif
-        if (auth::user()->email_set == 1) {
+        if (setNotificationEmail(1) == 1) {
+
           // Menyiapkan data
           $email = $statusorder->email_customer;
           $data = array(
@@ -191,7 +197,9 @@ class PelayananController extends Controller
         }
 
         // Cek status notif untuk telegram
-        $statusorder->notify(new OrderSelesai());
+        if (setNotificationTelegramFinish(1) == 1) {
+          $statusorder->notify(new OrderSelesai());
+        }
 
         Session::flash('success','Status Laundry Berhasil Diubah !');
       }
@@ -218,7 +226,7 @@ class PelayananController extends Controller
       ]);
       if ($statusbayar->status_order == 'Delivery') {
           // Cek email notif
-          if (auth::user()->email_set == 1) {
+          if (setNotificationEmail(1) == 1) {
             // Menyiapkan data
             $email = $statusbayar->email_customer;
             $data = array(

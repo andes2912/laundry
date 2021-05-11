@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{PageSettings,User,LaundrySetting,DataBank};
-use auth;
+use App\Models\{PageSettings,User,LaundrySetting,DataBank,notifications_setting};
+use Auth;
 use Session;
 
 class SettingsController extends Controller
@@ -14,11 +14,12 @@ class SettingsController extends Controller
   // Settings
   public function setting()
   {
-    $setpage = PageSettings::first();
-    $settarget = LaundrySetting::first();
-    $databank = DataBank::where('user_id',Auth::id())->get();
+    $setpage    = PageSettings::first();
+    $settarget  = LaundrySetting::first();
+    $databank   = DataBank::where('user_id',Auth::id())->get();
+    $setnotif   = notifications_setting::first();
 
-    return view('modul_admin.setting.index', compact('setpage','settarget','databank'));
+    return view('modul_admin.setting.index', compact('setpage','settarget','databank','setnotif'));
   }
 
   // Proses setting page
@@ -54,37 +55,23 @@ class SettingsController extends Controller
     }
   }
 
-  // Check Setting Theme & Email
-  public function set_theme_email(Request $request)
+  // Check Setting Theme
+  public function set_theme(Request $request)
   {
     $id = auth::id();
     $user = User::all();
 
-    $set_theme_email = User::findOrFail($id);
+    $set_theme = User::findOrFail($id);
     if ($request->theme == NULL) {
-      $set_theme_email->theme = '0';
+      $set_theme->theme = '0';
     } else {
-      $set_theme_email->theme = $request->theme;
+      $set_theme->theme = $request->theme;
     }
 
-    if ($request->email_set == NULL) {
-      $set_theme_email->email_set = '0';
-    } else {
-      $set_theme_email->email_set = $request->email_set;
-    }
+    $set_theme->save();
 
-    $set_theme_email->save();
-
-    if ($set_theme_email) {
-      foreach ($user as $users) {
-        $users->email_set = $set_theme_email->email_set;
-      }
-
-      $users->save();
-
-      Session::flash('success','Setting Berhasil Disimpan !');
-      return back();
-    }
+    Session::flash('success','Setting Berhasil Disimpan !');
+    return back();
   }
 
   // Setting Laundry Target
@@ -118,6 +105,19 @@ class SettingsController extends Controller
     ]);
 
     Session::flash('success','Bank Berhasil Ditambah !');
+    return back();
+  }
+
+  // Notification
+  public function notif(Request $request,$id)
+  {
+    $notif = notifications_setting::findorFail($id);
+    $notif->telegram_order_masuk    = $request->telegram_order_masuk;
+    $notif->telegram_order_selesai  = $request->telegram_order_selesai;
+    $notif->email                   = $request->email;
+    $notif->save();
+
+    Session::flash('success','Notifications Berhasil Diupdate !');
     return back();
   }
 

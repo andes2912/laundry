@@ -1,5 +1,5 @@
 <?php
-use App\Models\{customer};
+use App\Models\{customer,notifications_setting};
 
 class Rupiah {
     public static function getRupiah($value) {
@@ -29,5 +29,41 @@ if (! function_exists('namaCustomer'))
         $data  = $model::where('id',$id)->first();
         $name = !empty($data) ? $data->nama : 'Not Found';
         return $name;
+    }
+}
+
+// Setting Email Notifications
+if (! function_exists('setNotificationEmail'))
+{
+    function setNotificationEmail($id='')
+    {
+        $model = new notifications_setting;
+        $data  = $model::where('email',$id)->first();
+        $email = $data ? $data->email : 'Email Notification Aktif Tidak';
+        return $email;
+    }
+}
+
+// Setting Telegram Order Masuk Notifications
+if (! function_exists('setNotificationTelegramIn'))
+{
+    function setNotificationTelegramIn($id='')
+    {
+        $model = new notifications_setting;
+        $data  = $model::where('telegram_order_masuk',$id)->first();
+        $teleIn = $data ? $data->telegram_order_masuk : 'Telegram Notification Order Masuk Tidak Aktif';
+        return $teleIn;
+    }
+}
+
+// Setting Telegram Order Selesai Notifications
+if (! function_exists('setNotificationTelegramFinish'))
+{
+    function setNotificationTelegramFinish($id='')
+    {
+        $model = new notifications_setting;
+        $data  = $model::where('telegram_order_selesai',$id)->first();
+        $teleFininsh = $data ? $data->telegram_order_selesai : 'Telegram Notification Order Selesai Tidak Aktif';
+        return $teleFininsh;
     }
 }
