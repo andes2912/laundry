@@ -90,8 +90,10 @@ Route::middleware('auth')->group(function () {
 
     // Laporan
     Route::get('laporan','Karyawan\LaporanController@laporan');
-    Route::get('invoice-kar/{id}','Karyawan\LaporanController@invoicekar');
-    Route::get('cetak-invoice/{id}/print','Karyawan\LaporanController@cetakinvoice');
+
+    // Invoice
+    Route::get('invoice-kar/{id}','Karyawan\InvoiceController@invoicekar');
+    Route::get('cetak-invoice/{id}/print','Karyawan\InvoiceController@cetakinvoice');
 
     // Profile
     Route::get('profile-karyawan/{id}','Karyawan\ProfileController@karyawanProfile');
