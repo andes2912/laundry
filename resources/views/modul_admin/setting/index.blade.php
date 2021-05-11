@@ -27,7 +27,7 @@
           </li>
 
           <li class="nav-item">
-              <a class="nav-link d-flex py-75" id="pill-notifications" data-toggle="pill" href="#vertical-notifications" aria-expanded="false">
+              <a class="nav-link d-flex py-75" id="pill-target" data-toggle="pill" href="#vertical-target" aria-expanded="false">
                   <i class="feather icon-message-circle mr-50 font-medium-3"></i>
                   Target Laundry
               </a>
@@ -36,7 +36,21 @@
           <li class="nav-item">
               <a class="nav-link d-flex py-75" id="pill-theme" data-toggle="pill" href="#vertical-theme" aria-expanded="false">
                   <i class="feather icon-feather mr-50 font-medium-3"></i>
-                  Theme & Email Notification
+                  Theme
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link d-flex py-75" id="pill-bank" data-toggle="pill" href="#vertical-bank" aria-expanded="false">
+                  <i class="feather icon-credit-card mr-50 font-medium-3"></i>
+                  Data Bank
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link d-flex py-75" id="pill-notif" data-toggle="pill" href="#vertical-notif" aria-expanded="false">
+                  <i class="feather icon-feather mr-50 font-medium-3"></i>
+                  Notifications
               </a>
           </li>
 
@@ -48,6 +62,7 @@
           <div class="card-content">
             <div class="card-body">
               <div class="tab-content">
+                {{-- Panel General --}}
                 <div role="tabpanel" class="tab-pane active" id="vertical-general" aria-labelledby="pill-general" aria-expanded="true">
                   <form action="{{route('seting-page.update', $setpage->id)}}" method="POST">
                     @csrf
@@ -142,8 +157,9 @@
                   </form>
                 </div>
 
-                <div class="tab-pane fade" id="vertical-notifications" role="tabpanel" aria-labelledby="pill-notifications" aria-expanded="false">
-                  <form action="{{route('set-target.update', auth::user()->id)}}" method="post">
+                {{-- Panel Target --}}
+                <div class="tab-pane fade" id="vertical-target" role="tabpanel" aria-labelledby="pill-target" aria-expanded="false">
+                  <form action="{{route('set-target.update', Auth::user()->id)}}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -182,31 +198,20 @@
                   </form>
                 </div>
 
+                {{-- Panel Theme --}}
                 <div class="tab-pane fade" id="vertical-theme" role="tabpanel" aria-labelledby="pill-theme" aria-expanded="false">
-                  <form action="{{route('setting-theme-email.update', auth::id())}}" method="post">
+                  <form action="{{route('setting-theme.update', Auth::id())}}" method="post">
                     @csrf
                     @method('PUT')
                       <div class="row">
-                        <h5 class="m-1">Theme Dark <i class=" {{auth::user()->theme == 1 ? 'fa fa-check' : ''}} " style="color: chartreuse"></i> </h5>
+                        <h5 class="m-1">Theme Dark <i class=" {{Auth::user()->theme == 1 ? 'fa fa-check' : ''}} " style="color: chartreuse"></i> </h5>
                         <div class="col-12 mb-1">
                             <div class="custom-control custom-switch custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" name="theme" {{auth::user()->theme == 1 ? 'checked' : ''}} value="1" id="theme">
+                                <input type="checkbox" class="custom-control-input" name="theme" {{Auth::user()->theme == 1 ? 'checked' : ''}} value="1" id="theme">
                                 <label class="custom-control-label mr-1" for="theme"></label>
                                 <span class="switch-label w-100">Aktifkan Jika Ingin Menggunakan Theme Dark</span>
                             </div>
                         </div>
-
-                        <h5 class="m-1">Email Notification</h5>
-                        <div class="col-12 mb-1">
-                            <div class="custom-control custom-switch custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" name="email_set" {{auth::user()->email_set == 1 ? 'checked' : ''}} value="1" id="email_set">
-                                <label class="custom-control-label mr-1" for="email_set"></label>
-                                <span class="switch-label w-100">Aktifkan Jika Ingin Menggunakan Email Notifications</span>
-                            </div>
-                        </div>
-                        @if (auth::user()->email_set == 1)
-                          <small class="m-1 alert alert-danger">Pastikan Sudah mengatur setting mail driver pada file .env</small>
-                        @endif
 
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-start">
                           <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
@@ -217,6 +222,107 @@
                   </form>
                 </div>
 
+                {{-- Panel Bank --}}
+                <div class="tab-pane fade" id="vertical-bank" role="tabpanel" aria-labelledby="pill-bank" aria-expanded="false">
+                  <form action="" method="post">
+                  @csrf
+                    <div class="row">
+                      @if (Auth::User()->bank == NULL)
+                        <div class="col-md-4">
+                          <a data-toggle="modal" data-target="#addpayment">
+                            <div class="card bg-primary">
+                              <div class="card-body">
+                                <div class="card-title text-white">
+                                  Tambah Akun Bank
+                                </div>
+                                <div class="text-center text-white">
+                                  <i class="feather icon-plus"></i>
+                                </div> <br>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      @else
+                        @foreach ($databank as $bank)
+                          <div class="col-md-4">
+                            <a data-toggle="modal" data-target="#editpayment">
+                              <div class="card bg-danger">
+                                <div class="card-body text-center">
+                                  <div class="card-title text-white">
+                                    {{$bank->nama_bank}}
+                                  </div>
+                                  <span class="text-white">{{$bank->no_rekening}}</span> <br>
+                                  <small class="text-white">{{$bank->nama_pemilik}}</small>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                        @endforeach
+
+                        <div class="col-md-4">
+                          <a data-toggle="modal" data-target="#addpayment">
+                            <div class="card bg-primary">
+                              <div class="card-body">
+                                <div class="card-title text-white">
+                                  Tambah Akun Bank
+                                </div>
+                                <div class="text-center text-white">
+                                  <i class="feather icon-plus"></i>
+                                </div> <br>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      @endif
+
+                    </div>
+                  </form>
+                </div>
+
+                {{-- Panel Notifications --}}
+                <div class="tab-pane fade" id="vertical-notif" role="tabpanel" aria-labelledby="pill-notif" aria-expanded="false">
+                  <form action="{{route('set-notif.update', Auth::id())}}" method="post">
+                    @csrf
+                    @method('PUT')
+                      <div class="row">
+                        <h5 class="m-1">Email</h5>
+                        <div class="col-12 mb-1">
+                          <div class="custom-control custom-switch custom-control-inline">
+                              <input type="checkbox" class="custom-control-input" name="email" {{$setnotif->email == 1 ? 'checked' : '0'}} value="1" id="email">
+                              <label class="custom-control-label mr-1" for="email"></label>
+                              <span class="switch-label w-100">Aktifkan Jika Ingin Menggunakan Email Notification</span>
+                          </div>
+                        </div>
+
+                         <h5 class="m-1">Telegram Order Masuk</h5>
+                        <div class="col-12 mb-1">
+                          <div class="custom-control custom-switch custom-control-inline">
+                              <input type="checkbox" class="custom-control-input" name="telegram_order_masuk" {{$setnotif->telegram_order_masuk == 1 ? 'checked' : '0'}} value="1" id="telegram_order_masuk">
+                              <label class="custom-control-label mr-1" for="telegram_order_masuk"></label>
+                              <span class="switch-label w-100">Aktifkan Jika Ingin Mendapatkan Notifikasi Setiap Order Masuk</span>
+                          </div>
+                        </div>
+
+                         <h5 class="m-1">Telegram Order Keluar</h5>
+                        <div class="col-12 mb-1">
+                          <div class="custom-control custom-switch custom-control-inline">
+                              <input type="checkbox" class="custom-control-input" name="telegram_order_selesai" {{$setnotif->telegram_order_selesai == 1 ? 'checked' : '0'}} value="1" id="telegram_order_selesai">
+                              <label class="custom-control-label mr-1" for="telegram_order_selesai"></label>
+                              <span class="switch-label w-100">Aktifkan Jika Ingin Mendapatkan Notifikasi Setiap Order Selesai</span>
+                          </div>
+                        </div>
+                        {{-- @if ($setnotif->email == 1)
+                          <small class="m-1 alert alert-danger">Pastikan Sudah mengatur setting mail driver pada file .env</small>
+                        @endif --}}
+
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-start">
+                          <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
+                              changes</button>
+                          <button type="reset" class="btn btn-outline-warning">Cancel</button>
+                        </div>
+                      </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -224,5 +330,15 @@
       </div>
     </div>
   </section>
+  @include('modul_admin.setting.modal')
 </div>
+@endsection
+@section('scripts')
+<script>
+  @if (count($errors) > 0)
+    $(function() {
+      $('#addpayment').modal('show');
+    });
+  @endif
+</script>
 @endsection

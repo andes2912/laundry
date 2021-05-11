@@ -28,8 +28,8 @@
                           <label class="control-label">Nama Customer</label>
                           <select name="customer_id" id="customer_id" class="form-control select2 @error('customer_id') is-invalid @enderror" required>
                               <option value="">-- Pilih Customer --</option>
-                              @foreach ($customer as $item)
-                                  <option value="{{$item->id}}">{{$item->nama}}</option>
+                              @foreach ($customer as $customers)
+                                  <option value="{{$customers->id}}">{{$customers->nama}}</option>
                               @endforeach
                           </select>
                           @error('customer_id')
@@ -51,8 +51,6 @@
                           @enderror
                       </div>
                   </div>
-                  <span id="select-customer"></span>
-                  <span id="select-email-customer"></span>
                   <div class="col-md-3">
                     <div class="form-group has-success">
                         <label class="control-label">Berat Pakaian</label>
@@ -83,6 +81,22 @@
               </div>
 
               <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group has-success">
+                        <label class="control-label">Jenis Pembayaran</label>
+                        <select class="form-control custom-select @error('jenis_pembayaran') is-invalid @enderror" name="jenis_pembayaran" required>
+                          <option value="">-- Pilih Jenis Pembayaran --</option>
+                          <option value="Tunai">Tunai</option>
+                          <option value="Transfer">Transfer</option>
+                        </select>
+                        @error('jenis_pembayaran')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
+                    </div>
+                  </div>
 
                 <div class="col-md-3">
                   <div class="orm-group has-success">
@@ -140,12 +154,13 @@
       </div>
     </div>
     @else
-        <div class="card">
-            <div class="col text-center">
-                <h2>Data Harga Kosong / Tidak Aktif !</h2>
-                <h4>Mohon hubungi Administrator :)</h4>
-            </div>
+      <div class="card">
+        <div class="col text-center">
+          <img src="{{asset('backend/images/pages/empty.svg')}}" style="height:500px; width:100%; margin-top:10px">
+          <h2 class="mt-1">Data Harga Kosong / Tidak Aktif !</h2>
+          <h4>Mohon hubungi Administrator :)</h4>
         </div>
+      </div>
     @endif
 @endsection
 @section('scripts')
@@ -173,35 +188,6 @@
         $.get('{{ Url("listharga") }}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
             $("#select-harga").html(resp);
         });
-    });
-
-    // Filter Customer
-    $(document).ready(function() {
-       var customer_id = $("#customer_id").val();
-            $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),customer_id:customer_id}, function(resp){
-            $("#select-customer").html(resp);
-        });
-    });
-
-    $(document).on('change', '#customer_id', function (e) {
-      var customer_id = $(this).val();
-      $.get('{{ Url("get-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),customer_id:customer_id}, function(resp){
-        $("#select-customer").html(resp);
-      });
-    });
-
-    $(document).ready(function() {
-       var customer_id = $("#customer_id").val();
-            $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),customer_id:customer_id}, function(resp){
-            $("#select-email-customer").html(resp);
-        });
-    });
-
-    $(document).on('change', '#customer_id', function (e) {
-      var customer_id = $(this).val();
-      $.get('{{ Url("get-email-customer") }}',{'_token': $('meta[name=csrf-token]').attr('content'),customer_id:customer_id}, function(resp){
-        $("#select-email-customer").html(resp);
-      });
     });
 </script>
 @endsection

@@ -104,7 +104,7 @@
                             @else
                               <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
                               </a>
-                              <a class="dropdown-item" href="{{url('karyawa/setting' )}}"><i class="feather icon-settings"></i>Settings
+                              <a class="dropdown-item" href="{{url('karyawan/setting' )}}"><i class="feather icon-settings"></i>Settings
                               </a>
                             @endif
                             <div class="dropdown-divider"></div>
@@ -206,7 +206,9 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a href="{{url('/')}}" target="_blank"><i class="feather icon-square"></i><span class="menu-title" data-i18n="Dashboard">Frontend</span></a>
+                        <li class="nav-item"><a href="{{url('/laporan')}}"><i class="feather icon-file-text"></i><span class="menu-title" data-i18n="Dashboard">Laporan</span></a>
+                        </li>
+                         <li class="nav-item"><a href="{{url('/')}}" target="_blank"><i class="feather icon-square"></i><span class="menu-title" data-i18n="Dashboard">Frontend</span></a>
                         </li>
                     @endif
                 {{--End  --}}

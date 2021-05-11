@@ -5,11 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class DataBank extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-      'transaction_id','user_read_by'
+      'user_id','nama_bank','no_rekening','nama_pemilik'
     ];
+
+    public function User()
+    {
+      return $this->belongsTo(User::class);
+    }
 }

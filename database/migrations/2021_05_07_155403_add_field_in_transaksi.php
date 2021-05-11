@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RemoveNotifFieldFromTransaksis extends Migration
+class AddFieldInTransaksi extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class RemoveNotifFieldFromTransaksis extends Migration
     public function up()
     {
         Schema::table('transaksis', function (Blueprint $table) {
-          $table->dropColumn('notif');
-          $table->dropColumn('notif_admin');
+          $table->enum('jenis_pembayaran',['Tunai','Transfer'])->after('harga_akhir');
         });
     }
 
@@ -27,8 +26,7 @@ class RemoveNotifFieldFromTransaksis extends Migration
     public function down()
     {
         Schema::table('transaksis', function (Blueprint $table) {
-          $table->dropColumn('notif');
-          $table->dropColumn('notif_admin');
+            //
         });
     }
 }

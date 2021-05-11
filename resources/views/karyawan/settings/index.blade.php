@@ -36,13 +36,13 @@
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="vertical-general" aria-labelledby="pill-general" aria-expanded="true">
                   <div class="row">
-                    <form action="{{route('proses-setting-karyawan.update', auth::user()->id)}}" method="post">
+                    <form action="{{route('proses-setting-karyawan.update', Auth::user()->id)}}" method="post">
                       @csrf
                       @method('PUT')
-                      <h5 class="m-1">Theme Dark <i class=" {{auth::user()->theme == 1 ? 'fa fa-check' : ''}} " style="color: chartreuse"></i> </h5>
+                      <h5 class="m-1">Theme Dark <i class=" {{Auth::user()->theme == 1 ? 'fa fa-check' : ''}} " style="color: chartreuse"></i> </h5>
                       <div class="col-12 mb-1">
                           <div class="custom-control custom-switch custom-control-inline">
-                              <input type="checkbox" class="custom-control-input" name="theme" {{auth::user()->theme == 1 ? 'checked' : ''}} value="1" id="theme">
+                              <input type="checkbox" class="custom-control-input" name="theme" {{Auth::user()->theme == 1 ? 'checked' : ''}} value="1" id="theme">
                               <label class="custom-control-label mr-1" for="theme"></label>
                               <span class="switch-label w-100">Aktifkan Jika Ingin Menggunakan Theme Dark</span>
                           </div>

@@ -33,8 +33,6 @@ class CreateTransaksisTable extends Migration
             $table->string('bulan');
             $table->string('tahun');
             $table->string('tgl_ambil')->nullable();
-            $table->string('notif')->default(0);
-            $table->string('notif_admin')->default(0);
             $table->timestamps();
 
         });
