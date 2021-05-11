@@ -20,7 +20,7 @@ class PelayananController extends Controller
     // Halaman list order masuk
     public function index()
     {
-      $order = transaksi::with('harga')->where('user_id',auth::user()->id)
+      $order = transaksi::with('harga')->where('user_id',Auth::user()->id)
       ->orderBy('id','DESC')->get();
       return view('karyawan.transaksi.order', compact('order'));
     }
@@ -104,23 +104,23 @@ class PelayananController extends Controller
     // Daftar Costomer
     public function listcs()
     {
-      $customer = customer::orderBy('id','DESC')->where('user_id',auth::user()->id)->get();
+      $customer = customer::orderBy('id','DESC')->where('user_id',Auth::user()->id)->get();
       return view('karyawan.transaksi.customer', compact('customer'));
     }
 
     // Tambah Order
     public function addorders()
     {
-      $customer = customer::where('user_id',auth::user()->id)->get();
+      $customer = customer::where('user_id',Auth::user()->id)->get();
 
       $y = date('Y');
       $number = mt_rand(1000, 9999);
       // Nomor Form otomatis
-      $newID = $number. auth::user()->id .''.$y;
+      $newID = $number. Auth::user()->id .''.$y;
       $tgl = date('d-m-Y');
 
-      $cek_harga = harga::where('user_id',auth::user()->id)->where('status',1)->first();
-      $cek_customer = customer::select('id','user_id')->where('user_id',auth::id())->count();
+      $cek_harga = harga::where('user_id',Auth::user()->id)->where('status',1)->first();
+      $cek_customer = customer::select('id','user_id')->where('user_id',Auth::id())->count();
       return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga','cek_customer'));
     }
 
@@ -128,7 +128,7 @@ class PelayananController extends Controller
     public function listharga(Request $request)
     {
        $list_harga = harga::select('id','harga')
-        ->where('user_id',auth::user()->id)
+        ->where('user_id',Auth::user()->id)
         ->where('id',$request->id)
         ->get();
         $select = '';
@@ -150,7 +150,7 @@ class PelayananController extends Controller
     public function listhari(Request $request)
     {
       $list_jenis = harga::select('id','hari')
-        ->where('user_id',auth::user()->id)
+        ->where('user_id',Auth::user()->id)
         ->where('id',$request->id)
         ->get();
         $select = '';

@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-lg-8 col-xlg-9 col-md-7">
         <div class="card">
             <div class="card-body">
@@ -53,7 +53,7 @@
                     <div class="col-md-12">
                         <div class="form-group has-success">
                             <label class="control-label">Alamat</label>
-                            <textarea class="form-control" name="alamat" rows="3">{{$edit->alamat}}</textarea> 
+                            <textarea class="form-control" name="alamat" rows="3">{{$edit->alamat}}</textarea>
                         </div>
                     </div>
                     <hr>
@@ -67,12 +67,12 @@
                     <div class="col-md-12">
                         <div class="form-group has-success">
                             <label class="control-label">Alamat Laundry (cabang)</label>
-                            <textarea class="form-control" name="alamat_cabang" rows="3">{{$edit->alamat_cabang}}</textarea> 
+                            <textarea class="form-control" name="alamat_cabang" rows="3">{{$edit->alamat_cabang}}</textarea>
                         </div>
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
-                        <a href="{{url('profile-karyawan', auth::user()->id)}}" class="btn btn-danger">Cancel</a>
+                        <a href="{{url('profile-karyawan', Auth::user()->id)}}" class="btn btn-danger">Cancel</a>
                     </div>
                 </form>
             </div>

@@ -28,7 +28,7 @@
                 <button class="btn btn-circle btn-secondary"><i class="fa fa-youtube"></i></button>
 
                 <div class="d-flex justify-content-between">
-              <a href="{{url('profile-karyawan/edit', auth::user()->id)}}" class="btn btn-primary mt-2">Edit</a>
+              <a href="{{url('profile-karyawan/edit', Auth::user()->id)}}" class="btn btn-primary mt-2">Edit</a>
               <a href="" id="reset_password" data-id="{{$user->id}}" class="btn btn-warning mt-2">Reset Password</a>
             </div>
             </div>

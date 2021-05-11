@@ -323,7 +323,7 @@ class AdminController extends Controller
     // Profile
     public function profile()
     {
-      $profile = User::where('id',auth::id())->first();
+      $profile = User::where('id',Auth::id())->first();
       return view('modul_admin.setting.profile', compact('profile'));
     }
 

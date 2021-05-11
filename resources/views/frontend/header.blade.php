@@ -20,7 +20,7 @@
       <div class="collapse navbar-collapse" id="header-navbar">
           <ul class="nav navbar-nav navbar-right">
               @auth
-              <li> <a href="{{url('/home')}}">Welcome, {{auth::user()->name}}</a> </li>
+              <li> <a href="{{url('/home')}}">Welcome, {{Auth::user()->name}}</a> </li>
               @else
               <li><a href="{{route('login')}}">Masuk</a></li>
               @endauth

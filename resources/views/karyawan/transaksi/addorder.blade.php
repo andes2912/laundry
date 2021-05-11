@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 @section('title','Tambah Data Order')
 @section('content')
-    @if (@$cek_harga->user_id == !null || @$cek_harga->user_id == auth::user()->id)
+    @if (@$cek_harga->user_id == !null || @$cek_harga->user_id == Auth::user()->id)
 
     @if($message = Session::get('error'))
       <div class="alert alert-danger alert-block">
@@ -104,7 +104,7 @@
                       <select id="id" name="harga_id" class="form-control select2 @error('harga_id') is-invalid @enderror" required>
                           <option value="">-- Jenis Pakaian --</option>
                           <?php
-                          $jenis = App\Models\harga::select('id','jenis')->where('status','1')->where('user_id',auth::user()->id)->get();
+                          $jenis = App\Models\harga::select('id','jenis')->where('status','1')->where('user_id',Auth::user()->id)->get();
                           ?>
                           @foreach($jenis as $jenis)
                             <option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
