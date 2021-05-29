@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
-Use Alert;
-
+use Session;
 class ProfileController extends Controller
 {
     // Profile Karyawan Cabang
@@ -43,14 +42,18 @@ class ProfileController extends Controller
       return redirect('profile-karyawan/' .$id.'');
     }
 
-    // Reset Password Karyawan
-    public function reset_password(Request $request)
+    // Change Password Karyawan
+    public function change_password(Request $request, $id)
     {
-      $reset = User::find($request->id);
-      $reset->update([
-          'password' => bcrypt('12345678'),
+      $request->validate([
+        'password'  => 'required|confirmed',
       ]);
 
-      return $reset;
+      $change_password = User::findOrFail($id);
+      $change_password->password = bcrypt($request->password);
+      $change_password->save();
+
+      Session::flash('success','Password Berhasil Diubah !');
+      return \redirect()->back();
     }
 }
