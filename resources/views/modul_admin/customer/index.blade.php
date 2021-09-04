@@ -19,6 +19,7 @@
                                 <th>Alamat</th>
                                 <th>No Telpon</th>
                                 <th>Kelamin</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,6 +36,9 @@
                                     @else
                                         <span class="label label-info">Perempuan</span>
                                     @endif
+                                </td>
+                                <td>
+                                  <a href="{{route('customer.show', $item->id)}}" class="btn btn-info btn-sm">Info</a>
                                 </td>
                             </tr>
                             <?php $no++; ?>

@@ -111,13 +111,6 @@ class AdminController extends Controller
       }
     }
 
-    // Modul Customer
-    public function customer()
-    {
-      $customer = customer::all();
-      return view('modul_admin.customer.index', compact('customer'));
-    }
-
     // Modul Data Laundri
     public function datatransaksi()
     {
