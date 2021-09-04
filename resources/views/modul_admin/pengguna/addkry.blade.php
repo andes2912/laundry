@@ -12,7 +12,7 @@
                 @error('errors')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <form action="{{route('admin.store')}}" method="POST" class="form form-vertical">
+                <form action="{{route('karyawan.store')}}" method="POST" class="form form-vertical">
                     @csrf
                     <div class="form-body">
                         <div class="row">
@@ -95,8 +95,8 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                              <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
-                              <button type="reset" class="btn btn-outline-warning mr-1 mb-1">Reset</button>
+                              <button type="submit" class="btn btn-primary mr-1 mb-1">Tambah</button>
+                              <a href=" {{route('karyawan.index')}} " class="btn btn-outline-warning mr-1 mb-1">Batal</a>
                             </div>
                         </div>
                     </div>

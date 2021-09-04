@@ -26,7 +26,9 @@ Route::middleware('auth')->group(function () {
   // Modul Admin
   Route::prefix('/')->middleware('role:Admin')->group(function () {
     Route::resource('admin','Admin\AdminController');
-    // Pengguna
+
+    // Pengguna/karyawan
+    Route::resource('karyawan','Admin\KaryawanController');
     Route::get('adm','Admin\AdminController@adm');
     Route::get('kry','Admin\AdminController@kry');
     Route::get('kry-add','Admin\AdminController@addkry');
