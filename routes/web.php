@@ -32,13 +32,14 @@ Route::middleware('auth')->group(function () {
     Route::get('kry-add','Admin\AdminController@addkry');
 
     // Customer
-    Route::get('customer','Admin\AdminController@customer');
-    Route::get('customer-add','Admin\AdminController@addcustomer');
-    Route::post('customer-store','Admin\AdminController@storecustomer');
-    Route::get('customer-edit/{id_customer}','Admin\AdminController@editcustomer');
-    Route::put('customer-update/{id_customer}','Admin\AdminController@updatecustomer');
-    Route::delete('customer-delete/{id_customer}','Admin\AdminController@deletecustomer');
-    Route::get('jml-transaksi','Admin\AdminController@jmlTransaksi');
+    Route::resource('customer','Admin\CustomerController');
+    // Route::get('customer','Admin\AdminController@customer');
+    // Route::get('customer-add','Admin\AdminController@addcustomer');
+    // Route::post('customer-store','Admin\AdminController@storecustomer');
+    // Route::get('customer-edit/{id_customer}','Admin\AdminController@editcustomer');
+    // Route::put('customer-update/{id_customer}','Admin\AdminController@updatecustomer');
+    // Route::delete('customer-delete/{id_customer}','Admin\AdminController@deletecustomer');
+    // Route::get('jml-transaksi','Admin\AdminController@jmlTransaksi');
 
     // Data Laundri
     Route::get('data-transaksi','Admin\AdminController@datatransaksi');

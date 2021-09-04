@@ -11,4 +11,9 @@ class customer extends Model
     protected $fillable = [
         'nama','alamat','kelamin','no_telp','email_customer'
     ];
+
+    public function transaksi()
+    {
+      return $this->hasMany(transaksi::class, 'customer_id','id');
+    }
 }
