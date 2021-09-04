@@ -146,19 +146,14 @@
 
                 {{-- Menu Admin --}}
                     @if (auth::user()->auth == "Admin")
-                        <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="User">Data Pengguna</span></a>
+                        <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="User">Data User</span></a>
                             <ul class="menu-content">
                               <li class="nav-item {{ (request()->is('kry')) ? 'active' : '' }}">
                                 <a href="{{url('kry')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Karyawan</span></a>
                               </li>
-                            </ul>
-                        </li>
-
-                        <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="User">Data Customer</span></a>
-                            <ul class="menu-content">
-                                <li class="nav-item {{ (request()->is('customer')) ? 'active' : '' }}">
-                                  <a href="{{url('customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Customer</span></a>
-                                </li>
+                              <li class="nav-item {{ (request()->is('customer')) ? 'active' : '' }}">
+                                <a href="{{url('customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Customer</span></a>
+                              </li>
                             </ul>
                         </li>
 

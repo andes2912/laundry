@@ -1,6 +1,12 @@
 @extends('layouts.backend')
 @section('title','Profile')
 @section('content')
+@if($message = Session::get('success'))
+  <div class="alert alert-success alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+@endif
 <div class="row">
     <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
@@ -29,7 +35,7 @@
 
                 <div class="d-flex justify-content-between">
               <a href="{{url('profile-karyawan/edit', Auth::user()->id)}}" class="btn btn-primary mt-2">Edit</a>
-              <a href="" id="reset_password" data-id="{{$user->id}}" class="btn btn-warning mt-2">Reset Password</a>
+              <a href="" data-toggle="modal" data-target="#change_password" class="btn btn-warning mt-2">Change Password</a>
             </div>
             </div>
 
@@ -51,14 +57,5 @@
         </div>
     </div>
 </div>
-@endsection
-@section('scripts')
-    <script>
-        $(document).on('click','#reset_password', function () {
-            var id = $(this).attr('data-id');
-            $.get(' {{Url("reset-password")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-                location.reload();
-            });
-        });
-    </script>
+@include('karyawan.profile.modal')
 @endsection
