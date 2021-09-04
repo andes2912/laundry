@@ -13,11 +13,12 @@
     <strong>{{ $message }}</strong>
   </div>
 @endif
-<div class="col-lg-12">
+<div class="row">
+  <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title"> Data Karyawan / Cabang
-                <a href="{{url('kry-add')}}" class="btn btn-primary">Tambah</a>
+                <a href="{{route('karyawan.create')}}" class="btn btn-primary">Tambah</a>
             </h4>
 
             <div class="table-responsive">
@@ -52,12 +53,12 @@
                                 @endif
                             </td>
                             <td>
-                                <form action="{{ route('admin.destroy',$item->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a href="{{route('admin.edit', $item->id)}}" class="btn btn-sm btn-info">Edit</a>
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                </form>
+                              <form action="{{ route('karyawan.destroy',$item->id) }}" method="POST">
+                                  @csrf
+                                  @method('DELETE')
+                                  <a href="{{route('karyawan.edit', $item->id)}}" class="btn btn-sm btn-info">Edit</a>
+                                  <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                              </form>
                             </td>
                         </tr>
                         <?php $no++; ?>
@@ -67,5 +68,6 @@
             </div>
         </div>
     </div>
+  </div>
 </div>
 @endsection
