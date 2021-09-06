@@ -29,9 +29,9 @@ Route::middleware('auth')->group(function () {
 
     // Pengguna/karyawan
     Route::resource('karyawan','Admin\KaryawanController');
-    Route::get('adm','Admin\AdminController@adm');
-    Route::get('kry','Admin\AdminController@kry');
-    Route::get('kry-add','Admin\AdminController@addkry');
+    // Route::get('adm','Admin\AdminController@adm');
+    // Route::get('kry','Admin\AdminController@kry');
+    // Route::get('kry-add','Admin\AdminController@addkry');
 
     // Customer
     Route::resource('customer','Admin\CustomerController');
@@ -43,23 +43,21 @@ Route::middleware('auth')->group(function () {
     // Route::delete('customer-delete/{id_customer}','Admin\AdminController@deletecustomer');
     // Route::get('jml-transaksi','Admin\AdminController@jmlTransaksi');
 
-    // Data Laundri
-    Route::get('data-transaksi','Admin\AdminController@datatransaksi');
+    // Data Transaksi
+    Route::resource('transaksi','Admin\TransaksiController');
+    Route::get('filter-transaksi','Admin\TransaksiController@filtertransaksi'); // filter data transaksi by karyawan
+    Route::get('invoice-customer/{invoice}','Admin\TransaksiController@invoice'); // lihat invoice
+
+    // Route::get('data-transaksi','Admin\AdminController@datatransaksi');
     Route::get('data-harga','Admin\AdminController@dataharga');
     Route::post('harga-store','Admin\AdminController@hargastore');
     Route::get('edit-harga','Admin\AdminController@hargaedit');
-
-    // Laporan
-    Route::get('invoice-customer/{id}','Admin\AdminController@invoice');
 
     // Finance
     Route::get('data-finance','Admin\AdminController@finance');
 
     // Notifikasi
     Route::get('read-notification','Admin\AdminController@notif');
-
-    // Filter
-    Route::get('filter-transaksi','Admin\AdminController@filtertransaksi');
 
     // Setting
     Route::get('settings','Admin\SettingsController@setting');
