@@ -12,8 +12,14 @@ class transaksi extends Model
         'customer_id','user_id','tgl_transaksi','customer','status_order','status_payment','harga_id','kg','hari','harga','tgl','tgl_ambil','invoice','disc','bulan','tahun','harga_akhir','email_customer','jenis_pembayaran'
     ];
 
-    public function harga()
+    public function price()
     {
-      return $this->belongsTo(harga::class);
+      return $this->belongsTo(harga::class,'harga_id','id');
     }
+
+    public function customers()
+    {
+      return $this->belongsTo(customer::class,'customer_id','id');
+    }
+
 }

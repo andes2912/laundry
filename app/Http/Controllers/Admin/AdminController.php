@@ -22,18 +22,6 @@ class AdminController extends Controller
       return view('modul_admin.pengguna.admin', compact('adm'));
     }
 
-
-    // Modul Data Laundri
-    public function datatransaksi()
-    {
-      $transaksi = transaksi::selectRaw('transaksis.*,a.jenis')
-      ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
-      ->orderBy('id','DESC')->get();
-
-      $filter = User::select('id','name')->where('auth','Karyawan')->get();
-      return view('modul_admin.laundri.transaksi', compact('transaksi','filter'));
-    }
-
     // Tambah dan Data Harga
     public function dataharga()
     {
@@ -84,22 +72,6 @@ class AdminController extends Controller
     }
 
 // Laporan
-    // Invoice
-    public function invoice( Request $request,$id)
-    {
-      $invoice = transaksi::selectRaw('transaksis.*,a.jenis')
-      ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
-      ->where('transaksis.id', $request->id)
-      ->orderBy('id','DESC')->get();
-
-      $data = transaksi::selectRaw('transaksis.*,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
-      ->leftJoin('customers as a' , 'a.id' , '=' ,'transaksis.customer_id')
-      ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.user_id')
-      ->where('transaksis.id', $request->id)
-      ->orderBy('id','DESC')->first();
-
-      return view('modul_admin.laporan.invoice', compact('invoice','data'));
-    }
 
     // Hitung Jumlah Transaksi Keseluruhan
     public function jmlTransaksi(Request $request)
@@ -179,50 +151,6 @@ class AdminController extends Controller
 
       $user = transaksi::select('customer_id')->groupBy('customer_id')->get();
       return view('modul_admin.finance.cabang', compact('all','hari','bulan','tahun','kg','transaksi','user','ny','nm','nd'));
-    }
-
-    // Filter Transaksi
-    public function filtertransaksi(Request $request)
-    {
-      $transaksi = transaksi::selectRaw('transaksis.*,a.jenis')
-      ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.harga_id')
-      ->where('transaksis.user_id', $request->user_id)
-      ->orderBy('transaksis.created_at','desc')
-      ->get();
-
-      $return = "";
-      $no=1;
-      foreach($transaksi as $item) {
-        $return .="<tr>
-          <td>".$no."</td>
-          <td>".$item->tgl_transaksi."</td>
-          <td>".$item->customer."</td>
-          <td>".$item->status_order."</td>
-          <td>".$item->status_payment."</td>
-          <td>".$item->jenis."</td>";
-          $return .="
-          <input type='hidden' value='".$item->kg * $item->harga."'>
-          <td>".Rupiah::getRupiah($item->kg * $item->harga)."</td>
-          ";
-          if ($item->status_order == "Delivery"){
-              $return .="<td><a href='invoice-customer/$item->id' class='btn btn-sm btn-success style='color:white'>Invoice</a>
-              <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-          }
-          elseif($item->status_order == "Done")
-          {
-            $return .="<td> <a href='invoice-customer/$item->id' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
-            <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-          }
-          elseif($item->status_order == "Process")
-          {
-            $return .="<td> <a href='invoice-customer/$item->id' class='btn btn-sm btn-success' style='color:white'>Invoice</a>
-            <a class='btn btn-sm btn-info' style='color:white'>Detail</a></td>";
-          }
-        $return .= "</td>
-        </tr>";
-        $no++;
-      }
-      return $return;
     }
 
     // Profile

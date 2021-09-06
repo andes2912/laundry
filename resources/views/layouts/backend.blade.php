@@ -157,15 +157,19 @@
                             </ul>
                         </li>
 
-                        <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
+                        {{-- <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
                             <ul class="menu-content">
-                                <li class="nav-item {{ (request()->is('data-transaksi')) ? 'active' : '' }}">
-                                  <a href="{{url('data-transaksi')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Transaksi</span></a>
+                                <li class="nav-item {{ (request()->is('transaksi')) ? 'active' : '' }}">
+                                  <a href="{{url('transaksi')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Transaksi</span></a>
                                 </li>
                                 <li class="nav-item {{ (request()->is('data-harga')) ? 'active' : '' }}">
                                   <a href="{{url('data-harga')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Harga Laundry</span></a>
                                 </li>
                             </ul>
+                        </li> --}}
+
+                        <li class="nav-item {{ (request()->is('transaksi')) ? 'active' : '' }}">
+                          <a href="{{route('transaksi.index')}}"><i class="feather icon-shopping-cart"></i><span class="menu-item" data-i18n="List">Transaksi</span></a>
                         </li>
 
 
@@ -173,6 +177,9 @@
                           <ul class="menu-content">
                             <li class="nav-item {{ (request()->is('data-finance')) ? 'active' : '' }}">
                               <a href="{{url('data-finance')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Finance</span></a>
+                            </li>
+                            <li class="nav-item {{ (request()->is('data-harga')) ? 'active' : '' }}">
+                              <a href="{{url('data-harga')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Harga Laundry</span></a>
                             </li>
                           </ul>
                         </li>

@@ -5,19 +5,6 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title"> Laporan Laundry
-               {{-- <div class="row">
-                    <div class="col-4">
-                        <select name="user_id" id="user_id" class="form-control">
-                            <option value="0">--Filter--</option>
-                                @foreach ($filter as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                        </select>
-                </div>
-                <div class="cl-3">
-                    <button class="btn btn-primary" id="filter">Filter</button>
-                </div>
-               </div> --}}
             </h4>
             <div class="table-responsive m-t-0">
                 <table id="myTable" class="table display table-bordered table-striped">
@@ -36,7 +23,7 @@
                         <tr>
                           <td>{{$no}}</td>
                           <td>{{namaCustomer($laporans->customer_id)}}</td>
-                          <td>{{$laporans->Harga->jenis}}</td>
+                          <td>{{$laporans->price->jenis}}</td>
                           <td>{{$laporans->jenis_pembayaran}}</td>
                           <td>{{Rupiah::getRupiah($laporans->harga_akhir)}}</td>
                         </tr>
