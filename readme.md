@@ -15,6 +15,9 @@ Note : Aplikasi ini akan terus saya update.<br>
 Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com</b>
 </p>
 
+## Package
+- [IndoBank](https://github.com/andes2912/indobank)
+
 ## Fitur Release
 - 2.1.0 [Lihat Perubahan](https://github.com/andes2912/laundry/releases/tag/2.1.0)
 - 2.0.0 [Lihat Perubahan](https://github.com/andes2912/laundry/releases/tag/2.0)
