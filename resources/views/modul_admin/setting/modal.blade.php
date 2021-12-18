@@ -42,8 +42,16 @@
             @csrf
             <div class="modal-body">
                 <label for="Nama Bank">Nama Bank/E-Wallet</label>
+                @php
+                    $bank = App\Models\Bank::get();
+                @endphp
                 <div class="form-group">
-                  <input type="text" name="nama_bank" class="form-control @error('nama_bank') is-invalid @enderror" placeholder="Nama Bank">
+                  {{-- <input type="text" name="nama_bank" class="form-control @error('nama_bank') is-invalid @enderror" placeholder="Nama Bank"> --}}
+                  <select name="nama_bank" class="form-control @error('nama_bank') is-invalid @enderror">
+                    @foreach ($bank as $item)
+                      <option value="{{$item->nama_bank}}"> {{$item->nama_bank}} </option>
+                    @endforeach
+                  </select>
                   @error('nama_bank')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
