@@ -10,7 +10,7 @@ use Rupiah;
 use DB;
 use Session;
 use Spatie\Permission\Models\Role;
-
+use App\Http\Requests\HargaRequest;
 use Carbon\carbon;
 
 class AdminController extends Controller
@@ -25,23 +25,19 @@ class AdminController extends Controller
     // Tambah dan Data Harga
     public function dataharga()
     {
-      $harga = harga::selectRaw('hargas.*,a.nama_cabang')
-      ->leftJoin('users as a','a.id','=','hargas.user_id')
-      ->orderBy('id','DESC')->get(); // Ambil data harga
-      $karyawan = User::where('auth','Karyawan')->first(); // Cek Apakah sudah ada karyawan atau belum
+      // Ambil data harga
+      $harga = harga::with('harga_user')->orderBy('id','DESC')->get();
+      // Cek Apakah sudah ada karyawan atau belum
+      $karyawan = User::where('auth','Karyawan')->first();
+      // Ambil list cabang
       $getcabang = User::where('auth','Karyawan')->where('status','Active')->get();
+
       return view('modul_admin.laundri.harga', compact('harga','karyawan','getcabang'));
     }
 
     // Proses Simpan Harga
-    public function hargastore(Request $request)
+    public function hargastore(HargaRequest $request)
     {
-       $request->validate([
-        'jenis' => 'required',
-        'harga' => 'required',
-        'hari'  => 'required'
-      ]);
-
       $addharga = new harga();
       $addharga->user_id = $request->user_id;
       $addharga->jenis = $request->jenis;
@@ -73,18 +69,6 @@ class AdminController extends Controller
 
 // Laporan
 
-    // Hitung Jumlah Transaksi Keseluruhan
-    public function jmlTransaksi(Request $request)
-    {
-        $jml = customer::select(DB::raw('t.id,t.nama,t.alamat,t.kelamin,t.no_telp,a.kg'))
-        ->from(DB::raw('(SELECT * from customers order by created_at DESC) t'))
-        ->leftJoin('transaksis as a' ,'a.customer_id' , '=' , 't.id')
-        ->groupBy('t.id')
-        ->get();
-
-        return view('modul_admin.customer.jmltransaksi', compact('jml'));
-    }
-
     // Data Finance Cabang
     public function finance(Request $request)
     {
@@ -92,7 +76,7 @@ class AdminController extends Controller
       $all = transaksi::where('status_payment','Success')->sum('harga_akhir');
 
       // Uang yg di dapat by hari
-      $hari = transaksi::where('status_payment','Success')->where('tgl', Carbon::now()->day)->where('bulan', Carbon::now()->month)->where('tahun', Carbon::now()->year)->sum('harga_akhir');
+      $hari = transaksi::where('status_payment','Success')->whereDate('created_at', Carbon::today())->sum('harga_akhir');
 
       // Uang yg di dapat by bulan
       $bulan = transaksi::where('status_payment','Success')->where('bulan', Carbon::now()->month)->where('tahun', Carbon::now()->year)->sum('harga_akhir');
@@ -100,21 +84,19 @@ class AdminController extends Controller
       // Uang yg di dapat by tahunan
       $tahun = transaksi::where('status_payment','Success')->where('tahun', Carbon::now()->year)->sum('harga_akhir');
 
-      $tTahun = LaundrySetting::first(); //Target tahunan
-      $tBulan = LaundrySetting::first(); //Target Bulanan
-      $tHari  = LaundrySetting::first(); //Target Harian
+      $target = LaundrySetting::first(); //Target tahunan/bulanan/harian
 
       $thn = transaksi::where('status_payment','Success')->where('tahun', Carbon::now()->year)->count();
       $bln = transaksi::where('status_payment','Success')->where('bulan', Carbon::now()->month)->where('tahun', Carbon::now()->year)->count();
-      $hri = transaksi::where('status_payment','Success')->where('tgl', Carbon::now()->day)->where('bulan', Carbon::now()->month)->where('tahun', Carbon::now()->year)->count();
+      $hri = transaksi::where('status_payment','Success')->whereDate('created_at', Carbon::today())->count();
 
       // Ambil data persen by year
       $hy = NULL;
-      $year = ($tTahun->target_year - $thn) * 100;
-      if ($tTahun->target_year == 0) {
+      $year = ($target->target_year - $thn) * 100;
+      if ($target->target_year == 0) {
         $hy = 0;
       } else {
-        $hy = $year * 100 / $tTahun->target_year;
+        $hy = $year * 100 / $target->target_year;
       }
 
       $hys = $hy / 100;
@@ -122,23 +104,23 @@ class AdminController extends Controller
 
       // Ambil data persen by month
       $hm = NULL;
-      $month = ($tBulan->target_month - $bln) * 100;
+      $month = ($target->target_month - $bln) * 100;
 
-      if ($tBulan->target_month == 0) {
+      if ($target->target_month == 0) {
         $hm = 0;
       } else {
-        $hm = $month * 100 / $tBulan->target_month;
+        $hm = $month * 100 / $target->target_month;
       }
       $hms = $hm / 100;
       $nm = 100 - $hms;
 
       // Ambil data persen by day
       $hd = null;
-      $day = ($tHari->target_day - $hri) * 100;
-      if ($tHari->target_day == 0) {
+      $day = ($target->target_day - $hri) * 100;
+      if ($target->target_day == 0) {
         $hd= 0;
       } else {
-      $hd = $day * 100 / $tHari->target_day;
+      $hd = $day * 100 / $target->target_day;
 
       }
       $hds = $hd / 100;

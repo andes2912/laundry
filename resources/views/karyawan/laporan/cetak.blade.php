@@ -55,19 +55,19 @@
                 <tr>
                     <td style="padding-bottom:80px" colspan="2">
                         <h3 style="color:coral">{{$data->nama_cabang}}</h3>
-                        <p class="text-muted m-l-5"> Diterima Oleh <span style="margin-left:8px"> </span>: {{$data->name}}
-                            <br/> Alamat <span style="margin-left:62px"> </span>: {{$data->alamat_cabang}},
-                            <br/> No. Telp <span style="margin-left:50px"> </span>: {{$data->no_telpc}},
+                        <p class="text-muted m-l-5"> Diterima Oleh <span style="margin-left:8px"> </span>: {{$data->user->name}}
+                            <br/> Alamat <span style="margin-left:62px"> </span>: {{$data->user->alamat_cabang}},
+                            <br/> No. Telp <span style="margin-left:50px"> </span>: {{$data->user->no_telp}},
                             </p>
                     </td>
                     <td colspan="3">
                         <h3 style="text-align:right">Detail Order Customer :</h3>
                         <p style="text-align:right">
-                            {{$data->nama}}
-                            <br/> {{$data->alamat}}
-                            <br/> {{$data->no_telp}}</p> <br>
+                            {{$data->customers->nama}}
+                            <br/> {{$data->customers->alamat}}
+                            <br/> {{$data->customers->no_telp}}</p> <br>
                         <p style="text-align:right"><b>Tanggal Masuk :</b> <i class="fa fa-calendar"></i> {{carbon\carbon::parse($data->tgl_transaksi)->format('d-m-y')}}</p>
-                        <p style="text-align:right"><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i> 
+                        <p style="text-align:right"><b>Tanggal Diambil :</b> <i class="fa fa-calendar"></i>
                             @if ($data->tgl_ambil == "")
                                 Belum Diambil
                             @else
@@ -88,7 +88,7 @@
                 @foreach ($invoice as $item)
                 <tr>
                     <td style="color:black">1</td>
-                    <td style="color:black">{{$item->jenis}}</td>
+                    <td style="color:black">{{$item->price->jenis}}</td>
                     <td style="color:black">{{$item->kg}} Kg</td>
                     <td style="color:black">{{Rupiah::getRupiah($item->harga)}} /Kg</td>
                     <td><input type="hidden" value="{{$hitung = $item->kg * $item->harga}}">
@@ -108,7 +108,7 @@
                     <td style="color:black; font-weight:bold">{{Rupiah::getRupiah($item->harga_akhir)}}</td>
                 </tr>
             </tbody>
-            
+
         </table>
     </div>
 </body>

@@ -91,6 +91,12 @@ class SettingsController extends Controller
   public function bank(Request $request)
   {
 
+    $cek = DataBank::get()->count();
+    if ($cek >= 3) {
+      Session::flash('error','Maksimal bank hanya 3 !');
+      return back();
+    }
+
     $request->validate([
       'nama_bank'   => 'required|unique:data_banks',
       'no_rekening' => 'required|unique:data_banks',

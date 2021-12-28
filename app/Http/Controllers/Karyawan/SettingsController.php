@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Karyawan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Auth;
 use Session;
 
 class SettingsController extends Controller
