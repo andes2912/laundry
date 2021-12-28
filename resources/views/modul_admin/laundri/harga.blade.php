@@ -50,7 +50,7 @@
                                         <span class="label label-warning">Tidak Aktif</span>
                                         @endif
                                     </td>
-                                    <td>{{$item->nama_cabang}}</td>
+                                    <td>{{$item->harga_user->nama_cabang}}</td>
                                     <td>
                                         <a class="btn btn-sm btn-success" data-toggle="modal" data-id="{{$item->id}}" data-id-jenis="{{$item->jenis}}" data-id-kg="{{$item->kg}}" data-id-harga="{{$item->harga}}" data-id-hari="{{$item->hari}}" data-id-status="{{$item->status}}" id="click_harga" data-target="#edit_harga" style="color:white">Edit</a>
                                     </td>
@@ -80,7 +80,7 @@
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Cabang</label>
-                                        <select name="user_id" class="form-control @error('user_id') is-invalid @enderror" required>
+                                        <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
                                             <option value="">-- Pilih Cabang --</option>
                                             @foreach ($getcabang as $item)
                                                 <option value="{{$item->id}}">{{$item->nama_cabang}} - {{$item->name}}</option>
@@ -96,7 +96,7 @@
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Jenis Pakaian</label>
-                                        <input type="text" name="jenis" value="{{ old('jenis') }}" class="form-control @error('jenis') is-invalid @enderror" placeholder="Tambahkan Jenis Pakaian" required autocomplete="off">
+                                        <input type="text" name="jenis" value="{{ old('jenis') }}" class="form-control @error('jenis') is-invalid @enderror" placeholder="Tambahkan Jenis Pakaian" autocomplete="off">
                                         <small class="form-control-feedback "> Pisahkan Dengan format '+' Jika Jenis Lebih Dari Satu </small>
                                         @error('jenis')
                                           <span class="invalid-feedback" role="alert">
@@ -109,7 +109,7 @@
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Berat Per-Kg</label>
-                                        <input type="text" class="form-control form-control-danger" value="1000 gram" placeholder="Berat" readonly autocomplete="off" required>
+                                        <input type="text" class="form-control form-control-danger" value="1000 gram" placeholder="Berat" readonly autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Harga Per-Kg</label>
-                                        <input type="number" class="form-control form-control-danger @error('harga') is-invalid @enderror" name="harga" value="{{ old('harga') }}"placeholder="Harga Per-Kg" autocomplete="off" required>
+                                        <input type="number" class="form-control form-control-danger @error('harga') is-invalid @enderror" name="harga" value="{{ old('harga') }}"placeholder="Harga Per-Kg" autocomplete="off">
                                         <small class="form-control-feedback "> Tuliskan Tanpa tanda ',' dan '.' </small>
                                         @error('harga')
                                           <span class="invalid-feedback" role="alert">
@@ -130,7 +130,7 @@
                                 <div class="col-lg-12 col-xl-12">
                                     <div class="form-group has-success">
                                         <label class="control-label">Lama Hari</label>
-                                        <input type="number" name="hari" value="{{ old('hari') }}" class="form-control @error('hari') is-invalid @enderror" placeholder="Lama Hari" autocomplete="off" required>
+                                        <input type="number" name="hari" value="{{ old('hari') }}" class="form-control @error('hari') is-invalid @enderror" placeholder="Lama Hari" autocomplete="off">
                                         @error('hari')
                                           <span class="invalid-feedback" role="alert">
                                               <strong>{{ $message }}</strong>

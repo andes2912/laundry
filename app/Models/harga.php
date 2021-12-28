@@ -14,4 +14,9 @@ class harga extends Model
     {
       return $this->hasMany(transaksi::class);
     }
+
+    public function harga_user()
+    {
+      return $this->belongsTo(User::class,'user_id','id');
+    }
 }
