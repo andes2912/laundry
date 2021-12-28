@@ -76,7 +76,7 @@ class AdminController extends Controller
       $all = transaksi::where('status_payment','Success')->sum('harga_akhir');
 
       // Uang yg di dapat by hari
-      $hari = transaksi::where('status_payment','Success')->where('created_at', Carbon::today())->sum('harga_akhir');
+      $hari = transaksi::where('status_payment','Success')->whereDate('created_at', Carbon::today())->sum('harga_akhir');
 
       // Uang yg di dapat by bulan
       $bulan = transaksi::where('status_payment','Success')->where('bulan', Carbon::now()->month)->where('tahun', Carbon::now()->year)->sum('harga_akhir');
@@ -88,7 +88,7 @@ class AdminController extends Controller
 
       $thn = transaksi::where('status_payment','Success')->where('tahun', Carbon::now()->year)->count();
       $bln = transaksi::where('status_payment','Success')->where('bulan', Carbon::now()->month)->where('tahun', Carbon::now()->year)->count();
-      $hri = transaksi::where('status_payment','Success')->where('created_at', Carbon::today())->count();
+      $hri = transaksi::where('status_payment','Success')->whereDate('created_at', Carbon::today())->count();
 
       // Ambil data persen by year
       $hy = NULL;
