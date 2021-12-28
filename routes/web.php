@@ -94,7 +94,7 @@ Route::middleware('auth')->group(function () {
     Route::put('change-password/{id}','Karyawan\ProfileController@change_password')->name('change.password');
 
     // Setting
-    Route::get('karyawan/setting','Karyawan\SettingsController@setting');
+    Route::get('karyawan-setting','Karyawan\SettingsController@setting');
     Route::put('proses-setting-karyawan/{id}','Karyawan\SettingsController@proses_setting_karyawan')->name('proses-setting-karyawan.update');
   });
 });

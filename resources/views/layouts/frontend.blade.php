@@ -7,8 +7,9 @@
 	<meta charset="utf-8" />
 	<title>@yield('title')</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-	<meta content="" name="description" />
-	<meta content="" name="author" />
+  <meta name="description" content="E-Laundy aplikasi laundry berbasis website">
+  <meta name="keywords" content="E-Laundry,Laundry">
+  <meta name="author" content="Andri Desmana">
 
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
