@@ -1,3 +1,4 @@
+<img src="https://banners.beyondco.de/Laundry%20App.png?theme=light&packageManager=&packageName=&pattern=architect&style=style_1&description=Aplikasi+Management+Laundry&md=1&showWatermark=1&fontSize=100px&images=truck" />
 <p>Halo, ini adalah aplikasi Laundry yang dibangun dengan cinta (love). Aplikasi ini sudah bisa multi toko loh, alias kamu bisa membuat cabang laundry.<br>
 
 
@@ -13,6 +14,9 @@
 Note : Aplikasi ini akan terus saya update.<br>
 Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com</b>
 </p>
+
+## Package
+- [IndoBank](https://github.com/andes2912/indobank)
 
 ## Fitur Release
 - 2.1.0 [Lihat Perubahan](https://github.com/andes2912/laundry/releases/tag/2.1.0)

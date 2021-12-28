@@ -6,9 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="PIXINVENT">
+    <meta name="description" content="E-Laundy aplikasi laundry berbasis website">
+    <meta name="keywords" content="E-Laundry,Laundry">
+    <meta name="author" content="Andri Desmana">
     <title>@yield('title')</title>
     <link rel="apple-touch-icon" href="{{asset('backend/images/ico/apple-icon-120.png')}}">
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('backend/images/ico/favicon.ico')}}">
@@ -101,10 +101,10 @@
                             @if (auth::user()->auth == 'Admin')
                               <a class="dropdown-item" href="{{url('profile-admin', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
                               </a>
-                            @else
+                            @elseif(auth::user()->auth == 'Karyawan')
                               <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
                               </a>
-                              <a class="dropdown-item" href="{{url('karyawan/setting' )}}"><i class="feather icon-settings"></i>Settings
+                              <a class="dropdown-item" href="{{url('karyawan-setting' )}}"><i class="feather icon-settings"></i>Settings
                               </a>
                             @endif
                             <div class="dropdown-divider"></div>
@@ -156,17 +156,6 @@
                               </li>
                             </ul>
                         </li>
-
-                        {{-- <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
-                            <ul class="menu-content">
-                                <li class="nav-item {{ (request()->is('transaksi')) ? 'active' : '' }}">
-                                  <a href="{{url('transaksi')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Transaksi</span></a>
-                                </li>
-                                <li class="nav-item {{ (request()->is('data-harga')) ? 'active' : '' }}">
-                                  <a href="{{url('data-harga')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Harga Laundry</span></a>
-                                </li>
-                            </ul>
-                        </li> --}}
 
                         <li class="nav-item {{ (request()->is('transaksi')) ? 'active' : '' }}">
                           <a href="{{route('transaksi.index')}}"><i class="feather icon-shopping-cart"></i><span class="menu-item" data-i18n="List">Transaksi</span></a>

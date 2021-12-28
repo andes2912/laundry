@@ -29,19 +29,9 @@ Route::middleware('auth')->group(function () {
 
     // Pengguna/karyawan
     Route::resource('karyawan','Admin\KaryawanController');
-    // Route::get('adm','Admin\AdminController@adm');
-    // Route::get('kry','Admin\AdminController@kry');
-    // Route::get('kry-add','Admin\AdminController@addkry');
 
     // Customer
     Route::resource('customer','Admin\CustomerController');
-    // Route::get('customer','Admin\AdminController@customer');
-    // Route::get('customer-add','Admin\AdminController@addcustomer');
-    // Route::post('customer-store','Admin\AdminController@storecustomer');
-    // Route::get('customer-edit/{id_customer}','Admin\AdminController@editcustomer');
-    // Route::put('customer-update/{id_customer}','Admin\AdminController@updatecustomer');
-    // Route::delete('customer-delete/{id_customer}','Admin\AdminController@deletecustomer');
-    // Route::get('jml-transaksi','Admin\AdminController@jmlTransaksi');
 
     // Data Transaksi
     Route::resource('transaksi','Admin\TransaksiController');
@@ -104,7 +94,7 @@ Route::middleware('auth')->group(function () {
     Route::put('change-password/{id}','Karyawan\ProfileController@change_password')->name('change.password');
 
     // Setting
-    Route::get('karyawan/setting','Karyawan\SettingsController@setting');
+    Route::get('karyawan-setting','Karyawan\SettingsController@setting');
     Route::put('proses-setting-karyawan/{id}','Karyawan\SettingsController@proses_setting_karyawan')->name('proses-setting-karyawan.update');
   });
 });
