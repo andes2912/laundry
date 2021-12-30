@@ -52,8 +52,8 @@ class OrderMasuk extends Notification
     {
       $url = url('/invoice-kar/' .$order->id);
       return TelegramMessage::create()
-      ->to('@laundrynotif')
-      ->content("*Order Masuk*\nCustomer {$order->customer} \nBerat Pakaian {$order->kg}kg \nTotal Pembayaran Rp. {$order->harga_akhir}")
+      ->to(telegram_channel_masuk())
+      ->content("*Order Masuk*\nCustomer {$order->customer} \nBerat Pakaian {$order->kg}kg \nTotal Pembayaran Rp. ".number_format($order->harga_akhir)."")
       ->button('View Order', $url);
     }
 

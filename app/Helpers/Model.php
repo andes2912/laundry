@@ -67,3 +67,27 @@ if (! function_exists('setNotificationTelegramFinish'))
         return $teleFininsh;
     }
 }
+
+// Get Telegram Channel untuk order masuk
+if (! function_exists('telegram_channel_masuk'))
+{
+    function telegram_channel_masuk()
+    {
+        $model = new notifications_setting;
+        $data  = $model::first();
+        $channel_masuk = $data ? $data->telegram_channel_masuk : NULL;
+        return $channel_masuk;
+    }
+}
+
+// Get Telegram Channel untuk order selesai
+if (! function_exists('telegram_channel_selesai'))
+{
+    function telegram_channel_selesai()
+    {
+        $model = new notifications_setting;
+        $data  = $model::first();
+        $channel_selesai = $data ? $data->telegram_channel_selesai : NULL;
+        return $channel_selesai;
+    }
+}
