@@ -294,16 +294,17 @@
                           </div>
                         </div>
 
-                         <h5 class="m-1">Telegram Order Masuk</h5>
+                        <h5 class="m-1">Telegram Order Masuk</h5>
                         <div class="col-12 mb-1">
                           <div class="custom-control custom-switch custom-control-inline">
                               <input type="checkbox" class="custom-control-input" name="telegram_order_masuk" {{$setnotif->telegram_order_masuk == 1 ? 'checked' : '0'}} value="1" id="telegram_order_masuk">
                               <label class="custom-control-label mr-1" for="telegram_order_masuk"></label>
                               <span class="switch-label w-100">Aktifkan Jika Ingin Mendapatkan Notifikasi Setiap Order Masuk</span>
                           </div>
+
                         </div>
 
-                         <h5 class="m-1">Telegram Order Keluar</h5>
+                        <h5 class="m-1">Telegram Order Keluar</h5>
                         <div class="col-12 mb-1">
                           <div class="custom-control custom-switch custom-control-inline">
                               <input type="checkbox" class="custom-control-input" name="telegram_order_selesai" {{$setnotif->telegram_order_selesai == 1 ? 'checked' : '0'}} value="1" id="telegram_order_selesai">
@@ -311,9 +312,18 @@
                               <span class="switch-label w-100">Aktifkan Jika Ingin Mendapatkan Notifikasi Setiap Order Selesai</span>
                           </div>
                         </div>
-                        {{-- @if ($setnotif->email == 1)
-                          <small class="m-1 alert alert-danger">Pastikan Sudah mengatur setting mail driver pada file .env</small>
-                        @endif --}}
+
+                        <h5 class="m-1">Channel Telegram</h5>
+                        <div class="col-md-12 mb-1">
+                           <div class="form-group">
+                              <input type="text" name="telegram_channel_masuk" class="form-control" placeholder="Masukan Nama Channel Telegram" value=" {{$setnotif->telegram_channel_masuk}} ">
+                              @if ($setnotif->telegram_order_selesai == 1 || $setnotif->telegram_order_masuk == 1)
+                                @if ($setnotif->telegram_channel_masuk == '')
+                                  <small class="text-danger">Channel telegram wajib diisi.</small>
+                                @endif
+                               @endif
+                          </div>
+                        </div>
 
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-start">
                           <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save

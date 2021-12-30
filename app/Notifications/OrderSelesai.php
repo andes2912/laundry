@@ -52,8 +52,8 @@ class OrderSelesai extends Notification
     public function toTelegram($statusorder)
     {
       return TelegramMessage::create()
-      ->to('@laundrynotif')
-      ->content("*Order Selesai* \nCustomer {$statusorder->customer}\nBerat Pakaian {$statusorder->kg}kg \nTotal Pembayaran Rp. {$statusorder->harga_akhir}");
+      ->to(telegram_channel_selesai())
+      ->content("*Order Selesai* \nCustomer {$statusorder->customer}\nBerat Pakaian {$statusorder->kg}kg \nTotal Pembayaran Rp. ".number_format($statusorder->harga_akhir)."");
     }
 
     /**

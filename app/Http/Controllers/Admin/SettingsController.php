@@ -118,9 +118,11 @@ class SettingsController extends Controller
   public function notif(Request $request,$id)
   {
     $notif = notifications_setting::findorFail($id);
-    $notif->telegram_order_masuk    = $request->telegram_order_masuk;
-    $notif->telegram_order_selesai  = $request->telegram_order_selesai;
-    $notif->email                   = $request->email;
+    $notif->telegram_order_masuk      = $request->telegram_order_masuk;
+    $notif->telegram_order_selesai    = $request->telegram_order_selesai;
+    $notif->email                     = $request->email;
+    $notif->telegram_channel_masuk    = $request->telegram_channel_masuk;
+    $notif->telegram_channel_selesai  = $request->telegram_channel_masuk;
     $notif->save();
 
     Session::flash('success','Notifications Berhasil Diupdate !');
