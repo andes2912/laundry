@@ -25,7 +25,7 @@ Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com<
 
 ## Sponsors
 
-Support Pap!Kos by becoming a sponsor on [Saweria](https://saweria.co/andes2912). Your logo will show up here with a link to your website.
+Support E-Laundry by becoming a sponsor on [Saweria](https://saweria.co/andes2912). Your logo will show up here with a link to your website.
 
 ## Any Questions ?
 
