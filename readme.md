@@ -15,11 +15,21 @@ Note : Aplikasi ini akan terus saya update.<br>
 Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com</b>
 </p>
 
+## Package
+- [IndoBank](https://github.com/andes2912/indobank) package Laravel untuk menyimpan data Nama Bank yang ada di Indonesia
+
 ## Fitur Release
 - 2.1.0 [Lihat Perubahan](https://github.com/andes2912/laundry/releases/tag/2.1.0)
 - 2.0.0 [Lihat Perubahan](https://github.com/andes2912/laundry/releases/tag/2.0)
 
-</br>
+## Sponsors
+
+Support Pap!Kos by becoming a sponsor on [Saweria](https://saweria.co/andes2912). Your logo will show up here with a link to your website.
+
+## Any Questions ?
+
+Please contact me on [Andri Desmana](mailto:andridesmana29@outlook.com?subject=[GitHub]%20Questesion%20Pap!Kos) or [Telegram](https://t.me/andridesmana)
+
 ## License
 
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
