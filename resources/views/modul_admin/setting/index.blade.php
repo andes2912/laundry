@@ -49,7 +49,7 @@
 
           <li class="nav-item">
               <a class="nav-link d-flex py-75" id="pill-notif" data-toggle="pill" href="#vertical-notif" aria-expanded="false">
-                  <i class="feather icon-feather mr-50 font-medium-3"></i>
+                  <i class="feather icon-bell mr-50 font-medium-3"></i>
                   Notifications
               </a>
           </li>
