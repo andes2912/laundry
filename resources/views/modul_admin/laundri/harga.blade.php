@@ -148,7 +148,7 @@
                         </div>
                         @else
                             <h5 class="text-danger">Upsss, data karyawan/cabang masih kosong nih !!!</h5> <br>
-                            <a href="{{url('kry')}}" class="btn btn-success btn-block">Tambah Karyawan</a>
+                            <a href="{{url('karyawan')}}" class="btn btn-success btn-block">Tambah Karyawan</a>
                         @endif
                     </form>
                 </div>
