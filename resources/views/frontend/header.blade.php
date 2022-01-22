@@ -11,7 +11,7 @@
           <a href="{{url('/')}}" class="navbar-brand">
               <span class="navbar-logo"></span>
               <span class="brand-text">
-                  {{$setpage->judul != NULL ? $setpage->judul : 'Judul Disini'}}
+                  {{$setpage != NULL ? $setpage->judul : 'Judul Disini'}}
               </span>
           </a>
       </div>
