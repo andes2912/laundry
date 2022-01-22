@@ -99,6 +99,7 @@ var $purple = '#df87f2';
 var $strok_color = '#b9c3cd';
 
 // Bar Data Bulan
+var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 var salesavgChartoptions = {
       chart: {
         height: 270,
@@ -151,7 +152,7 @@ var salesavgChartoptions = {
           axisTicks: {
               show: false,
           },
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Juni', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          categories: MONTHS,
           axisBorder: {
               show: false,
           },
@@ -173,7 +174,7 @@ var salesavgChartoptions = {
       },
       series: [{
             name: "Laundry Masuk",
-            data: [{{$jan}}, {{$feb}}, {{$mar}}, {{$apr}}, {{$mey}}, {{$juni}}, {{$july}}, {{$aug}}, {{$sep}}, {{$oct}}, {{$nov}}, {{$dec}}]
+            data: [{{$_nilaiB}}]
         }],
 
     }

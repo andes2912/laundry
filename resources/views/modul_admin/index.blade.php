@@ -62,12 +62,108 @@
             </div>
         </div>
     </div>
+
+    <div class="col-xl-7 col-md-6 col-12">
+      <div class="card card-statistics">
+          <div class="card-header">
+              <h4 class="card-title">Pendapatan</h4>
+              <div class="d-flex align-items-center">
+                  <p class="card-text font-small-2 mr-25 mb-0">Pendapatan Tahuan & Bulan</p>
+              </div>
+          </div>
+          <div class="card-body statistics-body">
+              <div class="row">
+                  <div class="col-xl-4 col-sm-6 col-12 mb-2 mb-xl-0">
+                      <div class="media">
+                          <div class="avatar bg-primary mr-2">
+                              <div class="avatar-content">
+                                  <i class="feather icon-dollar-sign"></i>
+                              </div>
+                          </div>
+                          <div class="media-body my-auto">
+                              <h5 class="font-weight-bolder mb-0">{{Rupiah::getRupiah($incomeY)}}</h5>
+                              <p class="card-text font-small-1 mb-0">Tahun ini {{date('Y')}} </p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-4 col-sm-6 col-12 mb-2 mb-xl-0">
+                      <div class="media">
+                          <div class="avatar bg-info mr-2">
+                              <div class="avatar-content">
+                                 <i class="feather icon-dollar-sign"></i>
+                              </div>
+                          </div>
+                          <div class="media-body my-auto">
+                              <h5 class="font-weight-bolder mb-0"> {{Rupiah::getRupiah($incomeM)}} </h5>
+                              <p class="card-text font-small-1 mb-0">Bulan ini {{date('F')}} </p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-4 col-sm-6 col-12 mb-2 mb-sm-0">
+                      <div class="media">
+                          <div class="avatar bg-danger mr-2">
+                              <div class="avatar-content">
+                                  <i class="feather icon-dollar-sign"></i>
+                              </div>
+                          </div>
+                          <div class="media-body my-auto">
+                              <h5 class="font-weight-bolder mb-0">{{Rupiah::getRupiah($incomeYOld)}}</h5>
+                              <p class="card-text font-small-1 mb-0">Tahun lalu {{date("Y",strtotime("-1 year")) ?? 0}} </p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-xl-5 col-md-6 col-12">
+      <div class="card card-statistics">
+          <div class="card-header">
+              <h4 class="card-title">Pendapatan </h4>
+              <div class="d-flex align-items-center">
+                  <p class="card-text font-small-2 mr-25 mb-0">Pendapatan Harian</p>
+              </div>
+          </div>
+          <div class="card-body statistics-body">
+              <div class="row">
+                  <div class="col-xl-6 col-sm-6 col-12 mb-2 mb-xl-0">
+                      <div class="media">
+                          <div class="avatar bg-rgba-success mr-2">
+                              <div class="avatar-content">
+                                  <i class="feather icon-dollar-sign"></i>
+                              </div>
+                          </div>
+                          <div class="media-body my-auto">
+                              <h4 class="font-weight-bolder mb-0">{{Rupiah::getRupiah($incomeD)}}</h4>
+                              <p class="card-text font-small-1 mb-0">Hari ini {{date('l')}} </p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-6 col-sm-6 col-12 mb-2 mb-xl-0">
+                      <div class="media">
+                          <div class="avatar bg-rgba-warning mr-2">
+                              <div class="avatar-content">
+                                 <i class="feather icon-dollar-sign"></i>
+                              </div>
+                          </div>
+                          <div class="media-body my-auto">
+                              <h4 class="font-weight-bolder mb-0">{{Rupiah::getRupiah($incomeDOld)}}</h4>
+                              <p class="card-text font-small-1 mb-0">Kemarin {{date("l",strtotime("-1 day"))}} </p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
 </div>
+
 <div class="row">
     <div class="col-lg-7 col-xl-7 col-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h4 class="card-title">Data Per-hari</h4>
+                <h4 class="card-title">Data Laundry Masuk Per-hari</h4>
             </div>
             <div class="card-content">
                 <div class="card-body pb-0">
@@ -80,7 +176,7 @@
     <div class="col-lg-5 col-xl-5 col-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h4 class="card-title">Data Per-bulan</h4>
+                <h4 class="card-title">Data Laundry Masuk Per-bulan</h4>
             </div>
             <div class="card-content">
                 <div class="card-body pb-0">
@@ -99,6 +195,7 @@ var $purple = '#df87f2';
 var $strok_color = '#b9c3cd';
 
 // Bar data bulan
+var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 var salesavgChartoptions = {
       chart: {
         height: 270,
@@ -151,7 +248,7 @@ var salesavgChartoptions = {
           axisTicks: {
               show: false,
           },
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Juni', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          categories: MONTHS,
           axisBorder: {
               show: false,
           },
@@ -173,7 +270,7 @@ var salesavgChartoptions = {
       },
       series: [{
             name: "Laundry Masuk",
-            data: [{{$jan}}, {{$feb}}, {{$mar}}, {{$apr}}, {{$mey}}, {{$juni}}, {{$july}}, {{$aug}}, {{$sep}}, {{$oct}}, {{$nov}}, {{$dec}}]
+            data: [{{$_nilaiB}}]
         }],
 
     }
