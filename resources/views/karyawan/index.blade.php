@@ -6,7 +6,8 @@
           <div class="card card-congratulation-medal">
               <div class="card-body">
                   <h5>Welcome 🎉 {{Auth::user()->name}}!</h5>
-                  <p class="card-text font-small-2">Have you nice day.</p>
+                  <p class="card-text font-small-2">Semoga harimu menyenangkan.</p> <br>
+                  {{date('l, d F Y')}}, {{date('H:i:s')}}
               </div>
           </div>
       </div>
