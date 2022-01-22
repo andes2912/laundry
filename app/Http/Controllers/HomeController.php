@@ -118,6 +118,7 @@ class HomeController extends Controller
                   ->  with('incomeDOld',$incomeDOld);
 
           } elseif(Auth::user()->auth === "Karyawan") {
+
               $masuk = transaksi::whereIN('status_order',['Process','Done','Delivery'])->where('user_id',auth::user()->id)->count();
               $selesai = transaksi::where('status_order','Deone')->where('user_id',auth::user()->id)->count();
               $diambil = transaksi::where('status_order','Delivery')->where('user_id',auth::user()->id)->count();
@@ -127,7 +128,11 @@ class HomeController extends Controller
               $incomeM = transaksi::where('user_id',Auth::id())->where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->sum('harga_akhir');
               $incomeMOld = transaksi::where('user_id',Auth::id())->where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m',strtotime("-1 month")),'0'))->sum('harga_akhir');
 
-              $persen = ($incomeM - $incomeMOld) / $incomeM * 100;
+              $persen = 0;
+              if ($incomeMOld != null || $incomeM != null) {
+                $persen =  ($incomeM - $incomeMOld) / $incomeM * 100;
+              }
+
 
               // Statistik Bulanan
               $bln = DB::table('transaksis')
