@@ -122,35 +122,12 @@ class HomeController extends Controller
               $selesai = transaksi::where('status_order','Deone')->where('user_id',auth::user()->id)->count();
               $diambil = transaksi::where('status_order','Delivery')->where('user_id',auth::user()->id)->count();
               $customer = customer::where('user_id',auth::user()->id)->get();
-              $sudahbayar = transaksi::where('status_payment','Success')->where('user_id',auth::user()->id)->count();
-              $belumbayar = transaksi::where('status_payment','Pending')->where('user_id',auth::user()->id)->count();
+              $kgToday = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date('d'))->sum('kg');
+              $kgTodayOld = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date("d",strtotime("-1 day")))->sum('kg');
+              $incomeM = transaksi::where('user_id',Auth::id())->where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->sum('harga_akhir');
+              $incomeMOld = transaksi::where('user_id',Auth::id())->where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m',strtotime("-1 month")),'0'))->sum('harga_akhir');
 
-              // Statistik Harian
-              $hari = DB::table('transaksis')
-              ->  select('tgl', DB::raw('count(id) AS jml'))
-              ->  whereYear('created_at','=',date("Y", strtotime(now())))
-              ->  whereMonth('created_at','=',date("m", strtotime(now())))
-              ->  groupBy('tgl')
-              ->where('user_id',auth::user()->id)
-              ->  get();
-
-              $tanggal = '';
-              $batas =  31;
-              $nilai = '';
-              for($_i=1; $_i <= $batas; $_i++){
-                  $tanggal = $tanggal . (string)$_i . ',';
-                  $_check = false;
-                  foreach($hari as $_data){
-                      if((int)@$_data->tgl === $_i){
-                          $nilai = $nilai . (string)$_data->jml . ',';
-                          $_check = true;
-                      }
-                  }
-                  if(!$_check){
-                      $nilai = $nilai . '0,';
-                  }
-              }
-
+              $persen = ($incomeM - $incomeMOld) / $incomeM * 100;
 
               // Statistik Bulanan
               $bln = DB::table('transaksis')
@@ -182,10 +159,11 @@ class HomeController extends Controller
                   ->  with('masuk',$masuk)
                   ->  with('selesai',$selesai)
                   ->  with('customer', $customer)
-                  ->  with('sudahbayar', $sudahbayar)
-                  ->  with('belumbayar', $belumbayar)
-                  ->  with('_tanggal', substr($tanggal, 0,-1))
-                  ->  with('_nilai', substr($nilai, 0, -1))
+                  ->  with('kgToday', $kgToday)
+                  ->  with('kgTodayOld', $kgTodayOld)
+                  ->  with('incomeM',$incomeM)
+                  ->  with('incomeMOld',$incomeMOld)
+                  ->  with('persen',$persen)
                   ->  with('_bulan', substr($bulans, 0,-1))
                   ->  with('_nilaiB', substr($nilaiB, 0, -1));
 
