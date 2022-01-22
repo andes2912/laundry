@@ -17,7 +17,7 @@
   @include('frontend.footer')
 
 {{-- Whatsapp Button Start--}}
-  <a href="https://wa.me/{{$setpage->whatsapp}}" target="blank_">
+  <a href="https://wa.me/{{$setpage->whatsapp ?? ''}}" target="blank_">
     <img src="{{asset('frontend/img/wa.png')}}" class="wabutton" alt="WhatsApp-Button">
   </a>
 {{-- End: Whatsapp Button --}}
