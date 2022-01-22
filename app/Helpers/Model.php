@@ -1,5 +1,5 @@
 <?php
-use App\Models\{customer,notifications_setting};
+use App\Models\{customer,notifications_setting,transaksi};
 
 class Rupiah {
     public static function getRupiah($value) {
