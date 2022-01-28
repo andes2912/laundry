@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
       return $this->hasOne(DataBank::class);
     }
+
+    public function transaksi()
+    {
+      return $this->belongsTo(transaksi::class,'id','user_id');
+    }
 }
