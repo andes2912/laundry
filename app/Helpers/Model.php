@@ -3,7 +3,7 @@ use App\Models\{customer,notifications_setting,transaksi};
 
 class Rupiah {
     public static function getRupiah($value) {
-        $format = "Rp " . number_format($value,2,',','.');
+        $format = "Rp " . number_format($value,0,',','.');
         return $format;
     }
 }
