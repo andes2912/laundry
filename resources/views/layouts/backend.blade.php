@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/extensions/tether.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/extensions/shepherd-theme-default.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('backend/vendors/css/charts/apexcharts.css')}}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -164,8 +165,8 @@
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="User">Data Finance</span></a>
                           <ul class="menu-content">
-                            <li class="nav-item {{ (request()->is('data-finance')) ? 'active' : '' }}">
-                              <a href="{{url('data-finance')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Finance</span></a>
+                            <li class="nav-item {{ (request()->is('admin/finance')) ? 'active' : '' }}">
+                              <a href="{{route('finance.index')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Finance</span></a>
                             </li>
                             <li class="nav-item {{ (request()->is('data-harga')) ? 'active' : '' }}">
                               <a href="{{url('data-harga')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Harga Laundry</span></a>
@@ -262,6 +263,8 @@
 
     <!-- BEGIN: Page JS-->
     <script src="{{asset('backend/js/scripts/datatables/datatable.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/1.9.46/autoNumeric.js"></script>
+
     <!-- END: Page JS-->
     @yield('scripts')
 </body>

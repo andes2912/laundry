@@ -1,16 +1,4 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', 'FrontController@index');
 
 // Frontend
@@ -38,13 +26,12 @@ Route::middleware('auth')->group(function () {
     Route::get('filter-transaksi','Admin\TransaksiController@filtertransaksi'); // filter data transaksi by karyawan
     Route::get('invoice-customer/{invoice}','Admin\TransaksiController@invoice'); // lihat invoice
 
-    // Route::get('data-transaksi','Admin\AdminController@datatransaksi');
-    Route::get('data-harga','Admin\AdminController@dataharga');
-    Route::post('harga-store','Admin\AdminController@hargastore');
-    Route::get('edit-harga','Admin\AdminController@hargaedit');
+    Route::get('data-harga','Admin\FinanceController@dataharga');
+    Route::post('harga-store','Admin\FinanceController@hargastore');
+    Route::get('edit-harga','Admin\FinanceController@hargaedit');
 
     // Finance
-    Route::get('data-finance','Admin\AdminController@finance');
+    Route::get('finance','Admin\FinanceController@index')->name('finance.index');
 
     // Notifikasi
     Route::get('read-notification','Admin\AdminController@notif');
