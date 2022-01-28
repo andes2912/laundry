@@ -168,84 +168,6 @@ class PelayananController extends Controller
         return $select;
     }
 
-    // Proses Ubah Status Order
-    public function ubahstatusorder(Request $request)
-    {
-      $statusorder = transaksi::find($request->id);
-      $statusorder->update([
-          'status_order' => $request->status_order,
-      ]);
-      if ($statusorder->status_order == 'Done') {
-
-        // Cek email notif
-        if (setNotificationEmail(1) == 1) {
-
-          // Menyiapkan data
-          $email = $statusorder->email_customer;
-          $data = array(
-              'invoice' => $statusorder->invoice,
-              'customer' => $statusorder->customer,
-              'tgl_transaksi' => $statusorder->tgl_transaksi,
-          );
-
-          // Kirim Email
-          Mail::send('karyawan.email.selesai', $data, function($mail) use ($email, $data){
-          $mail->to($email,'no-replay')
-                  ->subject("E-Laundry - Laundry Selesai");
-          $mail->from('laundri.dev@gmail.com');
-          });
-        }
-
-        // Cek status notif untuk telegram
-        if (setNotificationTelegramFinish(1) == 1) {
-          $statusorder->notify(new OrderSelesai());
-        }
-
-        Session::flash('success','Status Laundry Berhasil Diubah !');
-      }
-    }
-
-    // Proses Ubah Status Pembayaran
-    public function ubahstatusbayar(Request $request)
-    {
-      $statusbayar = transaksi::find($request->id);
-      $statusbayar->update([
-          'status_payment' => $request->status_payment,
-      ]);
-      Session::flash('success','Status Pembayaran Berhasil Diubah !');
-      return $statusbayar;
-    }
-
-    // Proses Ubah Status Diambil
-    public function ubahstatusambil(Request $request)
-    {
-      $statusbayar = transaksi::find($request->id);
-      $statusbayar->update([
-          'tgl_ambil' => Carbon::today(),
-          'status_order' => 'Delivery'
-      ]);
-      if ($statusbayar->status_order == 'Delivery') {
-          // Cek email notif
-          if (setNotificationEmail(1) == 1) {
-            // Menyiapkan data
-            $email = $statusbayar->email_customer;
-            $data = array(
-                'invoice' => $statusbayar->invoice,
-                'customer' => $statusbayar->customer,
-                'tgl_transaksi' => $statusbayar->tgl_transaksi,
-                'tgl_ambil' => $statusbayar->tgl_ambil,
-            );
-
-            // Kirim Email
-            Mail::send('karyawan.email.diambil', $data, function($mail) use ($email, $data){
-            $mail->to($email,'no-replay')
-                    ->subject("E-Laundry - Laundry Sudah Diambil");
-            $mail->from('laundri.dev@gmail.com');
-            });
-          }
-        Session::flash('success','Status Laundry Berhasi Diubah !');
-      }
-    }
 
     // Tambah Customer
     public function listcsadd()
@@ -277,5 +199,57 @@ class PelayananController extends Controller
 
       return redirect('list-customer');
 
+    }
+
+    // Update Status Laundry
+    public function updateStatusLaundry(Request $request)
+    {
+      $transaksi = transaksi::find($request->id);
+      if ($transaksi->status_payment == 'Pending') {
+        $transaksi->update([
+          'status_payment' => 'Success'
+        ]);
+      } elseif ($transaksi->status_payment == 'Success') {
+        if ($transaksi->status_order == 'Process') {
+          $transaksi->update([
+            'status_order' => 'Done'
+          ]);
+        } elseif ($transaksi->status_order == 'Done') {
+          $transaksi->update([
+            'status_order' => 'Delivery'
+          ]);
+
+          // Cek email notif
+          if (setNotificationEmail(1) == 1) {
+
+            // Menyiapkan data
+            $email = $transaksi->email_customer;
+            $data = array(
+                'invoice' => $transaksi->invoice,
+                'customer' => $transaksi->customer,
+                'tgl_transaksi' => $transaksi->tgl_transaksi,
+            );
+
+            // Kirim Email
+            Mail::send('karyawan.email.selesai', $data, function($mail) use ($email, $data){
+            $mail->to($email,'no-replay')
+                    ->subject("E-Laundry - Laundry Selesai");
+            $mail->from('laundri.dev@gmail.com');
+            });
+          }
+
+          // Cek status notif untuk telegram
+          if (setNotificationTelegramFinish(1) == 1) {
+            $transaksi->notify(new OrderSelesai());
+          }
+        }
+      }
+
+      if ($transaksi->status_payment == 'Success') {
+          Session::flash('success', "Status Pembayaran Berhasil Diubah !");
+      }
+      if($transaksi->status_order == 'Done' || $transaksi->status_order == 'Delivery') {
+          Session::flash('success', "Status Laundry Berhasil Diubah !");
+      }
     }
 }

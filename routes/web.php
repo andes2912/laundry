@@ -54,9 +54,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('pelayanan','Karyawan\PelayananController');
     // Transaksi
     Route::get('add-order','Karyawan\PelayananController@addorders');
-    Route::get('ubah-status-order','Karyawan\PelayananController@ubahstatusorder');
-    Route::get('ubah-status-bayar','Karyawan\PelayananController@ubahstatusbayar');
-    Route::get('ubah-status-ambil','Karyawan\PelayananController@ubahstatusambil');
+    // Route::get('ubah-status-order','Karyawan\PelayananController@ubahstatusorder');
+    // Route::get('ubah-status-bayar','Karyawan\PelayananController@ubahstatusbayar');
+    // Route::get('ubah-status-ambil','Karyawan\PelayananController@ubahstatusambil');
+    Route::get('update-status-laundry','Karyawan\PelayananController@updateStatusLaundry');
 
     // Customer
     Route::get('list-customer','Karyawan\PelayananController@listcs');
