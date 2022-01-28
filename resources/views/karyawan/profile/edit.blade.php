@@ -5,7 +5,7 @@
     <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
             <div class="card-body">
-                <center class="m-t-30"> <img src="{{asset('backend/images/profile/user-uploads/user-01.jpg')}}" class="rounded" width="230" />
+                <center class="m-t-30"> <img src="{{asset($edit->foto == null ? 'backend/images/profile/user.jpg' : 'storage/images/foto_profile/'. $edit->foto)}}" class="rounded" width="230" />
                     <h4 class="card-title m-t-10">{{$edit->name}}</h4>
                     <h6 class="card-subtitle">Karyawan</h6>
                 </center>
@@ -29,7 +29,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Edit Profile</h4> <hr>
-                <form action="{{url('profile-karyawan/update', $edit->id)}}" method="post">
+                <form action="{{url('profile-karyawan/update', $edit->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="col-md-12">
@@ -54,6 +54,12 @@
                         <div class="form-group has-success">
                             <label class="control-label">Alamat</label>
                             <textarea class="form-control" name="alamat" rows="3">{{$edit->alamat}}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group has-success">
+                            <label class="control-label">Foto</label>
+                            <input type="file" name="foto" class="form-control">
                         </div>
                     </div>
                     <hr>
