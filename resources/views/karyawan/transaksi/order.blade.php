@@ -26,9 +26,9 @@
                         <th>No Resi</th>
                         <th>TGL Transaksi</th>
                         <th>Customer</th>
-                        <th>Status Order</th>
-                        <th>Status Payment</th>
-                        <th>Jenis Laundri</th>
+                        <th>Status Laundry</th>
+                        <th>Payment</th>
+                        <th>Jenis</th>
                         <th>Total</th>
                         <th>Action</th>
                     </tr>
@@ -46,16 +46,16 @@
                             @if ($item->status_order == 'Done')
                                 <span class="label label-success">Selesai</span>
                             @elseif($item->status_order == 'Delivery')
-                                <span class="label label-primary">Sudah Diambil</span>
+                                <span class="label label-primary">Diambil</span>
                             @elseif($item->status_order == 'Process')
-                                <span class="label label-info">Sedang Proses</span>
+                                <span class="label label-info">Diproses</span>
                             @endif
                         </td>
                         <td>
                             @if ($item->status_payment == 'Success')
-                                <span class="label label-success">Sudah Dibayar</span>
+                                <span class="label label-success">Lunas</span>
                             @elseif($item->status_payment == 'Pending')
-                                <span class="label label-info">Belum Dibayar</span>
+                                <span class="label label-info">Pending</span>
                             @endif
                         </td>
                         <td>{{$item->price->jenis}}</td>
@@ -63,19 +63,19 @@
                             {{Rupiah::getRupiah($item->harga_akhir)}}
                         </td>
                         <td>
-                            @if ($item->status_payment == "Pending")
-                                <a class="btn btn-sm btn-danger" data-toggle="modal" data-id-pay="{{$item->id}}" data-id-name="{{$item->customer}}" data-id-bayar="{{$item->status_payment}}" id="klick" data-target="#ubah_status_pay" style="color:white">Bayar</a>
-                                <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
-                            @elseif($item->status_payment == "Success")
-                                @if ($item->status_order == "Done")
-                                <a class="btn btn-sm btn-success" data-id-ambil="{{$item->id}}" id="ambil" style="color:white">Ambil</a>
-                                @elseif($item->status_order == "Process")
-                                    <a class="btn btn-sm btn-info" data-toggle="modal" data-id="{{$item->id}}" data-id-nama="{{$item->customer}}" data-id-order="{{$item->status_order}}" id="klikmodal" data-target="#ubah_status" style="color:white">Selesai</a>
-                                    <a href="{{url('invoice-kar', $item->id)}}"  class="btn btn-sm btn-primary">Invoice</a>
-                                @elseif($item->status_order == "Delivery")
-                                    <a href="" class="btn btn-sm btn-warning">Detail</a>
-                                    <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-primary">Invoice</a>
-                                @endif
+                            @if ($item->status_payment == 'Pending')
+                            <a class="btn btn-sm btn-danger" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Bayar</a>
+                            <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
+                            @elseif($item->status_payment == 'Success')
+                              @if ($item->status_order == 'Process')
+                                <a class="btn btn-sm btn-info" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Selesai</a>
+                                <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
+                              @elseif($item->status_order == 'Done')
+                                <a class="btn btn-sm btn-info" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Diambil</a>
+                                <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
+                              @elseif($item->status_order == 'Delivery')
+                                <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
+                              @endif
                             @endif
                         </td>
                     </tr>
@@ -84,73 +84,21 @@
                 </tbody>
             </table>
         </div>
-        @include('karyawan.transaksi.statusorder')
-        @include('karyawan.transaksi.statusbayar')
     </div>
 </div>
 @endsection
 @section('scripts')
 <script type="text/javascript">
 
-// Tampilkan Modal Ubah Status Order
-$(document).on('click','#klikmodal', function(){
-    var id = $(this).attr('data-id');
-    var customer = $(this).attr('data-id-nama');
-    var status_order = $(this).attr('data-id-order');
-    $("#id").val(id)
-    $("#customer").val(customer)
-    $("#status_order").val(status_order)
-});
-
-// Proses Ubah Status Order
-$(document).on('click','#save_status', function(){
-    var id = $("#id").val();
-    var customer = $("#customer").val();
-    var status_order = $("#status_order").val();
-
-    $.get('{{Url("ubah-status-order")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,customer:customer,status_order:status_order}, function(resp){
-      $("#id").val('');
-      $("#customer").val('');
-      $("#status_order").val('');
-
-      location.reload();
-    });
-});
-
-
-// Tampilkan Modal Ubah Status Pembayaran
-$(document).on('click','#klick', function(){
-    var id = $(this).attr('data-id-pay');
-    var customer = $(this).attr('data-id-name');
-    var status_payment = $(this).attr('data-id-bayar');
-    $("#id_bayar").val(id)
-    $("#customer_pay").val(customer)
-    $("#status_payment").val(status_payment)
-});
-
-// Proses Ubah Status Pembayaran
-$(document).on('click','#simpan_status', function(){
-    var id = $("#id_bayar").val();
-    var customer = $("#customer_pay").val();
-    var status_payment = $("#status_payment").val();
-
-    $.get('{{Url("ubah-status-bayar")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,customer:customer,status_payment:status_payment}, function(resp){
-      $("#id_bayar").val('');
-      $("#customer_pay").val('');
-      $("#status_payment").val('');
-			location.reload();
-    });
-});
-
-// Ubah Status Menjadi Diambil
-$(document).on('click','#ambil', function () {
-  var id = $(this).attr('data-id-ambil');
-  $.get(' {{Url("ubah-status-ambil")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-    location.reload();
+// Update Status Laundry
+$(document).on('click', '#updateStatus', function () {
+  var id = $(this).attr('data-id-update');
+  $.get('update-status-laundry', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(_resp){
+    location.reload()
   });
 });
 
-    // DATATABLE
+// DATATABLE
 $(document).ready(function() {
     $('#myTable').DataTable();
     $(document).ready(function() {
