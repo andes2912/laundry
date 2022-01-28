@@ -165,7 +165,7 @@
 
                         <li class=" nav-item"><a href="#"><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="User">Data Finance</span></a>
                           <ul class="menu-content">
-                            <li class="nav-item {{ (request()->is('admin/finance')) ? 'active' : '' }}">
+                            <li class="nav-item {{ (request()->is('finance')) ? 'active' : '' }}">
                               <a href="{{route('finance.index')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Finance</span></a>
                             </li>
                             <li class="nav-item {{ (request()->is('data-harga')) ? 'active' : '' }}">
