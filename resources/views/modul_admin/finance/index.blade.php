@@ -177,7 +177,7 @@
               <div class="employee-task d-flex justify-content-between align-items-center">
                   <div class="media">
                       <div class="avatar mr-75">
-                          <img src="{{asset('backend/images/profile/user.jpg')}}" class="rounded" width="42" height="42" alt="Avatar" />
+                          <img src="{{asset($cabang->foto == null ? 'backend/images/profile/user.jpg' : 'storage/images/foto_profile/'. $cabang->foto)}}" class="rounded" width="42" height="42" alt="Avatar" />
                       </div>
                       <div class="media-body my-auto">
                           <h6 class="mb-0">{{$cabang->nama_cabang}}</h6>

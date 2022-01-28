@@ -26,6 +26,14 @@ class ProfileController extends Controller
     // Profile Karyawan Cabang - Save
     public function karyawanProfileSave(Request $request, $id)
     {
+      $foto = $request->file('foto');
+      if ($foto) {
+        $nama_foto = time()."_".$foto->getClientOriginalName();
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'public/images/foto_profile';
+        $foto->storeAs($tujuan_upload,$nama_foto);
+      }
+
       $edit = User::FindorFail($id);
       $edit->id = $request->id;
       $edit->name = $request->name;
@@ -34,8 +42,8 @@ class ProfileController extends Controller
       $edit->no_telp = $request->no_telp;
       $edit->nama_cabang = $request->nama_cabang;
       $edit->alamat_cabang = $request->alamat_cabang;
+      $edit->foto = $nama_foto ?? Auth::user()->foto;
       $edit->save();
-
 
       alert()->success('Update Data Berhasil');
       $id = $edit->id;

@@ -95,7 +95,7 @@
                               <span class="user-status">{{auth::user()->auth}}</span>
                             </div>
                             <span>
-                              <img class="round" src="{{asset('backend/images/profile/user.jpg')}}" alt="avatar" height="40" width="40">
+                              <img class="round" src="{{asset(Auth::user()->foto == null ? 'backend/images/profile/user.jpg' : 'storage/images/foto_profile/'. Auth::user()->foto )}}" alt="avatar" height="40" width="40">
                             </span>
                           </a>
                           <div class="dropdown-menu dropdown-menu-right">
