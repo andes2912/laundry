@@ -47,6 +47,14 @@ Route::middleware('auth')->group(function () {
     // Profile
     Route::get('profile-admin/{id}','Admin\AdminController@profile');
     Route::get('profile-admin-edit','Admin\AdminController@edit_profile');
+
+    // Dodkumentasi
+    Route::get('dokumentasi','Admin\DokumentasiController@index'); // Dokumentasi
+    Route::get('dokumentasi/tentang','Admin\DokumentasiController@tentang'); // Tentang
+    Route::get('dokumentasi/instalasi-penggunaan','Admin\DokumentasiController@instalasi'); // Instalasi & Penggunaan
+    Route::get('dokumentasi/versi','Admin\DokumentasiController@versi'); // Versi dan Pembaruan
+    Route::get('dokumentasi/notifikasi','Admin\DokumentasiController@notifikasi'); // Notifikasi
+
   });
 
   // Modul Karyawan

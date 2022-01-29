@@ -34,6 +34,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/core/menu/menu-types/vertical-menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/core/colors/palette-gradient.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/pages/dashboard-analytics.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/pages/page-knowledge-base.css')}}">
+
 
     <!-- END: Page CSS-->
 
@@ -181,6 +183,10 @@
                             </li>
                           </ul>
                         </li>
+
+                        <li class="nav-item {{ (request()->is('dokumentasi')) ? 'active' : '' }}">
+                          <a href="{{url('dokumentasi')}}"><i class="feather icon-folder"></i><span class="menu-item" data-i18n="List">Dokumentasi</span></a>
+                        </li>
                     {{-- End Menu Admin --}}
 
                     {{-- Menu Karyawan --}}
@@ -264,7 +270,7 @@
     <!-- BEGIN: Page JS-->
     <script src="{{asset('backend/js/scripts/datatables/datatable.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/1.9.46/autoNumeric.js"></script>
-
+    <script src="{{asset('backend/js/scripts/pages/page-knowledge-base.js')}}"></script>
     <!-- END: Page JS-->
     @yield('scripts')
 </body>
