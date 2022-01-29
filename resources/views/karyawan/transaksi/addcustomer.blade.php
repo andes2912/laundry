@@ -15,7 +15,7 @@
                         <div class="col-md-4">
                             <div class="form-group has-success">
                                 <label class="control-label">Nama</label>
-                                <input type="text" class="form-control form-control-danger @error('nama') is-invalid @enderror" name="nama" placeholder="Nama Customer" autocomplete="off">
+                                <input type="text" class="form-control form-control-danger @error('nama') is-invalid @enderror" name="nama" value="{{old('nama')}}" placeholder="Nama Customer" autocomplete="off">
                                 @error('nama')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -27,8 +27,8 @@
                         <div class="col-md-4">
                             <div class="form-group has-success">
                                 <label class="control-label">Email</label>
-                                <input type="email" class="form-control form-control-danger @error('email') is-invalid @enderror" name="email_customer" placeholder="Alamat" autocomplete="off">
-                                @error('email')
+                                <input type="email" class="form-control form-control-danger @error('email_customer') is-invalid @enderror" name="email_customer" value="{{old('email_customer')}}" placeholder="Alamat" autocomplete="off">
+                                @error('email_customer')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
@@ -37,8 +37,8 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group has-success">
-                                <label class="control-label">No. Telp</label>
-                                <input type="number" class="form-control form-control-danger @error('no_telp') is-invalid @enderror" name="no_telp" placeholder="Nomor Telpon" autocomplete="off">
+                                <label class="control-label">No. WhatsApp</label>
+                                <input type="number" class="form-control form-control-danger @error('no_telp') is-invalid @enderror" name="no_telp" placeholder="Nomor WhatsApp" value="{{old('no_telp')}}" autocomplete="off">
                                 @error('no_telp')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -52,7 +52,7 @@
                         <div class="col-md-6">
                             <div class="form-group has-success">
                                 <label class="control-label">Alamat</label>
-                                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3" placeholder="Alamat Customer"></textarea>
+                                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3" placeholder="Alamat Customer"> {{old('alamat')}} </textarea>
                                 @error('alamat')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>

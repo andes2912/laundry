@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Karyawan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{transaksi,customer,harga};
+use App\Http\Requests\AddCustomerRequest;
 use Auth;
 use PDF;
 use Mail;
@@ -177,22 +178,23 @@ class PelayananController extends Controller
     }
 
     // Proses Tambah Customer
-    public function addcs(Request $request)
+    public function addcs(AddCustomerRequest $request)
     {
-      $request->validate([
-        'nama'                => 'required|unique:customers|max:25',
-        'email_customer'      => 'required|unique:customers',
-        'alamat'              => 'required',
-        'kelamin'             => 'required',
-        'no_telp'             => 'required|unique:customers',
-      ]);
+      $cekNumber = substr($request->no_telp,0,1); // ambil angka pertama dari string
+      $cekNumber1 = substr($request->no_telp,0,2); // ambil angka pertama & kedua dari string
+
+      if ($cekNumber == 0) { // cek jika angka pertama sama dengan 0, jalankan perintah ini
+        $removeNol = '62'. ltrim($request->no_telp, 0); // Hapus angka kosong
+      } elseif($cekNumber1 == 62) { // cek jika angka pertama & kedua sama dengan 62, jalankan perintah ini
+        $removeNol = $request->no_telp; // Balikan jika format sudah benar
+      }
 
       $addplg = New customer();
       $addplg->nama = $request->nama;
       $addplg->email_customer = $request->email_customer;
       $addplg->alamat = $request->alamat;
       $addplg->kelamin = $request->kelamin;
-      $addplg->no_telp = $request->no_telp;
+      $addplg->no_telp = $removeNol;
       $addplg->user_id = Auth::user()->id;
       $addplg->save();
 
