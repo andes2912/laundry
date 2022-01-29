@@ -281,6 +281,7 @@
 
                 {{-- Panel Notifications --}}
                 <div class="tab-pane fade" id="vertical-notif" role="tabpanel" aria-labelledby="pill-notif" aria-expanded="false">
+                  <div class="alert alert-danger">Baca Dokumentasi untuk mempermudah integrasi dan penggunaan Notifikasi pada halaman <b>Dokumentasi.</b></div>
                   <form action="{{route('set-notif.update', Auth::id())}}" method="post">
                     @csrf
                     @method('PUT')
@@ -323,13 +324,6 @@
                                 @endif
                                @endif
                           </div>
-                          <h5 class="text-danger" style="font-weight: bold">Intruksi Penggunaan Notifikasi Telegram !</h5>
-                          <ul>
-                            <li>Copy dan Paste <span style="font-weight: bold">TELEGRAM_BOT_TOKEN</span> pada file <span style="font-weight: bold">.env</span></li>
-                            <li>Untuk mendapatkan token nya, silahkan ikuti cara membuat bot pada halaman <a href="https://kumparan.com/berita-terkini/cara-membuat-bot-telegram-tak-sampai-5-menit-jadi-mudah-dan-simpel-1v3iKFA8Jkt/full" >disini</a></li>
-                            <li>Salin token ke dalam file <span style="font-weight: bold">.env</span> pada method <span style="font-weight: bold">TELEGRAM_BOT_TOKEN</span></li>
-                            <li>Ada yang kurang jelas ? hubungi saya di <a href="https://t.me/andridesmana">Telegram</a> </li>
-                          </ul>
                         </div>
 
                         <h5 class="m-1">WhatsApp Order Selesai</h5>
