@@ -91,3 +91,64 @@ if (! function_exists('telegram_channel_selesai'))
         return $channel_selesai;
     }
 }
+
+// Setting WhatsApp Notification order selesai
+if (! function_exists('setNotificationWhatsappOrderSelesai'))
+{
+    function setNotificationWhatsappOrderSelesai($id='')
+    {
+        $model = new notifications_setting;
+        $data  = $model::where('wa_order_selesai',$id)->first();
+        $whatsappFinish = $data ? $data->wa_order_selesai : 'WhatsApp Notification Order Selesai Tidak Aktif';
+        return $whatsappFinish;
+    }
+}
+
+// Get WhatsApp Notifikasi order selesai
+if (! function_exists('wa_order_selesai'))
+{
+    function wa_order_selesai()
+    {
+        $model = new notifications_setting;
+        $data  = $model::first();
+        $channel_selesai = $data ? $data->wa_order_selesai : NULL;
+        return $channel_selesai;
+    }
+}
+
+// Get Token WhatsApp
+if (! function_exists('getTokenWhatsapp'))
+{
+    function getTokenWhatsapp()
+    {
+        $model = new notifications_setting;
+        $data  = $model::first();
+        $channel_selesai = $data ? $data->wa_token : NULL;
+        return $channel_selesai;
+    }
+}
+
+// Notifikasi Whatsapp
+if (! function_exists('notificationWhatsapp'))
+{
+    function notificationWhatsapp($token,$waphone,$pesan)
+    {
+        $apiURL = 'https://api.kirimwa.id/v1/messages';
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $apiURL, [
+          'headers'=> [
+            'Authorization' => 'Bearer ' . $token,
+            'Content-Type'  => 'application/json'
+          ],
+          'body' => json_encode([
+            'message' => $pesan,
+            'phone_number' => $waphone,
+            'message_type' => 'text',
+            'device_id' => 'iphone' // isi dengan device_id kalian
+          ]),
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $responseBody = json_decode($response->getBody(), true);
+    }
+}
