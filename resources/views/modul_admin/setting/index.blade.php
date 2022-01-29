@@ -332,9 +332,29 @@
                           </ul>
                         </div>
 
+                        <h5 class="m-1">WhatsApp Order Selesai</h5>
+                        <div class="col-12 mb-1">
+                          <div class="custom-control custom-switch custom-control-inline">
+                              <input type="checkbox" class="custom-control-input" name="wa_order_selesai" {{$setnotif->wa_order_selesai == 1 ? 'checked' : '0'}} value="1" id="wa_order_selesai">
+                              <label class="custom-control-label mr-1" for="wa_order_selesai"></label>
+                              <span class="switch-label w-100">Aktifkan Jika Ingin Mengirimkan Notifikasi Setiap Order Selesai Kepada Customer</span>
+                          </div>
+                        </div>
+
+                        <h5 class="m-1">Token WhatsApp API</h5>
+                        <div class="col-md-12 mb-1">
+                           <div class="form-group">
+                              <input type="text" name="wa_token" class="form-control" placeholder="Masukan Token API" value="{{$setnotif->wa_token}}">
+                              @if ($setnotif->wa_order_selesai == 1)
+                                @if ($setnotif->wa_token == '')
+                                  <small class="text-danger">Token WhatsApp wajib diisi.</small>
+                                @endif
+                               @endif
+                          </div>
+                        </div>
+
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-start">
-                          <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
-                              changes</button>
+                          <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save changes</button>
                           <button type="reset" class="btn btn-outline-warning">Cancel</button>
                         </div>
                       </div>

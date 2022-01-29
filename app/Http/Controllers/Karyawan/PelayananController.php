@@ -36,6 +36,8 @@ class PelayananController extends Controller
     // Proses simpan order
     public function store(Request $request)
     {
+
+      // return (getTokenWhatsapp());
       $request->validate([
         'status_payment'    => 'required',
         'kg'                => 'required|regex:/^[0-9.]+$/',
@@ -86,7 +88,7 @@ class PelayananController extends Controller
               'customer' => $order->customer,
               'tgl_transaksi' => $order->tgl_transaksi,
           );
-
+// ,<=t6sXV5gemP;fFd@s9K@3OpJ<j6VRIJLg;NLeEr{qHIl=C-andri
           // Kirim Email
           Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
           $mail->to($email,'no-replay')
@@ -99,7 +101,6 @@ class PelayananController extends Controller
         return redirect('pelayanan');
       }
     }
-
 
     // Daftar Costomer
     public function listcs()
@@ -214,34 +215,46 @@ class PelayananController extends Controller
           $transaksi->update([
             'status_order' => 'Done'
           ]);
+
+            // Cek email notif
+            if (setNotificationEmail(1) == 1) {
+
+              // Menyiapkan data
+              $email = $transaksi->email_customer;
+              $data = array(
+                  'invoice' => $transaksi->invoice,
+                  'customer' => $transaksi->customer,
+                  'tgl_transaksi' => $transaksi->tgl_transaksi,
+              );
+
+              // Kirim Email
+              Mail::send('karyawan.email.selesai', $data, function($mail) use ($email, $data){
+              $mail->to($email,'no-replay')
+                      ->subject("E-Laundry - Laundry Selesai");
+              $mail->from('laundri.dev@gmail.com');
+              });
+            }
+
+            // Cek status notif untuk telegram
+            if (setNotificationTelegramFinish(1) == 1) {
+              $transaksi->notify(new OrderSelesai());
+            }
+
+            // Notifikasi WhatsApp
+            if (setNotificationWhatsappOrderSelesai(1) == 1 && getTokenWhatsapp() != null) {
+              $waCustomer = $transaksi->customers->no_telp; // get nomor whatsapp customer
+              $nameCustomer = $transaksi->customers->nama; // get name customer
+              notificationWhatsapp(
+                getTokenWhatsapp(), // Token
+                $waCustomer, // nomor whatsapp
+                'Halo Kak '.$nameCustomer.' Laundry kamu sudah selesai dan sudah bisa diambil nih :) ' // pesan
+              );
+            }
+
         } elseif ($transaksi->status_order == 'Done') {
           $transaksi->update([
             'status_order' => 'Delivery'
           ]);
-
-          // Cek email notif
-          if (setNotificationEmail(1) == 1) {
-
-            // Menyiapkan data
-            $email = $transaksi->email_customer;
-            $data = array(
-                'invoice' => $transaksi->invoice,
-                'customer' => $transaksi->customer,
-                'tgl_transaksi' => $transaksi->tgl_transaksi,
-            );
-
-            // Kirim Email
-            Mail::send('karyawan.email.selesai', $data, function($mail) use ($email, $data){
-            $mail->to($email,'no-replay')
-                    ->subject("E-Laundry - Laundry Selesai");
-            $mail->from('laundri.dev@gmail.com');
-            });
-          }
-
-          // Cek status notif untuk telegram
-          if (setNotificationTelegramFinish(1) == 1) {
-            $transaksi->notify(new OrderSelesai());
-          }
         }
       }
 

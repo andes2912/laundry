@@ -123,6 +123,8 @@ class SettingsController extends Controller
     $notif->email                     = $request->email;
     $notif->telegram_channel_masuk    = $request->telegram_channel_masuk;
     $notif->telegram_channel_selesai  = $request->telegram_channel_masuk;
+    $notif->wa_order_selesai          = $request->wa_order_selesai;
+    $notif->wa_token                  = $request->wa_token;
     $notif->save();
 
     Session::flash('success','Notifications Berhasil Diupdate !');
