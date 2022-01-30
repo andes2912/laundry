@@ -8,7 +8,7 @@
             <h4 class="card-title">Form Tambah Data Customer</h4>
         </div>
         <div class="card-body">
-            <form action="{{url('list-costomer-store')}}" method="POST">
+            <form action="{{url('customers-store')}}" method="POST">
                 @csrf
                 <div class="form-body">
                     <div class="row p-t-20">
@@ -27,7 +27,7 @@
                         <div class="col-md-4">
                             <div class="form-group has-success">
                                 <label class="control-label">Email</label>
-                                <input type="email" class="form-control form-control-danger @error('email_customer') is-invalid @enderror" name="email_customer" value="{{old('email_customer')}}" placeholder="Alamat" autocomplete="off">
+                                <input type="email" class="form-control form-control-danger @error('email_customer') is-invalid @enderror" name="email_customer" value="{{old('email_customer')}}" placeholder="Alamat Email" autocomplete="off">
                                 @error('email_customer')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -82,7 +82,7 @@
                 <input type="hidden" name="auth" value="Admin">
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary mr-1 mb-1">Tambah</button>
-                    <button type="reset" class="btn btn-outline-warning mr-1 mb-1">Reset</button>
+                    <a href=" {{url('customers')}}"  class="btn btn-outline-warning mr-1 mb-1">Batal</a>
                 </div>
             </form>
         </div>

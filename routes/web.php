@@ -63,15 +63,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('pelayanan','Karyawan\PelayananController');
     // Transaksi
     Route::get('add-order','Karyawan\PelayananController@addorders');
-    // Route::get('ubah-status-order','Karyawan\PelayananController@ubahstatusorder');
-    // Route::get('ubah-status-bayar','Karyawan\PelayananController@ubahstatusbayar');
-    // Route::get('ubah-status-ambil','Karyawan\PelayananController@ubahstatusambil');
     Route::get('update-status-laundry','Karyawan\PelayananController@updateStatusLaundry');
 
     // Customer
-    Route::get('list-customer','Karyawan\PelayananController@listcs');
-    Route::get('list-customer-add','Karyawan\PelayananController@listcsadd');
-    Route::post('list-costomer-store','Karyawan\PelayananController@addcs');
+    Route::get('customers','Karyawan\CustomerController@index');
+    Route::get('customers/{id}','Karyawan\CustomerController@detail');
+    Route::get('customers-create','Karyawan\CustomerController@create');
+    Route::post('customers-store','Karyawan\CustomerController@store');
 
     // Filter
     Route::get('listharga','Karyawan\PelayananController@listharga');

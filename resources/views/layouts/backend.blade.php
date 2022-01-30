@@ -199,8 +199,8 @@
                                 <li class="nav-item {{ (request()->is('add-order')) ? 'active' : '' }}">
                                   <a href="{{url('add-order')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Tambah Order</span></a>
                                 </li>
-                                <li class="nav-item {{ (request()->is('list-customer')) ? 'active' : '' }}">
-                                  <a href="{{url('list-customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Data Customer</span></a>
+                                <li class="nav-item {{ (request()->is('customers')) ? 'active' : '' }}">
+                                  <a href="{{url('customers')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Data Customer</span></a>
                                 </li>
                             </ul>
                         </li>

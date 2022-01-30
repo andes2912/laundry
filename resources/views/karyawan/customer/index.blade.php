@@ -16,7 +16,7 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive m-t-5">
-                <a href="{{url('list-customer-add')}}" class="btn btn-primary">Tambah Customer</a>
+                <a href="{{url('customers-create')}}" class="btn btn-primary">Tambah Customer</a>
             <table id="myTable" class="table table-bordered table-striped">
                 <thead>
                     <tr align="center" style="color:black; font-weight:bold">
@@ -25,7 +25,6 @@
                         <th>Email</th>
                         <th>Alamat</th>
                         <th>No Telpon</th>
-                        <th>Kelamin</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -39,18 +38,8 @@
                         <td>{{$item->alamat}}</td>
                         <td>{{$item->no_telp}}</td>
                         <td>
-                            @if ($item->kelamin == 'L')
-                                <span class="label label-success">Laki-laki</span>
-                            @else
-                                <span class="label label-info">Perempuan</span>
-                            @endif
-                        </td>
-                        <td>
-                            <form action="{{url('customer-delete', $item->id_customer)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <a href="{{url('add-order')}}" class="btn btn-sm btn-primary" style="color:white">Add Order</a>
-                            </form>
+                          {{-- <a href="" class="btn btn-sm btn-warning" style="color:white">Edit</a> --}}
+                          <a href=" {{url('customers', $item->id)}} " class="btn btn-sm btn-primary" style="color:white">Detail</a>
                         </td>
                     </tr>
                     <?php $no++; ?>
