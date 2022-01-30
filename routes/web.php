@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
 
     // Pengguna/karyawan
     Route::resource('karyawan','Admin\KaryawanController');
+    Route::get('update-satatus-karyawan','Admin\KaryawanController@updateKaryawan');
 
     // Customer
     Route::resource('customer','Admin\CustomerController');
