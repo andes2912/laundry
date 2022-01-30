@@ -38,7 +38,6 @@ class PelayananController extends Controller
     public function store(Request $request)
     {
 
-      // return (getTokenWhatsapp());
       $request->validate([
         'status_payment'    => 'required',
         'kg'                => 'required|regex:/^[0-9.]+$/',
@@ -89,7 +88,7 @@ class PelayananController extends Controller
               'customer' => $order->customer,
               'tgl_transaksi' => $order->tgl_transaksi,
           );
-// ,<=t6sXV5gemP;fFd@s9K@3OpJ<j6VRIJLg;NLeEr{qHIl=C-andri
+
           // Kirim Email
           Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
           $mail->to($email,'no-replay')
@@ -101,13 +100,6 @@ class PelayananController extends Controller
         Session::flash('success','Order Berhasil Ditambah !');
         return redirect('pelayanan');
       }
-    }
-
-    // Daftar Costomer
-    public function listcs()
-    {
-      $customer = customer::orderBy('id','DESC')->where('user_id',Auth::user()->id)->get();
-      return view('karyawan.transaksi.customer', compact('customer'));
     }
 
     // Tambah Order
@@ -170,39 +162,6 @@ class PelayananController extends Controller
         return $select;
     }
 
-
-    // Tambah Customer
-    public function listcsadd()
-    {
-      return view('karyawan.transaksi.addcustomer');
-    }
-
-    // Proses Tambah Customer
-    public function addcs(AddCustomerRequest $request)
-    {
-      $cekNumber = substr($request->no_telp,0,1); // ambil angka pertama dari string
-      $cekNumber1 = substr($request->no_telp,0,2); // ambil angka pertama & kedua dari string
-
-      if ($cekNumber == 0) { // cek jika angka pertama sama dengan 0, jalankan perintah ini
-        $removeNol = '62'. ltrim($request->no_telp, 0); // Hapus angka kosong
-      } elseif($cekNumber1 == 62) { // cek jika angka pertama & kedua sama dengan 62, jalankan perintah ini
-        $removeNol = $request->no_telp; // Balikan jika format sudah benar
-      }
-
-      $addplg = New customer();
-      $addplg->nama = $request->nama;
-      $addplg->email_customer = $request->email_customer;
-      $addplg->alamat = $request->alamat;
-      $addplg->kelamin = $request->kelamin;
-      $addplg->no_telp = $removeNol;
-      $addplg->user_id = Auth::user()->id;
-      $addplg->save();
-
-      Session::flash('success','Customer Berhasil Ditambah !');
-
-      return redirect('list-customer');
-
-    }
 
     // Update Status Laundry
     public function updateStatusLaundry(Request $request)

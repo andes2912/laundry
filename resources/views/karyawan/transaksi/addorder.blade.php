@@ -13,7 +13,7 @@
     <div class="card card-outline-info">
       <div class="card-header">
           <h4 class="card-title">Form Tambah Data Order
-              <a href="{{url('list-customer-add')}}" class="btn btn-danger">+ Customer Baru</a>
+              <a href="{{url('customers-create')}}" class="btn btn-danger">+ Customer Baru</a>
           </h4>
       </div>
       <div class="card-body">
