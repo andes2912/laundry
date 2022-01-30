@@ -54,10 +54,9 @@
                             </td>
                             <td>
                               <form action="{{ route('karyawan.destroy',$item->id) }}" method="POST">
-                                  @csrf
-                                  @method('DELETE')
-                                  <a href="{{route('karyawan.edit', $item->id)}}" class="btn btn-sm btn-info">Edit</a>
-                                  <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                @csrf
+                                @method('DELETE')
+                                <a class="btn btn-sm btn-{{$item->status == 'Active' ? 'primary' : 'danger'}}" data-id-update="{{$item->id}}" id="updateStatus">{{$item->status == 'Active' ? 'Non-Aktifkan' : 'Aktifkan'}}</a>
                               </form>
                             </td>
                         </tr>
@@ -70,4 +69,17 @@
     </div>
   </div>
 </div>
+@endsection
+@section('scripts')
+<script type="text/javascript">
+  // Update Status Karyawan
+  $(document).on('click', '#updateStatus', function () {
+    var id = $(this).attr('data-id-update');
+    $.get('update-satatus-karyawan', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(_resp){
+      location.reload()
+    });
+  });
+
+</script>
+
 @endsection

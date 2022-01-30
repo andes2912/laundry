@@ -6,6 +6,7 @@ use App\Http\Requests\AddKaryawanRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Session;
 
@@ -49,70 +50,23 @@ class KaryawanController extends Controller
       $adduser->no_telp       = $request->no_telp;
       $adduser->status        = 'Active';
       $adduser->auth          = 'Karyawan';
-      $adduser->password      = bcrypt('123456');
+      $adduser->password      = Hash::make($request->password);
       $adduser->save();
 
       $adduser->assignRole($adduser->auth);
 
-      Session::flash('success','Tambah Karyawan Berhasil');
+      Session::flash('success','Karyawan Berhasil Dibuat.');
       return redirect('karyawan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    // Update Status Karyawan
+    public function updateKaryawan(Request $request)
     {
-        //
-    }
+      $karyawan = User::find($request->id);
+      $karyawan->update([
+        'status'  => $karyawan->status == 'Active' ? 'Not Active' : 'Active'
+      ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-      $edit = User::find($id);
-      return view('modul_admin.pengguna.editkry', compact('edit'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-      $adduser = User::find($id);
-      $adduser->status = $request->status;
-      $adduser->save();
-
-      Session::flash('success','Update Karyawan Berhasil');
-      return redirect('karyawan');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-      $delete = User::find($id);
-      if ($delete->status == 'Active') {
-        Session::flash('error','Error, Status Karyawan masih aktif');
-      } else {
-        $delete->delete();
-        Session::flash('success','Hapus Karyawan Berhasil');
-      }
-      return redirect('karyawan');
+      Session::flash('success','Status Karyawan Berhasil Diupdate.');
     }
 }
