@@ -11,6 +11,11 @@
                 <div class="col-lg-6 col-12 p-0">
                     <div class="card rounded-0 mb-0 px-2">
                         <div class="card-header pb-1">
+                            @if($message = Session::get('error'))
+                              <div class="alert alert-danger alert-block">
+                                <strong>{{ $message }}</strong>
+                              </div>
+                            @endif
                             <div class="card-title">
                                 <h4 class="mb-0">Masuk</h4>
                             </div>
