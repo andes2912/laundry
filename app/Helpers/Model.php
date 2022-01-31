@@ -1,5 +1,5 @@
 <?php
-use App\Models\{customer,notifications_setting,transaksi};
+use App\Models\{User,notifications_setting,transaksi};
 
 class Rupiah {
     public static function getRupiah($value) {
@@ -13,9 +13,9 @@ if (! function_exists('email_customer'))
 {
     function email_customer($id=0)
     {
-      $model = new customer;
+      $model = new User;
       $data  = $model::where('id',$id)->first();
-      $email_customer = !empty($data) ? $data->email_customer : 'Not Found';
+      $email_customer = !empty($data) ? $data->email : 'Not Found';
       return $email_customer;
     }
 }
@@ -25,9 +25,9 @@ if (! function_exists('namaCustomer'))
 {
     function namaCustomer($id=0)
     {
-        $model = new customer;
+        $model = new User;
         $data  = $model::where('id',$id)->first();
-        $name = !empty($data) ? $data->nama : 'Not Found';
+        $name = !empty($data) ? $data->name : 'Not Found';
         return $name;
     }
 }
