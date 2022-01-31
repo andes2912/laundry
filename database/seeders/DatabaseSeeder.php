@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LaundrySettingSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(IndoBankSeeder::class);
+        $this->call(addRoleSeeder::class);
     }
 }
