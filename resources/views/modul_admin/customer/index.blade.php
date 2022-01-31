@@ -27,7 +27,7 @@
                             @foreach ($customer as $item)
                             <tr>
                                 <td>{{$no}}</td>
-                                <td>{{$item->nama}}</td>
+                                <td>{{$item->name}}</td>
                                 <td>{{$item->alamat}}</td>
                                 <td>{{$item->no_telp}}</td>
                                 <td>
