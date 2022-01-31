@@ -92,4 +92,12 @@ Route::middleware('auth')->group(function () {
     Route::get('karyawan-setting','Karyawan\SettingsController@setting');
     Route::put('proses-setting-karyawan/{id}','Karyawan\SettingsController@proses_setting_karyawan')->name('proses-setting-karyawan.update');
   });
+
+
+  // Modul Customer
+  Route::prefix('/')->middleware('role:Customer')->group(function (){
+    // Setting
+    Route::get('setitng','Customer\SettingController@index')->name('customer.setting');
+    Route::put('setitng/{id}','Customer\SettingController@settingUpdateCustomer')->name('customer.setting-update');
+  });
 });
