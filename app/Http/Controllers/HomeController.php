@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{transaksi,customer};
+use App\Models\{transaksi,User};
 use Auth;
 use DB;
 use Carbon\carbon;
@@ -33,7 +33,7 @@ class HomeController extends Controller
               $masuk = transaksi::whereIN('status_order',['Process','Done','Delivery'])->count();
               $selesai = transaksi::where('status_order','Done')->count();
               $diambil = transaksi::where('status_order','Delivery')->count();
-              $customer = customer::all();
+              $customer = User::where('auth','Customer')->get();
               $sudahbayar = transaksi::where('status_payment','Success')->count();
               $belumbayar = transaksi::where('status_payment','Pending')->count();
               $incomeY = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->sum('harga_akhir');
@@ -122,7 +122,7 @@ class HomeController extends Controller
               $masuk = transaksi::whereIN('status_order',['Process','Done','Delivery'])->where('user_id',auth::user()->id)->count();
               $selesai = transaksi::where('status_order','Deone')->where('user_id',auth::user()->id)->count();
               $diambil = transaksi::where('status_order','Delivery')->where('user_id',auth::user()->id)->count();
-              $customer = customer::where('user_id',auth::user()->id)->get();
+              $customer = User::where('karyawan_id',auth::user()->id)->get();
               $kgToday = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date('d'))->sum('kg');
               $kgTodayOld = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date("d",strtotime("-1 day")))->sum('kg');
               $incomeM = transaksi::where('user_id',Auth::id())->where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->sum('harga_akhir');
