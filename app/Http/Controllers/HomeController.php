@@ -172,8 +172,12 @@ class HomeController extends Controller
                   ->  with('_bulan', substr($bulans, 0,-1))
                   ->  with('_nilaiB', substr($nilaiB, 0, -1));
 
-          }else{
-              Auth::logout();
+          }elseif(Auth::user()->auth == 'Customer'){
+            $totalLaundry = transaksi::where('customer_id',Auth::id())->count();
+
+            $totalLaundryKg = transaksi::where('customer_id',Auth::id())->sum('kg');
+
+            return view('customer.index',\compact('totalLaundry','totalLaundryKg'));
           }
         }
     }

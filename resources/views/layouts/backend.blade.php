@@ -68,26 +68,7 @@
                                     </div>
                                 </li>
                                 <li class="scrollable-container media-list">
-                                    {{-- @foreach ($notif as $item)
-                                        <a class="d-flex justify-content-between" id="notif" data-id="{{$item->id}}">
-                                            <div class="media d-flex align-items-start">
-                                                <div class="media-left">
-                                                    <i class="feather icon-plus-square font-medium-5 primary"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="primary media-heading">Laundry Baru Masuk</h6>
-                                                    <small class="notification-text"> {{$item->customer}} | {{$item->kg}} kg | {{Rupiah::getRupiah($item->harga_akhir)}}</small>
-                                                </div>
-                                                <small>
-                                                    <time class="media-meta">{{Carbon\carbon::parse($item->updated_at)->diffForHumans()}}</time>
-                                                </small>
-                                            </div>
-                                        </a>
-                                    @endforeach --}}
                                 </li>
-                                {{-- <li class="dropdown-menu-footer">
-                                    <a class="dropdown-item p-1 text-center" href="javascript:void(0)">Read all notifications</a>
-                                </li> --}}
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item">
@@ -108,6 +89,11 @@
                               <a class="dropdown-item" href="{{url('profile-karyawan', auth::user()->id )}}"><i class="feather icon-user"></i>Profile
                               </a>
                               <a class="dropdown-item" href="{{url('karyawan-setting' )}}"><i class="feather icon-settings"></i>Settings
+                              </a>
+                            @elseif(auth::user()->auth == 'Customer')
+                              <a class="dropdown-item" href=""><i class="feather icon-user"></i>Profile
+                              </a>
+                              <a class="dropdown-item" href="{{Route('customer.setting')}}"><i class="feather icon-settings"></i>Settings
                               </a>
                             @endif
                             <div class="dropdown-divider"></div>
@@ -191,23 +177,27 @@
 
                     {{-- Menu Karyawan --}}
                     @elseif(auth::user()->auth == "Karyawan")
-                        <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
-                            <ul class="menu-content">
-                                <li class="nav-item {{ (request()->is('pelayanan')) ? 'active' : '' }}">
-                                  <a href="{{route('pelayanan.index')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Order Masuk</span></a>
-                                </li>
-                                <li class="nav-item {{ (request()->is('add-order')) ? 'active' : '' }}">
-                                  <a href="{{url('add-order')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Tambah Order</span></a>
-                                </li>
-                                <li class="nav-item {{ (request()->is('customers')) ? 'active' : '' }}">
-                                  <a href="{{url('customers')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Data Customer</span></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a href="{{url('/laporan')}}"><i class="feather icon-file-text"></i><span class="menu-title" data-i18n="Dashboard">Laporan</span></a>
-                        </li>
-                         <li class="nav-item"><a href="{{url('/')}}" target="_blank"><i class="feather icon-square"></i><span class="menu-title" data-i18n="Dashboard">Frontend</span></a>
-                        </li>
+                      <li class=" nav-item"><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="User">Data Transaksi</span></a>
+                          <ul class="menu-content">
+                              <li class="nav-item {{ (request()->is('pelayanan')) ? 'active' : '' }}">
+                                <a href="{{route('pelayanan.index')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Order Masuk</span></a>
+                              </li>
+                              <li class="nav-item {{ (request()->is('add-order')) ? 'active' : '' }}">
+                                <a href="{{url('add-order')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Tambah Order</span></a>
+                              </li>
+                              <li class="nav-item {{ (request()->is('customers')) ? 'active' : '' }}">
+                                <a href="{{url('customers')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Data Customer</span></a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="nav-item"><a href="{{url('/laporan')}}"><i class="feather icon-file-text"></i><span class="menu-title" data-i18n="Dashboard">Laporan</span></a>
+                      </li>
+                      <li class="nav-item"><a href="{{url('/')}}" target="_blank"><i class="feather icon-square"></i><span class="menu-title" data-i18n="Dashboard">Frontend</span></a>
+                      </li>
+                    @elseif(Auth::user()->auth == 'Customer')
+
+                      <li class="nav-item"><a href="{{url('/')}}" target="_blank"><i class="feather icon-square"></i><span class="menu-title" data-i18n="Dashboard">Frontend</span></a>
+                      </li>
                     @endif
                 {{--End  --}}
             </ul>
