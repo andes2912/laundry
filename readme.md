@@ -30,9 +30,55 @@ Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com<
 
 
 ## Fitur Release
-- 2.1.0 [Lihat Perubahan](https://github.com/andes2912/laundry/releases/tag/2.1.0)
-- 2.0.0 [Lihat Perubahan](https://github.com/andes2912/laundry/releases/tag/2.0)
-- [Lihat semua perubahan](https://github.com/andes2912/laundry/releases)
+#### [Versi 2.x](https://github.com/andes2912/laundry/tree/2.x)
+   #### Administrator
+   * Dashboard Administrator
+   * Tambah User Karyawan
+   * Lihat data transaksi
+   * Data Finance
+   * Data Harga
+   * Atur target laundry
+   * Ubah thema (untuk saat ini hanya ada Dark & White)
+   * Data Bank
+   * Setting Notifikasi Email, Telegram dan WhatsAapp
+   * Dokumentasi
+
+   #### Karyawan
+   * Dashboard Karyawan
+   * Data order masuk
+   * Data customer
+   * Tambah customer
+   * Tambah transaksi Laundry
+   * Laporan
+   * Ubah thema (untuk saat ini hanya ada Dark & White)
+
+ #### [Versi 3.x](https://github.com/andes2912/laundry/tree/3.x)
+   #### Administrator
+   * Dashboard Administrator
+   * Tambah User Karyawan
+   * Lihat data transaksi
+   * Data Finance
+   * Data Harga
+   * Atur target laundry
+   * Ubah thema (untuk saat ini hanya ada Dark & White)
+   * Data Bank
+   * Setting Notifikasi Email, Telegram dan WhatsAapp
+   * Dokumentasi
+
+   #### Karyawan
+   * Dashboard Karyawan
+   * Data order masuk
+   * Data customer
+   * Tambah customer
+   * Tambah transaksi Laundry
+   * Laporan
+   * Ubah thema (untuk saat ini hanya ada Dark & White)
+
+   #### Customer
+   * Dashboard Customer
+   * Ubah thema (untuk saat ini hanya ada Dark & White)
+   
+
 ## Sponsors
 
 Support E-Laundry by becoming a sponsor on [Saweria](https://saweria.co/andes2912). Your logo will show up here with a link to your website.
