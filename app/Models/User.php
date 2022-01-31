@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','status','auth','nama_cabang','alamat_cabang','alamat','no_telp','theme','foto'
+        'karyawan_id','name', 'email', 'password','status','auth','nama_cabang','alamat_cabang','alamat','no_telp','theme','foto'
     ];
 
     /**
@@ -46,5 +46,10 @@ class User extends Authenticatable
     public function transaksi()
     {
       return $this->belongsTo(transaksi::class,'id','user_id');
+    }
+
+    public function transaksiCustomer()
+    {
+      return $this->hasMany(transaksi::class,'customer_id','id');
     }
 }

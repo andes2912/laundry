@@ -33,12 +33,11 @@
                     @foreach ($customer as $item)
                     <tr align="center" style="color:black;">
                         <td>{{$no}}</td>
-                        <td>{{$item->nama}}</td>
-                        <td>{{$item->email_customer}}</td>
+                        <td>{{$item->name}}</td>
+                        <td>{{$item->email}}</td>
                         <td>{{$item->alamat}}</td>
                         <td>{{$item->no_telp}}</td>
                         <td>
-                          {{-- <a href="" class="btn btn-sm btn-warning" style="color:white">Edit</a> --}}
                           <a href=" {{url('customers', $item->id)}} " class="btn btn-sm btn-primary" style="color:white">Detail</a>
                         </td>
                     </tr>

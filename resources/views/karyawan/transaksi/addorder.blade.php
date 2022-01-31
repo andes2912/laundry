@@ -29,7 +29,7 @@
                           <select name="customer_id" id="customer_id" class="form-control select2 @error('customer_id') is-invalid @enderror" required>
                               <option value="">-- Pilih Customer --</option>
                               @foreach ($customer as $customers)
-                                  <option value="{{$customers->id}}">{{$customers->nama}}</option>
+                                  <option value="{{$customers->id}}">{{$customers->name}}</option>
                               @endforeach
                           </select>
                           @error('customer_id')
