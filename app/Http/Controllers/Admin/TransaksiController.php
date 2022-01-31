@@ -63,7 +63,7 @@ class TransaksiController extends Controller
       ->where('invoice', $request->invoice)
       ->orderBy('id','DESC')->get();
 
-      $dataInvoice = transaksi::with('customers.users')
+      $dataInvoice = transaksi::with('customers','user')
       ->where('invoice', $request->invoice)
       ->first();
 

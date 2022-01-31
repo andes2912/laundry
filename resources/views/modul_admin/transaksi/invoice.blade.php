@@ -10,18 +10,18 @@
             <div class="col-md-12">
                 <div class="pull-left">
                     <address>
-                        <h3><b class="text-danger">{{$dataInvoice->customers->users->nama_cabang}}</b></h3>
+                        <h3><b class="text-danger">{{$dataInvoice->user->nama_cabang}}</b></h3>
                         <p class="text-muted m-l-5">
-                          Diterima Oleh <span style="margin-left:20px"> </span>: {{$dataInvoice->customers->users->name}} <br/>
-                          Alamat <span style="margin-left:68px"> </span>: {{$dataInvoice->customers->users->alamat_cabang}} <br/>
-                          No. Telp <span style="margin-left:63px"> </span>: {{$dataInvoice->customers->users->no_telp == 0 ? '-' : $dataInvoice->customers->users->no_telp}}
+                          Diterima Oleh <span style="margin-left:20px"> </span>: {{$dataInvoice->user->name}} <br/>
+                          Alamat <span style="margin-left:68px"> </span>: {{$dataInvoice->user->alamat_cabang}} <br/>
+                          No. Telp <span style="margin-left:63px"> </span>: {{$dataInvoice->user->no_telp == 0 ? '-' : $dataInvoice->user->no_telp}}
                     </address>
                 </div>
                 <div class="pull-right text-right">
                     <address>
                         <h3>Detail Order Customer :</h3>
                         <p class="text-muted m-l-30">
-                          {{$dataInvoice->customers->nama}}<br/>
+                          {{$dataInvoice->customers->name}}<br/>
                           {{$dataInvoice->customers->alamat}}<br/>
                           {{$dataInvoice->customers->no_telp == 0 ? '-' : $dataInvoice->customers->no_telp}}
                         </p>
