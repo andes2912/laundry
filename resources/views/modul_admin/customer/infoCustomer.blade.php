@@ -9,39 +9,63 @@
             <h4 class="card-title">Detail Data Customer</h4>
         </div>
         <div class="card-content">
-            <div class="card-body">
+            <div class="row">
+              <div class="card-body">
                 <div class="card-text">
                     <dl class="row">
-                        <dt class="col-sm-2">Nama Customer</dt>
-                        <dd class="col-sm-10">: {{$customer->nama}}</dd>
+                        <dt class="col-sm-4">Nama Customer</dt>
+                        <dd class="col-sm-4">: {{$customer->nama}}</dd>
                     </dl>
 
                     <dl class="row">
-                        <dt class="col-sm-2">Email Customer</dt>
-                        <dd class="col-sm-10">: {{$customer->email_customer}}</dd>
+                        <dt class="col-sm-4">Email Customer</dt>
+                        <dd class="col-sm-4">: {{$customer->email_customer}}</dd>
                     </dl>
 
                     <dl class="row">
-                        <dt class="col-sm-2">No. Telepon</dt>
-                        <dd class="col-sm-10">: {{$customer->no_telp == 0 ? 'Belum Input' : $customer->no_telp}}</dd>
+                        <dt class="col-sm-4">No. Telepon</dt>
+                        <dd class="col-sm-4">: {{$customer->no_telp == 0 ? 'Belum Input' : $customer->no_telp}}</dd>
                     </dl>
 
                     <dl class="row">
-                        <dt class="col-sm-2">Alamat Customer</dt>
-                        <dd class="col-sm-10">: {{$customer->alamat}}</dd>
+                        <dt class="col-sm-4">Alamat Customer</dt>
+                        <dd class="col-sm-4">: {{$customer->alamat}}</dd>
                     </dl>
 
                     <dl class="row">
-                        <dt class="col-sm-2">Kelamin Customer</dt>
-                        <dd class="col-sm-10">: {{$customer->kelamin == 'L' ? 'Laki-laki' : 'Perempuan'}}</dd>
-                    </dl>
-
-                    <dl class="row">
-                        <dt class="col-sm-2">Laundry Pertama</dt>
-                        <dd class="col-sm-10">: {{$customer->created_at->format('d F Y')}}</dd>
+                        <dt class="col-sm-4">Kelamin Customer</dt>
+                        <dd class="col-sm-4">: {{$customer->kelamin == 'L' ? 'Laki-laki' : 'Perempuan'}}</dd>
                     </dl>
 
                 </div>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <dl class="row">
+                        <dt class="col-sm-4">Total Kg</dt>
+                        <dd class="col-sm-4">: {{$customer->transaksi()->sum('kg') ?? ''}} Kg</dd>
+                    </dl>
+
+                    <dl class="row">
+                        <dt class="col-sm-4">Total Rupiah</dt>
+                        <dd class="col-sm-4">: {{Rupiah::getRupiah($customer->transaksi()->sum('harga_akhir')) ?? ''}}</dd>
+                    </dl>
+
+                    <dl class="row">
+                        <dt class="col-sm-4">Total Laundry</dt>
+                        <dd class="col-sm-4">: {{$customer->transaksi()->count() ?? ''}} Kali</dd>
+                    </dl>
+
+                    <dl class="row">
+                        <dt class="col-sm-4">Laundry Terakhir</dt>
+                        <dd class="col-sm-4">: {{$customer->transaksi[0]['created_at'] ?? '-'}}</dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-4">Pendaftaran Akun</dt>
+                        <dd class="col-sm-4">: {{$customer->created_at}}</dd>
+                    </dl>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -78,7 +102,7 @@
                               <td>{{$item->kg}} kg</td>
                               <td>{{$item->jenis_pembayaran}}</td>
                               <td>{{$item->status_order}}</td>
-                              <td>{{$item->harga_akhir}}</td>
+                              <td>{{Rupiah::getRupiah($item->harga_akhir)}}</td>
 
                           </tr>
                           @endforeach
