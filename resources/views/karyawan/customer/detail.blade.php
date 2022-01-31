@@ -14,12 +14,12 @@
                 <div class="card-text">
                     <dl class="row">
                         <dt class="col-sm-4">Nama</dt>
-                        <dd class="col-sm-4">: {{$customer->nama}}</dd>
+                        <dd class="col-sm-4">: {{$customer->name}}</dd>
                     </dl>
 
                     <dl class="row">
                         <dt class="col-sm-4">Email</dt>
-                        <dd class="col-sm-4">: {{$customer->email_customer}}</dd>
+                        <dd class="col-sm-4">: {{$customer->email}}</dd>
                     </dl>
 
                     <dl class="row">
@@ -42,22 +42,22 @@
                 <div class="card-text">
                     <dl class="row">
                         <dt class="col-sm-4">Total Kg</dt>
-                        <dd class="col-sm-4">: {{$customer->transaksi()->sum('kg') ?? ''}} Kg</dd>
+                        <dd class="col-sm-4">: {{$customer->transaksiCustomer()->sum('kg') ?? ''}} Kg</dd>
                     </dl>
 
                     <dl class="row">
                         <dt class="col-sm-4">Total Rupiah</dt>
-                        <dd class="col-sm-4">: {{Rupiah::getRupiah($customer->transaksi()->sum('harga_akhir')) ?? ''}}</dd>
+                        <dd class="col-sm-4">: {{Rupiah::getRupiah($customer->transaksiCustomer()->sum('harga_akhir')) ?? ''}}</dd>
                     </dl>
 
                     <dl class="row">
                         <dt class="col-sm-4">Total Laundry</dt>
-                        <dd class="col-sm-4">: {{$customer->transaksi()->count() ?? ''}} Kali</dd>
+                        <dd class="col-sm-4">: {{$customer->transaksiCustomer()->count() ?? ''}} Kali</dd>
                     </dl>
 
                     <dl class="row">
                         <dt class="col-sm-4">Laundry Terakhir</dt>
-                        <dd class="col-sm-4">: {{$customer->transaksi[0]['created_at'] ?? '-'}}</dd>
+                        <dd class="col-sm-4">: {{$customer->transaksiCustomer[0]['created_at'] ?? '-'}}</dd>
                     </dl>
                     <dl class="row">
                         <dt class="col-sm-4">Pendaftaran Akun</dt>
@@ -92,7 +92,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                          @foreach ($customer->transaksi as $key => $item)
+                          @foreach ($customer->transaksiCustomer as $key => $item)
                           <tr>
                               <td>{{$key+1}}</td>
                               <td>{{$item->invoice}}</td>
@@ -105,6 +105,7 @@
 
                           </tr>
                           @endforeach
+
                         </tbody>
                     </table>
                 </div>

@@ -3,27 +3,30 @@
 namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AddCustomerRequest;
-use Illuminate\Http\Request;
-use App\Models\customer;
 use Auth;
 use Session;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Http\Requests\AddCustomerRequest;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
     // index
     public function index()
     {
-      $customer = customer::orderBy('id','DESC')->where('user_id',Auth::user()->id)->get();
+      $customer = User::where('karyawan_id',Auth::user()->id)
+      ->where('auth','Customer')
+      ->orderBy('id','DESC')->get();
       return view('karyawan.customer.index', compact('customer'));
     }
 
     // Detail Customer
     public function detail($id)
     {
-      $customer = customer::with(['transaksi' => function($a) {
-        $a->orderBy('created_at','desc');
-      }])->where('user_id',Auth::user()->id)
+      $customer = User::with('transaksiCustomer')
+      ->where('karyawan_id',Auth::user()->id)
       ->where('id',$id)->first();
       return view('karyawan.customer.detail', compact('customer'));
     }
@@ -46,15 +49,18 @@ class CustomerController extends Controller
         $removeNol = $request->no_telp; // Balikan jika format sudah benar
       }
 
-      $addplg = New customer();
-      $addplg->nama = $request->nama;
-      $addplg->email_customer = $request->email_customer;
-      $addplg->alamat = $request->alamat;
-      $addplg->kelamin = $request->kelamin;
-      $addplg->no_telp = $removeNol;
-      $addplg->user_id = Auth::user()->id;
-      $addplg->save();
+      $addCustomer = User::create([
+        'karyawan_id' => Auth::id(),
+        'name'        => $request->name,
+        'email'       => $request->email,
+        'auth'        => 'Customer',
+        'status'      => 'Active',
+        'no_telp'     => $removeNol,
+        'alamat'      => $request->alamat,
+        'password'    => Hash::make($request->password)
+      ]);
 
+      $addCustomer->assignRole($addCustomer->auth);
       Session::flash('success','Customer Berhasil Ditambah !');
 
       return redirect('customers');

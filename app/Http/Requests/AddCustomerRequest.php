@@ -24,27 +24,32 @@ class AddCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-          'nama'                => 'required|unique:customers|max:25',
-          'email_customer'      => 'required|unique:customers',
-          'alamat'              => 'required',
-          'kelamin'             => 'required',
-          'no_telp'             => 'required|unique:customers',
+          'name'                  => 'required|unique:users|max:25',
+          'email'                 => 'required|unique:users',
+          'alamat'                => 'required',
+          'no_telp'               => 'required|unique:users',
+          'password'              => 'required|string|min:8|confirmed',
+          'password_confirmation' => 'required|string|min:8'
         ];
     }
 
     public function messages()
     {
       return [
-        'nama.required'           => 'Nama tidak boleh kosong.',
-        'nama.unique'             => 'Nama sudah digunakan.',
-        'nama.max'                => 'Nama tidak boleh lebih dari 50 karakter.',
-        'email_customer.required' => 'Email tidak boleh kosong.',
-        'email_customer.unique'   => 'Email sudah digunakan.',
-        'email_customer.max'      => 'Email tidak boleh lebih dari 50 karakter.',
-        'alamat.required'         => 'Alamat tidak boleh kosong.',
-        'alamat.max'              => 'Alamat tidak boleh lebih dari 50 karakter.',
-        'no_telp.required'        => 'Nomor Telepon tidak boleh kosong.',
-        'kelamin.required'        => 'Jenis Kelamin tidak boleh kosong.'
+        'name.required'                 => 'Nama tidak boleh kosong.',
+        'name.unique'                   => 'Nama sudah digunakan.',
+        'name.max'                      => 'Nama tidak boleh lebih dari 50 karakter.',
+        'email.required'                => 'Email tidak boleh kosong.',
+        'email.unique'                  => 'Email sudah digunakan.',
+        'email.max'                     => 'Email tidak boleh lebih dari 50 karakter.',
+        'alamat.required'               => 'Alamat tidak boleh kosong.',
+        'alamat.max'                    => 'Alamat tidak boleh lebih dari 50 karakter.',
+        'no_telp.required'              => 'Nomor Telepon tidak boleh kosong.',
+        'password.required'             => 'Password tidak boleh kosong.',
+        'password.min'                  => 'Password harus lebih dari 8 karakter.',
+        'password.confirmed'            => 'Password tidak sama, mohon ulangi kembali.',
+        'password_confirmation.required'=> 'Password Konfirmasi tidak boleh kosong.',
+        'password_confirmation.min'     => 'Password Konfirmasi harus lebih dari 8 karakter.'
       ];
     }
 }

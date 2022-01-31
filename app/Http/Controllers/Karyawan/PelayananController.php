@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{transaksi,customer,harga};
+use App\Models\{transaksi,user,harga};
 use App\Http\Requests\AddCustomerRequest;
 use Auth;
 use PDF;
@@ -105,7 +105,7 @@ class PelayananController extends Controller
     // Tambah Order
     public function addorders()
     {
-      $customer = customer::where('user_id',Auth::user()->id)->get();
+      $customer = User::where('karyawan_id',Auth::user()->id)->get();
 
       $y = date('Y');
       $number = mt_rand(1000, 9999);
@@ -114,7 +114,7 @@ class PelayananController extends Controller
       $tgl = date('d-m-Y');
 
       $cek_harga = harga::where('user_id',Auth::user()->id)->where('status',1)->first();
-      $cek_customer = customer::select('id','user_id')->where('user_id',Auth::id())->count();
+      $cek_customer = User::select('id','karyawan_id')->where('karyawan_id',Auth::id())->count();
       return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga','cek_customer'));
     }
 

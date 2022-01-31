@@ -15,9 +15,9 @@
                         <div class="col-md-4">
                             <div class="form-group has-success">
                                 <label class="control-label">Nama</label>
-                                <input type="text" class="form-control form-control-danger @error('nama') is-invalid @enderror" name="nama" value="{{old('nama')}}" placeholder="Nama Customer" autocomplete="off">
-                                @error('nama')
-                                  <span class="invalid-feedback" role="alert">
+                                <input type="text" class="form-control form-control-danger @error('name') is-invalid @enderror" name="name" value="{{old('name')}}" placeholder="Nama Customer" autocomplete="off">
+                                @error('name')
+                                  <span class="invalid-feedback text-danger" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
                                 @enderror
@@ -27,9 +27,9 @@
                         <div class="col-md-4">
                             <div class="form-group has-success">
                                 <label class="control-label">Email</label>
-                                <input type="email" class="form-control form-control-danger @error('email_customer') is-invalid @enderror" name="email_customer" value="{{old('email_customer')}}" placeholder="Alamat Email" autocomplete="off">
-                                @error('email_customer')
-                                  <span class="invalid-feedback" role="alert">
+                                <input type="email" class="form-control form-control-danger @error('email') is-invalid @enderror" name="email" value="{{old('email')}}" placeholder="Alamat Email" autocomplete="off">
+                                @error('email')
+                                  <span class="invalid-feedback text-danger" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
                                 @enderror
@@ -40,37 +40,42 @@
                                 <label class="control-label">No. WhatsApp</label>
                                 <input type="number" class="form-control form-control-danger @error('no_telp') is-invalid @enderror" name="no_telp" placeholder="Nomor WhatsApp" value="{{old('no_telp')}}" autocomplete="off">
                                 @error('no_telp')
-                                  <span class="invalid-feedback" role="alert">
+                                  <span class="invalid-feedback text-danger" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
                                 @enderror
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <!--/span-->
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group has-success">
-                                <label class="control-label">Alamat</label>
-                                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3" placeholder="Alamat Customer"> {{old('alamat')}} </textarea>
-                                @error('alamat')
-                                  <span class="invalid-feedback" role="alert">
+                                <label class="control-label">Password</label>
+                                <input type="password" class="form-control form-control-danger @error('password') is-invalid @enderror" name="password" placeholder="Password" value="{{old('password')}}" autocomplete="off">
+                                @error('password')
+                                  <span class="invalid-feedback text-danger" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group has-success">
+                                <label class="control-label">Konfirmasi Password</label>
+                                <input type="password" class="form-control form-control-danger @error('password_confirmation') is-invalid @enderror" name="password_confirmation" placeholder="password_confirmation" value="{{old('password_confirmation')}}" autocomplete="off">
+                                @error('password_confirmation')
+                                  <span class="invalid-feedback text-danger" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <!--/span-->
+                        <div class="col-md-12">
                             <div class="form-group has-success">
-                                <label class="control-label">Gender</label>
-                                <select class="form-control custom-select @error('kelamin') is-invalid @enderror" name="kelamin">
-                                    <option value="">-- Jenis Gender --</option>
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
-                                </select>
-                                @error('kelamin')
-                                  <span class="invalid-feedback" role="alert">
+                                <label class="control-label">Alamat</label>
+                                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3" placeholder="Alamat Customer"> {{old('alamat')}} </textarea>
+                                @error('alamat')
+                                  <span class="invalid-feedback text-danger" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
                                 @enderror
