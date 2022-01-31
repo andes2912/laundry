@@ -61,13 +61,7 @@
                                 <p>{{Rupiah::getRupiah($item->harga_akhir)}}</p>
                               </td>
                               <td align="center">
-                                @if ($item->status_order == "Delivery")
-                                  <a href="{{url('invoice-customer', $item->invoice)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
-                                @elseif($item->status_order == "Done")
-                                  <a href="{{url('invoice-customer', $item->invoice)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
-                                @elseif($item->status_order == "Process")
-                                  <a href="{{url('invoice-customer', $item->invoice)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
-                                @endif
+                                <a href="{{url('invoice-customer', $item->invoice)}}" class="btn btn-sm btn-success" style="color:white">Invoice</a>
                               </td>
                           </tr>
                           @endforeach
