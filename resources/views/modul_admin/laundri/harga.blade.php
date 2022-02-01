@@ -161,6 +161,15 @@
 @section('scripts')
 <script type="text/javascript">
 
+// Format Harga Value
+$(".format_harga").autoNumeric('init', {
+    aSep: '.',
+    aDec: ',',
+    aForm: true,
+    vMax: '999999999',
+    vMin: '-999999999'
+});
+
 // Tampilkan Modal Edit Harga
 $(document).on('click','#click_harga', function(){
     var id = $(this).attr('data-id');
