@@ -81,8 +81,12 @@ class CustomerController extends Controller
           // Kirim Email
           Mail::send('emails.register', $data, function($mail) use ($email, $data){
           $mail->to($email,'no-replay')
-                  ->subject("E-Laundry - Register");
-          $mail->from('laundri.dev@gmail.com');
+                  ->subject("E-Laundry - Register")
+                  ->from($address = Auth::user()->email, $name = Auth::user()->nama_cabang);
+          // $mail->from([
+          //   'address' => Auth::user()->email,
+          //   'name'    => Auth::user()->nama_cabang,
+          // ]);
           });
         }
         DB::commit();
