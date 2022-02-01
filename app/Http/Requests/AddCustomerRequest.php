@@ -24,12 +24,10 @@ class AddCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-          'name'                  => 'required|unique:users|max:25',
+          'name'                  => 'required|max:25',
           'email'                 => 'required|unique:users',
           'alamat'                => 'required',
           'no_telp'               => 'required|unique:users',
-          'password'              => 'required|string|min:8|confirmed',
-          'password_confirmation' => 'required|string|min:8'
         ];
     }
 
@@ -44,12 +42,7 @@ class AddCustomerRequest extends FormRequest
         'email.max'                     => 'Email tidak boleh lebih dari 50 karakter.',
         'alamat.required'               => 'Alamat tidak boleh kosong.',
         'alamat.max'                    => 'Alamat tidak boleh lebih dari 50 karakter.',
-        'no_telp.required'              => 'Nomor Telepon tidak boleh kosong.',
-        'password.required'             => 'Password tidak boleh kosong.',
-        'password.min'                  => 'Password harus lebih dari 8 karakter.',
-        'password.confirmed'            => 'Password tidak sama, mohon ulangi kembali.',
-        'password_confirmation.required'=> 'Password Konfirmasi tidak boleh kosong.',
-        'password_confirmation.min'     => 'Password Konfirmasi harus lebih dari 8 karakter.'
+        'no_telp.required'              => 'Nomor Telepon tidak boleh kosong.'
       ];
     }
 }
