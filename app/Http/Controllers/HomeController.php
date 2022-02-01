@@ -39,7 +39,7 @@ class HomeController extends Controller
               $incomeY = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->sum('harga_akhir');
               $incomeM = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->sum('harga_akhir');
               $incomeYOld = transaksi::where('status_payment','Success')->where('tahun',date("Y",strtotime("-1 month")))->sum('harga_akhir');
-              $incomeD = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date('d'))->sum('harga_akhir');
+              // $incomeD = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',ltrim(date('d'),'0'))->sum('harga_akhir');
               $incomeDOld = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date("d",strtotime("-1 day")))->sum('harga_akhir');
 
 
@@ -120,10 +120,11 @@ class HomeController extends Controller
           } elseif(Auth::user()->auth === "Karyawan") {
 
               $masuk = transaksi::whereIN('status_order',['Process','Done','Delivery'])->where('user_id',auth::user()->id)->count();
-              $selesai = transaksi::where('status_order','Deone')->where('user_id',auth::user()->id)->count();
+              $selesai = transaksi::where('status_order','Done')->where('user_id',auth::user()->id)->count();
               $diambil = transaksi::where('status_order','Delivery')->where('user_id',auth::user()->id)->count();
               $customer = User::where('karyawan_id',auth::user()->id)->get();
-              $kgToday = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date('d'))->sum('kg');
+              $kgToday = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',ltrim(date('d'),'0'))->sum('kg');
+              // return $kgToday;
               $kgTodayOld = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date("d",strtotime("-1 day")))->sum('kg');
               $incomeM = transaksi::where('user_id',Auth::id())->where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->sum('harga_akhir');
               $incomeMOld = transaksi::where('user_id',Auth::id())->where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m',strtotime("-1 month")),'0'))->sum('harga_akhir');
@@ -132,7 +133,6 @@ class HomeController extends Controller
               if ($incomeMOld != null || $incomeM != null) {
                 $persen =  ($incomeM - $incomeMOld) / $incomeM * 100;
               }
-
 
               // Statistik Bulanan
               $bln = DB::table('transaksis')
