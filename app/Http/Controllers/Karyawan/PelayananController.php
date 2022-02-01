@@ -83,17 +83,26 @@ class PelayananController extends Controller
         if (setNotificationEmail(1) == 1) {
           // Menyiapkan data Email
           $email = $order->email_customer;
+          $jenisPakaian = harga::where('id', $order->harga_id)->first();
           $data = array(
               'invoice' => $order->invoice,
               'customer' => $order->customer,
               'tgl_transaksi' => $order->tgl_transaksi,
+              'pakaian'       => $jenisPakaian->jenis,
+              'berat'         => $order->kg,
+              'harga'         => $order->harga,
+              'harga_disc'    => ($hitung * $order->disc) / 100,
+              'disc'          => $order->disc,
+              'total'         => $order->kg * $order->harga,
+              'harga_akhir'   => $order->harga_akhir,
+              'laundry_name'  => Auth::user()->nama_cabang
           );
 
           // Kirim Email
-          Mail::send('karyawan.email.email', $data, function($mail) use ($email, $data){
+          Mail::send('emails.orders', $data, function($mail) use ($email, $data){
           $mail->to($email,'no-replay')
-                  ->subject("E-Laundry - Nomor Invoice");
-          $mail->from('laundri.dev@gmail.com');
+                  ->subject("E-Laundry - Invoice")
+                  ->from($address = Auth::user()->email, $name = Auth::user()->nama_cabang);
           });
         }
 
@@ -183,16 +192,17 @@ class PelayananController extends Controller
               // Menyiapkan data
               $email = $transaksi->email_customer;
               $data = array(
-                  'invoice' => $transaksi->invoice,
-                  'customer' => $transaksi->customer,
-                  'tgl_transaksi' => $transaksi->tgl_transaksi,
+                  'invoice'         => $transaksi->invoice,
+                  'customer'        => $transaksi->customer,
+                  'nama_laundry'    => Auth::user()->nama_cabang,
+                  'alamat_laundry'  => Auth::user()->alamat_cabang,
               );
 
               // Kirim Email
-              Mail::send('karyawan.email.selesai', $data, function($mail) use ($email, $data){
+              Mail::send('emails.done', $data, function($mail) use ($email, $data){
               $mail->to($email,'no-replay')
-                      ->subject("E-Laundry - Laundry Selesai");
-              $mail->from('laundri.dev@gmail.com');
+                      ->subject("E-Laundry - Laundry Selesai")
+                      ->from($address = Auth::user()->email, $name = Auth::user()->nama_cabang);
               });
             }
 
