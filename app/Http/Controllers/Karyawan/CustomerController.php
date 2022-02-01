@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Karyawan;
 use App\Http\Controllers\Controller;
 use Auth;
 use Session;
+use ErrorException;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\AddCustomerRequest;
 use Illuminate\Support\Facades\Hash;
-
+use Mail;
+use DB;
 class CustomerController extends Controller
 {
     // index
@@ -40,29 +42,55 @@ class CustomerController extends Controller
     // Store
     public function store(AddCustomerRequest $request)
     {
-      $cekNumber = substr($request->no_telp,0,1); // ambil angka pertama dari string
-      $cekNumber1 = substr($request->no_telp,0,2); // ambil angka pertama & kedua dari string
+      try {
+        DB::beginTransaction();
+        $cekNumber = substr($request->no_telp,0,1); // ambil angka pertama dari string
+        $cekNumber1 = substr($request->no_telp,0,2); // ambil angka pertama & kedua dari string
 
-      if ($cekNumber == 0) { // cek jika angka pertama sama dengan 0, jalankan perintah ini
-        $removeNol = '62'. ltrim($request->no_telp, 0); // Hapus angka kosong
-      } elseif($cekNumber1 == 62) { // cek jika angka pertama & kedua sama dengan 62, jalankan perintah ini
-        $removeNol = $request->no_telp; // Balikan jika format sudah benar
+        if ($cekNumber == 0) { // cek jika angka pertama sama dengan 0, jalankan perintah ini
+          $removeNol = '62'. ltrim($request->no_telp, 0); // Hapus angka kosong
+        } elseif($cekNumber1 == 62) { // cek jika angka pertama & kedua sama dengan 62, jalankan perintah ini
+          $removeNol = $request->no_telp; // Balikan jika format sudah benar
+        }
+
+        $addCustomer = User::create([
+          'karyawan_id' => Auth::id(),
+          'name'        => $request->name,
+          'email'       => $request->email,
+          'auth'        => 'Customer',
+          'status'      => 'Active',
+          'no_telp'     => $removeNol,
+          'alamat'      => $request->alamat,
+          'password'    => Hash::make($request->password)
+        ]);
+
+        $addCustomer->assignRole($addCustomer->auth);
+
+        if ($addCustomer) {
+          // Menyiapkan data Email
+          $email = $addCustomer->email;
+          $data = array(
+              'name'            => $addCustomer->name,
+              'email'           => $addCustomer->email,
+              'password'        => $request->password,
+              'url_login'       => url('/login'),
+              'nama_laundry'    => Auth::user()->nama_cabang,
+              'alamat_laundry'  => Auth::user()->alamat_cabang,
+          );
+
+          // Kirim Email
+          Mail::send('emails.register', $data, function($mail) use ($email, $data){
+          $mail->to($email,'no-replay')
+                  ->subject("E-Laundry - Register");
+          $mail->from('laundri.dev@gmail.com');
+          });
+        }
+        DB::commit();
+        Session::flash('success','Customer Berhasil Ditambah !');
+        return redirect('customers');
+      } catch (ErrorException $e) {
+        DB::rollback();
+        throw new ErrorException($e->getMessage());
       }
-
-      $addCustomer = User::create([
-        'karyawan_id' => Auth::id(),
-        'name'        => $request->name,
-        'email'       => $request->email,
-        'auth'        => 'Customer',
-        'status'      => 'Active',
-        'no_telp'     => $removeNol,
-        'alamat'      => $request->alamat,
-        'password'    => Hash::make($request->password)
-      ]);
-
-      $addCustomer->assignRole($addCustomer->auth);
-      Session::flash('success','Customer Berhasil Ditambah !');
-
-      return redirect('customers');
     }
 }
