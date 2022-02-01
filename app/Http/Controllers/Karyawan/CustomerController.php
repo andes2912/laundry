@@ -42,6 +42,7 @@ class CustomerController extends Controller
     // Store
     public function store(AddCustomerRequest $request)
     {
+
       try {
         DB::beginTransaction();
         $cekNumber = substr($request->no_telp,0,1); // ambil angka pertama dari string
@@ -53,6 +54,8 @@ class CustomerController extends Controller
           $removeNol = $request->no_telp; // Balikan jika format sudah benar
         }
 
+        $password =$this->acakpass(8);
+
         $addCustomer = User::create([
           'karyawan_id' => Auth::id(),
           'name'        => $request->name,
@@ -61,7 +64,7 @@ class CustomerController extends Controller
           'status'      => 'Active',
           'no_telp'     => $removeNol,
           'alamat'      => $request->alamat,
-          'password'    => Hash::make($request->password)
+          'password'    => Hash::make($password)
         ]);
 
         $addCustomer->assignRole($addCustomer->auth);
@@ -72,7 +75,7 @@ class CustomerController extends Controller
           $data = array(
               'name'            => $addCustomer->name,
               'email'           => $addCustomer->email,
-              'password'        => $request->password,
+              'password'        => $password,
               'url_login'       => url('/login'),
               'nama_laundry'    => Auth::user()->nama_cabang,
               'alamat_laundry'  => Auth::user()->alamat_cabang,
@@ -81,12 +84,8 @@ class CustomerController extends Controller
           // Kirim Email
           Mail::send('emails.register', $data, function($mail) use ($email, $data){
           $mail->to($email,'no-replay')
-                  ->subject("E-Laundry - Register")
-                  ->from($address = Auth::user()->email, $name = Auth::user()->nama_cabang);
-          // $mail->from([
-          //   'address' => Auth::user()->email,
-          //   'name'    => Auth::user()->nama_cabang,
-          // ]);
+              ->subject("E-Laundry - Register")
+              ->from($address = Auth::user()->email, $name = Auth::user()->nama_cabang);
           });
         }
         DB::commit();
@@ -96,5 +95,16 @@ class CustomerController extends Controller
         DB::rollback();
         throw new ErrorException($e->getMessage());
       }
+    }
+
+    // Acak Password
+    private function acakpass($long){
+      $huruf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'; //buat karakter yang akan digunakan sebagai password
+      $st = '';
+      for($i=0; $i<$long; $i++){
+        $p = rand(0, strlen($huruf)-1);
+        $st .=$huruf{$p};
+      }
+      return $st;
     }
 }

@@ -46,29 +46,6 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-success">
-                                <label class="control-label">Password</label>
-                                <input type="password" class="form-control form-control-danger @error('password') is-invalid @enderror" name="password" placeholder="Password" value="{{old('password')}}" autocomplete="off">
-                                @error('password')
-                                  <span class="invalid-feedback text-danger" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-success">
-                                <label class="control-label">Konfirmasi Password</label>
-                                <input type="password" class="form-control form-control-danger @error('password_confirmation') is-invalid @enderror" name="password_confirmation" placeholder="password_confirmation" value="{{old('password_confirmation')}}" autocomplete="off">
-                                @error('password_confirmation')
-                                  <span class="invalid-feedback text-danger" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
-                                @enderror
-                            </div>
-                        </div>
-
                         <!--/span-->
                         <div class="col-md-12">
                             <div class="form-group has-success">
