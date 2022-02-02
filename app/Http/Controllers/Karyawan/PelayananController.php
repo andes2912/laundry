@@ -141,7 +141,7 @@ class PelayananController extends Controller
                     <select id="harga" class="form-control" name="harga" value="harga">
                     ';
                     foreach ($list_harga as $studi) {
-        $select .= '<option value="'.$studi->harga.'">'.$studi->harga.'</option>';
+        $select .= '<option value="'.$studi->harga.'">'.'Rp. ' .number_format($studi->harga,0,",",".").'</option>';
                     }'
                     </select>
                     </div>
