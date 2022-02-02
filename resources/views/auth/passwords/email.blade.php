@@ -65,7 +65,7 @@
                                   @csrf
                                     <div class="form-group">
                                         <label for="forgot-password-email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="andri@example.com"/>
+                                        <input type="email" class="form-control  @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="andri@example.com"/>
                                         @error('email')
                                             <span class="invalid-feedback text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>

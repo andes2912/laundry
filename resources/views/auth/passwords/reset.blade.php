@@ -98,7 +98,7 @@
                                     </div>
 
 
-                                    {{-- <div class="form-group">
+                                    <div class="form-group">
                                         <div class="d-flex justify-content-between">
                                             <label for="reset-password-confirm">Konfirmasi Password Baru</label>
                                         </div>
@@ -113,7 +113,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     <button type="submit" class="btn btn-primary btn-block" >Buat Password Baru</button>
                                 </form>
 
