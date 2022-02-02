@@ -98,12 +98,12 @@
                                     </div>
 
 
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <div class="d-flex justify-content-between">
                                             <label for="reset-password-confirm">Konfirmasi Password Baru</label>
                                         </div>
                                         <div class="input-group input-group-merge">
-                                            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation"/>
+                                            <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" />
                                             <div class="input-group-append">
                                                 <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
                                             </div>
@@ -113,7 +113,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <button type="submit" class="btn btn-primary btn-block" >Buat Password Baru</button>
                                 </form>
 
