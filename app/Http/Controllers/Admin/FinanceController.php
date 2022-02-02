@@ -94,7 +94,7 @@ class FinanceController extends Controller
       $addharga->user_id = $request->user_id;
       $addharga->jenis = $request->jenis;
       $addharga->kg = 1000; // satuan gram
-      $addharga->harga = $request->harga;
+      $addharga->harga = preg_replace('/[^A-Za-z0-9\-]/', '', $request->harga); // Remove special caracter
       $addharga->hari = $request->hari;
       $addharga->status = 1; //aktif
       $addharga->save();

@@ -43,7 +43,7 @@
                                 <td>{{$item->jenis}}</td>
                                 <td>{{$item->hari}} Hari</td>
                                 <td>{{$item->kg}} Kg</td>
-                                <td>Rp. {{$item->harga}}</td>
+                                <td>{{Rupiah::getRupiah($item->harga)}}</td>
                                 <td>
                                     @if ($item->status == "1")
                                         <span class="label label-primary">Aktif</span>
