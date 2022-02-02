@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Karyawan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{transaksi,user,harga};
-use App\Http\Requests\AddCustomerRequest;
+use App\Http\Requests\{AddCustomerRequest,AddOrderRequest};
+use App\Notifications\{OrderMasuk,OrderSelesai};
 use Auth;
 use PDF;
 use Mail;
 use carbon\carbon;
 use Alert;
 use Session;
-use App\Notifications\{OrderMasuk,OrderSelesai};
+use DB;
 
 class PelayananController extends Controller
 
@@ -26,88 +27,77 @@ class PelayananController extends Controller
       return view('karyawan.transaksi.order', compact('order'));
     }
 
-
-    // Halaman create order
-    public function create()
-    {
-      return view('karyawan.transaksi.addorder');
-    }
-
-
     // Proses simpan order
-    public function store(Request $request)
+    public function store(AddOrderRequest $request)
     {
-
-      $request->validate([
-        'status_payment'    => 'required',
-        'kg'                => 'required|regex:/^[0-9.]+$/',
-        'hari'              => 'required',
-        'harga'             => 'required',
-        'jenis_pembayaran'  => 'required'
-      ]);
-
-      $order = new transaksi();
-      $order->invoice         = $request->invoice;
-      $order->tgl_transaksi   = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
-      $order->status_payment  = $request->status_payment;
-      $order->harga_id        = $request->harga_id;
-      $order->customer_id     = $request->customer_id;
-      $order->user_id         = Auth::user()->id;
-      $order->customer        = namaCustomer($order->customer_id);
-      $order->email_customer  = email_customer($order->customer_id);
-      $order->hari            = $request->hari;
-      $order->kg              = $request->kg;
-      $order->harga           = $request->harga;
-      $order->disc            = $request->disc;
-      $hitung                 = $order->kg * $order->harga;
-      if ($request->disc != NULL) {
-          $disc                = ($hitung * $order->disc) / 100;
-          $total               = $hitung - $disc;
-          $order->harga_akhir  = $total;
-      } else {
-        $order->harga_akhir    = $hitung;
-      }
-      $order->jenis_pembayaran  = $request->jenis_pembayaran;
-      $order->tgl               = Carbon::now()->day;
-      $order->bulan             = Carbon::now()->month;
-      $order->tahun             = Carbon::now()->year;
-      $order->save();
-
-      if ($order) {
-        // Notification Telegram
-        if (setNotificationTelegramIn(1) == 1) {
-          $order->notify(new OrderMasuk());
+      try {
+        DB::beginTransaction();
+        $order = new transaksi();
+        $order->invoice         = $request->invoice;
+        $order->tgl_transaksi   = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
+        $order->status_payment  = $request->status_payment;
+        $order->harga_id        = $request->harga_id;
+        $order->customer_id     = $request->customer_id;
+        $order->user_id         = Auth::user()->id;
+        $order->customer        = namaCustomer($order->customer_id);
+        $order->email_customer  = email_customer($order->customer_id);
+        $order->hari            = $request->hari;
+        $order->kg              = $request->kg;
+        $order->harga           = $request->harga;
+        $order->disc            = $request->disc;
+        $hitung                 = $order->kg * $order->harga;
+        if ($request->disc != NULL) {
+            $disc                = ($hitung * $order->disc) / 100;
+            $total               = $hitung - $disc;
+            $order->harga_akhir  = $total;
+        } else {
+          $order->harga_akhir    = $hitung;
         }
+        $order->jenis_pembayaran  = $request->jenis_pembayaran;
+        $order->tgl               = Carbon::now()->day;
+        $order->bulan             = Carbon::now()->month;
+        $order->tahun             = Carbon::now()->year;
+        $order->save();
 
-        // Notification email
-        if (setNotificationEmail(1) == 1) {
-          // Menyiapkan data Email
-          $email = $order->email_customer;
-          $jenisPakaian = harga::where('id', $order->harga_id)->first();
-          $data = array(
-              'invoice' => $order->invoice,
-              'customer' => $order->customer,
-              'tgl_transaksi' => $order->tgl_transaksi,
-              'pakaian'       => $jenisPakaian->jenis,
-              'berat'         => $order->kg,
-              'harga'         => $order->harga,
-              'harga_disc'    => ($hitung * $order->disc) / 100,
-              'disc'          => $order->disc,
-              'total'         => $order->kg * $order->harga,
-              'harga_akhir'   => $order->harga_akhir,
-              'laundry_name'  => Auth::user()->nama_cabang
-          );
+        if ($order) {
+          // Notification Telegram
+          if (setNotificationTelegramIn(1) == 1) {
+            $order->notify(new OrderMasuk());
+          }
 
-          // Kirim Email
-          Mail::send('emails.orders', $data, function($mail) use ($email, $data){
-          $mail->to($email,'no-replay')
-                  ->subject("E-Laundry - Invoice")
-                  ->from($address = Auth::user()->email, $name = Auth::user()->nama_cabang);
-          });
+          // Notification email
+          if (setNotificationEmail(1) == 1) {
+            // Menyiapkan data Email
+            $email = $order->email_customer;
+            $jenisPakaian = harga::where('id', $order->harga_id)->first();
+            $data = array(
+                'invoice' => $order->invoice,
+                'customer' => $order->customer,
+                'tgl_transaksi' => $order->tgl_transaksi,
+                'pakaian'       => $jenisPakaian->jenis,
+                'berat'         => $order->kg,
+                'harga'         => $order->harga,
+                'harga_disc'    => ($hitung * $order->disc) / 100,
+                'disc'          => $order->disc,
+                'total'         => $order->kg * $order->harga,
+                'harga_akhir'   => $order->harga_akhir,
+                'laundry_name'  => Auth::user()->nama_cabang
+            );
+
+            // Kirim Email
+            Mail::send('emails.orders', $data, function($mail) use ($email, $data){
+            $mail->to($email,'no-replay')
+                    ->subject("E-Laundry - Invoice")
+                    ->from($address = Auth::user()->email, $name = Auth::user()->nama_cabang);
+            });
+          }
+
+          Session::flash('success','Order Berhasil Ditambah !');
+          return redirect('pelayanan');
         }
-
-        Session::flash('success','Order Berhasil Ditambah !');
-        return redirect('pelayanan');
+      } catch (ErrorException $e) {
+        DB::rollback();
+        throw new ErrorException($e->getMessage());
       }
     }
 
@@ -115,6 +105,7 @@ class PelayananController extends Controller
     public function addorders()
     {
       $customer = User::where('karyawan_id',Auth::user()->id)->get();
+      $jenisPakaian = harga::where('user_id',Auth::id())->where('status','1')->get();
 
       $y = date('Y');
       $number = mt_rand(1000, 9999);
@@ -124,7 +115,7 @@ class PelayananController extends Controller
 
       $cek_harga = harga::where('user_id',Auth::user()->id)->where('status',1)->first();
       $cek_customer = User::select('id','karyawan_id')->where('karyawan_id',Auth::id())->count();
-      return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga','cek_customer'));
+      return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga','cek_customer','jenisPakaian'));
     }
 
     // Filter List Harga
