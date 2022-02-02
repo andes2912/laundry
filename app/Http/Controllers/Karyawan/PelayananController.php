@@ -91,7 +91,7 @@ class PelayananController extends Controller
                     ->from($address = Auth::user()->email, $name = Auth::user()->nama_cabang);
             });
           }
-
+          DB::commit();
           Session::flash('success','Order Berhasil Ditambah !');
           return redirect('pelayanan');
         }
