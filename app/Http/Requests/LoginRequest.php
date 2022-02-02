@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     {
         return [
           'email'     => 'required|email|exists:users,email',
-          'password'  => 'required|exists:users,password'
+          'password'  => 'required'
         ];
     }
 
@@ -36,9 +36,6 @@ class LoginRequest extends FormRequest
             "email.email"           => "Format email tidak diketahui",
             "email.exists"          => "Email tidak terdaftar pada sistem",
             "password.required"     => "Password tidak boleh kosong",
-            "password.min"          => "Password minimal 7 karakter",
-            "password.max"          => "Password maksimal 20 karakter",
-            'password.exists'       => "Password yang kamu masukan salah."
         ];
     }
 }
