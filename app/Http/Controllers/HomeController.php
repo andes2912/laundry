@@ -36,12 +36,20 @@ class HomeController extends Controller
               $customer = User::where('auth','Customer')->get();
               $sudahbayar = transaksi::where('status_payment','Success')->count();
               $belumbayar = transaksi::where('status_payment','Pending')->count();
-              $incomeY = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->sum('harga_akhir');
-              $incomeM = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->sum('harga_akhir');
-              $incomeYOld = transaksi::where('status_payment','Success')->where('tahun',date("Y",strtotime("-1 month")))->sum('harga_akhir');
-              $incomeD = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',ltrim(date('d'),'0'))->sum('harga_akhir');
-              $incomeDOld = transaksi::where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date("d",strtotime("-1 day")))->sum('harga_akhir');
+              $incomeY = transaksi::where('status_payment','Success')
+              ->where('tahun',date('Y'))->sum('harga_akhir');
 
+              $incomeM = transaksi::where('status_payment','Success')
+              ->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->sum('harga_akhir');
+
+              $incomeYOld = transaksi::where('status_payment','Success')
+              ->where('tahun',date("Y",strtotime("-1 month")))->sum('harga_akhir');
+
+              $incomeD = transaksi::where('status_payment','Success')
+              ->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',ltrim(date('d'),'0'))->sum('harga_akhir');
+
+              $incomeDOld = transaksi::where('status_payment','Success')->where('tahun',date('Y'))
+              ->where('bulan', ltrim(date('m'),'0'))->where('tgl',ltrim(date("d",strtotime("-1 day")),'0'))->sum('harga_akhir');
 
               $data = DB::table("transaksis")
                   ->select("id" ,DB::raw("(COUNT(*)) as customer"))
@@ -118,16 +126,22 @@ class HomeController extends Controller
                   ->  with('incomeDOld',$incomeDOld);
 
           } elseif(Auth::user()->auth === "Karyawan") {
-
               $masuk = transaksi::whereIN('status_order',['Process','Done','Delivery'])->where('user_id',auth::user()->id)->count();
               $selesai = transaksi::where('status_order','Done')->where('user_id',auth::user()->id)->count();
               $diambil = transaksi::where('status_order','Delivery')->where('user_id',auth::user()->id)->count();
               $customer = User::where('karyawan_id',auth::user()->id)->get();
-              $kgToday = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',ltrim(date('d'),'0'))->sum('kg');
-              // return $kgToday;
-              $kgTodayOld = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->where('tgl',date("d",strtotime("-1 day")))->sum('kg');
-              $incomeM = transaksi::where('user_id',Auth::id())->where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->sum('harga_akhir');
-              $incomeMOld = transaksi::where('user_id',Auth::id())->where('status_payment','Success')->where('tahun',date('Y'))->where('bulan', ltrim(date('m',strtotime("-1 month")),'0'))->sum('harga_akhir');
+
+              $kgToday = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))
+              ->where('bulan', ltrim(date('m'),'0'))->where('tgl',ltrim(date('d'),'0'))->sum('kg');
+
+              $kgTodayOld = transaksi::where('user_id',Auth::id())->where('tahun',date('Y'))
+              ->where('bulan', ltrim(date('m'),'0'))->where('tgl',ltrim(date("d",strtotime("-1 day")),'0'))->sum('kg');
+
+              $incomeM = transaksi::where('user_id',Auth::id())->where('status_payment','Success')
+              ->where('tahun',date('Y'))->where('bulan', ltrim(date('m'),'0'))->sum('harga_akhir');
+
+              $incomeMOld = transaksi::where('user_id',Auth::id())->where('status_payment','Success')
+              ->where('tahun',date('Y'))->where('bulan', ltrim(date('m',strtotime("-1 month")),'0'))->sum('harga_akhir');
 
               $persen = 0;
               if ($incomeMOld != null || $incomeM != null) {
