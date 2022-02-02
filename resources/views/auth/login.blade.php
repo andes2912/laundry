@@ -26,7 +26,12 @@
                                 <form action="{{route('login')}}" method="POST">
                                     @csrf
                                     <fieldset class="form-label-group form-group position-relative has-icon-left">
-                                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="E-Mail" value="{{ old('email') }}" required>
+                                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="E-Mail" value="{{ old('email') }}">
+                                        @error('email')
+                                          <span class="invalid-feedback text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                          </span>
+                                        @enderror
                                         <div class="form-control-position">
                                             <i class="feather icon-user"></i>
                                         </div>
@@ -34,7 +39,12 @@
                                     </fieldset>
 
                                     <fieldset class="form-label-group position-relative has-icon-left">
-                                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="user-password" placeholder="Password" required>
+                                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="user-password" placeholder="Password">
+                                        @error('password')
+                                          <span class="invalid-feedback text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                          </span>
+                                        @enderror
                                         <div class="form-control-position">
                                             <i class="feather icon-lock"></i>
                                         </div>
@@ -48,7 +58,7 @@
                             <div class="divider">
                                 <div class="divider-text"><a href="/">E-Laundry</a></div>
                             </div>
-                            <p style="font-size:10px">Jika ingin mendaftar silahkan hubungi nomor ini : 0822-4888-5062</p>
+                            <p style="font-size:10px;text-align:center">Build With <i class="feather icon-heart text-danger"></i> by <a href="https://andridesmana.pw" target="_blank">Andri Desmana</a></p>
                         </div>
                     </div>
                 </div>
