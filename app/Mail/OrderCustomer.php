@@ -7,10 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class RegisterCustomer extends Mailable
+class OrderCustomer extends Mailable
 {
-  use Queueable, SerializesModels;
-  protected $data;
+    use Queueable, SerializesModels;
+    protected $data;
 
     /**
      * Create a new message instance.
@@ -32,8 +32,8 @@ class RegisterCustomer extends Mailable
         $address = config("mail.from.address");
         $name = 'E-Laundry';
 
-        return $this->view('emails.register')
-        ->subject('Laundry Registrasi')
+        return $this->view('emails.orders')
+        ->subject('Laundry Order')
         ->with('data', $this->data)
         ->from($address, $name);
 
