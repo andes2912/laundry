@@ -20,6 +20,7 @@ Laundry dibangun menggunakan [Laravel](http://laravel.com), the best existing PH
 * Run `php artisan migrate --seed` for migration database
 * Run `php artisan storage:link` for create folder storage
 * Detail login, Email : `admin@laundry.com` Password `123456`
+* Run `php artisan queue:listen` for run queue
     
 Note : Aplikasi ini akan terus saya update.<br>
 Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com</b>
@@ -30,28 +31,6 @@ Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com<
 
 
 ## Fitur Release
-#### [Versi 2.x](https://github.com/andes2912/laundry/tree/2.x)
-   #### Administrator
-   * Dashboard Administrator
-   * Tambah User Karyawan
-   * Lihat data transaksi
-   * Data Finance
-   * Data Harga
-   * Atur target laundry
-   * Ubah thema (untuk saat ini hanya ada Dark & White)
-   * Data Bank
-   * Setting Notifikasi Email, Telegram dan WhatsAapp
-   * Dokumentasi
-
-   #### Karyawan
-   * Dashboard Karyawan
-   * Data order masuk
-   * Data customer
-   * Tambah customer
-   * Tambah transaksi Laundry
-   * Laporan
-   * Ubah thema (untuk saat ini hanya ada Dark & White)
-
  #### [Versi 3.x](https://github.com/andes2912/laundry/tree/3.x)
    #### Administrator
    * Dashboard Administrator
