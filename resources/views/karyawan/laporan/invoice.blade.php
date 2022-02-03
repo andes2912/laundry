@@ -59,18 +59,18 @@
                                         <p>{{Rupiah::getRupiah($hitung)}}</p>
                                     </td>
                                 </tr>
-
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="pull-left m-t-10">
-                    <h6 class="text-right" style="font-weight:bold">Dengan Menandatangani/Menerima Nota Ini, Berarti Anda Setuju :</h6>
-                    <p>
-                        1. Isi Deskripsi <br>
-                        2. Isi Deskripsi
-                    </p>
+                    <h6 style="font-weight:bold">Metode Pembayaran :</h6>
+                    <ol>
+                      @foreach ($bank as $banks)
+                        <li style="color: white"> {{$banks->nama_bank}} <br> {{$banks->no_rekening}} a/n {{$banks->nama_pemilik}}</li>
+                      @endforeach
+                    </ol>
                 </div>
                 <div class="pull-right m-t-10 text-right">
                     <p>Total : {{Rupiah::getRupiah($hitung)}}</p>

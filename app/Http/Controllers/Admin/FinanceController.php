@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{transaksi,customer,LaundrySetting,User,harga};
+use App\Models\{transaksi,customer,LaundrySetting,User,harga,DataBank};
 use App\Http\Requests\HargaRequest;
 use DB;
+use Auth;
 use Session;
 use Carbon\carbon;
 
@@ -84,7 +85,10 @@ class FinanceController extends Controller
       // Ambil list cabang
       $getcabang = User::where('auth','Karyawan')->where('status','Active')->get();
 
-      return view('modul_admin.laundri.harga', compact('harga','karyawan','getcabang'));
+      // Get Data Bank
+      $getBank = DataBank::where('user_id',Auth::id())->count();
+
+      return view('modul_admin.laundri.harga', compact('harga','karyawan','getcabang','getBank'));
     }
 
     // Proses Simpan Harga
