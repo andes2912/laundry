@@ -44,11 +44,11 @@
                       <td style="word-break:break-word;font-size:0px;padding:0px 0px 20px;" align="left">
                         <div style="cursor:auto;color:#737F8D;font-family:Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-size:16px;line-height:24px;text-align:left;">
                           <p><img src="https://cdn.discordapp.com/email_assets/127c95bbea39cd4bc1ad87d1500ae27d.png" alt="Party Wumpus" title="None" width="500" style="height: auto;"></p>
-                          <h2 style="font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-weight: 500;font-size: 20px;color: #4F545C;letter-spacing: 0.27px;">Halo,Kak {{$customer}}.</h2>
-                          <p>Kami ingin memberitahu bahwa Laundry kakak dengan nomor invoice {{$invoice}} sudah selesai dan sudah bisa diambil.</p>
+                          <h2 style="font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-weight: 500;font-size: 20px;color: #4F545C;letter-spacing: 0.27px;">Halo,Kak {{$data['customer']}}.</h2>
+                          <p>Kami ingin memberitahu bahwa Laundry kakak dengan nomor invoice <span style="font-weight: bold; color:black">{{$data['invoice']}}</span> sudah selesai dan sudah bisa diambil.</p>
                           <p style="font-size: 14px; line-height: 24px; margin-top: 6px; margin-bottom: 20px;">
                             Terima Kasih,
-                            <br>{{$nama_laundry}} Team
+                            <br>{{$data['nama_laundry']}} Team
                           </p>
                         </div>
                       </td>
@@ -76,10 +76,10 @@
                     <tr>
                       <td style="word-break:break-word;font-size:0px;padding:0px;" align="center">
                         <div style="cursor:auto;color:#99AAB5;font-family:Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-size:12px;line-height:24px;text-align:center;">
-                        Sent by {{$nama_laundry}} Teams
+                        Sent by {{$data['nama_laundry']}} Teams
                 </div></td></tr><tr>
       <td style="word-break:break-word;font-size:0px;padding:0px;" align="center"><div style="cursor:auto;color:#99AAB5;font-family:Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-size:12px;line-height:24px;text-align:center;">
-      {{$alamat_laundry}}
+      {{$data['alamat_laundry']}}
     </div></td></tr></tbody></table></div></td></tr></tbody></table></div></div>
 
 </body>

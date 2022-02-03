@@ -79,7 +79,7 @@
                     <tr>
                       <td class="sm-px-24" style="--bg-opacity: 1; background-color: #ffffff; background-color: rgba(255, 255, 255, var(--bg-opacity)); border-radius: 4px; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; line-height: 24px; padding: 48px; text-align: left; --text-opacity: 1; color: #626262; color: rgba(98, 98, 98, var(--text-opacity));" bgcolor="rgba(255, 255, 255, var(--bg-opacity))" align="left">
                         <p style="font-weight: 600; font-size: 18px; margin-bottom: 0;">Halo Kak,</p>
-                        <p style="font-weight: 700; font-size: 20px; margin-top: 0; --text-opacity: 1; color: #ff5850; color: rgba(255, 88, 80, var(--text-opacity));">{{$customer}}</p>
+                        <p style="font-weight: 700; font-size: 20px; margin-top: 0; --text-opacity: 1; color: #ff5850; color: rgba(255, 88, 80, var(--text-opacity));">{{$data['customer']}}</p>
 
                         <p style="font-size: 14px; line-height: 24px; margin-top: 6px; margin-bottom: 20px;">
                           Terima kasih sudah mempercayakan pakaian kakak kepada kami, berikut ini adalah invoice untuk Laundry kakak. Untuk mengetahui status Laundry, kakak bisa mengecek nya melalui halaman Dashboard.
@@ -87,11 +87,11 @@
                         <table style="font-family: 'Montserrat',Arial,sans-serif; width: 100%;" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td style="font-family: 'Montserrat',Arial,sans-serif;">
-                              <h3 style="font-weight: 700; font-size: 12px; margin-top: 0; text-align: left;">Invoice {{$invoice}}</h3>
+                              <h3 style="font-weight: 700; font-size: 12px; margin-top: 0; text-align: left;">Invoice {{$data['invoice']}}</h3>
                             </td>
                             <td style="font-family: 'Montserrat',Arial,sans-serif;">
                               <h3 style="font-weight: 700; font-size: 12px; margin-top: 0; text-align: right;">
-                                {{$tgl_transaksi}}
+                                {{$data['tgl_transaksi']}}
                               </h3>
                             </td>
                           </tr>
@@ -108,24 +108,24 @@
                                   </tr>
                                   <tr>
                                       <td style="color:black">1</td>
-                                      <td style="color:black">{{$pakaian}}</td>
-                                      <td style="color:black">{{$berat}} Kg</td>
-                                      <td style="color:black">Rp. {{number_format($harga,0,",",".")}} /Kg</td>
+                                      <td style="color:black">{{$data['pakaian']}}</td>
+                                      <td style="color:black">{{$data['berat']}} Kg</td>
+                                      <td style="color:black">Rp. {{number_format($data['harga'],0,",",".")}} /Kg</td>
                                       <td>
-                                        <p style="color:black">Rp. {{number_format($total,0,",",".")}}</p>
+                                        <p style="color:black">Rp. {{number_format($data['total'],0,",",".")}}</p>
                                       </td>
                                   </tr>
                                   <tr>
                                     <th colspan="4">
-                                      Diskon {{$disc == null || 0 ? '0' : $disc}} %
+                                      Diskon {{$data['disc'] == null || 0 ? '0' : $data['disc']}} %
                                     </th>
                                       <td style="color:black">
-                                       Rp. {{number_format($harga_disc,0,",",".")}}
+                                       Rp. {{number_format($data['harga_disc'],0,",",".")}}
                                       </td>
                                   </tr>
                                   <tr>
                                     <th colspan="4">Total Bayar</th>
-                                    <td style="color:black; font-weight:bold">Rp. {{number_format($harga_akhir,0,",",".")}}</td>
+                                    <td style="color:black; font-weight:bold">Rp. {{number_format($data['harga_akhir'],0,",",".")}}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -137,7 +137,7 @@
                         </p>
                         <p style="font-size: 14px; line-height: 24px; margin-top: 6px; margin-bottom: 20px;">
                           Cheers,
-                          <br>{{$laundry_name}} Team
+                          <br>{{$data['laundry_name']}} Team
                         </p>
                       </td>
                     </tr>

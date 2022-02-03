@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\AddCustomerRequest;
 use Illuminate\Support\Facades\Hash;
+use App\Jobs\RegisterCustomerJob;
 use Mail;
 use DB;
 class CustomerController extends Controller
@@ -71,7 +72,6 @@ class CustomerController extends Controller
 
         if ($addCustomer) {
           // Menyiapkan data Email
-          $email = $addCustomer->email;
           $data = array(
               'name'            => $addCustomer->name,
               'email'           => $addCustomer->email,
@@ -80,13 +80,8 @@ class CustomerController extends Controller
               'nama_laundry'    => Auth::user()->nama_cabang,
               'alamat_laundry'  => Auth::user()->alamat_cabang,
           );
-
-          // Kirim Email
-          Mail::send('emails.register', $data, function($mail) use ($email, $data){
-          $mail->to($email,'no-replay')
-              ->subject("E-Laundry - Register")
-              ->from($address = Auth::user()->email, $name = Auth::user()->nama_cabang);
-          });
+          // Kirim email
+          dispatch(new RegisterCustomerJob($data));
         }
         DB::commit();
         Session::flash('success','Customer Berhasil Ditambah !');
