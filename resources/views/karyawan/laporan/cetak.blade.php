@@ -108,8 +108,13 @@
                     <td style="color:black; font-weight:bold">{{Rupiah::getRupiah($item->harga_akhir)}}</td>
                 </tr>
             </tbody>
-
         </table>
+        <h6>Metode Pembayaran :</h6>
+        <ol style="font-size: 12px">
+          @foreach ($bank as $banks)
+            <li style="color: black"> {{$banks->nama_bank}} <br> {{$banks->no_rekening}} a/n {{$banks->nama_pemilik}}</li>
+          @endforeach
+        </ol>
     </div>
 </body>
 </html>
