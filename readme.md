@@ -51,32 +51,6 @@ Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com<
    * Tambah transaksi Laundry
    * Laporan
    * Ubah thema (untuk saat ini hanya ada Dark & White)
-
- #### [Versi 3.x](https://github.com/andes2912/laundry/tree/3.x)
-   #### Administrator
-   * Dashboard Administrator
-   * Tambah User Karyawan
-   * Lihat data transaksi
-   * Data Finance
-   * Data Harga
-   * Atur target laundry
-   * Ubah thema (untuk saat ini hanya ada Dark & White)
-   * Data Bank
-   * Setting Notifikasi Email, Telegram dan WhatsAapp
-   * Dokumentasi
-
-   #### Karyawan
-   * Dashboard Karyawan
-   * Data order masuk
-   * Data customer
-   * Tambah customer
-   * Tambah transaksi Laundry
-   * Laporan
-   * Ubah thema (untuk saat ini hanya ada Dark & White)
-
-   #### Customer
-   * Dashboard Customer
-   * Ubah thema (untuk saat ini hanya ada Dark & White)
    
 
 ## Sponsors
