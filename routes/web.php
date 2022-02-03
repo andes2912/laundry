@@ -99,5 +99,9 @@ Route::middleware('auth')->group(function () {
     // Setting
     Route::get('setitng','Customer\SettingController@index')->name('customer.setting');
     Route::put('setitng/{id}','Customer\SettingController@settingUpdateCustomer')->name('customer.setting-update');
+
+    // Profile
+    Route::get('me','Customer\ProfileController@index');
+    Route::put('me/{id}','Customer\ProfileController@updateProfile');
   });
 });

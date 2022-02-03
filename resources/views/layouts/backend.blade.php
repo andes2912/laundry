@@ -91,7 +91,7 @@
                               <a class="dropdown-item" href="{{url('karyawan-setting' )}}"><i class="feather icon-settings"></i>Settings
                               </a>
                             @elseif(auth::user()->auth == 'Customer')
-                              <a class="dropdown-item" href=""><i class="feather icon-user"></i>Profile
+                              <a class="dropdown-item" href=" {{url('me')}} "><i class="feather icon-user"></i>Profile
                               </a>
                               <a class="dropdown-item" href="{{Route('customer.setting')}}"><i class="feather icon-settings"></i>Settings
                               </a>
@@ -194,6 +194,8 @@
                       </li>
                       <li class="nav-item"><a href="{{url('/')}}" target="_blank"><i class="feather icon-square"></i><span class="menu-title" data-i18n="Dashboard">Frontend</span></a>
                       </li>
+
+                    {{-- Menu Customer --}}
                     @elseif(Auth::user()->auth == 'Customer')
 
                       <li class="nav-item"><a href="{{url('/')}}" target="_blank"><i class="feather icon-square"></i><span class="menu-title" data-i18n="Dashboard">Frontend</span></a>
