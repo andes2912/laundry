@@ -199,7 +199,7 @@ class PelayananController extends Controller
             // Notifikasi WhatsApp
             if (setNotificationWhatsappOrderSelesai(1) == 1 && getTokenWhatsapp() != null) {
               $waCustomer = $transaksi->customers->no_telp; // get nomor whatsapp customer
-              $nameCustomer = $transaksi->customers->nama; // get name customer
+              $nameCustomer = $transaksi->customers->name; // get name customer
               notificationWhatsapp(
                 getTokenWhatsapp(), // Token
                 $waCustomer, // nomor whatsapp
