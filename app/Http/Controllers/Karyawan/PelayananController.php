@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{transaksi,user,harga,DataBank};
+use App\Models\{transaksi,User,harga,DataBank};
 use App\Http\Requests\{AddCustomerRequest,AddOrderRequest};
 use App\Notifications\{OrderMasuk,OrderSelesai};
 use App\Jobs\{OrderCustomerJob,DoneCustomerJob};
@@ -175,6 +175,11 @@ class PelayananController extends Controller
           $transaksi->update([
             'status_order' => 'Done'
           ]);
+
+            // Tambah point +1
+            $points = User::where('id',$transaksi->customer_id)->firstOrFail();
+            $points->point =  $points->point + 1;
+            $points->update();
 
             // Cek email notif
             if (setNotificationEmail(1) == 1) {
