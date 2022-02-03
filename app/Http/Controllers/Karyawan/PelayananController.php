@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{transaksi,user,harga};
+use App\Models\{transaksi,user,harga,DataBank};
 use App\Http\Requests\{AddCustomerRequest,AddOrderRequest};
 use App\Notifications\{OrderMasuk,OrderSelesai};
 use App\Jobs\{OrderCustomerJob,DoneCustomerJob};
@@ -69,7 +69,7 @@ class PelayananController extends Controller
           // Notification email
           if (setNotificationEmail(1) == 1) {
             // Menyiapkan data Email
-            // $email = $order->email_customer;
+            $bank = DataBank::get();
             $jenisPakaian = harga::where('id', $order->harga_id)->first();
             $data = array(
                 'email'         => $order->email_customer,
@@ -83,7 +83,8 @@ class PelayananController extends Controller
                 'disc'          => $order->disc,
                 'total'         => $order->kg * $order->harga,
                 'harga_akhir'   => $order->harga_akhir,
-                'laundry_name'  => Auth::user()->nama_cabang
+                'laundry_name'  => Auth::user()->nama_cabang,
+                'bank'          => $bank
             );
 
             // Kirim Email

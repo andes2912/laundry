@@ -132,6 +132,16 @@
                             </td>
                           </tr>
                         </table>
+                        <br>
+                        <p style="font-size: 12px; font-weight:bold; color:black">
+                        <h5>Metode Pembayaran :</h5>
+                          <ol>
+                            @foreach ($data['bank'] as $banks)
+                              <li> {{$banks->nama_bank}} <br> {{$banks->no_rekening}} a/n {{$banks->nama_pemilik}}</li>
+                            @endforeach
+                          </ol>
+                        </p>
+                        <br>
                         <p style="font-size: 14px; line-height: 24px; margin-top: 6px; margin-bottom: 20px;">
                           Jika kakak memiliki pertanyaan tentang invoice ini, cukup balas email ini atau hubungi tim dukungan kami untuk mendapatkan bantuan.
                         </p>
