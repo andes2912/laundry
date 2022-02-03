@@ -57,7 +57,7 @@
                                   </div>
                               </div>
                               <div class="media-body my-auto">
-                                  <h4 class="font-weight-bolder mb-0"> 0 </h4>
+                                  <h4 class="font-weight-bolder mb-0"> {{Auth::user()->point}} </h4>
                                   <p class="card-text font-small-1 mb-0">Point</p>
                               </div>
                           </div>
