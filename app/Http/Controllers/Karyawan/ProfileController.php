@@ -16,13 +16,6 @@ class ProfileController extends Controller
       return view('karyawan.profile.index', compact('user'));
     }
 
-    // Profile Karyawan Cabang - Edit
-    public function karyawanProfileEdit(Request $request, $id)
-    {
-      $edit = User::find($id);
-      return view('karyawan.profile.edit', compact('edit'));
-    }
-
     // Profile Karyawan Cabang - Save
     public function karyawanProfileSave(Request $request, $id)
     {
@@ -34,34 +27,21 @@ class ProfileController extends Controller
         $foto->storeAs($tujuan_upload,$nama_foto);
       }
 
-      $edit = User::FindorFail($id);
-      $edit->id = $request->id;
-      $edit->name = $request->name;
-      $edit->email = $request->email;
-      $edit->alamat = $request->alamat;
-      $edit->no_telp = $request->no_telp;
-      $edit->nama_cabang = $request->nama_cabang;
-      $edit->alamat_cabang = $request->alamat_cabang;
-      $edit->foto = $nama_foto ?? Auth::user()->foto;
-      $edit->save();
+      if ($request->password) {
+        $password = Hash::make($request->password);
+      }
+      $profile = User::findOrFail($id);
+      $profile->name            = $request->name;
+      $profile->email           = $request->email;
+      $profile->alamat          = $request->alamat;
+      $profile->nama_cabang     = $request->nama_cabang;
+      $profile->alamat_cabang   = $request->alamat_cabang;
+      $profile->foto            = $nama_foto ?? Auth::user()->foto;
+      $profile->password        = $password ?? Auth::user()->password;
+      $profile->save();
 
-      alert()->success('Update Data Berhasil');
-      $id = $edit->id;
-      return redirect('profile-karyawan/' .$id.'');
+      Session::flash('success','Data profile berhasil diupdate !');
+      return back();
     }
 
-    // Change Password Karyawan
-    public function change_password(Request $request, $id)
-    {
-      $request->validate([
-        'password'  => 'required|confirmed',
-      ]);
-
-      $change_password = User::findOrFail($id);
-      $change_password->password = bcrypt($request->password);
-      $change_password->save();
-
-      Session::flash('success','Password Berhasil Diubah !');
-      return \redirect()->back();
-    }
 }

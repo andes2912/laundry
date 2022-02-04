@@ -84,9 +84,7 @@ Route::middleware('auth')->group(function () {
 
     // Profile
     Route::get('profile-karyawan/{id}','Karyawan\ProfileController@karyawanProfile');
-    Route::get('profile-karyawan/edit/{id}','Karyawan\ProfileController@karyawanProfileEdit');
     Route::put('profile-karyawan/update/{id}','Karyawan\ProfileController@karyawanProfileSave');
-    Route::put('change-password/{id}','Karyawan\ProfileController@change_password')->name('change.password');
 
     // Setting
     Route::get('karyawan-setting','Karyawan\SettingsController@setting');
