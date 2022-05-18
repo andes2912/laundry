@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
-use Auth;
-use Session;
 use ErrorException;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +11,10 @@ use App\Http\Requests\AddCustomerRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\RegisterCustomerJob;
 use Mail;
-use DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 class CustomerController extends Controller
 {
     // index
@@ -55,7 +56,7 @@ class CustomerController extends Controller
           $removeNol = $request->no_telp; // Balikan jika format sudah benar
         }
 
-        $password =$this->acakpass(8);
+        $password = str::random(8);
 
         $addCustomer = User::create([
           'karyawan_id' => Auth::id(),
@@ -90,16 +91,5 @@ class CustomerController extends Controller
         DB::rollback();
         throw new ErrorException($e->getMessage());
       }
-    }
-
-    // Acak Password
-    private function acakpass($long){
-      $huruf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'; //buat karakter yang akan digunakan sebagai password
-      $st = '';
-      for($i=0; $i<$long; $i++){
-        $p = rand(0, strlen($huruf)-1);
-        $st .=$huruf{$p};
-      }
-      return $st;
     }
 }
