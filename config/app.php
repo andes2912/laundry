@@ -169,6 +169,7 @@ return [
          */
         // RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -230,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Rupiah' => App\Helpers\Rupiah::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         // 'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
     ],
 

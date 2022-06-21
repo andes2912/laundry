@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
 
     // Laporan
     Route::get('laporan','Karyawan\LaporanController@laporan');
+    Route::get('export-excel','Karyawan\LaporanController@exportExcel');
 
     // Invoice
     Route::get('invoice-kar/{id}','Karyawan\InvoiceController@invoicekar');
