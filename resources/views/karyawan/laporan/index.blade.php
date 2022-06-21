@@ -5,6 +5,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title"> Laporan Laundry
+              <a href="{{url('export-excel')}}" class="btn btn-info btn-sm">Export Excel</a>
             </h4>
             <div class="table-responsive m-t-0">
                 <table id="myTable" class="table display table-bordered table-striped">
