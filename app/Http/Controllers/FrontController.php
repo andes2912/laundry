@@ -8,23 +8,33 @@ use App\Models\{transaksi,PageSettings};
 class FrontController extends Controller
 {
 
-  //Index
-  public function index()
-  {
-    $setpage = PageSettings::first();
+    //Index
+    public function index(Request $request)
+    {
+        $setpage = PageSettings::first();
+        $cari = $request->cari;
+        $search = transaksi::with('customers')
+        ->whereHas('customers', function($q) use ($cari) {
+            $q->where('no_telp', 'like', "%".$cari."%");
+        })
+        ->orwhere('invoice', 'like', "%".$cari."%")->first();
+        return view('frontend.index', compact('setpage','search'));
+    }
 
-    return view('frontend.index', compact('setpage'));
-  }
+    //Search
+    public function search(Request $request)
+    {
+        $cari = $request->cari;
 
-  //Search
-  public function search(Request $request)
-  {
-      $search = transaksi::where('invoice', $request->search_status);
-      if ($search->count() == 0) {
-          $return = 0;
-        }else{
-          $return = $search->first();
+        $setpage = PageSettings::first();
+        $search = transaksi::with('customers')
+        ->whereHas('customers', function($q) use ($cari) {
+            $q->where('no_telp', 'like', "%".$cari."%");
+        })
+        ->orwhere('invoice', 'like', "%".$cari."%")->first();
+        if(!$search){
+            return redirect('/');
         }
-        return $return;
-  }
+        return view('frontend.search', compact('setpage','search'));
+    }
 }
