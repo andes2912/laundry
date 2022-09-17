@@ -19,6 +19,10 @@
 	<link href="{{asset('frontend/css/forum/style.css')}}" rel="stylesheet" />
 	<link href="{{asset('frontend/css/forum/style-responsive.min.css')}}" rel="stylesheet" />
 	<link href="{{asset('frontend/css/forum/theme/default.css')}}" id="theme" rel="stylesheet" />
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+	<link href="https://cdn.datatables.net/fixedheader/3.2.4/css/fixedHeader.bootstrap.min.css" rel="stylesheet" />
+	<link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap.min.css" rel="stylesheet" />
 	<!-- ================== END BASE CSS STYLE ================== -->
 
 	<!-- ================== BEGIN BASE JS ================== -->
@@ -66,18 +70,30 @@
     </div>
     <!-- end #footer-copyright -->
 	<!-- ================== BEGIN BASE JS ================== -->
-  <script src="{{ asset('js/app.js') }}" ></script>
+    <script src="{{ asset('js/app.js') }}" ></script>
 	<script src="{{asset('frontend/plugins/jquery/jquery-3.2.1.min.js')}}"></script>
 	<script src="{{asset('frontend/plugins/bootstrap3/js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('frontend/plugins/js-cookie/js.cookie.js')}}"></script>
     <script src="{{asset('frontend/js/forum/apps.min.js')}}"></script>
     <script src="{{asset('frontend/js/swal/sweetalert2.all.min.js')}}"></script>
-	<!-- ================== END BASE JS ================== -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap.min.js"></script>
 
+	<!-- ================== END BASE JS ================== -->
 	<script>
 	    $(document).ready(function() {
 	        App.init();
+            var table = $('#example').DataTable( {
+                responsive: true
+            } );
+
+            new $.fn.dataTable.FixedHeader( table );
 	    });
+
     </script>
     @yield('scripts')
 </body>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{transaksi,PageSettings};
+use App\Models\{transaksi,PageSettings, User};
 
 class FrontController extends Controller
 {
@@ -36,5 +36,22 @@ class FrontController extends Controller
             return redirect('/');
         }
         return view('frontend.search', compact('setpage','search'));
+    }
+
+    // History
+    public function history(Request $request)
+    {
+        $setpage = PageSettings::first();
+
+        $history = User::where('no_telp', $request->no_telp)
+        ->with('transaksiCustomer', function($a) {
+            $a->orderBy('id','desc');
+        })
+        ->whereHas('transaksiCustomer')
+        ->get();
+        if(!$history){
+            return redirect('/');
+        }
+        return view('frontend.history', compact('setpage','history'));
     }
 }
