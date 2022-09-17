@@ -1,8 +1,14 @@
 <?php
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 Route::get('/', 'FrontController@index');
 
 // Frontend
 Route::get('pencarian-laundry','FrontController@search');
+
+// History
+Route::get('history/{no_telp}','FrontController@history');
 
 Auth::routes([
     'register' => false,

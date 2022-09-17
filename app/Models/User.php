@@ -52,4 +52,5 @@ class User extends Authenticatable
     {
       return $this->hasMany(transaksi::class,'customer_id','id');
     }
+
 }
