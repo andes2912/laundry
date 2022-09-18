@@ -72,8 +72,8 @@ class CustomerController extends Controller
         $addCustomer->status        = 'Active';
         $addCustomer->no_telp       = $removeNol;
         $addCustomer->alamat        = $request->alamat;
-        $addCustomer->membership_id = $request->membership_id;
-        $addCustomer->is_membership = $request->membership_id != null || $request->membership_id != ''  ? 1 : 0;
+        $addCustomer->membership_price_id = $request->membership_price_id;
+        $addCustomer->is_membership = $request->membership_price_id != null || $request->membership_price_id != ''  ? 1 : 0;
         $addCustomer->password      = Hash::make($password);
         $addCustomer->assignRole($addCustomer->auth);
         $addCustomer->save();
