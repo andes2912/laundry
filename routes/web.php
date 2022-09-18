@@ -80,6 +80,8 @@ Route::middleware('auth')->group(function () {
     Route::get('customers/{id}','Karyawan\CustomerController@detail');
     Route::get('customers-create','Karyawan\CustomerController@create');
     Route::post('customers-store','Karyawan\CustomerController@store');
+    Route::get('deactive-membership','Karyawan\CustomerController@deactiveMembership');
+    Route::get('add-membership','Karyawan\CustomerController@addMembership');
 
     // Filter
     Route::get('listharga','Karyawan\PelayananController@listharga');

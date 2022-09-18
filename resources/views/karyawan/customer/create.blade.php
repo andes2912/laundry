@@ -12,7 +12,7 @@
                 @csrf
                 <div class="form-body">
                     <div class="row p-t-20">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Nama</label>
                                 <input type="text" class="form-control form-control-danger @error('name') is-invalid @enderror" name="name" value="{{old('name')}}" placeholder="Nama Customer" autocomplete="off">
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                         <!--/span-->
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">Email</label>
                                 <input type="email" class="form-control form-control-danger @error('email') is-invalid @enderror" name="email" value="{{old('email')}}" placeholder="Alamat Email" autocomplete="off">
@@ -35,11 +35,27 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group has-success">
                                 <label class="control-label">No. WhatsApp</label>
                                 <input type="number" class="form-control form-control-danger @error('no_telp') is-invalid @enderror" name="no_telp" placeholder="Nomor WhatsApp" value="{{old('no_telp')}}" autocomplete="off">
                                 @error('no_telp')
+                                  <span class="invalid-feedback text-danger" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group has-success">
+                                <label class="control-label">Membership</label>
+                                <select name="membership_id" class="form-control @error('membership_id') is-invalid @enderror">
+                                    <option value="">-- Pilih Membership --</option>
+                                    @foreach ($membership as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('membership_id')
                                   <span class="invalid-feedback text-danger" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>

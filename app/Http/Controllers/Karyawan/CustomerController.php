@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Requests\AddCustomerRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\RegisterCustomerJob;
+use App\Models\MembershipPrice;
 use Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
@@ -20,10 +21,13 @@ class CustomerController extends Controller
     // index
     public function index()
     {
-      $customer = User::where('karyawan_id',Auth::user()->id)
+      $customer = User::with('membership')
+      ->where('karyawan_id',Auth::user()->id)
       ->where('auth','Customer')
       ->orderBy('id','DESC')->get();
-      return view('karyawan.customer.index', compact('customer'));
+
+      $membership = MembershipPrice::where('is_active',1)->get();
+      return view('karyawan.customer.index', compact('customer','membership'));
     }
 
     // Detail Customer
@@ -38,7 +42,8 @@ class CustomerController extends Controller
     // Create
     public function create()
     {
-      return view('karyawan.customer.create');
+        $membership = MembershipPrice::where('is_active',1)->get();
+        return view('karyawan.customer.create', compact('membership'));
     }
 
     // Store
@@ -58,18 +63,19 @@ class CustomerController extends Controller
 
         $password = str::random(8);
 
-        $addCustomer = User::create([
-          'karyawan_id' => Auth::id(),
-          'name'        => $request->name,
-          'email'       => $request->email,
-          'auth'        => 'Customer',
-          'status'      => 'Active',
-          'no_telp'     => $removeNol,
-          'alamat'      => $request->alamat,
-          'password'    => Hash::make($password)
-        ]);
-
+        $addCustomer = new User;
+        $addCustomer->karyawan_id   = Auth::id();
+        $addCustomer->name          = $request->name;
+        $addCustomer->email         = $request->email;
+        $addCustomer->auth          = 'Customer';
+        $addCustomer->status        = 'Active';
+        $addCustomer->no_telp       = $removeNol;
+        $addCustomer->alamat        = $request->alamat;
+        $addCustomer->membership_id = $request->membership_id;
+        $addCustomer->is_membership = $request->membership_id != null || $request->membership_id != ''  ? 1 : 0;
+        $addCustomer->password      = Hash::make($password);
         $addCustomer->assignRole($addCustomer->auth);
+        $addCustomer->save();
 
         if ($addCustomer) {
           // Menyiapkan data Email
@@ -82,7 +88,7 @@ class CustomerController extends Controller
               'alamat_laundry'  => Auth::user()->alamat_cabang,
           );
           // Kirim email
-          dispatch(new RegisterCustomerJob($data));
+        //   dispatch(new RegisterCustomerJob($data));
         }
         DB::commit();
         Session::flash('success','Customer Berhasil Ditambah !');
@@ -91,5 +97,29 @@ class CustomerController extends Controller
         DB::rollback();
         throw new ErrorException($e->getMessage());
       }
+    }
+
+    // Deactive Membership
+    public function deactiveMembership(Request $request)
+    {
+        $customer = User::find($request->id);
+        $customer->update([
+            'is_membership' => 0,
+            'membership_id' => null
+        ]);
+
+        Session::flash('success', "Deactive Membership Success!");
+    }
+
+    // Add Membership
+    public function addMembership(Request $request)
+    {
+        $membership = User::find($request->id);
+        $membership->update([
+            'membership_id' => $request->membership_id,
+            'is_membership' => 1
+        ]);
+
+        Session::flash('success', "Add Membership Success!");
     }
 }
