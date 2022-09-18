@@ -13,7 +13,7 @@
     <div class="card card-outline-info">
       <div class="card-header">
           <h4 class="card-title">Form Tambah Data Order
-              <a href="{{url('customers-create')}}" class="btn btn-danger">+ Customer Baru</a>
+              <a href="{{url('customers-create')}}" class="btn btn-danger">+ Customer Baru  </a>
           </h4>
       </div>
       <div class="card-body">
@@ -29,7 +29,9 @@
                           <select name="customer_id" id="customer_id" class="form-control select2 @error('customer_id') is-invalid @enderror" >
                               <option value="">-- Pilih Customer --</option>
                               @foreach ($customer as $customers)
-                                  <option value="{{$customers->id}}" {{old('customer_id') == $customers->id ? 'selected' : ''}} >{{$customers->name}}</option>
+                                  <option value="{{$customers->id}}" {{old('customer_id') == $customers->id ? 'selected' : ''}} >{{$customers->name}}
+                                   {{$customers->is_membership == 1 ? ' - Member '.$customers->membership_price->name.' ' : ''}}
+                                  </option>
                               @endforeach
                           </select>
                           @error('customer_id')

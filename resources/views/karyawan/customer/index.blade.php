@@ -25,6 +25,7 @@
                         <th>Email</th>
                         <th>Alamat</th>
                         <th>No Telpon</th>
+                        <th>Membership</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -37,8 +38,13 @@
                         <td>{{$item->email}}</td>
                         <td>{{$item->alamat}}</td>
                         <td>{{$item->no_telp}}</td>
+                        <td>{{$item->membership_price->name ?? 'Not a Membership'}}</td>
                         <td>
                           <a href=" {{url('customers', $item->id)}} " class="btn btn-sm btn-primary" style="color:white">Detail</a>
+                          <a class="btn btn-info btn-sm" data-id="{{$item->id}}" data-name="{{$item->name}}" id="add_membership" data-toggle="modal" data-target="#add_member" style="color: black">Add Membership</a>
+                          @if ($item->is_membership == 1)
+                              <a class="btn btn-warning btn-sm" data-id-deactive="{{$item->id}}" id="deactiveMembership" style="color: black">Deactivate Membership</a>
+                          @endif
                         </td>
                     </tr>
                     <?php $no++; ?>
@@ -47,10 +53,43 @@
             </table>
         </div>
     </div>
+    @include('karyawan.customer.modal_membership')
 </div>
 @endsection
 @section('scripts')
 <script type="text/javascript">
+
+// Deaactive Membership
+$(document).on('click', '#deactiveMembership', function () {
+  var id = $(this).attr('data-id-deactive');
+  $.get('deactive-membership', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(_resp){
+    location.reload()
+  });
+});
+
+// Add Membership
+$(document).on('click','#add_membership', function(){
+    var id = $(this).attr('data-id');
+    var name = $(this).attr('data-name');
+    $("#user_id").val(id)
+    $("#name").val(name)
+
+});
+
+// Proses Add Membership
+$(document).on('click','#simpan_membership', function(){
+    var id = $("#user_id").val();
+    var membership_price_id = $("#membership_price_id").val();
+
+    $.get('{{Url("add-membership")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,membership_price_id:membership_price_id}, function(resp){
+
+    $("#id").val('');
+    $("#membership_price_id").val('');
+    location.reload();
+    });
+ });
+
+
 // DataTable
 $(document).ready(function() {
     $('#myTable').DataTable();
