@@ -33,9 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::get('filter-transaksi','Admin\TransaksiController@filtertransaksi'); // filter data transaksi by karyawan
     Route::get('invoice-customer/{invoice}','Admin\TransaksiController@invoice'); // lihat invoice
 
+    // Harga
     Route::get('data-harga','Admin\FinanceController@dataharga');
     Route::post('harga-store','Admin\FinanceController@hargastore');
     Route::get('edit-harga','Admin\FinanceController@hargaedit');
+
+    // Membership Price
+    Route::resource('membership-price','Admin\MembershipPriceController');
 
     // Finance
     Route::get('finance','Admin\FinanceController@index')->name('finance.index');

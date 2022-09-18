@@ -159,6 +159,9 @@
                             <li class="nav-item {{ (request()->is('data-harga')) ? 'active' : '' }}">
                               <a href="{{url('data-harga')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Harga Laundry</span></a>
                             </li>
+                            <li class="nav-item {{ (request()->is('membership-price')) ? 'active' : '' }}">
+                              <a href="{{url('membership-price')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Harga Membership</span></a>
+                            </li>
                           </ul>
                         </li>
 
