@@ -14,10 +14,10 @@
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="control-label">Membership :</label>
-                        <select name="membership_id" id="membership_id" class="form-control">
+                        <select name="membership_price_id" id="membership_price_id" class="form-control">
                             <option value="">-- PILIH --</option>
                             @foreach ($membership as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->id}}">{{$item->name}} - {{$item->kg}} Kg</option>
                             @endforeach
                         </select>
                     </div>

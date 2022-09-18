@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\Karyawan;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\{transaksi,User,harga,DataBank};
-use App\Http\Requests\{AddCustomerRequest,AddOrderRequest};
-use App\Notifications\{OrderMasuk,OrderSelesai};
-use App\Jobs\{OrderCustomerJob,DoneCustomerJob};
-use Auth;
-use PDF;
-use Mail;
 use carbon\carbon;
-use Alert;
-use Session;
-use DB;
+use ErrorException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Models\{transaksi,User,harga,DataBank, Memberships};
+use App\Jobs\{OrderCustomerJob,DoneCustomerJob};
+use App\Notifications\{OrderMasuk,OrderSelesai};
+use App\Http\Requests\{AddCustomerRequest,AddOrderRequest};
 
 class PelayananController extends Controller
 
@@ -58,7 +56,18 @@ class PelayananController extends Controller
         $order->tgl               = Carbon::now()->day;
         $order->bulan             = Carbon::now()->month;
         $order->tahun             = Carbon::now()->year;
+        $order->is_membership     = getMembership($request->customer_id);
         $order->save();
+
+        // Kurangi Jumlah kg pada membership
+        $membership = Memberships::where('user_id', $order->customer_id)->first();
+        if ($order->is_membership == 1 && $membership->curent_kg >= $order->kg) {
+            $membership->curent_kg = $membership->curent_kg - $order->kg;
+            $membership->update();
+        } elseif($order->is_membership == 1 && $membership->curent_kg <= $order->kg) {
+            Session::flash('error','Order Gagal, Bukan Membership atau Jumlah KG pada Membership tidak cukup !');
+            return redirect('pelayanan');
+        }
 
         if ($order) {
           // Notification Telegram
@@ -88,7 +97,7 @@ class PelayananController extends Controller
             );
 
             // Kirim Email
-            dispatch(new OrderCustomerJob($data));
+            // dispatch(new OrderCustomerJob($data));
           }
           DB::commit();
           Session::flash('success','Order Berhasil Ditambah !');

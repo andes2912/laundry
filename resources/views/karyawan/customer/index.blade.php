@@ -38,13 +38,12 @@
                         <td>{{$item->email}}</td>
                         <td>{{$item->alamat}}</td>
                         <td>{{$item->no_telp}}</td>
-                        <td>{{$item->membership->name ?? 'Not a Membership'}}</td>
+                        <td>{{$item->membership_price->name ?? 'Not a Membership'}}</td>
                         <td>
                           <a href=" {{url('customers', $item->id)}} " class="btn btn-sm btn-primary" style="color:white">Detail</a>
+                          <a class="btn btn-info btn-sm" data-id="{{$item->id}}" data-name="{{$item->name}}" id="add_membership" data-toggle="modal" data-target="#add_member" style="color: black">Add Membership</a>
                           @if ($item->is_membership == 1)
-                            <a class="btn btn-warning btn-sm" data-id-deactive="{{$item->id}}" id="deactiveMembership" style="color: black">Deactivate Membership</a>
-                          @else
-                            <a class="btn btn-info btn-sm" data-id="{{$item->id}}" data-name="{{$item->name}}" id="add_membership" data-toggle="modal" data-target="#add_member" style="color: black">Add Membership</a>
+                              <a class="btn btn-warning btn-sm" data-id-deactive="{{$item->id}}" id="deactiveMembership" style="color: black">Deactivate Membership</a>
                           @endif
                         </td>
                     </tr>
@@ -80,12 +79,12 @@ $(document).on('click','#add_membership', function(){
 // Proses Add Membership
 $(document).on('click','#simpan_membership', function(){
     var id = $("#user_id").val();
-    var membership_id = $("#membership_id").val();
+    var membership_price_id = $("#membership_price_id").val();
 
-    $.get('{{Url("add-membership")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,membership_id:membership_id}, function(resp){
+    $.get('{{Url("add-membership")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,membership_price_id:membership_price_id}, function(resp){
 
     $("#id").val('');
-    $("#membership_id").val('');
+    $("#membership_price_id").val('');
     location.reload();
     });
  });

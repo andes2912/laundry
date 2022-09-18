@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'karyawan_id','name', 'email', 'password','status','auth','nama_cabang','alamat_cabang','alamat','no_telp','theme','foto','point','is_membership','membership_id'
+        'karyawan_id','name', 'email', 'password','status','auth','nama_cabang','alamat_cabang','alamat','no_telp','theme','foto','point','is_membership','membership_price_id'
     ];
 
     /**
@@ -53,9 +53,9 @@ class User extends Authenticatable
       return $this->hasMany(transaksi::class,'customer_id','id');
     }
 
-    public function membership()
+    public function membership_price()
     {
-        return $this->belongsTo(MembershipPrice::class,'membership_id','id');
+        return $this->belongsTo(MembershipPrice::class,'membership_price_id','id');
     }
 
 }

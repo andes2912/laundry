@@ -152,3 +152,15 @@ if (! function_exists('notificationWhatsapp'))
         $responseBody = json_decode($response->getBody(), true);
     }
 }
+
+// Get membership
+if (! function_exists('getMembership'))
+{
+    function getMembership($id=0)
+    {
+        $model = new User;
+        $data  = $model::where('id',$id)->first();
+        $member = !empty($data) ? $data->is_membership : 'Not Found';
+        return $member;
+    }
+}

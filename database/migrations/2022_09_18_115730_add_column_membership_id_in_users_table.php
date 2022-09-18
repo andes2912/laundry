@@ -14,7 +14,7 @@ class AddColumnMembershipIdInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('membership_id')->nullable()->after('is_membership');
+            $table->integer('membership_price_id')->nullable()->after('is_membership');
         });
     }
 

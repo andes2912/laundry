@@ -14,7 +14,7 @@ class AddColumnMembershipPriceInTransaksisTable extends Migration
     public function up()
     {
         Schema::table('transaksis', function (Blueprint $table) {
-            $table->boolean('membership_price')->default(0)->after('tgl_ambil');
+            $table->boolean('is_membership')->default(0)->after('tgl_ambil');
         });
     }
 
