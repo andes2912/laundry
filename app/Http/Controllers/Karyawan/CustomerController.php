@@ -53,24 +53,16 @@ class CustomerController extends Controller
 
       try {
         DB::beginTransaction();
-        $cekNumber = substr($request->no_telp,0,1); // ambil angka pertama dari string
-        $cekNumber1 = substr($request->no_telp,0,2); // ambil angka pertama & kedua dari string
-
-        if ($cekNumber == 0) { // cek jika angka pertama sama dengan 0, jalankan perintah ini
-          $removeNol = '62'. ltrim($request->no_telp, 0); // Hapus angka kosong
-        } elseif($cekNumber1 == 62) { // cek jika angka pertama & kedua sama dengan 62, jalankan perintah ini
-          $removeNol = $request->no_telp; // Balikan jika format sudah benar
-        }
-
         $password = str::random(8);
 
+        $phone_number = preg_replace('/^0/','62',$request->no_telp);
         $addCustomer = new User;
         $addCustomer->karyawan_id   = Auth::id();
         $addCustomer->name          = $request->name;
         $addCustomer->email         = $request->email;
         $addCustomer->auth          = 'Customer';
         $addCustomer->status        = 'Active';
-        $addCustomer->no_telp       = $removeNol;
+        $addCustomer->no_telp       = $phone_number;
         $addCustomer->alamat        = $request->alamat;
         $addCustomer->membership_price_id = $request->membership_price_id;
         $addCustomer->is_membership = $request->membership_price_id != null || $request->membership_price_id != ''  ? 1 : 0;

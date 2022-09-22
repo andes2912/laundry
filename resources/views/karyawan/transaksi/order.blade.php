@@ -64,15 +64,17 @@
                         </td>
                         <td>
                             @if ($item->status_payment == 'Pending')
-                            <a class="btn btn-sm btn-danger" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Bayar</a>
-                            <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
+                                <a class="btn btn-sm btn-danger" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Bayar</a>
+                                <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
                             @elseif($item->status_payment == 'Success')
                               @if ($item->status_order == 'Process')
                                 <a class="btn btn-sm btn-info" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Selesai</a>
                                 <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
+                                <a href="https://wa.me/{{$item->customers->no_telp. '?text=' .urlencode(' Halo,' .$item->customer .' Laundry Kamu sedang kami proses. Terima Kasih, sudah menggunakan jasa Omaku Laundry')}}" class="btn btn-success btn-sm">Send</a>
                               @elseif($item->status_order == 'Done')
                                 <a class="btn btn-sm btn-info" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Diambil</a>
                                 <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
+                                <a href="https://wa.me/{{$item->customers->no_telp. '?text=' .urlencode(' Halo,' .$item->customer .' Laundry Kamu Sudah Selesai dan bisa di ambil. Terima Kasih, sudah menggunakan jasa Omaku Laundry')}}" class="btn btn-success btn-sm">Send</a>
                               @elseif($item->status_order == 'Delivery')
                                 <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
                               @endif
