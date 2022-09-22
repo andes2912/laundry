@@ -21,7 +21,7 @@ class PelayananController extends Controller
     // Halaman list order masuk
     public function index()
     {
-      $order = transaksi::with('price')->where('user_id',Auth::user()->id)
+      $order = transaksi::with('price','customers')->where('user_id',Auth::user()->id)
       ->orderBy('id','DESC')->get();
       return view('karyawan.transaksi.order', compact('order'));
     }
