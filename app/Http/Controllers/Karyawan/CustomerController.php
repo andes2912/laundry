@@ -47,15 +47,9 @@ class CustomerController extends Controller
 
       try {
         DB::beginTransaction();
-        $cekNumber = substr($request->no_telp,0,1); // ambil angka pertama dari string
-        $cekNumber1 = substr($request->no_telp,0,2); // ambil angka pertama & kedua dari string
 
-        if ($cekNumber == 0) { // cek jika angka pertama sama dengan 0, jalankan perintah ini
-          $removeNol = '62'. ltrim($request->no_telp, 0); // Hapus angka kosong
-        } elseif($cekNumber1 == 62) { // cek jika angka pertama & kedua sama dengan 62, jalankan perintah ini
-          $removeNol = $request->no_telp; // Balikan jika format sudah benar
-        }
 
+        $phone_number = preg_replace('/^0/','62',$request->no_telp);
         $password = str::random(8);
 
         $addCustomer = User::create([
@@ -64,7 +58,7 @@ class CustomerController extends Controller
           'email'       => $request->email,
           'auth'        => 'Customer',
           'status'      => 'Active',
-          'no_telp'     => $removeNol,
+          'no_telp'     => $phone_number,
           'alamat'      => $request->alamat,
           'password'    => Hash::make($password)
         ]);
