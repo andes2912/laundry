@@ -67,17 +67,49 @@
                                 <a class="btn btn-sm btn-danger" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Bayar</a>
                                 <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
                                 @if ($item->status_order == 'Process')
-                                    <a href="https://wa.me/{{$item->customers->no_telp. '?text=' .urlencode(' Halo,' .$item->customer .' Laundry Kamu sedang kami proses. Terima Kasih, sudah menggunakan jasa Omaku Laundry')}}" class="btn btn-success btn-sm">Send</a>
+                                    <a href="https://wa.me/{{$item->customers->no_telp. '?text=' .urlencode(' Halo,' .$item->customer .' Laundry kamu sedang kami prosess, untuk melacak Laundry & Detail pesanan, Bapak/Ibu bisa kunjungi Web kami di :omakulaundry.com.
+Catatan :
+1. Kami tidak bertanggung jawab atas pakaian yang rusak / luntur karena sifat bahan tersebut.
+2. Cucian Luntur yang tidak diberitahukan ke kami , diluar tanggung jwb kami.
+3. Harap hitung dan periksa jumlah pakaian ketika sebelum pencucian,
+4. Apabila konsumen tidak menghitung jumlah cucian, maka jumlah yg kami hitung dianggap benar.
+5. Pengaduam / komplain kami layani 1x24 jam setelah pengambilan.
+6. Benda berharga/barang tertinggal (jika hilang/rusak), bukan tanggung jawab kami.
+7. Pakaian yang tidak diambil lebih dari 1 bulan, bukan tanggung jawab kami.
+8. Haga bisa berubah sewaktu-waktu tanpa pemberitahuan terlebih dahulu.
+
+
+Terima Kasih,
+Sudah menggunakan Jasa OmakuLaundry :)
+')}}" class="btn btn-success btn-sm">Send</a>
                                 @endif
                             @elseif($item->status_payment == 'Success')
                               @if ($item->status_order == 'Process')
                                 <a class="btn btn-sm btn-info" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Selesai</a>
                                 <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
-                                <a href="https://wa.me/{{$item->customers->no_telp. '?text=' .urlencode(' Halo,' .$item->customer .' Laundry Kamu sedang kami proses. Terima Kasih, sudah menggunakan jasa Omaku Laundry')}}" class="btn btn-success btn-sm">Send</a>
+                                <a href="https://wa.me/{{$item->customers->no_telp. '?text=' .urlencode(' Halo,' .$item->customer .' Laundry kamu sedang kami prosess, untuk melacak Laundry & Detail pesanan, Bapak/Ibu bisa kunjungi Web kami di :omakulaundry.com.
+Catatan :
+1. Kami tidak bertanggung jawab atas pakaian yang rusak / luntur karena sifat bahan tersebut.
+2. Cucian Luntur yang tidak diberitahukan ke kami , diluar tanggung jwb kami.
+3. Harap hitung dan periksa jumlah pakaian ketika sebelum pencucian,
+4. Apabila konsumen tidak menghitung jumlah cucian, maka jumlah yg kami hitung dianggap benar.
+5. Pengaduam / komplain kami layani 1x24 jam setelah pengambilan.
+6. Benda berharga/barang tertinggal (jika hilang/rusak), bukan tanggung jawab kami.
+7. Pakaian yang tidak diambil lebih dari 1 bulan, bukan tanggung jawab kami.
+8. Haga bisa berubah sewaktu-waktu tanpa pemberitahuan terlebih dahulu.
+
+
+Terima Kasih,
+Sudah menggunakan Jasa OmakuLaundry :)')}}" class="btn btn-success btn-sm">Send</a>
                               @elseif($item->status_order == 'Done')
                                 <a class="btn btn-sm btn-info" style="color:white" data-id-update="{{$item->id}}" id="updateStatus">Diambil</a>
                                 <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
-                                <a href="https://wa.me/{{$item->customers->no_telp. '?text=' .urlencode(' Halo,' .$item->customer .' Laundry Kamu Sudah Selesai dan bisa di ambil. Terima Kasih, sudah menggunakan jasa Omaku Laundry')}}" class="btn btn-success btn-sm">Send</a>
+                                <a href="https://wa.me/{{$item->customers->no_telp. '?text=' .urlencode(' Halo,' .$item->customer .' Kami dari omakulaundry.com mau konfirmasi nih, untuk Laundry kamu sudah selesai nih, apakah mau diantar? untuk detail pesanan dan Invoice, silahkan kunjungi website kami di :
+omakulaundry.com
+
+
+Terima Kasih,
+Sudah Menggunakan Jasa Omakulaundry :)')}}" class="btn btn-success btn-sm">Send</a>
                               @elseif($item->status_order == 'Delivery')
                                 <a href="{{url('invoice-kar', $item->id)}}" class="btn btn-sm btn-warning" style="color:white">Invoice</a>
                               @endif
