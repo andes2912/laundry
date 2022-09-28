@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\Karyawan;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\{transaksi,User,harga,DataBank};
-use App\Http\Requests\{AddCustomerRequest,AddOrderRequest};
-use App\Notifications\{OrderMasuk,OrderSelesai};
-use App\Jobs\{OrderCustomerJob,DoneCustomerJob};
-use Auth;
-use PDF;
-use Mail;
 use carbon\carbon;
-use Alert;
-use Session;
-use DB;
+use ErrorException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AddOrderRequest;
+use Illuminate\Support\Facades\Session;
+use App\Models\{transaksi,User,harga,DataBank, Notification};
+use App\Jobs\DoneCustomerJob;
+use App\Notifications\{OrderMasuk,OrderSelesai};
 
 class PelayananController extends Controller
 
@@ -88,7 +86,8 @@ class PelayananController extends Controller
             );
 
             // Kirim Email
-            dispatch(new OrderCustomerJob($data));
+            // dispatch(new OrderCustomerJob($data));
+
           }
           DB::commit();
           Session::flash('success','Order Berhasil Ditambah !');
@@ -180,6 +179,14 @@ class PelayananController extends Controller
             $points = User::where('id',$transaksi->customer_id)->firstOrFail();
             $points->point =  $points->point + 1;
             $points->update();
+
+            // Create Notifikasi
+            $id         = $transaksi->id;
+            $user_id    = $transaksi->customer_id;
+            $title      = 'Pakaian Selesai';
+            $body       = 'Pakaian Sudah Selesai dan Sudah Bisa Diambil :)';
+            $kategori   = 'info';
+            sendNotification($id,$user_id,$kategori,$title,$body);
 
             // Cek email notif
             if (setNotificationEmail(1) == 1) {

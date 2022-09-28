@@ -1,4 +1,8 @@
 <?php
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'FrontController@index');
 
 // Frontend
@@ -11,6 +15,7 @@ Auth::routes([
 Route::middleware('auth')->group(function () {
   Route::get('/home', 'HomeController@index')->name('home');
 
+  Route::get('read-notifikasi','HomeController@readNotifikasi');
   // Modul Admin
   Route::prefix('/')->middleware('role:Admin')->group(function () {
     Route::resource('admin','Admin\AdminController');
