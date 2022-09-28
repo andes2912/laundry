@@ -12,6 +12,7 @@
                 <th>Berat</th>
                 <th>Diskon</th>
                 <th>Jumlah</th>
+                <th>Jenis</th>
                 <th>Tanggal Transaksi</th>
                 <th>Status</th>
             </tr>
@@ -24,6 +25,7 @@
                     <td>{{$item->kg}} Kg</td>
                     <td>{{$item->disc ?? 0}} %</td>
                     <td>Rp {{number_format($item->harga_akhir)}}</td>
+                    <td>{{$item->price->jenis}}</td>
                     <td>{{$item->tgl_transaksi}}</td>
                     <td>{{$item->status_order}}</td>
                 </tr>

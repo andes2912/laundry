@@ -46,6 +46,7 @@ class FrontController extends Controller
         $history = User::where('no_telp', $request->no_telp)
         ->with('transaksiCustomer', function($a) {
             $a->orderBy('id','desc');
+            $a->with('price');
         })
         ->whereHas('transaksiCustomer')
         ->get();
