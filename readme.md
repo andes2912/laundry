@@ -32,7 +32,7 @@ Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com<
 
 
 ## Fitur Release
- #### [Versi 3.x](https://github.com/andes2912/laundry/tree/3.x)
+ #### [Versi 3.1](https://github.com/andes2912/laundry/tree/3.1)
    #### Administrator
    * Dashboard Administrator
    * Tambah User Karyawan
@@ -57,6 +57,7 @@ Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com<
    #### Customer
    * Dashboard Customer
    * Ubah thema (untuk saat ini hanya ada Dark & White)
+   * Notification List
    
 
 ## Sponsors
