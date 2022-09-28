@@ -3,7 +3,8 @@
 
 ## Requirements
 
-* PHP 7.3 or higher
+* Version 1.x , 2.x or 3.x use PHP 7.3 (Framework Laravel 8) [Versi 3.x](https://github.com/andes2912/laundry/tree/3.x)
+* Version 3.1 use PHP 8.0 (Framework Laravel 9) [Versi 3.1](https://github.com/andes2912/laundry/tree/3.1)
 * Database (eg: MySQL)
 * Web Server (eg: Apache, Nginx, IIS)
     
