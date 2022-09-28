@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{transaksi,User};
-use Auth;
-use DB;
-use Carbon\carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\{Notification, transaksi,User};
 
 class HomeController extends Controller
 {
@@ -191,10 +190,20 @@ class HomeController extends Controller
             $totalLaundryKg = transaksi::where('customer_id',Auth::id())->sum('kg');
 
             $transaksi = transaksi::with('price')->where('customer_id',Auth::id())->get();
-
             return view('customer.index',\compact('totalLaundry','totalLaundryKg','transaksi'));
           }
         }
+    }
+
+    // Read Notifikasi
+    public function readNotifikasi(Request $request)
+    {
+        $notif = Notification::find($request->id);
+        $notif->update([
+            'is_read'   => 1
+        ]);
+
+        return $notif;
     }
 
 }

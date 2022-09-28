@@ -1,5 +1,6 @@
 <?php
-use App\Models\{User,notifications_setting,transaksi};
+use App\Models\{Notification, User,notifications_setting,transaksi};
+use PhpParser\Node\Stmt\Return_;
 
 class Rupiah {
     public static function getRupiah($value) {
@@ -151,4 +152,26 @@ if (! function_exists('notificationWhatsapp'))
         $statusCode = $response->getStatusCode();
         $responseBody = json_decode($response->getBody(), true);
     }
+}
+
+// Get Notifikasi
+function getNotifikasi($user_id)
+{
+    $model = new Notification;
+    $data = $model::where('user_id',$user_id)->where('is_read',0)->orderBy('created_at','desc')->get();
+    return $data;
+}
+
+// Send Notif
+function sendNotification($id=null, $user_id=null, $kategori=null, $title=null, $body=null)
+{
+    $notif = new Notification;
+    $notif->transaksi_id    = $id ?? null;
+    $notif->user_id         = $user_id ?? null;
+    $notif->kategori        = $kategori;
+    $notif->title           = $title;
+    $notif->body            = $body;
+    $notif->save();
+
+    return $notif;
 }

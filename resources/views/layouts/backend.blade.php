@@ -60,14 +60,30 @@
                         </ul>
                     </div>
                     <ul class="nav navbar-nav float-right">
-                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up"></span></a>
+                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up">{{count(getNotifikasi(Auth::id()))}}</span></a>
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                 <li class="dropdown-menu-header">
                                     <div class="dropdown-header m-0 p-2">
-                                        <h3 class="white"></h3><span class="notification-title">App Notifications</span>
+                                        <h3 class="white"></h3><span class="notification-title">Notifications</span>
                                     </div>
                                 </li>
                                 <li class="scrollable-container media-list">
+                                    @forelse (getNotifikasi(Auth::id()) as $notifikasis)
+                                        <a data-id-notif="{{$notifikasis->id}}" id="readNotif">
+                                            <div class="media d-flex align-items-start">
+                                                <div class="media-body">
+                                                    <p class="media-heading"><span class="font-weight-bolder">{{$notifikasis->title}} 🎉</span></p><small class="notification-text"> {{$notifikasis->body}}.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    @empty
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-body">
+                                                <p class="media-heading"><span class="font-weight-bolder">Belum ada Notifikasi disini.</span></p>
+                                                <small class="notification-text"> Notifikasi akan muncul disini ketika sudah tersedia.</small>
+                                            </div>
+                                        </div>
+                                    @endforelse
                                 </li>
                             </ul>
                         </li>
@@ -264,6 +280,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/1.9.46/autoNumeric.js"></script>
     <script src="{{asset('backend/js/scripts/pages/page-knowledge-base.js')}}"></script>
     <!-- END: Page JS-->
+
+    <script type="text/javascript">
+        // Read Notifikasi
+        $(document).on('click', '#readNotif', function () {
+            var id = $(this).attr('data-id-notif');
+            $.get('read-notifikasi', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(_resp){
+                location.reload()
+            });
+        });
+    </script>
     @yield('scripts')
 </body>
 <!-- END: Body-->
