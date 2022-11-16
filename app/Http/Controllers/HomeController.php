@@ -143,7 +143,7 @@ class HomeController extends Controller
               ->where('tahun',date('Y'))->where('bulan', ltrim(date('m',strtotime("-1 month")),'0'))->sum('harga_akhir');
 
               $persen = 0;
-              if ($incomeMOld != null || $incomeM != null) {
+              if ($incomeMOld != null && $incomeM != null) {
                 $persen =  ($incomeM - $incomeMOld) / $incomeM * 100;
               }
 
