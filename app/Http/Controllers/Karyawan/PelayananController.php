@@ -12,6 +12,7 @@ use App\Http\Requests\AddOrderRequest;
 use Illuminate\Support\Facades\Session;
 use App\Models\{transaksi,User,harga,DataBank, Notification};
 use App\Jobs\DoneCustomerJob;
+use App\Jobs\OrderCustomerJob;
 use App\Notifications\{OrderMasuk,OrderSelesai};
 
 class PelayananController extends Controller
@@ -86,7 +87,7 @@ class PelayananController extends Controller
             );
 
             // Kirim Email
-            // dispatch(new OrderCustomerJob($data));
+            dispatch(new OrderCustomerJob($data));
 
           }
           DB::commit();
