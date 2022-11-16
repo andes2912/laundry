@@ -76,7 +76,9 @@ class CustomerController extends Controller
               'alamat_laundry'  => Auth::user()->alamat_cabang,
           );
           // Kirim email
-          dispatch(new RegisterCustomerJob($data));
+           if (setNotificationEmail(1) == 1) {
+            dispatch(new RegisterCustomerJob($data));
+           }
         }
         DB::commit();
         Session::flash('success','Customer Berhasil Ditambah !');
