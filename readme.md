@@ -7,7 +7,7 @@
 * Version 3.1 use PHP 8.0 (Framework Laravel 9) [Versi 3.1](https://github.com/andes2912/laundry/tree/3.1)
 * Database (eg: MySQL)
 * Web Server (eg: Apache, Nginx, IIS)
-    
+
 ## Framework
 
 Laundry dibangun menggunakan [Laravel](http://laravel.com), the best existing PHP framework, as the foundation framework.
@@ -20,9 +20,9 @@ Laundry dibangun menggunakan [Laravel](http://laravel.com), the best existing PH
 * Run `cp .env.example .env` for create .env file
 * Run `php artisan migrate --seed` for migration database
 * Run `php artisan storage:link` for create folder storage
-* Detail login, Email : `admin@laundry.com` Password `123456`
+* Run `php artisan create:admin` for create user Administrator
 * Run `php artisan queue:listen` for run queue
-    
+
 Note : Aplikasi ini akan terus saya update.<br>
 Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com</b>
 </p>
@@ -58,7 +58,7 @@ Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com<
    * Dashboard Customer
    * Ubah thema (untuk saat ini hanya ada Dark & White)
    * Notification List
-   
+
 
 ## Sponsors
 
