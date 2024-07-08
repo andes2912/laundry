@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles;
+    use HasApiTokens, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'karyawan_id','name', 'email', 'password','status','auth','nama_cabang','alamat_cabang','alamat','no_telp','theme','foto','point'
+        'karyawan_id', 'name', 'email', 'password', 'status', 'auth', 'nama_cabang', 'alamat_cabang', 'alamat', 'no_telp', 'theme', 'foto', 'point'
     ];
 
     /**
@@ -40,16 +40,16 @@ class User extends Authenticatable
 
     function bank()
     {
-      return $this->hasOne(DataBank::class);
+        return $this->hasOne(DataBank::class);
     }
 
     public function transaksi()
     {
-      return $this->belongsTo(transaksi::class,'id','user_id');
+        return $this->belongsTo(transaksi::class, 'id', 'user_id');
     }
 
     public function transaksiCustomer()
     {
-      return $this->hasMany(transaksi::class,'customer_id','id');
+        return $this->hasMany(transaksi::class, 'customer_id', 'id');
     }
 }
