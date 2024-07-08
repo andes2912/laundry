@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -16,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(IndoBankSeeder::class);
         $this->call(addRoleSeeder::class);
+        $this->call(addRoleKurirSeeder::class);
     }
 }
