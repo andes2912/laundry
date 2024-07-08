@@ -39,7 +39,7 @@ class OrderService
     // List Transaksi
     public function listTransaksi()
     {
-        $data = $this->modelOrder->where('customer_id', Auth::id())->where('status', 1)->get();
+        $data = $this->modelOrder->where('customer_id', Auth::id())->get();
         return $data;
     }
 
@@ -53,7 +53,7 @@ class OrderService
     // List Harga
     public function listHarga($params)
     {
-        $data = $this->modelHarga->where('user_id', $params['user_id'])->get();
+        $data = $this->modelHarga->where('user_id', $params['user_id'])->where('status', 1)->get();
         return $data;
     }
 }
