@@ -20,14 +20,34 @@ class OrderController extends Controller
         return $this->orderService->order($request);
     }
 
+    public function detailLaundry($id)
+    {
+        return $this->orderService->detailLaundry($id);
+    }
+
     public function listTransaksi()
     {
         return $this->orderService->listTransaksi();
     }
 
-    public function listLaundry()
+    public function listTransaksiKurir()
     {
-        return $this->orderService->listLaundry();
+        return $this->orderService->listTransaksiKurir();
+    }
+
+    public function detailTransaksi($id)
+    {
+        return $this->orderService->detailTransaksi($id);
+    }
+
+    public function pickupLaundry(Request $request)
+    {
+        return $this->orderService->pickupLaundry($request);
+    }
+
+    public function listLaundry(Request $request)
+    {
+        return $this->orderService->listLaundry($request);
     }
 
     public function listHarga(Request $request)

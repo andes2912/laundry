@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
-use Twilio\Rest\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProfileResource;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use App\Notifications\WelcomeEmailNotification;
 
 class AuthController extends Controller
 {
@@ -32,7 +28,8 @@ class AuthController extends Controller
 
     public function profile()
     {
-        return response()->json(['message' => 'Your Profile', 'data' => Auth::user()]);
+        $data = Auth::user();
+        return new ProfileResource($data);
     }
 
 

@@ -18,14 +18,14 @@ class transaksi extends Model
         $payload['user_id']             = $request->user_id ?? null;
         $payload['harga_id']            = $request->harga_id ?? null;
         $payload['kg']                  = $request->kg ?? null;
-        $payload['hari']                = $request->hari ?? null;
-        $payload['harga']               = $request->harga ?? null;
+        $payload['hari']                = $this->getHari($request->harga_id) ?? null;
+        $payload['harga']               = $this->getHarga($request->harga_id) ?? null;
         $payload['disc']                = $request->disc ?? null;
         $payload['harga_akhir']         = $request->harga_akhir ?? null;
         $payload['jenis_pembayaran']    = $request->jenis_pembayaran ?? null;
         $payload['status_order']        = $request->status_order ?? null;
         $payload['status_payment']      = $request->status_payment ?? null;
-        $hitung                         = $request->kg * $request->harga;
+        $hitung                         = $request->kg * $this->getHarga($request->harga_id);
         if ($request->disc != NULL) {
             $disc                = ($hitung * $request->disc) / 100;
             $total               = $hitung - $disc;
@@ -62,5 +62,22 @@ class transaksi extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    private function getHarga($id)
+    {
+        $harga = harga::findOrFail($id);
+        return $harga->harga;
+    }
+
+    private function getHari($id)
+    {
+        $hari = harga::findOrFail($id);
+        return $hari->hari;
+    }
+
+    public function kurirPickup()
+    {
+        return $this->belongsTo(KurirPickup::class, 'id', 'transaksi_id');
     }
 }
