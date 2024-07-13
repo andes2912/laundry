@@ -112,4 +112,29 @@ class OrderService
             return $this->responseFailed($th->getMessage());
         }
     }
+
+    // Payment
+    public function payment($params)
+    {
+        try {
+            DB::beginTransaction();
+            $data = transaksi::where('id', $params['transaksi_id'])->first();
+            if ($params['bukti_pembayaran']) {
+                $bukti = $params->file('bukti_pembayaran');
+                $bukti_file = $data->invoice . "-" . time() . "." . $bukti->getClientOriginalExtension();
+                // isi dengan nama folder tempat kemana file diupload
+                $tujuan_upload = 'public/file/bukti';
+                $bukti->storeAs($tujuan_upload, $bukti_file);
+            }
+
+            $data->bukti_pembayaran = $bukti_file;
+            $data->update();
+
+            DB::commit();
+            return $data;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->responseFailed($th->getMessage());
+        }
+    }
 }

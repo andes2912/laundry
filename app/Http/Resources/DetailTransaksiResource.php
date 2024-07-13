@@ -27,7 +27,9 @@ class DetailTransaksiResource extends JsonResource
             'status_payment'    => $this->status_payment,
             'jenis_pembayaran'  => $this->jenis_pembayaran,
             'kg'                => $this->kg,
-            'harga_akhir'       => $this->harga_akhir,
+            'harga_akhir'       => number_format($this->harga_akhir),
+            'bukti_pembayaran'  => $this->bukti_pembayaran != null ? true : false,
+            'jenis'             => $this->price->jenis,
             'pickup'             => $this->kurirPickup ? [
                 'id'        => $this->kurirPickup->id,
                 'user_id'   => $this->kurirPickup->user_id,

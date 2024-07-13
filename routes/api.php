@@ -13,4 +13,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('order', 'API\OrderController@order');
     Route::get('detail-laundry/{id}', 'API\OrderController@detailLaundry');
     Route::post('pickup-laundry', 'API\OrderController@pickupLaundry');
+    Route::put('payment', 'API\OrderController@payment');
 });

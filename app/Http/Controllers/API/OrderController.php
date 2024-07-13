@@ -45,6 +45,11 @@ class OrderController extends Controller
         return $this->orderService->pickupLaundry($request);
     }
 
+    public function payment(Request $request)
+    {
+        return $this->orderService->payment($request);
+    }
+
     public function listLaundry(Request $request)
     {
         return $this->orderService->listLaundry($request);
