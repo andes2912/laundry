@@ -48,7 +48,7 @@ class CustomerController extends Controller
 
 
             $phone_number = preg_replace('/^0/', '62', $request->no_telp);
-            $password = str::random(8);
+            $password = 1234567890;
 
             $addCustomer = User::create([
                 'karyawan_id' => Auth::id(),
