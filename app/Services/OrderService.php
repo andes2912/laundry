@@ -55,10 +55,18 @@ class OrderService
     }
 
     // List Transaksi
-    public function listTransaksi()
+    public function listTransaksi($params)
     {
+        $status_payment = $params['status_payment'];
+        $status_order = $params['status_order'];
+
         $data = $this->modelOrder->where('customer_id', Auth::id())
-            ->where('status_payment', 'pending')
+            ->when($status_payment, function ($payment) use ($status_payment) {
+                $payment->where('status_payment', $status_payment);
+            })
+            ->when($status_order, function ($payment) use ($status_order) {
+                $payment->where('status_order', $status_order);
+            })
             ->orderBy('updated_at', 'desc')
             ->get();
         return ListTransaksiResource::collection($data);

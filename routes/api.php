@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'API\AuthController@login');
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', 'API\AuthController@profile');
+    Route::delete('logout', 'API\AuthController@logout');
     Route::get('list-laundry', 'API\OrderController@listLaundry');
     Route::get('list-harga', 'API\OrderController@listHarga');
     Route::get('list-transaksi', 'API\OrderController@listTransaksi');

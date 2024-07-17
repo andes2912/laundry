@@ -25,9 +25,9 @@ class OrderController extends Controller
         return $this->orderService->detailLaundry($id);
     }
 
-    public function listTransaksi()
+    public function listTransaksi(Request $request)
     {
-        return $this->orderService->listTransaksi();
+        return $this->orderService->listTransaksi($request);
     }
 
     public function listTransaksiKurir()
