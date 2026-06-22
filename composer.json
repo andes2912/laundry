@@ -8,31 +8,34 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.0.21",
-        "andes2912/indobank": "^0.7.0",
-        "barryvdh/laravel-dompdf": "^2.0.0",
-        "guzzlehttp/guzzle": "^7.4",
-        "laravel-notification-channels/telegram": "^2.1",
-        "laravel/framework": "^9.0",
-        "laravel/tinker": "^2.6.3",
-        "laravel/ui": "^3.0",
-        "laravelcollective/html": "^6.2",
-        "maatwebsite/excel": "^3.1",
-        "realrashid/sweet-alert": "^5.1.0",
-        "spatie/laravel-permission": "^5.5.5"
+        "php": "^8.2",
+        "andes2912/indobank": "^0.9",
+        "barryvdh/laravel-dompdf": "^3.0",
+        "guzzlehttp/guzzle": "^7.8",
+        "laravel-notification-channels/telegram": "^6.0",
+        "laravel/framework": "^12.0",
+        "laravel/tinker": "^2.9",
+        "laravel/ui": "^4.6",
+        "maatwebsite/excel": "^3.1.55",
+        "realrashid/sweet-alert": "^7.2",
+        "spatie/laravel-permission": "^6.9"
     },
     "require-dev": {
-        "beyondcode/laravel-dump-server": "^1.8.0",
-        "filp/whoops": "^2.0",
-        "fzaninotto/faker": "^1.4",
-        "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.0"
+        "fakerphp/faker": "^1.23",
+        "filp/whoops": "^2.15",
+        "laravel/pint": "^1.13",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.1",
+        "phpunit/phpunit": "^11.0"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
     },
     "extra": {
         "laravel": {
@@ -41,16 +44,12 @@
     },
     "autoload": {
         "psr-4": {
-        "App\\": "app/",
-        "Database\\Factories\\": "database/factories/",
-        "Database\\Seeders\\": "database/seeders/"
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         },
         "files":  [
             "app/Helpers/Model.php"
-        ],
-        "classmap": [
-            "database/seeders",
-            "database/factories"
         ]
     },
     "autoload-dev": {
@@ -58,7 +57,7 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
@@ -72,5 +71,4 @@
             "@php artisan key:generate --ansi"
         ]
     }
-
 }

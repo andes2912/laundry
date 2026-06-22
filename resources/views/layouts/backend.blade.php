@@ -47,7 +47,7 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern  {{Auth::user()->theme == 1 ? 'dark-layout' : ''}} content-left-sidebar chat-application navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar" data-layout="dark-layout">
+<body class="vertical-layout vertical-menu-modern  {{ (Auth::user()->theme ?? 1) == 1 ? 'dark-layout' : '' }} content-left-sidebar chat-application navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar" data-layout="dark-layout">
 
     <!-- BEGIN: Header-->
     <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu floating-nav navbar-light navbar-shadow">
@@ -60,6 +60,20 @@
                         </ul>
                     </div>
                     <ul class="nav navbar-nav float-right">
+                        {{-- Theme toggle (dark/light) --}}
+                        <li class="nav-item d-none d-lg-block">
+                            <form id="theme-toggle-form" method="POST" action="{{ route('setting-theme.update', Auth::id()) }}" class="m-0">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="theme" value="{{ (Auth::user()->theme ?? 1) == 1 ? 0 : 1 }}">
+                                <a class="nav-link nav-link-label" href="#"
+                                   onclick="event.preventDefault(); document.getElementById('theme-toggle-form').submit();"
+                                   data-toggle="tooltip" data-placement="bottom"
+                                   title="Ganti ke {{ (Auth::user()->theme ?? 1) == 1 ? 'Light' : 'Dark' }} Mode">
+                                    <i class="ficon feather {{ (Auth::user()->theme ?? 1) == 1 ? 'icon-sun' : 'icon-moon' }}"></i>
+                                </a>
+                            </form>
+                        </li>
                         <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up">{{count(getNotifikasi(Auth::id()))}}</span></a>
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                 <li class="dropdown-menu-header">

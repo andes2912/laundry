@@ -106,6 +106,9 @@ class HomeController extends Controller
                   }
               }
 
+              // Transaksi terbaru untuk dashboard
+              $recent = transaksi::orderByDesc('created_at')->take(8)->get();
+
               return view('modul_admin.index')
                   ->  with('data', $data)
                   ->  with('masuk',$masuk)
@@ -122,7 +125,8 @@ class HomeController extends Controller
                   ->  with('incomeM',$incomeM)
                   ->  with('incomeYOld',$incomeYOld)
                   ->  with('incomeD',$incomeD)
-                  ->  with('incomeDOld',$incomeDOld);
+                  ->  with('incomeDOld',$incomeDOld)
+                  ->  with('recent', $recent);
 
           } elseif(Auth::user()->auth === "Karyawan") {
               $masuk = transaksi::whereIN('status_order',['Process','Done','Delivery'])->where('user_id',auth::user()->id)->count();

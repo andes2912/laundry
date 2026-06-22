@@ -13,7 +13,7 @@ class FrontController extends Controller
   {
     $setpage = PageSettings::first();
 
-    return view('frontend.index', compact('setpage'));
+    return view('frontend.index-dashboard', compact('setpage'));
   }
 
   //Search

@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/bootstrap-extended.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/colors.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/components.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/themes/dark-layout.css')}}">
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/core/colors/palette-gradient.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/pages/authentication.css')}}">
@@ -37,7 +38,7 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+<body class="vertical-layout vertical-menu-modern 1-column dark-layout navbar-floating footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
     <!-- BEGIN: Content-->
     <div class="app-content content">
         <div class="content-overlay"></div>
