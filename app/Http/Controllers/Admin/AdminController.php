@@ -11,6 +11,7 @@ use DB;
 use Session;
 use Spatie\Permission\Models\Role;
 use Carbon\carbon;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -31,13 +32,32 @@ class AdminController extends Controller
     // Proses edit profile
     public function edit_profile(Request $request)
     {
-      $profile = User::find($request->id_profile);
-      $profile->update([
-        'name'  => $request->name,
-        'email'  => $request->email
+      $request->validate([
+        'name'     => 'required|string|max:100',
+        'email'    => 'required|email',
+        'foto'     => 'nullable|image|max:2048',
+        'password' => 'nullable|min:6|confirmed',
       ]);
 
-      Session::flash('success','Update Profile Berhasil');
-      return $profile;
+      $profile = User::findOrFail(Auth::id());
+
+      if ($foto = $request->file('foto')) {
+        $nama_foto = time().'_'.$foto->getClientOriginalName();
+        $foto->storeAs('public/images/foto_profile', $nama_foto);
+        $profile->foto = $nama_foto;
+      }
+
+      if ($request->filled('password')) {
+        $profile->password = Hash::make($request->password);
+      }
+
+      $profile->name    = $request->name;
+      $profile->email   = $request->email;
+      $profile->no_telp = $request->no_telp;
+      $profile->alamat  = $request->alamat;
+      $profile->save();
+
+      Session::flash('success', 'Profile berhasil diupdate.');
+      return back();
     }
 }

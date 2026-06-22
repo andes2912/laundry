@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'karyawan_id','name', 'email', 'password','status','auth','nama_cabang','alamat_cabang','alamat','no_telp','theme','foto','point'
+        'karyawan_id','cabang_id','name', 'email', 'password','status','auth','nama_cabang','alamat_cabang','alamat','no_telp','theme','foto','point'
     ];
 
     /**
@@ -51,5 +51,13 @@ class User extends Authenticatable
     public function transaksiCustomer()
     {
       return $this->hasMany(transaksi::class,'customer_id','id');
+    }
+
+    /**
+     * Cabang tempat karyawan ini bekerja.
+     */
+    public function cabang()
+    {
+      return $this->belongsTo(Cabang::class, 'cabang_id');
     }
 }

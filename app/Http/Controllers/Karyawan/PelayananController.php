@@ -22,99 +22,172 @@ class PelayananController extends Controller
     // Halaman list order masuk
     public function index()
     {
-      $order = transaksi::with('price')->where('user_id',Auth::user()->id)
+      $order = transaksi::with('price','items')->where('user_id',Auth::user()->id)
       ->orderBy('id','DESC')->get();
       return view('karyawan.transaksi.order', compact('order'));
     }
 
-    // Proses simpan order
+    // Proses simpan order (multi-item)
     public function store(AddOrderRequest $request)
     {
       try {
         DB::beginTransaction();
-        $order = new transaksi();
-        $order->invoice         = $request->invoice;
-        $order->tgl_transaksi   = Carbon::now()->parse($order->tgl_transaksi)->format('d-m-Y');
-        $order->status_payment  = $request->status_payment;
-        $order->harga_id        = $request->harga_id;
-        $order->customer_id     = $request->customer_id;
-        $order->user_id         = Auth::user()->id;
-        $order->customer        = namaCustomer($order->customer_id);
-        $order->email_customer  = email_customer($order->customer_id);
-        $order->hari            = $request->hari;
-        $order->kg              = $request->kg;
-        $order->harga           = $request->harga;
-        $order->disc            = $request->disc;
-        $hitung                 = $order->kg * $order->harga;
-        if ($request->disc != NULL) {
-            $disc                = ($hitung * $order->disc) / 100;
-            $total               = $hitung - $disc;
-            $order->harga_akhir  = $total;
-        } else {
-          $order->harga_akhir    = $hitung;
+
+        $items = $request->input('items', []);
+        $disc  = (float) $request->input('disc', 0);
+
+        // 1. Lookup semua harga sekaligus
+        $hargaIds  = collect($items)->pluck('harga_id')->unique();
+        $hargaMap  = harga::whereIn('id', $hargaIds)->get()->keyBy('id');
+
+        // 2. Hitung subtotal per item + grand total
+        $itemRows = [];
+        $grandTotal = 0;
+        $longestHari = 0;
+        foreach ($items as $it) {
+            $h = $hargaMap->get($it['harga_id']);
+            if (!$h) continue;
+            $kg       = (float) $it['kg'];
+            $subtotal = (int) round($kg * $h->harga);
+            $grandTotal += $subtotal;
+            $longestHari = max($longestHari, (int) $h->hari);
+
+            $itemRows[] = [
+                'harga_id' => $h->id,
+                'jenis'    => $h->jenis,
+                'kg'       => $kg,
+                'hari'     => (int) $h->hari,
+                'harga'    => (int) $h->harga,
+                'subtotal' => $subtotal,
+            ];
         }
-        $order->jenis_pembayaran  = $request->jenis_pembayaran;
-        $order->tgl               = Carbon::now()->day;
-        $order->bulan             = Carbon::now()->month;
-        $order->tahun             = Carbon::now()->year;
+
+        if (empty($itemRows)) {
+            DB::rollBack();
+            return back()->withInput()->withErrors(['items' => 'Item tidak valid.']);
+        }
+
+        // 3. Aplikasikan diskon ke grand total
+        $hargaAkhir = $grandTotal;
+        if ($disc > 0) {
+            $hargaAkhir = (int) round($grandTotal - ($grandTotal * $disc / 100));
+        }
+
+        // 4. Simpan transaksi (header). Field harga_id/kg/harga/hari = ITEM PERTAMA
+        //    untuk backward-compat dengan template invoice/laporan lama.
+        $first = $itemRows[0];
+        $order = new transaksi();
+        $order->invoice          = $request->invoice;
+        $order->tgl_transaksi    = Carbon::now()->format('d-m-Y');
+        $order->status_payment   = $request->status_payment;
+        $order->customer_id      = $request->customer_id;
+        $order->user_id          = Auth::user()->id;
+        $order->customer         = namaCustomer($order->customer_id);
+        $order->email_customer   = email_customer($order->customer_id);
+        $order->harga_id         = $first['harga_id'];
+        $order->kg               = collect($itemRows)->sum('kg');  // total kg semua item
+        $order->harga            = $first['harga'];
+        $order->hari             = $longestHari;                   // ambil yang paling lama
+        $order->disc             = $request->disc;
+        $order->harga_akhir      = $hargaAkhir;
+        $order->jenis_pembayaran = $request->jenis_pembayaran;
+        $order->tgl              = Carbon::now()->day;
+        $order->bulan            = Carbon::now()->month;
+        $order->tahun            = Carbon::now()->year;
         $order->save();
 
-        if ($order) {
-          // Notification Telegram
-          if (setNotificationTelegramIn(1) == 1) {
-            $order->notify(new OrderMasuk());
-          }
-
-          // Notification email
-          if (setNotificationEmail(1) == 1) {
-            // Menyiapkan data Email
-            $bank = DataBank::get();
-            $jenisPakaian = harga::where('id', $order->harga_id)->first();
-            $data = array(
-                'email'         => $order->email_customer,
-                'invoice'       => $order->invoice,
-                'customer'      => $order->customer,
-                'tgl_transaksi' => $order->tgl_transaksi,
-                'pakaian'       => $jenisPakaian->jenis,
-                'berat'         => $order->kg,
-                'harga'         => $order->harga,
-                'harga_disc'    => ($hitung * $order->disc) / 100,
-                'disc'          => $order->disc,
-                'total'         => $order->kg * $order->harga,
-                'harga_akhir'   => $order->harga_akhir,
-                'laundry_name'  => Auth::user()->nama_cabang,
-                'bank'          => $bank
-            );
-
-            // Kirim Email
-            dispatch(new OrderCustomerJob($data));
-
-          }
-          DB::commit();
-          Session::flash('success','Order Berhasil Ditambah !');
-          return redirect('pelayanan');
+        // 5. Simpan setiap item
+        foreach ($itemRows as $row) {
+            $order->items()->create($row);
         }
-      } catch (ErrorException $e) {
-        DB::rollback();
-        throw new ErrorException($e->getMessage());
+
+        // 6. Notifikasi (best-effort, tidak gagalkan order)
+        try {
+            if (setNotificationTelegramIn(1) == 1) {
+                $order->notify(new OrderMasuk());
+            }
+        } catch (\Throwable $e) {
+            \Log::warning('Telegram notif failed: '.$e->getMessage());
+        }
+
+        try {
+            if (setNotificationEmail(1) == 1) {
+                $bank = DataBank::get();
+                $data = [
+                    'email'         => $order->email_customer,
+                    'invoice'       => $order->invoice,
+                    'customer'      => $order->customer,
+                    'tgl_transaksi' => $order->tgl_transaksi,
+                    'items'         => $itemRows,
+                    'pakaian'       => $first['jenis'],   // backward-compat single
+                    'berat'         => $order->kg,
+                    'harga'         => $order->harga,
+                    'harga_disc'    => $disc > 0 ? (int) round($grandTotal * $disc / 100) : 0,
+                    'disc'          => $order->disc,
+                    'total'         => $grandTotal,
+                    'harga_akhir'   => $order->harga_akhir,
+                    'laundry_name'  => optional(Auth::user()->cabang)->nama ?? Auth::user()->nama_cabang,
+                    'bank'          => $bank,
+                ];
+                dispatch(new OrderCustomerJob($data));
+            }
+        } catch (\Throwable $e) {
+            \Log::warning('Email order notif failed: '.$e->getMessage());
+        }
+
+        DB::commit();
+        Session::flash('success', 'Order berhasil dibuat dengan '.count($itemRows).' item.');
+        return redirect('pelayanan');
+
+      } catch (\Throwable $e) {
+        DB::rollBack();
+        \Log::error('PelayananController@store error: '.$e->getMessage());
+        return back()->withInput()->with('error', 'Gagal simpan order: '.$e->getMessage());
       }
+    }
+
+    // Resource route /pelayanan/create — delegate ke addorders()
+    public function create()
+    {
+      return $this->addorders();
     }
 
     // Tambah Order
     public function addorders()
     {
-      $customer = User::where('karyawan_id',Auth::user()->id)->get();
+      $cek_harga    = harga::where('user_id',Auth::user()->id)->where('status',1)->first();
+      $cek_customer = User::select('id','karyawan_id')->where('karyawan_id',Auth::id())->count();
+
+      // Guard: data harga belum ada -> arahkan ke list harga karyawan
+      if (!$cek_harga) {
+        Session::flash('error',
+          'Tidak bisa buat order: belum ada data harga aktif untuk cabang kamu. Mohon hubungi admin untuk mengisi data harga terlebih dahulu.');
+        return redirect('listharga-karyawan');
+      }
+
+      // Guard: customer belum ada -> arahkan ke form tambah customer
+      if ($cek_customer == 0) {
+        Session::flash('error',
+          'Tidak bisa buat order: belum ada customer terdaftar. Tambahkan minimal 1 customer dulu.');
+        return redirect('customers-create');
+      }
+
+      $customer     = User::where('karyawan_id',Auth::user()->id)->get();
       $jenisPakaian = harga::where('user_id',Auth::id())->where('status','1')->get();
 
       $y = date('Y');
       $number = mt_rand(1000, 9999);
-      // Nomor Form otomatis
-      $newID = $number. Auth::user()->id .''.$y;
-      $tgl = date('d-m-Y');
+      $newID  = $number. Auth::user()->id .''.$y;
 
-      $cek_harga = harga::where('user_id',Auth::user()->id)->where('status',1)->first();
-      $cek_customer = User::select('id','karyawan_id')->where('karyawan_id',Auth::id())->count();
-      return view('karyawan.transaksi.addorder', compact('customer','newID','cek_harga','cek_customer','jenisPakaian'));
+      return view('karyawan.transaksi.addorder',
+        compact('customer','newID','cek_harga','cek_customer','jenisPakaian'));
+    }
+
+    // List harga (read-only) untuk karyawan
+    public function viewHarga()
+    {
+      $hargaList = harga::where('user_id', Auth::id())->orderBy('jenis')->get();
+      return view('karyawan.harga.index', compact('hargaList'));
     }
 
     // Filter List Harga
@@ -167,9 +240,21 @@ class PelayananController extends Controller
     {
       $transaksi = transaksi::find($request->id);
       if ($transaksi->status_payment == 'Pending') {
-        $transaksi->update([
-          'status_payment' => 'Success'
-        ]);
+        // Wajib pilih jenis pembayaran kalau masih "Belum Diketahui"
+        $jp = $request->jenis_pembayaran;
+        $needsJp = empty($transaksi->jenis_pembayaran) || $transaksi->jenis_pembayaran === 'Belum Diketahui';
+        if ($needsJp) {
+            if (!in_array($jp, ['Tunai', 'Transfer'], true)) {
+                return response()->json([
+                    'ok'    => false,
+                    'code'  => 'need_payment',
+                    'error' => 'Pilih jenis pembayaran (Tunai / Transfer) dulu.',
+                ], 422);
+            }
+            $transaksi->jenis_pembayaran = $jp;
+        }
+        $transaksi->status_payment = 'Success';
+        $transaksi->save();
       } elseif ($transaksi->status_payment == 'Success') {
         if ($transaksi->status_order == 'Process') {
           $transaksi->update([

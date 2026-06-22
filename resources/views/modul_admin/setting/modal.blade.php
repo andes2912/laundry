@@ -1,89 +1,138 @@
-{{-- Modal Edit Profile --}}
-<div class="modal fade" id="edit_profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h4 class="modal-title" id="exampleModalLabel1">Edit Profile </h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <input type="hidden" name="id_profile" id="id_profile">
-              <div class="form-group">
-                  <label for="name" class="control-label">Name :</label>
-                  <input type="text" name="name" id="name" class="form-control">
-              </div>
-
-              <div class="form-group">
-                  <label for="email" class="control-label">Email :</label>
-                  <input type="email" name="email" id="email" class="form-control">
-              </div>
-
-            </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-success" id="update_profile">Update</button>
-              <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-          </div>
-      </div>
-  </div>
-</div>
-
-<div class="modal fade text-left" id="addpayment" tabindex="-1" role="dialog" aria-labelledby="addpayment" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h4 class="modal-title" id="addpayment">Tambah Data Payment </h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <form action="{{route('setting.bank')}}" method="POST">
-            @csrf
+{{-- Modal Edit Profile (dipakai di halaman lain) --}}
+<div class="modal fade" id="edit_profile" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="feather icon-edit mr-50 text-primary"></i> Edit Profile
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+            </div>
             <div class="modal-body">
-                <label for="Nama Bank">Nama Bank/E-Wallet</label>
-                @php
-                    $bank = App\Models\Bank::get();
-                @endphp
-                <div class="form-group">
-                  {{-- <input type="text" name="nama_bank" class="form-control @error('nama_bank') is-invalid @enderror" placeholder="Nama Bank"> --}}
-                  <select name="nama_bank" class="form-control @error('nama_bank') is-invalid @enderror">
-                    @foreach ($bank as $item)
-                      <option value="{{$item->nama_bank}}"> {{$item->nama_bank}} </option>
-                    @endforeach
-                  </select>
-                  @error('nama_bank')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
-                </div>
-
-                <label>Nomor Rekening/Telp: </label>
-                <div class="form-group">
-                    <input type="number" name="no_rekening" placeholder="Nomor Rekening" class="form-control @error('no_rekening') is-invalid @enderror">
-                    @error('no_rekening')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
-                </div>
-
-                <label>Nama Pemilik: </label>
-                <div class="form-group">
-                    <input type="text" name="nama_pemilik" placeholder="Nama Pemilik" class="form-control @error('nama_pemilik') is-invalid @enderror">
-                    @error('nama_pemilik')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
-                </div>
+                <form>
+                    <input type="hidden" name="id_profile" id="id_profile">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
-              <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" id="update_profile">
+                    <i class="feather icon-save mr-25"></i> Update
+                </button>
             </div>
-          </form>
-      </div>
-  </div>
+        </div>
+    </div>
 </div>
+
+{{-- ============ MODAL: TAMBAH REKENING BANK ============ --}}
+<div class="modal fade" id="addpayment" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="feather icon-credit-card mr-50 text-success"></i> Tambah Rekening Bank / E-Wallet
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+            </div>
+            <form action="{{ route('setting.bank') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    {{-- Preview kartu --}}
+                    <div class="mb-2 p-2" id="bank-preview"
+                         style="background:linear-gradient(135deg,#7367f0,#9e95f5); color:#fff; border-radius:10px;">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h6 class="text-white mb-0" id="prev-bank">Nama Bank</h6>
+                            <i class="feather icon-credit-card text-white" style="opacity:.6;"></i>
+                        </div>
+                        <h4 class="text-white text-bold-700 my-1" style="letter-spacing:2px; font-family:monospace;" id="prev-rek">
+                            •••• •••• •••• ••••
+                        </h4>
+                        <small class="text-white" style="opacity:.85;" id="prev-nama">a/n Pemilik Rekening</small>
+                    </div>
+
+                    @php $bankList = App\Models\Bank::get(); @endphp
+
+                    {{-- Nama Bank --}}
+                    <div class="form-group">
+                        <label class="text-bold-600">
+                            <i class="feather icon-credit-card mr-25 text-muted"></i> Nama Bank / E-Wallet
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select name="nama_bank" id="bp-nama-bank"
+                                class="form-control @error('nama_bank') is-invalid @enderror" required>
+                            <option value="">— Pilih Bank / E-Wallet —</option>
+                            @foreach ($bankList as $b)
+                                <option value="{{ $b->nama_bank }}" {{ old('nama_bank') == $b->nama_bank ? 'selected' : '' }}>
+                                    {{ $b->nama_bank }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_bank')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    {{-- Nomor Rekening --}}
+                    <div class="form-group">
+                        <label class="text-bold-600">
+                            <i class="feather icon-hash mr-25 text-muted"></i> Nomor Rekening / Nomor HP
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="number" name="no_rekening" id="bp-no-rek"
+                               class="form-control @error('no_rekening') is-invalid @enderror"
+                               placeholder="Contoh: 1234567890" value="{{ old('no_rekening') }}" required>
+                        <small class="text-muted">Untuk e-wallet, isi dengan nomor HP terdaftar.</small>
+                        @error('no_rekening')
+                            <small class="text-danger d-block">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    {{-- Nama Pemilik --}}
+                    <div class="form-group mb-0">
+                        <label class="text-bold-600">
+                            <i class="feather icon-user mr-25 text-muted"></i> Nama Pemilik Rekening
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" name="nama_pemilik" id="bp-nama-pem"
+                               class="form-control @error('nama_pemilik') is-invalid @enderror"
+                               placeholder="Sesuai buku tabungan" value="{{ old('nama_pemilik') }}" required>
+                        @error('nama_pemilik')
+                            <small class="text-danger d-block">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                        <i class="feather icon-x mr-25"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="feather icon-save mr-25"></i> Simpan Rekening
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Live preview kartu rekening saat user mengetik
+(function () {
+    function maskNumber(n) {
+        if (!n) return '•••• •••• •••• ••••';
+        var s = String(n);
+        return s.replace(/(.{4})/g, '$1 ').trim();
+    }
+    $(document).on('input change', '#bp-nama-bank, #bp-no-rek, #bp-nama-pem', function () {
+        $('#prev-bank').text($('#bp-nama-bank').val() || 'Nama Bank');
+        $('#prev-rek').text(maskNumber($('#bp-no-rek').val()));
+        $('#prev-nama').text('a/n ' + ($('#bp-nama-pem').val() || 'Pemilik Rekening'));
+    });
+})();
+</script>

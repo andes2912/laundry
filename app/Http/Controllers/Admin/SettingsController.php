@@ -115,19 +115,92 @@ class SettingsController extends Controller
   }
 
   // Notification
-  public function notif(Request $request,$id)
+  public function notif(Request $request, $id)
   {
-    $notif = notifications_setting::findorFail($id);
-    $notif->telegram_order_masuk      = $request->telegram_order_masuk;
-    $notif->telegram_order_selesai    = $request->telegram_order_selesai;
-    $notif->email                     = $request->email;
-    $notif->telegram_channel_masuk    = $request->telegram_channel_masuk;
-    $notif->telegram_channel_selesai  = $request->telegram_channel_masuk;
-    $notif->wa_order_selesai          = $request->wa_order_selesai;
-    $notif->wa_token                  = $request->wa_token;
+    // Normalisasi toggle
+    $email  = (int) $request->boolean('email');
+    $tgIn   = (int) $request->boolean('telegram_order_masuk');
+    $tgDone = (int) $request->boolean('telegram_order_selesai');
+    $waDone = (int) $request->boolean('wa_order_selesai');
+
+    // String fields
+    $tgChannelIn   = trim((string) $request->telegram_channel_masuk);
+    $tgChannelDone = trim((string) ($request->telegram_channel_selesai ?: $tgChannelIn));
+    $tgBotToken    = trim((string) $request->telegram_bot_token);
+    $waToken       = trim((string) $request->wa_token);
+    $waUrl         = trim((string) $request->wa_gateway_url);
+    $waDevice      = trim((string) $request->wa_device_id);
+    $waProvider    = in_array($request->wa_provider, ['kirimwa','fonnte','wablas','wa_cloud'], true)
+                        ? $request->wa_provider : 'kirimwa';
+
+    $mailHost      = trim((string) $request->mail_host);
+    $mailPort      = $request->mail_port ? (int) $request->mail_port : null;
+    $mailUser      = trim((string) $request->mail_username);
+    $mailPass      = $request->mail_password; // password tidak di-trim
+    $mailEnc       = $request->mail_encryption ?: null;
+    $mailFrom      = trim((string) $request->mail_from_address);
+    $mailFromName  = trim((string) $request->mail_from_name);
+
+    // Server-side validation: toggle ON tapi config wajib kosong → blok
+    $errors = [];
+
+    if ($email && $mailHost === '') {
+        $errors['mail_host'] = 'Email Notification aktif — SMTP Host wajib diisi.';
+    }
+    if ($email && $mailFrom === '') {
+        $errors['mail_from_address'] = 'Email Notification aktif — alamat pengirim (From) wajib diisi.';
+    }
+
+    if (($tgIn || $tgDone) && $tgChannelIn === '') {
+        $errors['telegram_channel_masuk'] = 'Notifikasi Telegram aktif — Chat ID / Channel wajib diisi.';
+    }
+    if (($tgIn || $tgDone) && $tgBotToken === '') {
+        $errors['telegram_bot_token'] = 'Notifikasi Telegram aktif — Bot Token wajib diisi.';
+    }
+
+    if ($waDone && $waToken === '') {
+        $errors['wa_token'] = 'Notifikasi WhatsApp aktif — Token gateway wajib diisi.';
+    }
+
+    if (!empty($errors)) {
+        return back()->withErrors($errors)->withInput();
+    }
+
+    $notif = notifications_setting::findOrFail($id);
+    $notif->email                     = $email;
+    $notif->telegram_order_masuk      = $tgIn;
+    $notif->telegram_order_selesai    = $tgDone;
+    $notif->telegram_channel_masuk    = $tgChannelIn;
+    $notif->telegram_channel_selesai  = $tgChannelDone;
+    $notif->telegram_bot_token        = $tgBotToken ?: null;
+    $notif->wa_order_selesai          = $waDone;
+    $notif->wa_token                  = $waToken ?: null;
+    $notif->wa_gateway_url            = $waUrl ?: null;
+    $notif->wa_device_id              = $waDevice ?: null;
+    $notif->wa_provider               = $waProvider;
+
+    // Validasi tambahan WA Cloud: phone_number_id wajib (kita pakai field wa_device_id)
+    if ($waDone && $waProvider === 'wa_cloud' && $waDevice === '') {
+        return back()->withErrors([
+            'wa_device_id' => 'WA Cloud API: isi Phone Number ID di field "Device ID / Phone Number ID".'
+        ])->withInput();
+    }
+
+    // SMTP — simpan hanya kalau host diisi (biar nggak overwrite env dengan null)
+    $notif->mail_host        = $mailHost ?: null;
+    $notif->mail_port        = $mailPort;
+    $notif->mail_username    = $mailUser ?: null;
+    if (!empty($mailPass)) {
+        // Hanya update password kalau user isi field baru
+        $notif->mail_password = $mailPass;
+    }
+    $notif->mail_encryption  = $mailEnc;
+    $notif->mail_from_address = $mailFrom ?: null;
+    $notif->mail_from_name    = $mailFromName ?: null;
+
     $notif->save();
 
-    Session::flash('success','Notifications Berhasil Diupdate !');
+    Session::flash('success', 'Pengaturan notifikasi berhasil disimpan.');
     return back();
   }
 
