@@ -4,7 +4,7 @@ Semua perubahan penting pada proyek ini didokumentasikan di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/),
 dan proyek ini menggunakan [Semantic Versioning](https://semver.org/lang/id/).
 
-## [2.0.0] — 2026-06-22
+## [4.0.1] — 2026-06-22
 
 Rilis besar: upgrade framework Laravel 9 → 12, redesign dashboard admin, dan landing page baru dengan tema dark default.
 
@@ -111,6 +111,6 @@ php artisan optimize:clear
 
 ---
 
-## [1.x] — Sebelumnya
+## [< 4.0.1] — Sebelumnya
 
 Riwayat sebelum upgrade ini tidak terdokumentasi di file changelog.
