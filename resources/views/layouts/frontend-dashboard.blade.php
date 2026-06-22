@@ -213,6 +213,43 @@
             background: rgba(40,199,111,.15); color: var(--success);
         }
 
+        /* Inline themed alert inside track-card (replaces SweetAlert) */
+        .track-alert {
+            display: none;
+            margin-top: 1rem;
+            padding: .75rem .9rem;
+            border-radius: 8px;
+            font-size: .88rem;
+            line-height: 1.45;
+            border: 1px solid transparent;
+            align-items: flex-start;
+            gap: .6rem;
+        }
+        .track-alert.show { display: flex; }
+        .track-alert .ta-icon { flex-shrink: 0; margin-top: 1px; }
+        .track-alert .ta-body { flex: 1; }
+        .track-alert .ta-body strong { display: block; margin-bottom: 1px; font-weight: 600; }
+        .track-alert.error {
+            background: rgba(234, 84, 85, .12);
+            border-color: rgba(234, 84, 85, .35);
+            color: var(--danger);
+        }
+        .track-alert.warning {
+            background: rgba(255, 159, 67, .12);
+            border-color: rgba(255, 159, 67, .35);
+            color: var(--warning);
+        }
+        .track-alert.success {
+            background: rgba(40, 199, 111, .12);
+            border-color: rgba(40, 199, 111, .35);
+            color: var(--success);
+        }
+        /* Input error state */
+        .track-input.has-error input {
+            border-color: var(--danger);
+            box-shadow: 0 0 0 3px rgba(234, 84, 85, .18);
+        }
+
         /* ===== SECTIONS ===== */
         .section { padding: 5rem 0; position: relative; }
         .section-head { text-align:center; max-width: 720px; margin: 0 auto 3.5rem; }
@@ -569,7 +606,7 @@
         </a>
     @endif
 
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.29.1/dist/feather.min.js"></script>
     <script>

@@ -3,50 +3,46 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AddOrderRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
-          'status_payment'    => 'required',
-          'kg'                => 'required|regex:/^[0-9.]+$/|numeric',
-          'hari'              => 'required',
-          'harga'             => 'required',
-          'jenis_pembayaran'  => 'required',
-          'disc'              => 'nullable|numeric',
-          'harga_id'          => 'required',
-          'customer_id'       => 'required'
+          'customer_id'        => 'required',
+          'status_payment'     => ['required', Rule::in(['Pending', 'Success'])],
+          'jenis_pembayaran'   => ['required', Rule::in(['Tunai', 'Transfer', 'Belum Diketahui'])],
+          'disc'               => 'nullable|numeric|min:0|max:100',
+
+          // Multi-item array
+          'items'              => 'required|array|min:1',
+          'items.*.harga_id'   => 'required|exists:hargas,id',
+          'items.*.kg'         => 'required|numeric|min:0.01',
         ];
     }
 
     public function messages()
     {
       return [
-        'status_payment.required'   => 'Status Pembayaran wajib dipilih.',
-        'kg.required'               => 'Berat Pakaian tidak boleh kosong.',
-        'kg.numeric'                => 'Berat Pakaian hanya mendukung angka.',
-        'hari.required'             => 'Hari tidak boleh kosong.',
-        'harga.required'            => 'Harga tidak boleh kosong.',
-        'jenis_pembayaran.required' => 'Jenis Pembayaran wajib dipilih.',
-        'disc.numeric'              => 'Diskon hanya mendukung angka.',
-        'harga_id.required'         => 'Jenis Pakaian wajib dipilih.',
-        'customer_id.required'      => 'Customer wajib dipilih.'
+        'customer_id.required'        => 'Customer wajib dipilih.',
+        'status_payment.required'     => 'Status pembayaran wajib dipilih.',
+        'jenis_pembayaran.required'   => 'Jenis pembayaran wajib dipilih.',
+        'jenis_pembayaran.in'         => 'Jenis pembayaran tidak valid.',
+        'disc.numeric'                => 'Diskon harus angka.',
+        'disc.max'                    => 'Diskon maksimum 100%.',
+        'items.required'              => 'Minimal 1 item pakaian wajib diisi.',
+        'items.min'                   => 'Minimal 1 item pakaian wajib diisi.',
+        'items.*.harga_id.required'   => 'Jenis pakaian wajib dipilih di setiap baris.',
+        'items.*.harga_id.exists'     => 'Jenis pakaian yang dipilih tidak valid.',
+        'items.*.kg.required'         => 'Berat (kg) wajib diisi di setiap baris.',
+        'items.*.kg.numeric'          => 'Berat harus berupa angka.',
+        'items.*.kg.min'              => 'Berat minimum 0.01 kg.',
       ];
     }
 }

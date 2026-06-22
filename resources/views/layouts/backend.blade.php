@@ -165,12 +165,18 @@
 
                 {{-- Menu Admin --}}
                     @if (auth::user()->auth == "Admin")
+                        <li class="nav-item {{ (request()->is('cabang*')) ? 'active' : '' }}">
+                          <a href="{{ route('cabang.index') }}">
+                            <i class="feather icon-map-pin"></i>
+                            <span class="menu-title" data-i18n="Cabang">Cabang</span>
+                          </a>
+                        </li>
                         <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="User">Data User</span></a>
                             <ul class="menu-content">
-                              <li class="nav-item {{ (request()->is('karyawan')) ? 'active' : '' }}">
+                              <li class="nav-item {{ (request()->is('karyawan*')) ? 'active' : '' }}">
                                 <a href="{{route('karyawan.index')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Karyawan</span></a>
                               </li>
-                              <li class="nav-item {{ (request()->is('customer')) ? 'active' : '' }}">
+                              <li class="nav-item {{ (request()->is('customer*')) ? 'active' : '' }}">
                                 <a href="{{url('customer')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Customer</span></a>
                               </li>
                             </ul>
@@ -219,6 +225,9 @@
                                 <a href="{{url('customers')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Data Customer</span></a>
                               </li>
                           </ul>
+                      </li>
+                      <li class="nav-item {{ (request()->is('listharga-karyawan')) ? 'active' : '' }}">
+                        <a href="{{ url('listharga-karyawan') }}"><i class="feather icon-tag"></i><span class="menu-title" data-i18n="Harga">Data Harga</span></a>
                       </li>
                       <li class="nav-item"><a href="{{url('/laporan')}}"><i class="feather icon-file-text"></i><span class="menu-title" data-i18n="Dashboard">Laporan</span></a>
                       </li>

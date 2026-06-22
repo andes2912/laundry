@@ -27,4 +27,12 @@ class transaksi extends Model
       return $this->belongsTo(User::class,'user_id','id');
     }
 
+    /**
+     * Items (multi-item support). 1 transaksi bisa punya beberapa item pakaian.
+     */
+    public function items()
+    {
+      return $this->hasMany(TransaksiItem::class, 'transaksi_id');
+    }
+
 }

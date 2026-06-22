@@ -291,7 +291,7 @@
                             <tr>
                                 <td>
                                     <a href="{{ route('transaksi.show', $trx->id) }}" class="text-bold-600">
-                                        {{ $trx->no_invoice ?? '#'.$trx->id }}
+                                        {{ $trx->invoice ?? '#'.$trx->id }}
                                     </a>
                                     <br><small class="text-muted">{{ \Carbon\Carbon::parse($trx->created_at)->diffForHumans() }}</small>
                                 </td>

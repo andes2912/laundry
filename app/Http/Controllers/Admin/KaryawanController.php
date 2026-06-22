@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Cabang;
 use App\Models\User;
 use Session;
 
@@ -19,7 +20,7 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-      $kry = User::where('auth','Karyawan')->get();
+      $kry = User::with('cabang')->where('auth','Karyawan')->get();
       return view('modul_admin.pengguna.kry', compact('kry'));
     }
 
@@ -30,7 +31,16 @@ class KaryawanController extends Controller
      */
     public function create()
     {
-      return view('modul_admin.pengguna.addkry');
+      $cabangs = Cabang::where('status','Active')->orderBy('nama')->get();
+
+      // Hard requirement: minimal 1 cabang aktif sebelum bisa tambah karyawan
+      if ($cabangs->isEmpty()) {
+        Session::flash('error',
+          'Belum ada cabang aktif. Buat cabang terlebih dahulu sebelum menambahkan karyawan.');
+        return redirect()->route('cabang.create');
+      }
+
+      return view('modul_admin.pengguna.addkry', compact('cabangs'));
     }
 
     /**
@@ -41,23 +51,27 @@ class KaryawanController extends Controller
      */
     public function store(AddKaryawanRequest $request)
     {
+        $cabang = Cabang::findOrFail($request->cabang_id);
         $phone_number = preg_replace('/^0/','62',$request->no_telp);
-        $adduser = New User();
+
+        $adduser = new User();
         $adduser->name          = $request->name;
         $adduser->email         = $request->email;
-        $adduser->nama_cabang   = $request->nama_cabang;
+        $adduser->cabang_id     = $cabang->id;
+        // Tetap diisi untuk backward-compat di view/laporan lama
+        $adduser->nama_cabang   = $cabang->nama;
+        $adduser->alamat_cabang = $cabang->alamat;
         $adduser->alamat        = $request->alamat;
-        $adduser->alamat_cabang = $request->alamat_cabang;
         $adduser->no_telp       = $phone_number;
         $adduser->status        = 'Active';
         $adduser->auth          = 'Karyawan';
         $adduser->password      = Hash::make($request->password);
         $adduser->save();
 
-      $adduser->assignRole($adduser->auth);
+        $adduser->assignRole($adduser->auth);
 
-      Session::flash('success','Karyawan Berhasil Dibuat.');
-      return redirect('karyawan');
+        Session::flash('success','Karyawan berhasil dibuat dan dipasangkan ke cabang '.$cabang->nama.'.');
+        return redirect('karyawan');
     }
 
     // Update Status Karyawan

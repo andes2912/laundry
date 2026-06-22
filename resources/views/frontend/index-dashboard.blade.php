@@ -40,7 +40,7 @@
                 Notifikasi WhatsApp otomatis untuk customer
             </div>
             <h1>
-                Kelola Laundry-mu <br>
+                <span style="white-space: nowrap;">Kelola Laundry&#8209;mu</span> <br>
                 Lebih <span class="grad">Cerdas &amp; Cepat</span>
             </h1>
             <p class="lead-x">
@@ -64,12 +64,22 @@
         <div class="track-card reveal" id="tracking">
             <h3><i data-feather="search" width="18" height="18"></i> Lacak Status Laundry</h3>
             <p class="small-muted">Masukkan nomor invoice yang kamu terima saat order.</p>
-            <div class="track-input">
+            <div class="track-input" id="track-input">
                 <input type="text" id="search_status" placeholder="Contoh: TR0392928" autocomplete="off">
                 <button class="btn-x btn-primary-x" id="search-btn">
                     Cek <i data-feather="arrow-right" width="16" height="16"></i>
                 </button>
             </div>
+
+            {{-- Themed inline alert (replaces SweetAlert) --}}
+            <div class="track-alert" id="track-alert" role="alert">
+                <i data-feather="alert-circle" class="ta-icon" width="18" height="18"></i>
+                <div class="ta-body">
+                    <strong id="ta-title">—</strong>
+                    <span id="ta-msg">—</span>
+                </div>
+            </div>
+
             <div class="track-result" id="track-result">
                 <div class="row-info"><span>Customer</span><strong id="r-customer">-</strong></div>
                 <div class="row-info"><span>Tanggal Order</span><strong id="r-tgl">-</strong></div>
@@ -364,14 +374,41 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+// Themed inline alert (consistent with dashboard palette) — replaces SweetAlert
+function showTrackAlert(type, title, msg, iconName) {
+    var $a = $('#track-alert');
+    $a.removeClass('error warning success').addClass(type).addClass('show');
+    $('#ta-title').text(title);
+    $('#ta-msg').text(msg);
+    // Swap feather icon
+    $a.find('.ta-icon').attr('data-feather', iconName);
+    if (window.feather) feather.replace({ 'stroke-width': 1.75 });
+    // Highlight input on error
+    if (type === 'error' || type === 'warning') {
+        $('#track-input').addClass('has-error');
+    } else {
+        $('#track-input').removeClass('has-error');
+    }
+}
+function hideTrackAlert() {
+    $('#track-alert').removeClass('show error warning success');
+    $('#track-input').removeClass('has-error');
+}
+
 $(document).on('click', '#search-btn', function (e) {
     var search_status = $("#search_status").val().trim();
+    hideTrackAlert();
+    $('#track-result').removeClass('show');
+
     if (!search_status) {
-        Swal.fire({ icon: 'warning', title: 'Kosong', text: 'Masukkan nomor invoice dulu ya.' });
+        showTrackAlert('warning', 'Belum ada nomor invoice',
+            'Masukkan nomor invoice yang kamu terima saat order dulu ya.',
+            'alert-triangle');
+        $('#search_status').focus();
         return;
     }
+
     $.get('{{ url("pencarian-laundry") }}', {
         '_token': $('meta[name=csrf-token]').attr('content'),
         search_status: search_status
@@ -382,15 +419,25 @@ $(document).on('click', '#search-btn', function (e) {
             $('#r-status').text(resp.status_order || '-');
             $('#track-result').addClass('show');
         } else {
-            $('#track-result').removeClass('show');
-            Swal.fire({ icon: 'error', title: 'Tidak ditemukan', text: 'No invoice tidak terdaftar. Coba cek lagi.' });
+            showTrackAlert('error', 'Invoice tidak ditemukan',
+                'Nomor invoice "' + search_status + '" tidak terdaftar. Coba cek lagi nomornya.',
+                'x-circle');
         }
     }).fail(function(){
-        Swal.fire({ icon: 'error', title: 'Error', text: 'Gagal menghubungi server.' });
+        showTrackAlert('error', 'Gagal terhubung',
+            'Tidak bisa menghubungi server. Cek koneksi internet kamu lalu coba lagi.',
+            'wifi-off');
     });
 });
+
+// Enter key submits
 $(document).on('keypress', '#search_status', function(e) {
     if (e.which === 13) $('#search-btn').click();
+});
+
+// Hide alert saat user mulai mengetik ulang
+$(document).on('input', '#search_status', function() {
+    if ($('#track-alert').hasClass('show')) hideTrackAlert();
 });
 </script>
 @endsection

@@ -12,7 +12,7 @@ class TransaksiController extends Controller
 
     public function index()
     {
-      $transaksi = transaksi::with('price')
+      $transaksi = transaksi::with('price','items','user')
       ->orderBy('created_at','desc')->get();
 
       $filter = User::select('id','name')->where('auth','Karyawan')->get();
@@ -23,47 +23,23 @@ class TransaksiController extends Controller
     // Filter Transaksi
     public function filtertransaksi(Request $request)
     {
+      $q = transaksi::with('price','items','user')->orderBy('created_at','desc');
       if ($request->user_id != 'all') {
-        $transaksi = transaksi::with('price')
-        ->where('user_id', $request->user_id)
-        ->orderBy('created_at','desc')
-        ->get();
-      }elseif($request->user_id == 'all') {
-        $transaksi = transaksi::with('price')
-        ->orderBy('created_at','desc')
-        ->get();
+        $q->where('user_id', $request->user_id);
       }
+      $transaksi = $q->get();
 
-
-      $return = "";
-      $no=1;
-      foreach($transaksi as $item) {
-        $return .="<tr>
-          <td>".$no."</td>
-          <td>".$item->tgl_transaksi."</td>
-          <td>".$item->customer."</td>
-          <td>".$item->status_order."</td>
-          <td>".$item->status_payment."</td>
-          <td>".$item->price->jenis."</td>";
-          $return .="
-          <input type='hidden' value='".$item->kg * $item->harga."'>
-          <td>".Rupiah::getRupiah($item->kg * $item->harga)."</td>";
-          $return .="<td><a href='invoice-customer/$item->invoice' class='btn btn-sm btn-success style='color:white'>Invoice</a></td>";
-        $return .= "</td>
-        </tr>";
-        $no++;
-      }
-      return $return;
+      return view('modul_admin.transaksi._rows', compact('transaksi'))->render();
     }
 
     // Invoice
     public function invoice( Request $request)
     {
-      $invoice = transaksi::with('price')
+      $invoice = transaksi::with('price','items')
       ->where('invoice', $request->invoice)
       ->orderBy('id','DESC')->get();
 
-      $dataInvoice = transaksi::with('customers','user')
+      $dataInvoice = transaksi::with('customers','user','items')
       ->where('invoice', $request->invoice)
       ->first();
 

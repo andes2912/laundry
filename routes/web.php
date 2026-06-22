@@ -16,9 +16,16 @@ Route::middleware('auth')->group(function () {
   Route::get('/home', 'HomeController@index')->name('home');
 
   Route::get('read-notifikasi','HomeController@readNotifikasi');
+
+  // Theme toggle (semua role bisa)
+  Route::put('set-theme/{id}','Admin\SettingsController@set_theme')->name('setting-theme.update');
+
   // Modul Admin
   Route::prefix('/')->middleware('role:Admin')->group(function () {
     Route::resource('admin','Admin\AdminController');
+
+    // Cabang
+    Route::resource('cabang','Admin\CabangController');
 
     // Pengguna/karyawan
     Route::resource('karyawan','Admin\KaryawanController');
@@ -45,14 +52,13 @@ Route::middleware('auth')->group(function () {
     // Setting
     Route::get('settings','Admin\SettingsController@setting');
     Route::put('proses-setting-page/{id}','Admin\SettingsController@proses_set_page')->name('seting-page.update');
-    Route::put('set-theme/{id}','Admin\SettingsController@set_theme')->name('setting-theme.update');
     Route::put('set-target-laundry/{id}','Admin\SettingsController@set_target_laundry')->name('set-target.update');
     Route::post('add-bank','Admin\SettingsController@bank')->name('setting.bank');
     Route::put('set-notif/{id}','Admin\SettingsController@notif')->name('set-notif.update');
 
     // Profile
-    Route::get('profile-admin/{id}','Admin\AdminController@profile');
-    Route::get('profile-admin-edit','Admin\AdminController@edit_profile');
+    Route::get('profile-admin/{id}','Admin\AdminController@profile')->name('profile-admin');
+    Route::put('profile-admin/update','Admin\AdminController@edit_profile')->name('profile-admin.update');
 
     // Dodkumentasi
     Route::get('dokumentasi','Admin\DokumentasiController@index'); // Dokumentasi
@@ -79,6 +85,9 @@ Route::middleware('auth')->group(function () {
     // Filter
     Route::get('listharga','Karyawan\PelayananController@listharga');
     Route::get('listhari','Karyawan\PelayananController@listhari');
+
+    // List harga read-only untuk karyawan
+    Route::get('listharga-karyawan','Karyawan\PelayananController@viewHarga');
 
     // Laporan
     Route::get('laporan','Karyawan\LaporanController@laporan');

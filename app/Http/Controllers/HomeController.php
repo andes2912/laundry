@@ -176,6 +176,12 @@ class HomeController extends Controller
                   }
               }
 
+              // Transaksi terbaru milik karyawan ini
+              $recent = transaksi::where('user_id', Auth::id())
+                  ->orderByDesc('created_at')
+                  ->take(6)
+                  ->get();
+
               return view('karyawan.index')
                   ->  with('diambil', $diambil)
                   ->  with('masuk',$masuk)
@@ -187,14 +193,29 @@ class HomeController extends Controller
                   ->  with('incomeMOld',$incomeMOld)
                   ->  with('persen',$persen)
                   ->  with('_bulan', substr($bulans, 0,-1))
-                  ->  with('_nilaiB', substr($nilaiB, 0, -1));
+                  ->  with('_nilaiB', substr($nilaiB, 0, -1))
+                  ->  with('recent', $recent);
 
           }elseif(Auth::user()->auth == 'Customer'){
-            $totalLaundry = transaksi::where('customer_id',Auth::id())->count();
-            $totalLaundryKg = transaksi::where('customer_id',Auth::id())->sum('kg');
+            $base = transaksi::where('customer_id', Auth::id());
+            $totalLaundry   = (clone $base)->count();
+            $totalLaundryKg = (clone $base)->sum('kg');
+            $totalSpent     = (clone $base)->where('status_payment','Success')->sum('harga_akhir');
+            $countProcess   = (clone $base)->where('status_order','Process')->count();
+            $countDone      = (clone $base)->where('status_order','Done')->count();
+            $countDelivery  = (clone $base)->where('status_order','Delivery')->count();
+            $countPending   = (clone $base)->where('status_payment','Pending')->count();
 
-            $transaksi = transaksi::with('price')->where('customer_id',Auth::id())->get();
-            return view('customer.index',\compact('totalLaundry','totalLaundryKg','transaksi'));
+            $transaksi = transaksi::with('price','items','user')
+                ->where('customer_id', Auth::id())
+                ->orderByDesc('id')
+                ->get();
+
+            return view('customer.index', \compact(
+                'totalLaundry','totalLaundryKg','totalSpent',
+                'countProcess','countDone','countDelivery','countPending',
+                'transaksi'
+            ));
           }
         }
     }

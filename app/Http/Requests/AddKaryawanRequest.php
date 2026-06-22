@@ -24,14 +24,13 @@ class AddKaryawanRequest extends FormRequest
     public function rules()
     {
         return [
-          'name'                  => 'required|unique:users|max:50',
-          'email'                 => 'required|unique:users|max:50',
-          'nama_cabang'           => 'required|max:50',
-          'alamat'                => 'required|max:50',
-          'alamat_cabang'         => 'required|unique:users',
+          'name'                  => 'required|max:50',
+          'email'                 => 'required|email|unique:users,email|max:50',
+          'cabang_id'             => 'required|exists:cabangs,id',
+          'alamat'                => 'required|max:191',
           'no_telp'               => 'required',
           'password'              => 'required|string|min:8|confirmed',
-          'password_confirmation' => 'required|string|min:8'
+          'password_confirmation' => 'required|string|min:8',
         ];
     }
 
@@ -39,23 +38,20 @@ class AddKaryawanRequest extends FormRequest
     {
       return [
         'name.required'                 => 'Nama tidak boleh kosong.',
-        'name.unique'                   => 'Nama sudah digunakan.',
         'name.max'                      => 'Nama tidak boleh lebih dari 50 karakter.',
         'email.required'                => 'Email tidak boleh kosong.',
+        'email.email'                   => 'Format email tidak valid.',
         'email.unique'                  => 'Email sudah digunakan.',
         'email.max'                     => 'Email tidak boleh lebih dari 50 karakter.',
-        'nama_cabang.required'          => 'Nama Cabang tidak boleh kosong.',
-        'nama_cabang.max'               => 'Nama Cabang tidak boleh lebih dari 30 karakter.',
-        'alamat_cabang.required'        => 'Alamat Cabang tidak boleh ksosong.',
-        'alamt_cabang.unique'           => 'Alamat Cabang sudah digunakan',
-        'alamat.required'               => 'Alamat tidak boleh kosong.',
-        'alamat.max'                    => 'Alamat tidak boleh lebih dari 50 karakter.',
-        'no_telp.required'              => 'Nomor Telepon tidak boleh kosong.',
+        'cabang_id.required'            => 'Cabang wajib dipilih.',
+        'cabang_id.exists'              => 'Cabang yang dipilih tidak valid. Refresh halaman.',
+        'alamat.required'               => 'Alamat karyawan tidak boleh kosong.',
+        'no_telp.required'              => 'Nomor telepon tidak boleh kosong.',
         'password.required'             => 'Password tidak boleh kosong.',
-        'password.min'                  => 'Password harus lebih dari 8 karakter.',
-        'password.confirmed'            => 'Password tidak sama, mohon ulangi kembali.',
-        'password_confirmation.required'=> 'Password Konfirmasi tidak boleh kosong.',
-        'password_confirmation.min'     => 'Password Konfirmasi harus lebih dari 8 karakter.'
+        'password.min'                  => 'Password minimal 8 karakter.',
+        'password.confirmed'            => 'Konfirmasi password tidak sama.',
+        'password_confirmation.required'=> 'Konfirmasi password wajib diisi.',
+        'password_confirmation.min'     => 'Konfirmasi password minimal 8 karakter.',
       ];
     }
 }

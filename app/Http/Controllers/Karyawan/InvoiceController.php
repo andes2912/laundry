@@ -12,12 +12,12 @@ class InvoiceController extends Controller
        // Invoice
     public function invoicekar(Request $request)
     {
-      $invoice = transaksi::with('price')
+      $invoice = transaksi::with('price','items')
       ->where('user_id',Auth::id())
       ->where('id',$request->id)
       ->get();
 
-      $data = transaksi::with('customers','user')
+      $data = transaksi::with('customers','user','items')
       ->where('user_id',Auth::id())
       ->where('id',$request->id)
       ->first();
@@ -29,19 +29,19 @@ class InvoiceController extends Controller
     // Cetak invoice
     public function cetakinvoice(Request $request)
     {
-       $invoice = transaksi::with('price')
+       $invoice = transaksi::with('price','items')
       ->where('user_id',Auth::id())
       ->where('id',$request->id)
       ->get();
 
-      $data = transaksi::with('customers','user')
+      $data = transaksi::with('customers','user','items')
       ->where('user_id',Auth::id())
       ->where('id',$request->id)
       ->first();
 
       $bank = DataBank::get();
 
-      $pdf = PDF::loadView('karyawan.laporan.cetak', compact('invoice','data','bank'))->setPaper('a4', 'landscape');
+      $pdf = PDF::loadView('karyawan.laporan.cetak', compact('invoice','data','bank'))->setPaper('a4', 'portrait');
       return $pdf->stream();
     }
 }

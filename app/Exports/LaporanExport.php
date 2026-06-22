@@ -14,7 +14,7 @@ class LaporanExport implements FromView
     */
     public function view(): View
     {
-      $data = transaksi::where('user_id',Auth::id())->get();
+      $data = transaksi::with('items','price')->where('user_id',Auth::id())->get();
 
       return view(
         'karyawan.laporan.excelExport',

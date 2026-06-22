@@ -132,25 +132,88 @@ if (! function_exists('getTokenWhatsapp'))
 // Notifikasi Whatsapp
 if (! function_exists('notificationWhatsapp'))
 {
-    function notificationWhatsapp($token,$waphone,$pesan)
+    /**
+     * Kirim notifikasi WhatsApp via gateway terkonfigurasi.
+     * Provider didukung: kirimwa | fonnte | wablas | wa_cloud
+     *
+     * - $token  : token autentikasi (semua provider butuh)
+     * - $waphone: nomor tujuan (format tergantung provider, lihat helper text di UI)
+     * - $pesan  : isi pesan teks
+     *
+     * Return: ['ok' => bool, 'code' => int, 'body' => array, 'error' => string?]
+     */
+    function notificationWhatsapp($token, $waphone, $pesan)
     {
-        $apiURL = 'https://api.kirimwa.id/v1/messages';
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', $apiURL, [
-          'headers'=> [
-            'Authorization' => 'Bearer ' . $token,
-            'Content-Type'  => 'application/json'
-          ],
-          'body' => json_encode([
-            'message' => $pesan,
-            'phone_number' => $waphone,
-            'message_type' => 'text',
-            'device_id' => 'iphone' // isi dengan device_id kalian
-          ]),
-        ]);
+        $cfg      = \App\Models\notifications_setting::first();
+        $provider = $cfg && $cfg->wa_provider ? $cfg->wa_provider : 'kirimwa';
+        $url      = $cfg && $cfg->wa_gateway_url ? $cfg->wa_gateway_url : null;
+        $deviceId = $cfg && $cfg->wa_device_id   ? $cfg->wa_device_id   : null;
 
-        $statusCode = $response->getStatusCode();
-        $responseBody = json_decode($response->getBody(), true);
+        // Per-provider mapping
+        switch ($provider) {
+            case 'fonnte':
+                // https://docs.fonnte.com
+                $url     = $url ?: 'https://api.fonnte.com/send';
+                $headers = ['Authorization' => $token];
+                $body    = ['target' => $waphone, 'message' => $pesan];
+                $form    = 'form_params';
+                break;
+
+            case 'wablas':
+                // https://wablas.com — region URL biasanya beda (jkt, sg), wajib disetel di wa_gateway_url
+                $url     = $url ?: 'https://console.wablas.com/api/send-message';
+                $headers = ['Authorization' => $token];
+                $body    = ['phone' => $waphone, 'message' => $pesan];
+                $form    = 'form_params';
+                break;
+
+            case 'wa_cloud':
+                // Meta WhatsApp Cloud API
+                // wa_device_id dipakai sebagai phone_number_id
+                $phoneNumberId = $deviceId;
+                if (!$phoneNumberId) {
+                    return ['ok' => false, 'error' => 'WA Cloud API butuh Phone Number ID di field "Device ID".'];
+                }
+                $url     = $url ?: ('https://graph.facebook.com/v18.0/' . $phoneNumberId . '/messages');
+                $headers = ['Authorization' => 'Bearer ' . $token, 'Content-Type' => 'application/json'];
+                $body    = [
+                    'messaging_product' => 'whatsapp',
+                    'to'                => $waphone,
+                    'type'              => 'text',
+                    'text'              => ['body' => $pesan],
+                ];
+                $form    = 'json';
+                break;
+
+            case 'kirimwa':
+            default:
+                $url     = $url ?: 'https://api.kirimwa.id/v1/messages';
+                $headers = ['Authorization' => 'Bearer ' . $token, 'Content-Type' => 'application/json'];
+                $body    = [
+                    'message'      => $pesan,
+                    'phone_number' => $waphone,
+                    'message_type' => 'text',
+                    'device_id'    => $deviceId ?: 'iphone',
+                ];
+                $form    = 'json';
+                break;
+        }
+
+        try {
+            $client   = new \GuzzleHttp\Client(['timeout' => 10]);
+            $options  = ['headers' => $headers, 'http_errors' => false];
+            $options[$form] = $body;
+            $response = $client->request('POST', $url, $options);
+            return [
+                'ok'       => $response->getStatusCode() < 300,
+                'code'     => $response->getStatusCode(),
+                'body'     => json_decode($response->getBody(), true),
+                'provider' => $provider,
+            ];
+        } catch (\Throwable $e) {
+            \Log::warning("WhatsApp notif failed (provider={$provider}): ".$e->getMessage());
+            return ['ok' => false, 'error' => $e->getMessage(), 'provider' => $provider];
+        }
     }
 }
 
