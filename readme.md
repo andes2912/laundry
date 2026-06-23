@@ -1,88 +1,98 @@
-<img src="https://banners.beyondco.de/Laundry%20App.png?theme=light&packageManager=&packageName=&pattern=architect&style=style_1&description=Aplikasi+Management+Laundry&md=1&showWatermark=1&fontSize=100px&images=truck" />
-<p>Halo, ini adalah aplikasi Laundry yang dibangun dengan cinta (love). Aplikasi ini sudah bisa multi toko loh, alias kamu bisa membuat cabang laundry.<br>
+# E-Laundry
 
-## Requirements
+> Aplikasi manajemen laundry modern berbasis web — kelola order, customer, karyawan, dan laporan keuangan dalam satu dashboard.
 
-* Version 1.x , 2.x or 3.x use PHP 7.3 (Framework Laravel 8) [Versi 3.x](https://github.com/andes2912/laundry/tree/3.x)
-* Version 3.1 use PHP 8.0 (Framework Laravel 9) [Versi 3.1](https://github.com/andes2912/laundry/tree/3.1)
-* Database (eg: MySQL)
-* Web Server (eg: Apache, Nginx, IIS)
+![Version](https://img.shields.io/badge/version-4.0.2-7367f0)
+![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel)
+![License](https://img.shields.io/badge/license-Proprietary-red)
 
-## Framework
+> ⚠️ **Showcase repository.** Versi base lama dari E-Laundry. Source code untuk versi aktif (v4.0.1+) bersifat closed-source dan tersedia melalui langganan berbayar.
 
-Laundry dibangun menggunakan [Laravel](http://laravel.com), the best existing PHP framework, as the foundation framework.
+---
 
-## Installation
+## ✨ Fitur Utama
 
-* Install [Composer](https://getcomposer.org/download) and [Npm](https://nodejs.org/en/download)
-* Clone the repository: `git clone https://github.com/andes2912/laundry.git`
-* Install dependencies: `composer install ; npm install ; npm run dev`
-* Run `cp .env.example .env` for create .env file
-* Run `php artisan migrate --seed` for migration database
-* Run `php artisan storage:link` for create folder storage
-* Run `php artisan create:admin` for create user Administrator
-* Run `php artisan queue:listen` for run queue
+### 🛒 Manajemen Order
+- Order multi-item per transaksi (multi jenis pakaian)
+- Konfirmasi update status dengan modal interaktif
+- Auto-generate invoice & PDF
+- Tracking status real-time untuk customer
 
-Note : Aplikasi ini akan terus saya update.<br>
-Kalau ada pertanyaan bisa kontak aku di email ini <b>andridesmana29@outlook.com</b>
-</p>
+### 👥 Multi-Role User
+- **SuperAdmin** — kelola seluruh tenant Admin
+- **Admin** — kelola operasional laundry
+- **Karyawan** — proses order & update status
+- **Customer** — tracking & riwayat order
 
-## Package
-- [IndoBank](https://github.com/andes2912/indobank) package Laravel untuk menyimpan data Nama Bank yang ada di Indonesia
+### 💰 Laporan & Finance
+- Dashboard analytics dengan stat cards animatif
+- Target laundry harian / bulanan / tahunan
+- Filter laporan + export Excel berstyle profesional
+- Pendapatan per cabang
 
+### 🔔 Notifikasi Otomatis (konfigurasi dari dashboard)
+- Email via SMTP custom
+- Telegram bot
+- WhatsApp via gateway (Kirimwa / Fonnte / Wablas / WA Cloud API)
 
-## Fitur Release
- #### [Versi 3.1](https://github.com/andes2912/laundry/tree/3.1)
-   #### Administrator
-   * Dashboard Administrator
-   * Tambah User Karyawan
-   * Lihat data transaksi
-   * Data Finance
-   * Data Harga
-   * Atur target laundry
-   * Ubah thema (untuk saat ini hanya ada Dark & White)
-   * Data Bank
-   * Setting Notifikasi Email, Telegram dan WhatsAapp
-   * Dokumentasi
+### 🎨 UX Modern
+- Dark / Light mode
+- Mobile-friendly responsive
+- Animasi dashboard (counter, fade-up, hover lift)
+- Custom branding invoice (Business plan)
 
-   #### Karyawan
-   * Dashboard Karyawan
-   * Data order masuk
-   * Data customer
-   * Tambah customer
-   * Tambah transaksi Laundry
-   * Laporan
-   * Ubah thema (untuk saat ini hanya ada Dark & White)
+---
 
-   #### Customer
-   * Dashboard Customer
-   * Ubah thema (untuk saat ini hanya ada Dark & White)
-   * Notification List
+## 📦 Paket Berlangganan
 
+| Fitur | Starter | Pro | Business |
+|---|:---:|:---:|:---:|
+| **Harga** | **Gratis** | Rp 99rb/bln | Rp 249rb/bln |
+| Order per bulan | 50 | Unlimited | Unlimited |
+| Karyawan | 1 | 5 | Unlimited |
+| Laporan + Export Excel | — | ✅ | ✅ |
+| Notif WhatsApp / Telegram | — | ✅ | ✅ |
+| Multi-outlet (Cabang) | — | — | ✅ |
+| Custom branding invoice | — | — | ✅ |
+| Priority support 24/7 | — | — | ✅ |
 
-## Sponsors
+[**🚀 Hubungi untuk berlangganan →**](#kontak)
 
-Support E-Laundry by becoming a sponsor on [Saweria](https://saweria.co/andes2912). Your logo will show up here with a link to your website.
+---
 
-## Any Questions ?
+## 🏗️ Tech Stack
 
-Please contact me on [Andri Desmana](mailto:andridesmana29@outlook.com?subject=[GitHub]%20Questesion%20Pap!Kos) or [Telegram](https://t.me/andridesmana)
+- **Backend**: Laravel 12 · PHP 8.2+
+- **Frontend**: Blade · jQuery · ApexCharts
+- **Database**: MySQL / MariaDB
+- **PDF**: DomPDF
+- **Excel**: Maatwebsite/Excel
+- **Auth & Roles**: Spatie Permission
+- **Email**: Laravel Mail (SMTP runtime override)
+- **Telegram**: laravel-notification-channels/telegram
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📸 Preview
 
-## Dashboard Administrator
-<img src="https://github.com/andes2912/laundry/blob/2.x/public/images/v2.x/Dashboard%20Admin%20-%20Laundry.png" />
+> Screenshot & demo hidup akan dirilis. Hubungi via WhatsApp untuk request akses tester.
 
-## Page Finane Administrator
-<img src="https://github.com/andes2912/laundry/blob/2.x/public/images/v2.x/Page%20Finance%20Admin%20-%20Laundry.png" />
+---
 
-## Page Harga Laundry Administrator
-<img src="https://github.com/andes2912/laundry/blob/2.x/public/images/v2.x/Page%20Harga%20Laundry%20Admin%20-%20Laundry.png" />
+## 📜 Lisensi
 
-## Dashboard Karyawan
-<img src="https://github.com/andes2912/laundry/blob/2.x/public/images/v2.x/Dashboard%20Karyawan%20-%20Laundry.png" />
+Software ini berlisensi **Proprietary**. Lihat [LICENSE](LICENSE) untuk detail lengkap.
 
-## Page Pemesanan Laundry Karyawan
-<img src="https://github.com/andes2912/laundry/blob/2.x/public/images/v2.x/Page%20Add%20Order%20-%20Laundry.png" />
+Repositori ini dipublikasikan untuk tujuan **showcase**. Public visibility ≠ izin untuk menjalankan, menyalin, atau mendistribusikan. Penggunaan komersial wajib via subscription berbayar.
+
+---
+
+## 📞 Kontak
+
+- 📧 **Email**: andridesmana29@gmail.com
+- 🌐 **Website**: https://andridesmana.dev
+- 💬 **WhatsApp**: Hubungi via website untuk akses langsung
+
+---
+
+<sub>Built with ❤️ by [Andri Desmana](https://andridesmana.dev) · © 2026 All Rights Reserved</sub>
